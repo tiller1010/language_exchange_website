@@ -9,4 +9,5 @@ const Hello = (props) => {
 	);
 }
 
-ReactDOM.render(<Hello/>, document.getElementById('app'));
+// ReactDOM.render(<Hello/>, document.getElementById('app'));
+export default Hello;
