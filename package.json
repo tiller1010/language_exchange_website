@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "build": "webpack",
+    "watch": "webpack --watch"
   },
   "author": "Tyler Trout",
   "license": "ISC",
@@ -14,6 +15,7 @@
     "express": "^4.17.1",
     "express-handlebars": "^4.0.2",
     "express-react-views": "^0.11.0",
+    "mongodb": "^3.5.9",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
