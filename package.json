@@ -4,7 +4,7 @@
   "description": "A MERN App",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "nodemon -e jsx server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "watch": "webpack --watch"

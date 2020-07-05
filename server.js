@@ -6,7 +6,7 @@ const mongoURL = 'mongodb://127.0.0.1:27017';
 
 var app = express();
 app.set('views', __dirname + '/views');
-app.set('view engine', 'jsx');
+app.set('view engine', '.jsx');
 app.engine('jsx', require('express-react-views').createEngine());
 
 app.use(express.urlencoded());
@@ -16,9 +16,9 @@ app.get('/', (req, res) => {
 	res.render('home');
 });
 
-app.get('/about', (req, res) => {
-	res.render('about');
-});
+// app.get('/about', (req, res) => {
+// 	res.render('about', {mongoClient, mongoURL});
+// });
 
 app.listen(port, () => {
 	if(port === 3000){
