@@ -1,11 +1,12 @@
 import React from 'react';
 
-const Hello = (props) => {
+const Home = (props) => {
   return (
     <div>
-      <h1>Hello World</h1>
+      <h1>Home</h1>
+      <a href="/videos">Search for video</a>
     </div>
   );
 }
 
-export default Hello;
+export default Home;
