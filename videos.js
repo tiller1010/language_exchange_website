@@ -6,4 +6,10 @@ async function index(){
 	return videos;
 }
 
-module.exports = { index };
+async function add(video){
+	const db = getDB();
+	const newVideo = await db.collection('videos').insertOne(video);
+	return video;
+}
+
+module.exports = { index, add };

@@ -20,9 +20,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 			res.render('home');
 		});
 
-		let items = await index();
+		let videos = await index();
 		app.get('/videos', (req, res) => {
-			res.render('videos', {items});
+			res.render('videos', {index});
+		});
+		app.get('/videos/add', (req, res) => {
+			res.render('videos-add');
 		});
 
 		app.listen(port, () => {

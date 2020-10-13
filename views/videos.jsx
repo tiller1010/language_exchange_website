@@ -4,11 +4,25 @@ class Videos extends React.Component {
 	constructor(){
 		super();
 		this.state = {
-			items: []
+			videos: []
 		}
+		this.testFunc = this.testFunc.bind(this);
 	}
 
-	componentDidMount(){
+	testFunc(){
+		this.setState({
+			videos: [{title: 'test2'}]
+		})
+	}
+
+	async componentDidMount(){
+		// let newVideos = await this.props.index();
+		let newVideos = [{	title: 'test'}]
+		if(newVideos){
+			this.setState({
+				videos: newVideos
+			});
+		}
 	}
 
 	render(){
@@ -16,12 +30,13 @@ class Videos extends React.Component {
 		return (
 			<div>
 				<h1>Videos</h1>
-				{/*<p>{JSON.stringify(this.props.items)}</p>*/}
 				<ul>
-					{this.props.items.map((item) => 
-						<li key={this.props.items.indexOf(item)}>{item.title}</li>
+					{this.state.videos.map((item) => 
+						<li key={this.state.videos.indexOf(item)}>{item.title}</li>
 					)}
 				</ul>
+				<button onClick={this.testFunc}>click</button>
+			    <a href="/videos/add">Add a video</a>
 			</div>
 		);
 	}
