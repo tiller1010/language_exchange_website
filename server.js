@@ -20,9 +20,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 			res.render('home');
 		});
 
-		let videos = await index();
-		app.get('/videos', (req, res) => {
-			res.render('videos', {index});
+		app.get('/videos:format?', async (req, res) => {
+			let videos = await index();
+			if(req.params.format){
+				res.format({
+					json: function(){
+						res.send(JSON.stringify(videos))
+					}
+				})
+			}
+			res.render('videos', {videos});
 		});
 		app.get('/videos/add', (req, res) => {
 			res.render('videos-add');

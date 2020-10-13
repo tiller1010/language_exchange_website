@@ -9,8 +9,7 @@ class Videos extends React.Component {
 	}
 
 	async componentDidMount(){
-		// let newVideos = await this.props.index();
-		let newVideos = [{	title: 'test'}]
+		let newVideos = await this.props.index();
 		if(newVideos){
 			this.setState({
 				videos: newVideos
@@ -22,12 +21,8 @@ class Videos extends React.Component {
 
 		return (
 			<div>
-				<h1>Videos</h1>
-				<ul>
-					{this.state.videos.map((item) => 
-						<li key={this.state.videos.indexOf(item)}>{item.title}</li>
-					)}
-				</ul>
+			    <script async src="js/main.js"></script>
+			    <div id="app"></div>
 			    <a href="/videos/add">Add a video</a>
 			</div>
 		);

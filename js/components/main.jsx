@@ -1,29 +1,51 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-class Hello extends React.Component {
+async function getVideos(){
+	return fetch(`${document.location.origin}/videos.json`)
+		.then((response) => response.json());
+}
+
+class VideoLoader extends React.Component {
 	constructor(){
 		super();
 		this.state = {
 			videos: []
 		}
-		this.testFunc = this.testFunc.bind(this);
+		this.refreshVideos = this.refreshVideos.bind(this);
 	}
 
-	testFunc(){
-		this.setState({
-			videos: [{title: 'test2'}]
-		})
+	async componentDidMount(){
+		var newVideos = await getVideos();
+		if(newVideos){
+			this.setState({
+				videos: newVideos
+			});
+		}
 	}
+
+	async refreshVideos(){
+		var newVideos = await getVideos();
+		if(newVideos){
+			this.setState({
+				videos: newVideos
+			});
+		}
+	}
+
 	render(){
 		return (
-			<div>
-				<h1>Hello World</h1>
-				<p>{JSON.stringify(this.state.videos)}</p>
-				<button onClick={this.testFunc}>click</button>
+			<div>			
+				<h1>Videos</h1>
+				<ul>
+					{this.state.videos.map((item) => 
+						<li key={this.state.videos.indexOf(item)}>{item.title}</li>
+					)}
+				</ul>
+				<button onClick={this.refreshVideos}>Refresh</button>
 			</div>
 		);
 	}
 }
 
-ReactDOM.render(<Hello/>, document.getElementById('app'));
+ReactDOM.render(<VideoLoader/>, document.getElementById('app'));
