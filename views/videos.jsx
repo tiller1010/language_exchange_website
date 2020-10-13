@@ -6,13 +6,6 @@ class Videos extends React.Component {
 		this.state = {
 			videos: []
 		}
-		this.testFunc = this.testFunc.bind(this);
-	}
-
-	testFunc(){
-		this.setState({
-			videos: [{title: 'test2'}]
-		})
 	}
 
 	async componentDidMount(){
@@ -35,7 +28,6 @@ class Videos extends React.Component {
 						<li key={this.state.videos.indexOf(item)}>{item.title}</li>
 					)}
 				</ul>
-				<button onClick={this.testFunc}>click</button>
 			    <a href="/videos/add">Add a video</a>
 			</div>
 		);
