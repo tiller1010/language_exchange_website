@@ -81,20 +81,56 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./js/components/main.jsx");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./js/main.jsx");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./js/components/main.jsx":
+/***/ "./js/components/Home.jsx":
 /*!********************************!*\
-  !*** ./js/components/main.jsx ***!
+  !*** ./js/components/Home.jsx ***!
   \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n\n\nclass Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {\n  constructor() {\n    super();\n    this.state = {};\n  }\n\n  componentDidMount() {}\n\n  render() {\n    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"h1\", null, \"One Word Video App\"));\n  }\n\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Home);\n\n//# sourceURL=webpack:///./js/components/Home.jsx?");
+
+/***/ }),
+
+/***/ "./js/components/VideosAdd.jsx":
+/*!*************************************!*\
+  !*** ./js/components/VideosAdd.jsx ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n\n\nclass VideosAdd extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {\n  constructor() {\n    super();\n    this.state = {};\n  }\n\n  componentDidMount() {}\n\n  render() {\n    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"h1\", null, \"Video Add\"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"form\", {\n      action: \"/videos\",\n      method: \"POST\"\n    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"input\", {\n      type: \"text\",\n      name: \"title\"\n    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"input\", {\n      type: \"submit\",\n      value: \"Submit\"\n    })));\n  }\n\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (VideosAdd);\n\n//# sourceURL=webpack:///./js/components/VideosAdd.jsx?");
+
+/***/ }),
+
+/***/ "./js/components/VideosLoader.jsx":
+/*!****************************************!*\
+  !*** ./js/components/VideosLoader.jsx ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n\n\nasync function getVideos() {\n  return fetch(`${document.location.origin}/videos.json`).then(response => response.json());\n}\n\nclass VideosLoader extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {\n  constructor() {\n    super();\n    this.state = {\n      videos: []\n    };\n    this.refreshVideos = this.refreshVideos.bind(this);\n  }\n\n  async componentDidMount() {\n    var newVideos = await getVideos();\n\n    if (newVideos) {\n      this.setState({\n        videos: newVideos\n      });\n    }\n  }\n\n  async refreshVideos() {\n    var newVideos = await getVideos();\n\n    if (newVideos) {\n      this.setState({\n        videos: newVideos\n      });\n    }\n  }\n\n  render() {\n    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"h1\", null, \"Videos\"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"ul\", null, this.state.videos.map(item => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"li\", {\n      key: this.state.videos.indexOf(item)\n    }, item.title))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"button\", {\n      onClick: this.refreshVideos\n    }, \"Refresh\"));\n  }\n\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (VideosLoader);\n\n//# sourceURL=webpack:///./js/components/VideosLoader.jsx?");
+
+/***/ }),
+
+/***/ "./js/main.jsx":
+/*!*********************!*\
+  !*** ./js/main.jsx ***!
+  \*********************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\");\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);\n\n\n\nasync function getVideos() {\n  return fetch(`${document.location.origin}/videos.json`).then(response => response.json());\n}\n\nclass VideoLoader extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {\n  constructor() {\n    super();\n    this.state = {\n      videos: []\n    };\n    this.refreshVideos = this.refreshVideos.bind(this);\n  }\n\n  async componentDidMount() {\n    var newVideos = await getVideos();\n\n    if (newVideos) {\n      this.setState({\n        videos: newVideos\n      });\n    }\n  }\n\n  async refreshVideos() {\n    var newVideos = await getVideos();\n\n    if (newVideos) {\n      this.setState({\n        videos: newVideos\n      });\n    }\n  }\n\n  render() {\n    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"h1\", null, \"Videos\"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"ul\", null, this.state.videos.map(item => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"li\", {\n      key: this.state.videos.indexOf(item)\n    }, item.title))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"button\", {\n      onClick: this.refreshVideos\n    }, \"Refresh\"));\n  }\n\n}\n\nreact_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(VideoLoader, null), document.getElementById('app'));\n\n//# sourceURL=webpack:///./js/components/main.jsx?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\");\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _components_Home_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Home.jsx */ \"./js/components/Home.jsx\");\n/* harmony import */ var _components_VideosLoader_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/VideosLoader.jsx */ \"./js/components/VideosLoader.jsx\");\n/* harmony import */ var _components_VideosAdd_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/VideosAdd.jsx */ \"./js/components/VideosAdd.jsx\");\n\n\n\n\n\n\nif (document.getElementById('home')) {\n  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_jsx__WEBPACK_IMPORTED_MODULE_2__[\"default\"], null), document.getElementById('home'));\n}\n\nif (document.getElementById('videos')) {\n  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_VideosLoader_jsx__WEBPACK_IMPORTED_MODULE_3__[\"default\"], null), document.getElementById('videos'));\n}\n\nif (document.getElementById('videos-add')) {\n  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_VideosAdd_jsx__WEBPACK_IMPORTED_MODULE_4__[\"default\"], null), document.getElementById('videos-add'));\n}\n\n//# sourceURL=webpack:///./js/main.jsx?");
 
 /***/ }),
 

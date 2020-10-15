@@ -3,7 +3,7 @@ const webpack = require('webpack');
 
 module.exports = {
 	entry: {
-		main: path.resolve(__dirname, 'js/components/main.jsx')
+		main: path.resolve(__dirname, 'js/main.jsx')
 	},
 	output: {
 		filename: '[name].js',

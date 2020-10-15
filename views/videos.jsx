@@ -22,7 +22,7 @@ class Videos extends React.Component {
 		return (
 			<div>
 			    <script async src="js/main.js"></script>
-			    <div id="app"></div>
+			    <div id="videos"></div>
 			    <a href="/videos/add">Add a video</a>
 			</div>
 		);

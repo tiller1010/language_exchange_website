@@ -1,6 +1,6 @@
 import React from 'react';
 
-class VideosAdd extends React.Component {
+class Home extends React.Component {
 	constructor(){
 		super();
 		this.state = {
@@ -14,11 +14,10 @@ class VideosAdd extends React.Component {
 
 		return (
 			<div>
-		      <script async src="../js/main.js"></script>
-		      <div id="videos-add"></div>
+				<h1>One Word Video App</h1>
 			</div>
 		);
 	}
 }
 
-export default VideosAdd;
+export default Home;

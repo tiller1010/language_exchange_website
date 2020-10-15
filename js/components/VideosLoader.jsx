@@ -1,12 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 async function getVideos(){
 	return fetch(`${document.location.origin}/videos.json`)
 		.then((response) => response.json());
 }
 
-class VideoLoader extends React.Component {
+class VideosLoader extends React.Component {
 	constructor(){
 		super();
 		this.state = {
@@ -48,4 +47,4 @@ class VideoLoader extends React.Component {
 	}
 }
 
-ReactDOM.render(<VideoLoader/>, document.getElementById('app'));
+export default VideosLoader;
