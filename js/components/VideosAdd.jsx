@@ -15,7 +15,7 @@ class VideosAdd extends React.Component {
 		return (
 			<div>
 				<h1>Video Add</h1>
-				<form action="/videos" method="POST">
+				<form action="/videos/add" method="POST">
 					<input type="text" name="title"/>
 					<input type="submit" value="Submit"/>
 				</form>

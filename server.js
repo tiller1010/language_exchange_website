@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const port = process.env.PORT || 3000;
 const { connectToDB } = require('./db.js');
-const { index } = require('./videos.js');
+const { index, add } = require('./videos.js');
 
 var app = express();
 app.set('views', __dirname + '/views');
@@ -33,6 +33,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 		});
 		app.get('/videos/add', (req, res) => {
 			res.render('videos-add');
+		});
+		app.post('/videos/add', async (req, res) => {
+			await add({title: req.body.title});
+			let videos = await index();
+			res.redirect('/videos');
 		});
 
 		app.listen(port, () => {
