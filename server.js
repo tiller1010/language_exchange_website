@@ -31,12 +31,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 			}
 			res.render('videos', {videos});
 		});
+
 		app.get('/videos/add', (req, res) => {
 			res.render('videos-add');
 		});
+
 		app.post('/videos/add', async (req, res) => {
+			console.log(req.body)
 			await add({title: req.body.title});
-			let videos = await index();
 			res.redirect('/videos');
 		});
 

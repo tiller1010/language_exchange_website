@@ -1,4 +1,5 @@
 const { getDB } = require('./db.js');
+const fs = require('fs');
 
 async function index(){
 	const db = getDB();
