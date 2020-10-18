@@ -4,7 +4,7 @@
   "description": "A MERN App",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon -e jsx server.js",
+    "start": "nodemon -e js,jsx server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "watch": "webpack --watch"
@@ -12,11 +12,12 @@
   "author": "Tyler Trout",
   "license": "ISC",
   "dependencies": {
-    "nodemon": "^2.0.2",
     "express": "^4.17.1",
     "express-handlebars": "^4.0.2",
     "express-react-views": "^0.11.0",
     "mongodb": "^3.5.9",
+    "multer": "^1.4.2",
+    "nodemon": "^2.0.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },

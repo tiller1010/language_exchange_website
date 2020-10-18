@@ -36,11 +36,17 @@ class VideosLoader extends React.Component {
 		return (
 			<div>			
 				<h1>Videos</h1>
-				<ul>
-					{this.state.videos.map((item) => 
-						<li key={this.state.videos.indexOf(item)}>{item.title}</li>
+				<div>
+					{this.state.videos.map((video) => 
+						<div key={this.state.videos.indexOf(video)}>
+							<h3>{video.title}</h3>
+							<div style={{height: '300px'}}>
+								<video src={video.src} type="video/mp4" className="video-preview" height="225" width="400" controls>
+								</video>
+							</div>
+						</div>
 					)}
-				</ul>
+				</div>
 				<button onClick={this.refreshVideos}>Refresh</button>
 			</div>
 		);

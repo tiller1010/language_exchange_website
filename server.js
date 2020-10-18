@@ -1,4 +1,6 @@
 const express = require('express');
+const multer  = require('multer');
+const upload = multer({ dest: 'public/assets/' });
 const path = require('path');
 const port = process.env.PORT || 3000;
 const { connectToDB } = require('./db.js');
@@ -36,9 +38,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 			res.render('videos-add');
 		});
 
-		app.post('/videos/add', async (req, res) => {
-			console.log(req.body)
-			await add({title: req.body.title});
+		app.post('/videos/add', upload.single('video'), async (req, res) => {
+			console.log(req.file)
+			await add({
+				title: req.body.title,
+				src: 'assets/' + req.file.filename,
+				originalName: req.file.originalname
+			});
 			res.redirect('/videos');
 		});
 

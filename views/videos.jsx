@@ -1,21 +1,6 @@
 import React from 'react';
 
 class Videos extends React.Component {
-	constructor(){
-		super();
-		this.state = {
-			videos: []
-		}
-	}
-
-	async componentDidMount(){
-		let newVideos = await this.props.index();
-		if(newVideos){
-			this.setState({
-				videos: newVideos
-			});
-		}
-	}
 
 	render(){
 
