@@ -15,6 +15,8 @@
     "express": "^4.17.1",
     "express-handlebars": "^4.0.2",
     "express-react-views": "^0.11.0",
+    "feathers-mongodb": "^6.2.0",
+    "feathers-mongodb-fuzzy-search": "^2.0.1",
     "mongodb": "^3.5.9",
     "multer": "^1.4.2",
     "nodemon": "^2.0.2",

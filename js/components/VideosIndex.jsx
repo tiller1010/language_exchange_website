@@ -1,11 +1,13 @@
 import React from 'react';
 
 async function getVideos(){
-	return fetch(`${document.location.origin}/videos.json`)
+	var urlParams = new URLSearchParams(window.location.search);
+	var searchKeywords = urlParams.get('keywords') || '';
+	return fetch(`${document.location.origin}/videos.json${searchKeywords ? '?keywords=' + searchKeywords : ''}`)
 		.then((response) => response.json());
 }
 
-class VideosLoader extends React.Component {
+class VideosIndex extends React.Component {
 	constructor(){
 		super();
 		this.state = {
@@ -36,6 +38,13 @@ class VideosLoader extends React.Component {
 		return (
 			<div>			
 				<h1>Videos</h1>
+				<button onClick={this.refreshVideos}>Refresh</button>
+				<form action="/videos" method="GET">
+					<label htmlFor="keywords">Search Terms</label>
+					<input type="text" name="keywords"/>
+					<input type="submit" value="Search"/>
+				</form>
+			    <a href="/videos/add">Add a video</a>
 				<div>
 					{this.state.videos.map((video) => 
 						<div key={this.state.videos.indexOf(video)}>
@@ -47,10 +56,9 @@ class VideosLoader extends React.Component {
 						</div>
 					)}
 				</div>
-				<button onClick={this.refreshVideos}>Refresh</button>
 			</div>
 		);
 	}
 }
 
-export default VideosLoader;
+export default VideosIndex;

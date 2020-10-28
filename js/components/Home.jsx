@@ -15,6 +15,12 @@ class Home extends React.Component {
 		return (
 			<div>
 				<h1>One Word Video App</h1>
+				<form action="/videos" method="GET">
+					<label htmlFor="keywords">Search Terms</label>
+					<input type="text" name="keywords"/>
+					<input type="submit" value="Search"/>
+				</form>
+			    <a href="/videos">View all videos</a>
 			</div>
 		);
 	}
