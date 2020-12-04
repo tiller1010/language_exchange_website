@@ -11,7 +11,7 @@ class Home extends React.Component {
 	componentDidMount(){
 		axios.get('http://localhost:1337/collecs')
 			.then(response => {
-			  console.log(response);
+			  // console.log(response);
 			  if(response.data[0].media){
 			  	console.log(`http://localhost:1337${response.data[0].media.url}`);
 			  	this.setState({
@@ -19,8 +19,18 @@ class Home extends React.Component {
 			  	});
 			  }
 			});
+
+		axios.get('http://localhost:1337/levels')
+			.then(res => {
+				console.log(res)
+				this.setState({
+					levels: res.data
+				});
+			})
 	}
 
+			    // <h2>Strapi Test:</h2>
+			    // <img src={strapiTestImage}/>
 	render(){
 		var { strapiTestImage } = this.state || 'notfound';
 		return (
@@ -34,8 +44,25 @@ class Home extends React.Component {
 			    <a href="/videos">View all videos</a>
 
 			    <hr/>
-			    <h2>Strapi Test:</h2>
-			    <img src={strapiTestImage}/>
+
+			    {this.state.levels ?
+			    	this.state.levels.map((level) => 
+			    		<div key={this.state.levels.indexOf(level)}>
+				    		<a href={level.Level}><h2>Level {level.Level}</h2></a>
+				    		{level.topics ?
+				    			level.topics.map((topic) =>
+				    				<ul key={level.topics.indexOf(topic)}>
+				    					<li>{topic.Topic}</li>
+				    				</ul>
+			    				)
+			    				:
+			    				<p>No topics</p>
+				    		}
+			    		</div>
+		    		) 
+			    	:
+			    	<h2>No levels</h2>
+			    }
 			</div>
 		);
 	}
