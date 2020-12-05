@@ -66,7 +66,7 @@ class VideosAdd extends React.Component {
 					<video type="video/mp4" className="video-preview" height="225" width="400" controls>
 					</video>
 				</div>
-				<form action="/videos/add" method="POST" enctype="multipart/form-data">
+				<form action="/videos/add" method="POST" encType="multipart/form-data">
 					<input type="text" name="title" required/>
 					<div style={{display: 'flex'}}>
 						<label htmlFor="video">Video</label>

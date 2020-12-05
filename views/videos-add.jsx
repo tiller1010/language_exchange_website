@@ -1,22 +1,14 @@
 import React from 'react';
+import DefaultLayout from './layouts/default';
 
 class VideosAdd extends React.Component {
-	constructor(){
-		super();
-		this.state = {
-		}
-	}
-
-	componentDidMount(){
-	}
 
 	render(){
 
 		return (
-			<div>
-		      <script async src="../js/main.js"></script>
+			<DefaultLayout pathResolver="../">
 		      <div id="videos-add"></div>
-			</div>
+			</DefaultLayout>
 		);
 	}
 }

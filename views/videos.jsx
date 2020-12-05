@@ -1,14 +1,14 @@
 import React from 'react';
+import DefaultLayout from './layouts/default';
 
 class Videos extends React.Component {
 
 	render(){
 
 		return (
-			<div>
-			    <script async src="js/main.js"></script>
+			<DefaultLayout>
 			    <div id="videos"></div>
-			</div>
+			</DefaultLayout>
 		);
 	}
 }

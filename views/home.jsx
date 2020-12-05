@@ -1,12 +1,12 @@
 import React from 'react';
+import DefaultLayout from './layouts/default';
 
 const Home = (props) => {
   return (
-    <div>
+    <DefaultLayout>
       <h1>Home</h1>
-      <script async src="js/main.js"></script>
       <div id="home"></div>
-    </div>
+    </DefaultLayout>
   );
 }
 
