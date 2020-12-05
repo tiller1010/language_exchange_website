@@ -34,7 +34,7 @@ class Home extends React.Component {
 	render(){
 		var { strapiTestImage } = this.state || 'notfound';
 		return (
-			<div>
+			<div className="pad">
 				<h1>One Word Video App</h1>
 				<form action="/videos" method="GET">
 					<label htmlFor="keywords">Search Terms</label>
@@ -47,14 +47,14 @@ class Home extends React.Component {
 
 			    {this.state.levels ?
 			    	this.state.levels.map((level) => 
-			    		<div key={this.state.levels.indexOf(level)}>
-				    		<a href={level.Level}><h2>Level {level.Level}</h2></a>
+			    		<div key={this.state.levels.indexOf(level)} className="flex x-center">
+				    		<a href={level.Level} className="pure-u-1 text-center"><h2>Level {level.Level}</h2></a>
 				    		{level.topics ?
-				    			level.topics.map((topic) =>
-				    				<ul key={level.topics.indexOf(topic)}>
-				    					<li>{topic.Topic}</li>
-				    				</ul>
-			    				)
+			    				<ul className="pure-u-1 flex x-space-around">
+					    			{level.topics.map((topic) =>
+				    					<li key={level.topics.indexOf(topic)}>{topic.Topic}</li>
+				    				)}
+			    				</ul>
 			    				:
 			    				<p>No topics</p>
 				    		}

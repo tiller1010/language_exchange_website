@@ -32,6 +32,9 @@ module.exports = {
 						options: {
 							name: 'css/[name].css'
 						}
+					},
+					{
+						loader: 'sass-loader'
 					}
 				]
 			}

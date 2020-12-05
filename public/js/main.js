@@ -132,7 +132,9 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     var {
       strapiTestImage
     } = this.state || 'notfound';
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "One Word Video App"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "pad"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "One Word Video App"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
       action: "/videos",
       method: "GET"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
@@ -146,12 +148,16 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: "/videos"
     }, "View all videos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.state.levels ? this.state.levels.map(level => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      key: this.state.levels.indexOf(level)
+      key: this.state.levels.indexOf(level),
+      className: "flex x-center"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: level.Level
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Level ", level.Level)), level.topics ? level.topics.map(topic => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      href: level.Level,
+      className: "pure-u-1 text-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Level ", level.Level)), level.topics ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      className: "pure-u-1 flex x-space-around"
+    }, level.topics.map(topic => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       key: level.topics.indexOf(topic)
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, topic.Topic))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "No topics"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No levels"));
+    }, topic.Topic))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "No topics"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No levels"));
   }
 
 }
@@ -2222,10 +2228,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/file-loader/dist/cjs.js?!./node_modules/purecss/build/pure-min.css":
-/*!**************************************************************************************************!*\
-  !*** ./node_modules/file-loader/dist/cjs.js??ref--5-1!./node_modules/purecss/build/pure-min.css ***!
-  \**************************************************************************************************/
+/***/ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/pure-min.css":
+/*!*****************************************************************************************************************************************!*\
+  !*** ./node_modules/file-loader/dist/cjs.js??ref--5-1!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/pure-min.css ***!
+  \*****************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2235,10 +2241,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/file-loader/dist/cjs.js?!./sass/custom.scss":
-/*!***************************************************************************!*\
-  !*** ./node_modules/file-loader/dist/cjs.js??ref--5-1!./sass/custom.scss ***!
-  \***************************************************************************/
+/***/ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./sass/custom.scss":
+/*!******************************************************************************************************************!*\
+  !*** ./node_modules/file-loader/dist/cjs.js??ref--5-1!./node_modules/sass-loader/dist/cjs.js!./sass/custom.scss ***!
+  \******************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2691,7 +2697,7 @@ module.exports = ReactPropTypesSecret;
 /***/ (function(module, exports, __webpack_require__) {
 
 var api = __webpack_require__(/*! ../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !../../file-loader/dist/cjs.js??ref--5-1!./pure-min.css */ "./node_modules/file-loader/dist/cjs.js?!./node_modules/purecss/build/pure-min.css");
+            var content = __webpack_require__(/*! !../../file-loader/dist/cjs.js??ref--5-1!../../sass-loader/dist/cjs.js!./pure-min.css */ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/pure-min.css");
 
             content = content.__esModule ? content.default : content;
 
@@ -31275,7 +31281,7 @@ module.exports = function (list, options) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var api = __webpack_require__(/*! ../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !../node_modules/file-loader/dist/cjs.js??ref--5-1!./custom.scss */ "./node_modules/file-loader/dist/cjs.js?!./sass/custom.scss");
+            var content = __webpack_require__(/*! !../node_modules/file-loader/dist/cjs.js??ref--5-1!../node_modules/sass-loader/dist/cjs.js!./custom.scss */ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./sass/custom.scss");
 
             content = content.__esModule ? content.default : content;
 

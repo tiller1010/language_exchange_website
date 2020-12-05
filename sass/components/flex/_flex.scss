@@ -1,0 +1,13 @@
+.flex{
+	display: flex;
+	flex-wrap: wrap;
+	&.x-center{
+		justify-content: center;
+	}
+	&.x-space-around{
+		justify-content: space-around;
+	}
+	&.y-center{
+		align-items: center;
+	}
+}
