@@ -151,7 +151,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       key: this.state.levels.indexOf(level),
       className: "flex x-center"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: level.Level,
+      href: `/level/${level.id}`,
       className: "pure-u-1 text-center"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Level ", level.Level)), level.topics ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
       className: "pure-u-1 flex x-space-around"
@@ -163,6 +163,59 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Home);
+
+/***/ }),
+
+/***/ "./js/components/Level.jsx":
+/*!*********************************!*\
+  !*** ./js/components/Level.jsx ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+class Level extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+  constructor() {
+    super();
+    this.state = {};
+  }
+
+  componentDidMount() {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`http://localhost:1337/levels/${this.props.levelID}`).then(res => {
+      console.log(res);
+      this.setState({
+        topics: res.data.topics
+      });
+    });
+  }
+
+  render() {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "pad"
+    }, this.state.topics ? this.state.topics.map(topic => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      key: this.state.topics.indexOf(topic),
+      className: "flex x-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      href: `/topics/${topic.Topic}`,
+      className: "pure-u-1 text-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Topic ", topic.Topic)), topic.challenges ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      className: "pure-u-1 flex x-space-around"
+    }, topic.challenges.map(challenge => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      key: topic.challenges.indexOf(challenge)
+    }, challenge.Challenge))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "No challenges"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No topics"));
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Level);
 
 /***/ }),
 
@@ -374,6 +427,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Home_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Home.jsx */ "./js/components/Home.jsx");
 /* harmony import */ var _components_VideosIndex_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/VideosIndex.jsx */ "./js/components/VideosIndex.jsx");
 /* harmony import */ var _components_VideosAdd_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/VideosAdd.jsx */ "./js/components/VideosAdd.jsx");
+/* harmony import */ var _components_Level_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Level.jsx */ "./js/components/Level.jsx");
+
 
 
 
@@ -390,6 +445,13 @@ if (document.getElementById('videos')) {
 
 if (document.getElementById('videos-add')) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_VideosAdd_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], null), document.getElementById('videos-add'));
+}
+
+if (document.getElementById('level')) {
+  var levelID = document.getElementById('level').getAttribute('levelID');
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Level_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    levelID: levelID
+  }), document.getElementById('level'));
 }
 
 /***/ }),

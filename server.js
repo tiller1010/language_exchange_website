@@ -46,6 +46,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 			res.render('home');
 		});
 
+		// Levels route
+		app.get('/level/:id', (req, res) => {
+			res.render('level.jsx', {levelID: req.params.id});
+		});
+
 		// Index videos route
 		app.get('/videos:format?', async (req, res) => {
 			let keywords = req.query.keywords || false;

@@ -48,7 +48,7 @@ class Home extends React.Component {
 			    {this.state.levels ?
 			    	this.state.levels.map((level) => 
 			    		<div key={this.state.levels.indexOf(level)} className="flex x-center">
-				    		<a href={level.Level} className="pure-u-1 text-center"><h2>Level {level.Level}</h2></a>
+				    		<a href={`/level/${level.id}`} className="pure-u-1 text-center"><h2>Level {level.Level}</h2></a>
 				    		{level.topics ?
 			    				<ul className="pure-u-1 flex x-space-around">
 					    			{level.topics.map((topic) =>
