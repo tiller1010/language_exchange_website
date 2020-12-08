@@ -11,10 +11,33 @@ class Level extends React.Component {
 	componentDidMount(){
 		axios.get(`http://localhost:1337/levels/${this.props.levelID}`)
 			.then(res => {
-				console.log(res)
+				// console.log(res)
 				this.setState({
 					topics: res.data.topics
 				});
+			})
+
+		axios.get(`http://localhost:1337/challenges`)
+			.then(res => {
+				console.log(res)
+				if(res.data){
+					res.data.forEach((challenge) => {
+						if(challenge.topic){
+							var topics = this.state.topics;
+							topics.forEach((topic) => {
+								if(topic.id === challenge.topic.id){
+									topic.challenges = topic.challenges ? topic.challenges.concat(challenge) : [ challenge ];
+									this.setState({
+										topics
+									});
+								}
+							});
+						}
+						// this.setState({
+						// 	topics: res.data.topics
+						// });
+					})
+				}
 			})
 	}
 	render(){
@@ -23,13 +46,16 @@ class Level extends React.Component {
 			    {this.state.topics ?
 			    	this.state.topics.map((topic) => 
 			    		<div key={this.state.topics.indexOf(topic)} className="flex x-center">
-				    		<a href={`/topics/${topic.Topic}`} className="pure-u-1 text-center"><h2>Topic {topic.Topic}</h2></a>
+				    		<a href={`/level/${this.props.levelID}/topics/${topic.Topic}`} className="pure-u-1 text-center"><h2>Topic {topic.Topic}</h2></a>
 				    		{topic.challenges ?
-			    				<ul className="pure-u-1 flex x-space-around">
+			    				<div className="pure-u-1 flex x-space-around">
 					    			{topic.challenges.map((challenge) =>
-				    					<li key={topic.challenges.indexOf(challenge)}>{challenge.Challenge}</li>
+					    				<div key={topic.challenges.indexOf(challenge)} className="challenge">
+						    				<h2>{challenge.Title}</h2>
+					    					<p>{challenge.Content}</p>
+				    					</div>
 				    				)}
-			    				</ul>
+			    				</div>
 			    				:
 			    				<p>No challenges</p>
 				    		}

@@ -190,10 +190,32 @@ class Level extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
 
   componentDidMount() {
     axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`http://localhost:1337/levels/${this.props.levelID}`).then(res => {
-      console.log(res);
+      // console.log(res)
       this.setState({
         topics: res.data.topics
       });
+    });
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`http://localhost:1337/challenges`).then(res => {
+      console.log(res);
+
+      if (res.data) {
+        res.data.forEach(challenge => {
+          if (challenge.topic) {
+            var topics = this.state.topics;
+            topics.forEach(topic => {
+              if (topic.id === challenge.topic.id) {
+                topic.challenges = topic.challenges ? topic.challenges.concat(challenge) : [challenge];
+                this.setState({
+                  topics
+                });
+              }
+            });
+          } // this.setState({
+          // 	topics: res.data.topics
+          // });
+
+        });
+      }
     });
   }
 
@@ -204,13 +226,14 @@ class Level extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       key: this.state.topics.indexOf(topic),
       className: "flex x-center"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `/topics/${topic.Topic}`,
+      href: `/level/${this.props.levelID}/topics/${topic.Topic}`,
       className: "pure-u-1 text-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Topic ", topic.Topic)), topic.challenges ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Topic ", topic.Topic)), topic.challenges ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "pure-u-1 flex x-space-around"
-    }, topic.challenges.map(challenge => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-      key: topic.challenges.indexOf(challenge)
-    }, challenge.Challenge))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "No challenges"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No topics"));
+    }, topic.challenges.map(challenge => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      key: topic.challenges.indexOf(challenge),
+      className: "challenge"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, challenge.Title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, challenge.Content)))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "No challenges"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No topics"));
   }
 
 }
