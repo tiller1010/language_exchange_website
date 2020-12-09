@@ -109,15 +109,16 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   }
 
   componentDidMount() {
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:1337/collecs').then(response => {
-      // console.log(response);
-      if (response.data[0].media) {
-        console.log(`http://localhost:1337${response.data[0].media.url}`);
-        this.setState({
-          strapiTestImage: `http://localhost:1337${response.data[0].media.url}`
-        });
-      }
-    });
+    // axios.get('http://localhost:1337/collecs')
+    // 	.then(response => {
+    // 	  // console.log(response);
+    // 	  if(response.data[0].media){
+    // 	  	console.log(`http://localhost:1337${response.data[0].media.url}`);
+    // 	  	this.setState({
+    // 	  		strapiTestImage: `http://localhost:1337${response.data[0].media.url}`
+    // 	  	});
+    // 	  }
+    // 	});
     axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:1337/levels').then(res => {
       console.log(res);
       this.setState({
@@ -185,12 +186,13 @@ __webpack_require__.r(__webpack_exports__);
 class Level extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      topics: []
+    };
   }
 
   componentDidMount() {
     axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`http://localhost:1337/levels/${this.props.levelID}`).then(res => {
-      // console.log(res)
       this.setState({
         topics: res.data.topics
       });
@@ -210,10 +212,7 @@ class Level extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
                 });
               }
             });
-          } // this.setState({
-          // 	topics: res.data.topics
-          // });
-
+          }
         });
       }
     });
@@ -226,7 +225,7 @@ class Level extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       key: this.state.topics.indexOf(topic),
       className: "flex x-center"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `/level/${this.props.levelID}/topics/${topic.Topic}`,
+      href: `/level/${this.props.levelID}/topics/${topic.id}`,
       className: "pure-u-1 text-center"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Topic ", topic.Topic)), topic.challenges ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "pure-u-1 flex x-space-around"
@@ -239,6 +238,68 @@ class Level extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Level);
+
+/***/ }),
+
+/***/ "./js/components/Topic.jsx":
+/*!*********************************!*\
+  !*** ./js/components/Topic.jsx ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+  constructor() {
+    super();
+    this.state = {
+      challenges: []
+    };
+  }
+
+  componentDidMount() {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`http://localhost:1337/challenges`).then(res => {
+      console.log(res);
+
+      if (res.data) {
+        res.data.forEach(challenge => {
+          if (challenge.topic) {
+            var challenges = this.state.challenges;
+
+            if (this.props.topicID == challenge.topic.id) {
+              challenges = challenges.concat(challenge);
+              this.setState({
+                challenges
+              });
+            }
+          }
+        });
+      }
+    });
+  }
+
+  render() {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "pad"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      href: `/level/${this.props.levelID}`
+    }, "Back"), this.state.challenges ? this.state.challenges.map(challenge => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      key: this.state.challenges.indexOf(challenge),
+      className: "flex x-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, challenge.Title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, challenge.Content))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No challenges"));
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Topic);
 
 /***/ }),
 
@@ -451,6 +512,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_VideosIndex_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/VideosIndex.jsx */ "./js/components/VideosIndex.jsx");
 /* harmony import */ var _components_VideosAdd_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/VideosAdd.jsx */ "./js/components/VideosAdd.jsx");
 /* harmony import */ var _components_Level_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Level.jsx */ "./js/components/Level.jsx");
+/* harmony import */ var _components_Topic_jsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/Topic.jsx */ "./js/components/Topic.jsx");
+
 
 
 
@@ -475,6 +538,15 @@ if (document.getElementById('level')) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Level_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], {
     levelID: levelID
   }), document.getElementById('level'));
+}
+
+if (document.getElementById('topic')) {
+  var levelID = document.getElementById('topic').getAttribute('levelID');
+  var topicID = document.getElementById('topic').getAttribute('topicID');
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Topic_jsx__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    levelID: levelID,
+    topicID: topicID
+  }), document.getElementById('topic'));
 }
 
 /***/ }),

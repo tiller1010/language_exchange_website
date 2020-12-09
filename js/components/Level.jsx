@@ -5,13 +5,13 @@ class Level extends React.Component {
 	constructor(){
 		super();
 		this.state = {
+			topics: []
 		}
 	}
 
 	componentDidMount(){
 		axios.get(`http://localhost:1337/levels/${this.props.levelID}`)
 			.then(res => {
-				// console.log(res)
 				this.setState({
 					topics: res.data.topics
 				});
@@ -33,9 +33,6 @@ class Level extends React.Component {
 								}
 							});
 						}
-						// this.setState({
-						// 	topics: res.data.topics
-						// });
 					})
 				}
 			})
@@ -46,7 +43,7 @@ class Level extends React.Component {
 			    {this.state.topics ?
 			    	this.state.topics.map((topic) => 
 			    		<div key={this.state.topics.indexOf(topic)} className="flex x-center">
-				    		<a href={`/level/${this.props.levelID}/topics/${topic.Topic}`} className="pure-u-1 text-center"><h2>Topic {topic.Topic}</h2></a>
+				    		<a href={`/level/${this.props.levelID}/topics/${topic.id}`} className="pure-u-1 text-center"><h2>Topic {topic.Topic}</h2></a>
 				    		{topic.challenges ?
 			    				<div className="pure-u-1 flex x-space-around">
 					    			{topic.challenges.map((challenge) =>

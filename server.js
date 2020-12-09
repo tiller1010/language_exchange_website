@@ -47,8 +47,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 		});
 
 		// Levels route
-		app.get('/level/:id', (req, res) => {
-			res.render('level.jsx', {levelID: req.params.id});
+		app.get('/level/:levelID', (req, res) => {
+			res.render('level.jsx', {levelID: req.params.levelID});
+		});
+
+		// Topics route
+		app.get('/level/:levelID/topics/:topicID', (req, res) => {
+			res.render('topic.jsx', {
+				levelID: req.params.levelID,
+				topicID: req.params.topicID
+			});
 		});
 
 		// Index videos route

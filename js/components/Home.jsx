@@ -9,16 +9,16 @@ class Home extends React.Component {
 	}
 
 	componentDidMount(){
-		axios.get('http://localhost:1337/collecs')
-			.then(response => {
-			  // console.log(response);
-			  if(response.data[0].media){
-			  	console.log(`http://localhost:1337${response.data[0].media.url}`);
-			  	this.setState({
-			  		strapiTestImage: `http://localhost:1337${response.data[0].media.url}`
-			  	});
-			  }
-			});
+		// axios.get('http://localhost:1337/collecs')
+		// 	.then(response => {
+		// 	  // console.log(response);
+		// 	  if(response.data[0].media){
+		// 	  	console.log(`http://localhost:1337${response.data[0].media.url}`);
+		// 	  	this.setState({
+		// 	  		strapiTestImage: `http://localhost:1337${response.data[0].media.url}`
+		// 	  	});
+		// 	  }
+		// 	});
 
 		axios.get('http://localhost:1337/levels')
 			.then(res => {
