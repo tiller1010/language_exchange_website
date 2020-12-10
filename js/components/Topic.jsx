@@ -28,6 +28,22 @@ class Topic extends React.Component {
 				}
 			})
 	}
+
+	renderMedia(challenge){
+		switch(challenge.FeaturedMedia[0].mime){
+			case 'image/jpeg':
+				return <img src={`http://localhost:1337${challenge.FeaturedMedia[0].url}`}/>
+			case 'video/mp4':
+				return (
+					<video height="225" width="400" controls>
+						<source src={`http://localhost:1337${challenge.FeaturedMedia[0].url}`} type="video/mp4"/>
+					</video>
+				);
+			default:
+				return <p>Invalid media</p>
+		}
+	}
+
 	render(){
 		return (
 			<div className="pad">
@@ -37,6 +53,11 @@ class Topic extends React.Component {
 			    		<div key={this.state.challenges.indexOf(challenge)} className="flex x-center">
 			    			<h2>{challenge.Title}</h2>
 			    			<p>{challenge.Content}</p>
+			    			{challenge.FeaturedMedia.length ?
+			    				this.renderMedia(challenge)
+			    				:
+			    				''
+			    			}
 			    		</div>
 		    		) 
 			    	:

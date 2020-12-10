@@ -109,25 +109,13 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   }
 
   componentDidMount() {
-    // axios.get('http://localhost:1337/collecs')
-    // 	.then(response => {
-    // 	  // console.log(response);
-    // 	  if(response.data[0].media){
-    // 	  	console.log(`http://localhost:1337${response.data[0].media.url}`);
-    // 	  	this.setState({
-    // 	  		strapiTestImage: `http://localhost:1337${response.data[0].media.url}`
-    // 	  	});
-    // 	  }
-    // 	});
     axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:1337/levels').then(res => {
       console.log(res);
       this.setState({
         levels: res.data
       });
     });
-  } // <h2>Strapi Test:</h2>
-  // <img src={strapiTestImage}/>
-
+  }
 
   render() {
     var {
@@ -286,6 +274,28 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     });
   }
 
+  renderMedia(challenge) {
+    switch (challenge.FeaturedMedia[0].mime) {
+      case 'image/jpeg':
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          src: `http://localhost:1337${challenge.FeaturedMedia[0].url}`
+        });
+
+      case 'video/mp4':
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+          height: "225",
+          width: "400",
+          controls: true
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
+          src: `http://localhost:1337${challenge.FeaturedMedia[0].url}`,
+          type: "video/mp4"
+        }));
+
+      default:
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Invalid media");
+    }
+  }
+
   render() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "pad"
@@ -294,7 +304,7 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }, "Back"), this.state.challenges ? this.state.challenges.map(challenge => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       key: this.state.challenges.indexOf(challenge),
       className: "flex x-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, challenge.Title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, challenge.Content))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No challenges"));
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, challenge.Title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, challenge.Content), challenge.FeaturedMedia.length ? this.renderMedia(challenge) : '')) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No challenges"));
   }
 
 }
