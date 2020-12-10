@@ -40,6 +40,7 @@ class Level extends React.Component {
 	render(){
 		return (
 			<div className="pad">
+				<a href={`/`}>Back</a>
 			    {this.state.topics ?
 			    	this.state.topics.map((topic) => 
 			    		<div key={this.state.topics.indexOf(topic)} className="flex x-center">

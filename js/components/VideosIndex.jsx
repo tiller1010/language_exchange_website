@@ -36,8 +36,9 @@ class VideosIndex extends React.Component {
 
 	render(){
 		return (
-			<div>			
+			<div className="pad">			
 				<h1>Videos</h1>
+				<a href={`/`}>Back</a>
 				<button onClick={this.refreshVideos}>Refresh</button>
 				<form action="/videos" method="GET">
 					<label htmlFor="keywords">Search Terms</label>

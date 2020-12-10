@@ -60,8 +60,9 @@ class VideosAdd extends React.Component {
 	render(){
 
 		return (
-			<div>
+			<div className="pad">
 				<h1>Video Add</h1>
+				<a href={`/videos`}>Back</a>
 				<div style={{height: '300px'}}>
 					<video type="video/mp4" className="video-preview" height="225" width="400" controls>
 					</video>
