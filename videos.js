@@ -1,10 +1,17 @@
 const { getDB } = require('./db.js');
 const fs = require('fs');
 
-async function index(){
+const pageLength = 3;
+async function index(page = 1){
 	const db = getDB();
-	const videos = await db.collection('videos').find({}).toArray();
-	return videos;
+	// Skip items per page, minus the current page
+	const videos = await db.collection('videos').find({}).skip((page - 1) * pageLength).limit(pageLength).toArray();
+	const videoCount = await db.collection('videos').count();
+	const pages = Math.ceil(videoCount / pageLength);
+	return {
+		videos,
+		pages
+	}
 }
 
 async function add(video){

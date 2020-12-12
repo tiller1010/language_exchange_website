@@ -65,9 +65,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 			let videos = null;
 			// If using search keywords
 			if(keywords){
-			    videos = await VideoService.find({ query: { $search: keywords } })
+			    videos = {
+			    	videos: await VideoService.find({ query: { $search: keywords } }),
+			    	pages: 1
+			    }
 			} else {
-				videos = await index();
+				videos = await index(req.query.page);
 			}
 			if(req.params.format){
 				res.format({

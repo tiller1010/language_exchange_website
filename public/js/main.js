@@ -441,44 +441,69 @@ __webpack_require__.r(__webpack_exports__);
 async function getVideos() {
   var urlParams = new URLSearchParams(window.location.search);
   var searchKeywords = urlParams.get('keywords') || '';
-  return fetch(`${document.location.origin}/videos.json${searchKeywords ? '?keywords=' + searchKeywords : ''}`).then(response => response.json());
+  var page = urlParams.get('page') || '';
+  return fetch(`${document.location.origin}/videos.json?${searchKeywords ? 'keywords=' + searchKeywords + '&' : ''}${page ? 'page=' + page : ''}`).then(response => response.json());
 }
 
 class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   constructor() {
     super();
     this.state = {
-      videos: []
+      videos: [],
+      pages: [],
+      currentPage: 1
     };
     this.refreshVideos = this.refreshVideos.bind(this);
+    this.pagination = this.pagination.bind(this);
   }
 
   async componentDidMount() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var page = urlParams.get('page') || '';
     var newVideos = await getVideos();
+    console.log(newVideos);
 
     if (newVideos) {
       this.setState({
-        videos: newVideos
+        videos: newVideos.videos,
+        pages: this.pagination(newVideos.pages),
+        currentPage: page
       });
     }
   }
 
   async refreshVideos() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var page = urlParams.get('page') || '';
     var newVideos = await getVideos();
 
     if (newVideos) {
       this.setState({
-        videos: newVideos
+        videos: newVideos.videos,
+        pages: this.pagination(newVideos.pages),
+        currentPage: page
       });
     }
+  }
+
+  pagination(pages) {
+    var pageLinks = [];
+
+    for (var i = 1; i <= pages; i++) {
+      pageLinks.push({
+        pageNumber: i
+      });
+    }
+
+    return pageLinks;
   }
 
   render() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "pad"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Videos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Videos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: `/`
-    }, "Back"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    }, "Back")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       onClick: this.refreshVideos
     }, "Refresh"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
       action: "/videos",
@@ -491,9 +516,17 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "submit",
       value: "Search"
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      href: "/videos"
+    }, "Clear filters")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: "/videos/add"
-    }, "Add a video"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.videos.map(video => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, "Add a video")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.pages.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      className: "pagination flex"
+    }, this.state.pages.map(page => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      key: this.state.pages.indexOf(page)
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      href: `/videos?page=${page.pageNumber}`
+    }, page.pageNumber)))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "1"), this.state.videos.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.videos.map(video => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       key: this.state.videos.indexOf(video)
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, video.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       style: {
@@ -506,7 +539,13 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
       height: "225",
       width: "400",
       controls: true
-    }))))));
+    }))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "No videos"), this.state.pages.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      className: "pagination flex"
+    }, this.state.pages.map(page => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      key: this.state.pages.indexOf(page)
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      href: `/videos?page=${page.pageNumber}`
+    }, page.pageNumber)))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "1")));
   }
 
 }

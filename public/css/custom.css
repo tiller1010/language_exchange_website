@@ -105,3 +105,6 @@ i {
     width: 100%;
   }
 }
+.pagination {
+  list-style: none;
+}
