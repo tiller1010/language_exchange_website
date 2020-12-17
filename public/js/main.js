@@ -117,13 +117,29 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     });
   }
 
+  renderMedia(topic) {
+    if (topic.FeaturedImage) {
+      switch (topic.FeaturedImage.mime) {
+        case 'image/jpeg':
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "img-container"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+            src: `http://localhost:1337${topic.FeaturedImage.url}`
+          }));
+
+        default:
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Invalid media");
+      }
+    }
+  }
+
   render() {
     var {
       strapiTestImage
     } = this.state || 'notfound';
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "pad"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "One Word Video App"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Video Submissions"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
       action: "/videos",
       method: "GET"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
@@ -142,11 +158,15 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: `/level/${level.id}`,
       className: "pure-u-1 text-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Level ", level.Level)), level.topics ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-      className: "pure-u-1 flex x-space-around"
-    }, level.topics.map(topic => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-      key: level.topics.indexOf(topic)
-    }, topic.Topic))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "No topics"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No levels"));
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Level ", level.Level)), level.topics ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "topics pure-u-1 flex x-space-around"
+    }, level.topics.map(topic => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      key: level.topics.indexOf(topic),
+      href: `/level/${level.id}/topics/${topic.id}`,
+      className: "topic pure-u-1-2"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+      className: "text-center"
+    }, topic.Topic), this.renderMedia(topic)))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "No topics"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No levels"));
   }
 
 }
@@ -277,24 +297,28 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   }
 
   renderMedia(challenge) {
-    switch (challenge.FeaturedMedia[0].mime) {
-      case 'image/jpeg':
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-          src: `http://localhost:1337${challenge.FeaturedMedia[0].url}`
-        });
+    if (challenge.FeaturedMedia) {
+      if (challenge.FeaturedMedia.length) {
+        switch (challenge.FeaturedMedia[0].mime) {
+          case 'image/jpeg':
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+              src: `http://localhost:1337${challenge.FeaturedMedia[0].url}`
+            });
 
-      case 'video/mp4':
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
-          height: "225",
-          width: "400",
-          controls: true
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
-          src: `http://localhost:1337${challenge.FeaturedMedia[0].url}`,
-          type: "video/mp4"
-        }));
+          case 'video/mp4':
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+              height: "225",
+              width: "400",
+              controls: true
+            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
+              src: `http://localhost:1337${challenge.FeaturedMedia[0].url}`,
+              type: "video/mp4"
+            }));
 
-      default:
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Invalid media");
+          default:
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Invalid media");
+        }
+      }
     }
   }
 

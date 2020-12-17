@@ -19,11 +19,26 @@ class Home extends React.Component {
 			})
 	}
 
+	renderMedia(topic){
+		if(topic.FeaturedImage){
+			switch(topic.FeaturedImage.mime){
+				case 'image/jpeg':
+					return (
+						<div className="img-container">
+							<img src={`http://localhost:1337${topic.FeaturedImage.url}`}/>
+						</div>
+					);
+				default:
+					return <p>Invalid media</p>
+			}
+		}
+	}
+
 	render(){
 		var { strapiTestImage } = this.state || 'notfound';
 		return (
 			<div className="pad">
-				<h1>One Word Video App</h1>
+				<h1>Video Submissions</h1>
 				<form action="/videos" method="GET">
 					<label htmlFor="keywords">Search Terms</label>
 					<input type="text" name="keywords"/>
@@ -38,11 +53,14 @@ class Home extends React.Component {
 			    		<div key={this.state.levels.indexOf(level)} className="flex x-center">
 				    		<a href={`/level/${level.id}`} className="pure-u-1 text-center"><h2>Level {level.Level}</h2></a>
 				    		{level.topics ?
-			    				<ul className="pure-u-1 flex x-space-around">
+				    			<div className="topics pure-u-1 flex x-space-around">
 					    			{level.topics.map((topic) =>
-				    					<li key={level.topics.indexOf(topic)}>{topic.Topic}</li>
+				    					<a key={level.topics.indexOf(topic)} href={`/level/${level.id}/topics/${topic.id}`} className="topic pure-u-1-2">
+						    					<h3 className="text-center">{topic.Topic}</h3>
+						    					{this.renderMedia(topic)}
+				    					</a>
 				    				)}
-			    				</ul>
+			    				</div>
 			    				:
 			    				<p>No topics</p>
 				    		}

@@ -20,9 +20,6 @@ body {
   background-color: #eee;
 }
 
-.img-container {
-  max-width: 400px;
-}
 .img-container img {
   width: 100%;
   max-height: 400px;
@@ -107,4 +104,11 @@ i {
 }
 .pagination {
   list-style: none;
+}
+
+.topics a.topic {
+  display: block;
+}
+.topics a.topic .img-container {
+  height: 400px;
 }
