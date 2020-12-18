@@ -10,9 +10,18 @@ class Topic extends React.Component {
 	}
 
 	componentDidMount(){
-		axios.get(`http://localhost:1337/challenges`)
+		axios.get(`http://localhost:1337/topics/${this.props.topicID}`)
 			.then(res => {
 				console.log(res)
+				if(res.data){
+					this.setState({
+						topic: res.data.Topic
+					})
+				}
+			})
+
+		axios.get(`http://localhost:1337/challenges`)
+			.then(res => {
 				if(res.data){
 					res.data.forEach((challenge) => {
 						if(challenge.topic){
@@ -34,7 +43,11 @@ class Topic extends React.Component {
 			if(challenge.FeaturedMedia.length){
 				switch(challenge.FeaturedMedia[0].mime){
 					case 'image/jpeg':
-						return <img src={`http://localhost:1337${challenge.FeaturedMedia[0].url}`}/>
+						return (
+							<div className="img-container">
+								<img src={`http://localhost:1337${challenge.FeaturedMedia[0].url}`}/>
+							</div>
+						);
 					case 'video/mp4':
 						return (
 							<video height="225" width="400" controls>
@@ -52,18 +65,23 @@ class Topic extends React.Component {
 		return (
 			<div className="pad">
 				<a href={`/level/${this.props.levelID}`}>Back</a>
+				<h2 className="text-center">{this.state.topic}</h2>
 			    {this.state.challenges ?
-			    	this.state.challenges.map((challenge) => 
-			    		<div key={this.state.challenges.indexOf(challenge)} className="flex x-center">
-			    			<h2>{challenge.Title}</h2>
-			    			<p>{challenge.Content}</p>
-			    			{challenge.FeaturedMedia.length ?
-			    				this.renderMedia(challenge)
-			    				:
-			    				''
-			    			}
-			    		</div>
-		    		) 
+			    	<div className="challenges pure-u-1 flex x-space-around">
+				    	{this.state.challenges.map((challenge) => 
+				    		<div key={this.state.challenges.indexOf(challenge)} className="flex x-center pure-u-1-2">
+					    		<div className="pad">
+					    			<h2>{challenge.Title}</h2>
+					    			<p>{challenge.Content}</p>
+					    			{challenge.FeaturedMedia.length ?
+					    				this.renderMedia(challenge)
+					    				:
+					    				''
+					    			}
+					    		</div>
+				    		</div>
+			    		)}
+		    		</div>
 			    	:
 			    	<h2>No challenges</h2>
 			    }

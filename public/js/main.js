@@ -276,9 +276,16 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   }
 
   componentDidMount() {
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`http://localhost:1337/challenges`).then(res => {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`http://localhost:1337/topics/${this.props.topicID}`).then(res => {
       console.log(res);
 
+      if (res.data) {
+        this.setState({
+          topic: res.data.Topic
+        });
+      }
+    });
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`http://localhost:1337/challenges`).then(res => {
       if (res.data) {
         res.data.forEach(challenge => {
           if (challenge.topic) {
@@ -301,9 +308,11 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       if (challenge.FeaturedMedia.length) {
         switch (challenge.FeaturedMedia[0].mime) {
           case 'image/jpeg':
-            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "img-container"
+            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
               src: `http://localhost:1337${challenge.FeaturedMedia[0].url}`
-            });
+            }));
 
           case 'video/mp4':
             return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
@@ -327,10 +336,16 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "pad"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: `/level/${this.props.levelID}`
-    }, "Back"), this.state.challenges ? this.state.challenges.map(challenge => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, "Back"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+      className: "text-center"
+    }, this.state.topic), this.state.challenges ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "challenges pure-u-1 flex x-space-around"
+    }, this.state.challenges.map(challenge => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       key: this.state.challenges.indexOf(challenge),
-      className: "flex x-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, challenge.Title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, challenge.Content), challenge.FeaturedMedia.length ? this.renderMedia(challenge) : '')) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No challenges"));
+      className: "flex x-center pure-u-1-2"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "pad"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, challenge.Title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, challenge.Content), challenge.FeaturedMedia.length ? this.renderMedia(challenge) : '')))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No challenges"));
   }
 
 }

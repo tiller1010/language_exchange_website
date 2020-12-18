@@ -3,10 +3,12 @@ import DefaultLayout from './layouts/default';
 
 const Topic = (props) => {
   return (
-    <DefaultLayout pathResolver="../../../">
-      <h1>Topic {props.topicID}</h1>
-      <div id="topic" levelID={props.levelID} topicID={props.topicID}></div>
-    </DefaultLayout>
+	<DefaultLayout pathResolver="../../../">
+		<div className="pad">
+			<h1>Level {props.levelID}:</h1>
+		</div>
+		<div id="topic" levelID={props.levelID} topicID={props.topicID}></div>
+	</DefaultLayout>
   );
 }
 
