@@ -370,29 +370,34 @@ __webpack_require__.r(__webpack_exports__);
 class VideosAdd extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   constructor() {
     super();
-    this.state = {}; // this.handleImageUploadChange = this.handleImageUploadChange.bind(this);
-
+    this.state = {};
+    this.handleThumbnailUploadChange = this.handleThumbnailUploadChange.bind(this);
     this.handleVideoUploadChange = this.handleVideoUploadChange.bind(this);
   }
 
-  componentDidMount() {} // handleImageUploadChange(event){
-  // 	let key = event.target.name;
-  // 	let newState = {};
-  //     let image = event.target.files[0];
-  //     if(image){
-  // 		newState[key] = image.name;
-  // 		this.setState(newState);
-  //     	// Set preview
-  //     	let reader = new FileReader();
-  //     	let frame = document.querySelector(`.${key}-preview`);
-  // 		reader.addEventListener('load', function () {
-  // 		  frame.style.background = `url(${ reader.result }) no-repeat center center/contain`;
-  // 		  // sessionStorage.setItem(key, reader.result);
-  // 		}, false);
-  //     	reader.readAsDataURL(image);
-  //     }
-  // }
+  componentDidMount() {}
 
+  handleThumbnailUploadChange(event) {
+    let key = event.target.name;
+    let newState = {};
+    let image = event.target.files[0];
+
+    if (image) {
+      newState[key] = image.name;
+      this.setState(newState); // Set preview
+
+      let reader = new FileReader();
+      let frame = document.querySelector(`.${key}-preview`);
+      reader.addEventListener('load', function () {
+        if (/jpeg|jpg|png/.test(reader.result.substr(0, 20))) {
+          frame.style.background = `url(${reader.result}) no-repeat center center/cover`;
+        } else {
+          alert('Invalid thumbnail format.');
+        }
+      }, false);
+      reader.readAsDataURL(image);
+    }
+  }
 
   handleVideoUploadChange(event) {
     let key = event.target.name;
@@ -406,17 +411,15 @@ class VideosAdd extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       let reader = new FileReader();
       let frame = document.querySelector(`.${key}-preview`);
       reader.addEventListener('load', function () {
-        frame.src = `${reader.result}`;
-        console.log(reader.result); // sessionStorage.setItem(key, reader.result);
+        if (/mp4/.test(reader.result.substr(0, 20))) {
+          frame.src = `${reader.result}`;
+        } else {
+          alert('Invalid video format.');
+        }
       }, false);
       reader.readAsDataURL(video);
     }
-  } // <div className="image-preview" style={{height: '300px'}}></div>
-  // <div style={{display: 'flex'}}>
-  // 	<label htmlFor="title">Image</label>
-  // 	<input type="file" name="image" onChange={this.handleImageUploadChange} required/>
-  // </div>
-
+  }
 
   render() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -424,16 +427,31 @@ class VideosAdd extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Video Add"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: `/videos`
     }, "Back"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "flex",
+      style: {
+        maxWidth: '1300px'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "pure-u-1-2",
       style: {
         height: '300px'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Video Preview"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
       type: "video/mp4",
       className: "video-preview",
       height: "225",
       width: "400",
       controls: true
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "pure-u-1-2"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Thumbnail Preview"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "thumbnail-preview",
+      style: {
+        height: '225px',
+        width: '400px',
+        border: '1px solid'
+      }
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
       action: "/videos/add",
       method: "POST",
       encType: "multipart/form-data"
@@ -451,6 +469,17 @@ class VideosAdd extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       type: "file",
       name: "video",
       onChange: this.handleVideoUploadChange,
+      required: true
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      style: {
+        display: 'flex'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      htmlFor: "thumbnail"
+    }, "Thumbnail"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "file",
+      name: "thumbnail",
+      onChange: this.handleThumbnailUploadChange,
       required: true
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "submit",
@@ -586,7 +615,7 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
       className: "video-preview lozad",
       height: "225",
       width: "400",
-      poster: "/images/videoPlaceholder.png",
+      poster: video.thumbnailSrc || "/images/videoPlaceholder.png",
       controls: true
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
       src: video.src

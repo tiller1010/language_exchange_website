@@ -112,7 +112,9 @@ class VideosIndex extends React.Component {
 								<div key={this.state.videos.indexOf(video)}>
 									<h3>{video.title}</h3>
 									<div style={{height: '300px'}}>
-										<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster="/images/videoPlaceholder.png" controls>
+										<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
+											video.thumbnailSrc || "/images/videoPlaceholder.png"
+										} controls>
 											<source src={video.src}></source>
 										</video>
 									</div>

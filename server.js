@@ -87,11 +87,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 		});
 
 		// Add video route
-		app.post('/videos/add', upload.single('video'), async (req, res) => {
+		app.post('/videos/add', upload.fields([{name: 'video', maxCount: 1}, {name: 'thumbnail', maxCount: 1}]), async (req, res) => {
 			await add({
 				title: req.body.title,
-				src: 'assets/' + req.file.filename,
-				originalName: req.file.originalname
+				src: 'assets/' + req.files['video'][0].filename,
+				originalName: req.files['video'][0].originalname,
+				thumbnailSrc: 'assets/' + req.files['thumbnail'][0].filename,
+				originalThumbnailName: req.files['thumbnail'][0].originalname
 			});
 			res.redirect('/videos');
 		});
