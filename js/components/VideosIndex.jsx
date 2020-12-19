@@ -22,10 +22,9 @@ class VideosIndex extends React.Component {
 
 	async componentDidMount(){
 		var urlParams = new URLSearchParams(window.location.search);
-		var page = urlParams.get('page') || '';
+		var page = urlParams.get('page') || 1;
 
 		var newVideos = await getVideos();
-		console.log(newVideos)
 		if(newVideos){
 			this.setState({
 				videos: newVideos.videos,
@@ -79,11 +78,25 @@ class VideosIndex extends React.Component {
 				<div>
 					{this.state.pages.length ?
 						<ul className="pagination flex">
+							{this.state.currentPage > 1 ?
+								<li>
+									<a href={`/videos?page=${Number(this.state.currentPage) - 1}`}>Prev</a>
+								</li>
+								:
+								''
+							}
 							{this.state.pages.map((page) =>
 								<li key={this.state.pages.indexOf(page)}>
 									<a href={`/videos?page=${page.pageNumber}`}>{page.pageNumber}</a>
 								</li>
 							)}
+							{this.state.currentPage < this.state.pages.length ?
+								<li>
+									<a href={`/videos?page=${Number(this.state.currentPage) + 1}`}>Next</a>
+								</li>
+								:
+								''
+							}
 						</ul>
 						:
 						<p>1</p>
@@ -94,7 +107,7 @@ class VideosIndex extends React.Component {
 								<div key={this.state.videos.indexOf(video)}>
 									<h3>{video.title}</h3>
 									<div style={{height: '300px'}}>
-										<video src={video.src} type="video/mp4" className="video-preview" height="225" width="400" controls>
+										<video src={video.src} type="video/mp4" className="video-preview" height="225" width="400" controls preload="none">
 										</video>
 									</div>
 								</div>
@@ -105,14 +118,28 @@ class VideosIndex extends React.Component {
 					}
 					{this.state.pages.length ?
 						<ul className="pagination flex">
+							{this.state.currentPage > 1 ?
+								<li>
+									<a href={`/videos?page=${Number(this.state.currentPage) - 1}`}>Prev</a>
+								</li>
+								:
+								''
+							}
 							{this.state.pages.map((page) =>
 								<li key={this.state.pages.indexOf(page)}>
 									<a href={`/videos?page=${page.pageNumber}`}>{page.pageNumber}</a>
 								</li>
 							)}
+							{this.state.currentPage < this.state.pages.length ?
+								<li>
+									<a href={`/videos?page=${Number(this.state.currentPage) + 1}`}>Next</a>
+								</li>
+								:
+								''
+							}
 						</ul>
 						:
-						<p>1</p>
+						<p></p>
 					}
 				</div>
 			</div>

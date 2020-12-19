@@ -104,6 +104,10 @@ i {
 }
 .pagination {
   list-style: none;
+  padding: 0;
+}
+.pagination li {
+  padding: 5px;
 }
 
 .topics a.topic {
