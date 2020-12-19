@@ -1,4 +1,5 @@
 import React from 'react';
+import lozad from 'lozad';
 
 async function getVideos(){
 	var urlParams = new URLSearchParams(window.location.search);
@@ -7,6 +8,10 @@ async function getVideos(){
 	return fetch(`${document.location.origin}/videos.json?${searchKeywords ? 'keywords=' + searchKeywords + '&' : ''}${page ? 'page=' + page : ''}`)
 		.then((response) => response.json());
 }
+
+// Enable lazy loading
+const lozadObserver = lozad();
+lozadObserver.observe();
 
 class VideosIndex extends React.Component {
 	constructor(){
@@ -99,7 +104,7 @@ class VideosIndex extends React.Component {
 							}
 						</ul>
 						:
-						<p>1</p>
+						<p></p>
 					}
 					{this.state.videos.length ?
 						<div>
@@ -107,7 +112,8 @@ class VideosIndex extends React.Component {
 								<div key={this.state.videos.indexOf(video)}>
 									<h3>{video.title}</h3>
 									<div style={{height: '300px'}}>
-										<video src={video.src} type="video/mp4" className="video-preview" height="225" width="400" controls preload="none">
+										<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster="/images/videoPlaceholder.png" controls>
+											<source src={video.src}></source>
 										</video>
 									</div>
 								</div>
