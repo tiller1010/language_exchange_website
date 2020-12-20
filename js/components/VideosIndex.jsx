@@ -62,6 +62,10 @@ class VideosIndex extends React.Component {
 	}
 
 	render(){
+
+		var urlParams = new URLSearchParams(window.location.search);
+		var keywords = urlParams.get('keywords') || null;
+
 		return (
 			<div className="pad">			
 				<h1>Videos</h1>
@@ -85,19 +89,19 @@ class VideosIndex extends React.Component {
 						<ul className="pagination flex">
 							{this.state.currentPage > 1 ?
 								<li>
-									<a href={`/videos?page=${Number(this.state.currentPage) - 1}`}>Prev</a>
+									<a href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}`}>Prev</a>
 								</li>
 								:
 								''
 							}
 							{this.state.pages.map((page) =>
 								<li key={this.state.pages.indexOf(page)}>
-									<a href={`/videos?page=${page.pageNumber}`}>{page.pageNumber}</a>
+									<a href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}`}>{page.pageNumber}</a>
 								</li>
 							)}
 							{this.state.currentPage < this.state.pages.length ?
 								<li>
-									<a href={`/videos?page=${Number(this.state.currentPage) + 1}`}>Next</a>
+									<a href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}`}>Next</a>
 								</li>
 								:
 								''
@@ -128,19 +132,19 @@ class VideosIndex extends React.Component {
 						<ul className="pagination flex">
 							{this.state.currentPage > 1 ?
 								<li>
-									<a href={`/videos?page=${Number(this.state.currentPage) - 1}`}>Prev</a>
+									<a href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}`}>Prev</a>
 								</li>
 								:
 								''
 							}
 							{this.state.pages.map((page) =>
 								<li key={this.state.pages.indexOf(page)}>
-									<a href={`/videos?page=${page.pageNumber}`}>{page.pageNumber}</a>
+									<a href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}`}>{page.pageNumber}</a>
 								</li>
 							)}
 							{this.state.currentPage < this.state.pages.length ?
 								<li>
-									<a href={`/videos?page=${Number(this.state.currentPage) + 1}`}>Next</a>
+									<a href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}`}>Next</a>
 								</li>
 								:
 								''
