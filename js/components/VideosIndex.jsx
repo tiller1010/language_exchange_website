@@ -23,6 +23,8 @@ class VideosIndex extends React.Component {
 		}
 		this.refreshVideos = this.refreshVideos.bind(this);
 		this.pagination = this.pagination.bind(this);
+		this.handleChangePage = this.handleChangePage.bind(this);
+		this.handleSearch = this.handleSearch.bind(this);
 	}
 
 	async componentDidMount(){
@@ -41,7 +43,7 @@ class VideosIndex extends React.Component {
 
 	async refreshVideos(){
 		var urlParams = new URLSearchParams(window.location.search);
-		var page = urlParams.get('page') || '';
+		var page = urlParams.get('page') || 1;
 
 		var newVideos = await getVideos();
 		if(newVideos){
@@ -51,6 +53,19 @@ class VideosIndex extends React.Component {
 				currentPage: page
 			});
 		}
+	}
+
+	handleChangePage(event){
+		event.preventDefault();
+		window.history.pushState({}, '', event.target.href);
+		this.refreshVideos();
+	}
+
+	handleSearch(event){
+		event.preventDefault();
+		var url = event.target.action + '?' + (new URLSearchParams(new FormData(event.target)).toString());
+		window.history.pushState({}, '', url);
+		this.refreshVideos();
 	}
 
 	pagination(pages){
@@ -73,13 +88,13 @@ class VideosIndex extends React.Component {
 					<a href={`/`}>Back</a>
 				</div>
 				<button onClick={this.refreshVideos}>Refresh</button>
-				<form action="/videos" method="GET">
+				<form action="/videos" method="GET" onSubmit={this.handleSearch}>
 					<label htmlFor="keywords">Search Terms</label>
 					<input type="text" name="keywords"/>
 					<input type="submit" value="Search"/>
 				</form>
 			    <div>
-				    <a href="/videos">Clear filters</a>
+				    <a onClick={this.handleChangePage} href="/videos">Clear filters</a>
 			    </div>
 			    <div>
 				    <a href="/videos/add">Add a video</a>
@@ -89,19 +104,19 @@ class VideosIndex extends React.Component {
 						<ul className="pagination flex">
 							{this.state.currentPage > 1 ?
 								<li>
-									<a href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}`}>Prev</a>
+									<a onClick={this.handleChangePage} href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}`}>Prev</a>
 								</li>
 								:
 								''
 							}
 							{this.state.pages.map((page) =>
 								<li key={this.state.pages.indexOf(page)}>
-									<a href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}`}>{page.pageNumber}</a>
+									<a onClick={this.handleChangePage} href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}`}>{page.pageNumber}</a>
 								</li>
 							)}
 							{this.state.currentPage < this.state.pages.length ?
 								<li>
-									<a href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}`}>Next</a>
+									<a onClick={this.handleChangePage} href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}`}>Next</a>
 								</li>
 								:
 								''
@@ -113,7 +128,7 @@ class VideosIndex extends React.Component {
 					{this.state.videos.length ?
 						<div>
 							{this.state.videos.map((video) => 
-								<div key={this.state.videos.indexOf(video)}>
+								<div key={video._id}>
 									<h3>{video.title}</h3>
 									<div style={{height: '300px'}}>
 										<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
@@ -132,19 +147,19 @@ class VideosIndex extends React.Component {
 						<ul className="pagination flex">
 							{this.state.currentPage > 1 ?
 								<li>
-									<a href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}`}>Prev</a>
+									<a onClick={this.handleChangePage} href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}`}>Prev</a>
 								</li>
 								:
 								''
 							}
 							{this.state.pages.map((page) =>
 								<li key={this.state.pages.indexOf(page)}>
-									<a href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}`}>{page.pageNumber}</a>
+									<a onClick={this.handleChangePage} href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}`}>{page.pageNumber}</a>
 								</li>
 							)}
 							{this.state.currentPage < this.state.pages.length ?
 								<li>
-									<a href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}`}>Next</a>
+									<a onClick={this.handleChangePage} href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}`}>Next</a>
 								</li>
 								:
 								''

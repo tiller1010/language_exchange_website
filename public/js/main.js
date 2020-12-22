@@ -530,6 +530,8 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
     };
     this.refreshVideos = this.refreshVideos.bind(this);
     this.pagination = this.pagination.bind(this);
+    this.handleChangePage = this.handleChangePage.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   async componentDidMount() {
@@ -548,7 +550,7 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
 
   async refreshVideos() {
     var urlParams = new URLSearchParams(window.location.search);
-    var page = urlParams.get('page') || '';
+    var page = urlParams.get('page') || 1;
     var newVideos = await getVideos();
 
     if (newVideos) {
@@ -558,6 +560,19 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
         currentPage: page
       });
     }
+  }
+
+  handleChangePage(event) {
+    event.preventDefault();
+    window.history.pushState({}, '', event.target.href);
+    this.refreshVideos();
+  }
+
+  handleSearch(event) {
+    event.preventDefault();
+    var url = event.target.action + '?' + new URLSearchParams(new FormData(event.target)).toString();
+    window.history.pushState({}, '', url);
+    this.refreshVideos();
   }
 
   pagination(pages) {
@@ -583,7 +598,8 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
       onClick: this.refreshVideos
     }, "Refresh"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
       action: "/videos",
-      method: "GET"
+      method: "GET",
+      onSubmit: this.handleSearch
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
       htmlFor: "keywords"
     }, "Search Terms"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -593,21 +609,25 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
       type: "submit",
       value: "Search"
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      onClick: this.handleChangePage,
       href: "/videos"
     }, "Clear filters")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: "/videos/add"
     }, "Add a video")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.pages.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
       className: "pagination flex"
     }, this.state.currentPage > 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      onClick: this.handleChangePage,
       href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}`
     }, "Prev")) : '', this.state.pages.map(page => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       key: this.state.pages.indexOf(page)
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      onClick: this.handleChangePage,
       href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}`
     }, page.pageNumber))), this.state.currentPage < this.state.pages.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      onClick: this.handleChangePage,
       href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}`
     }, "Next")) : '') : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null), this.state.videos.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.videos.map(video => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      key: this.state.videos.indexOf(video)
+      key: video._id
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, video.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       style: {
         height: '300px'
@@ -624,12 +644,15 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
     })))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "No videos"), this.state.pages.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
       className: "pagination flex"
     }, this.state.currentPage > 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      onClick: this.handleChangePage,
       href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}`
     }, "Prev")) : '', this.state.pages.map(page => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       key: this.state.pages.indexOf(page)
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      onClick: this.handleChangePage,
       href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}`
     }, page.pageNumber))), this.state.currentPage < this.state.pages.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      onClick: this.handleChangePage,
       href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}`
     }, "Next")) : '') : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null)));
   }
