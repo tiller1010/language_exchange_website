@@ -64,9 +64,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 			let keywords = req.query.keywords || false;
 			let videos = null;
 			// If using search keywords
+			const page = req.query.page || 1;
 			if(keywords){
 				const searchPageLength = 3;
-				const page = req.query.page || 1;
 				videos = await VideoService.find({
 					query: {
 						$search: keywords,
