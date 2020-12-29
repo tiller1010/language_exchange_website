@@ -1,6 +1,6 @@
 const express = require('express');
 const multer  = require('multer');
-const upload = multer({ dest: 'public/assets/' });
+var upload = multer({ dest: 'public/assets/' });
 const path = require('path');
 const port = process.env.PORT || 3000;
 const { connectToDB, getDB } = require('./db.js');
@@ -17,6 +17,29 @@ app.engine('jsx', require('express-react-views').createEngine());
 app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname, 'public')));
 
+function randomFilename() {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for(var i = 0; i < 40; i++){
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+
+  return text;
+}
+
+var storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, __dirname + '/public/assets');
+	},
+	filename: function(req, file, cb){
+		let fileExtension = file.mimetype.split('').splice(file.mimetype.indexOf('/') + 1, file.mimetype.length).join('');
+		console.log(file)
+		cb(null, randomFilename() + '.' + fileExtension);
+	}
+})
+ 
+var upload = multer({ storage });
 
 (async function start(){
 	try{
