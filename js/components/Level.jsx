@@ -48,9 +48,11 @@ class Level extends React.Component {
 				    		{topic.challenges ?
 			    				<div className="pure-u-1 flex x-space-around">
 					    			{topic.challenges.map((challenge) =>
-					    				<div key={topic.challenges.indexOf(challenge)} className="challenge">
-						    				<h2>{challenge.Title}</h2>
-					    					<p>{challenge.Content}</p>
+					    				<div key={topic.challenges.indexOf(challenge)} className="challenge flex x-center pure-u-1-2">
+						    				<div className="pad">
+							    				<h2>{challenge.Title}</h2>
+						    					<p>{challenge.Content}</p>
+					    					</div>
 				    					</div>
 				    				)}
 			    				</div>
