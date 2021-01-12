@@ -34,7 +34,9 @@ var storage = multer.diskStorage({
 	},
 	filename: function(req, file, cb){
 		let fileExtension = file.mimetype.split('').splice(file.mimetype.indexOf('/') + 1, file.mimetype.length).join('');
-		console.log(file)
+		if(fileExtension == 'quicktime'){
+			fileExtension = 'mp4';
+		}
 		cb(null, randomFilename() + '.' + fileExtension);
 	}
 })
@@ -130,7 +132,11 @@ var upload = multer({ storage });
 				thumbnailSrc: 'assets/' + req.files['thumbnail'][0].filename,
 				originalThumbnailName: req.files['thumbnail'][0].originalname
 			});
-			res.redirect('/videos');
+			if(req.body.nativeFlag){
+				res.status(200).send('Successful upload');
+			} else {
+				res.redirect('/videos');
+			}
 		});
 
 		// Start app
