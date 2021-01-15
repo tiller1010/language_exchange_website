@@ -64,6 +64,8 @@ class Topic extends React.Component {
 	render(){
 		return (
 			<div className="pad">
+				<a href={`/`}>Home</a>
+				<span>&nbsp;</span>
 				<a href={`/level/${this.props.levelID}`}>Back</a>
 				<h2 className="text-center">{this.state.topic}</h2>
 			    {this.state.challenges ?

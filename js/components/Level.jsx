@@ -37,14 +37,33 @@ class Level extends React.Component {
 				}
 			})
 	}
+
+	renderMedia(topic){
+		if(topic.FeaturedImage){
+			switch(topic.FeaturedImage.mime){
+				case 'image/jpeg':
+					return (
+						<div className="img-container">
+							<img src={`http://localhost:1337${topic.FeaturedImage.url}`}/>
+						</div>
+					);
+				default:
+					return <p>Invalid media</p>
+			}
+		}
+	}
+
 	render(){
 		return (
 			<div className="pad">
-				<a href={`/`}>Back</a>
+				<a href={`/`}>Home</a>
 			    {this.state.topics ?
 			    	this.state.topics.map((topic) => 
 			    		<div key={this.state.topics.indexOf(topic)} className="flex x-center">
-				    		<a href={`/level/${this.props.levelID}/topics/${topic.id}`} className="pure-u-1 text-center"><h2>Topic {topic.Topic}</h2></a>
+				    		<a href={`/level/${this.props.levelID}/topics/${topic.id}`} className="pure-u-1 text-center">
+					    		<h2>Topic {topic.Topic}</h2>
+								{this.renderMedia(topic)}
+				    		</a>
 				    		{topic.challenges ?
 			    				<div className="pure-u-1 flex x-space-around">
 					    			{topic.challenges.map((challenge) =>
