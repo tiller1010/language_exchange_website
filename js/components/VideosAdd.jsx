@@ -47,8 +47,9 @@ class VideosAdd extends React.Component {
 	    	let reader = new FileReader();
 	    	let frame = document.querySelector(`.${key}-preview`);
 			reader.addEventListener('load', function () {
-				if(/mp4/.test(reader.result.substr(0, 20))){
-					  frame.src = `${ reader.result }`;
+				if(/mp4|quicktime/.test(reader.result.substr(0, 20))){
+					  frame.src = URL.createObjectURL(video);
+					  URL.revokeObjectURL(video);
 				} else {
 					alert('Invalid video format.');
 				}

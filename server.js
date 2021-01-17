@@ -35,7 +35,7 @@ var storage = multer.diskStorage({
 	filename: function(req, file, cb){
 		let fileExtension = file.mimetype.split('').splice(file.mimetype.indexOf('/') + 1, file.mimetype.length).join('');
 		if(fileExtension == 'quicktime'){
-			fileExtension = 'mp4';
+			fileExtension = 'mov';
 		}
 		cb(null, randomFilename() + '.' + fileExtension);
 	}
