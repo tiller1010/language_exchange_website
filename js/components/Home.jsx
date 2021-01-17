@@ -34,6 +34,10 @@ class Home extends React.Component {
 		}
 	}
 
+	randomTopics(level){
+		return level.topics.sort(() => .5 - Math.random()).slice(0, 5);
+	}
+
 	render(){
 		var { strapiTestImage } = this.state || 'notfound';
 		return (
@@ -54,7 +58,7 @@ class Home extends React.Component {
 				    		<a href={`/level/${level.id}`} className="pure-u-1 text-center"><h2>Level {level.Level}</h2></a>
 				    		{level.topics ?
 				    			<div className="topics pure-u-1 flex x-space-around">
-					    			{level.topics.map((topic) =>
+					    			{this.randomTopics(level).map((topic) =>
 				    					<a key={level.topics.indexOf(topic)} href={`/level/${level.id}/topics/${topic.id}`} className="topic pure-u-1-2">
 						    					<h3 className="text-center">{topic.Topic}</h3>
 						    					{this.renderMedia(topic)}

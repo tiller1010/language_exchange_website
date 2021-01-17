@@ -133,6 +133,10 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }
   }
 
+  randomTopics(level) {
+    return level.topics.sort(() => .5 - Math.random()).slice(0, 5);
+  }
+
   render() {
     var {
       strapiTestImage
@@ -160,7 +164,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "pure-u-1 text-center"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Level ", level.Level)), level.topics ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "topics pure-u-1 flex x-space-around"
-    }, level.topics.map(topic => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    }, this.randomTopics(level).map(topic => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       key: level.topics.indexOf(topic),
       href: `/level/${level.id}/topics/${topic.id}`,
       className: "topic pure-u-1-2"
@@ -242,6 +246,10 @@ class Level extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }
   }
 
+  randomChallenges(topic) {
+    return topic.challenges.sort(() => .5 - Math.random()).slice(0, 5);
+  }
+
   render() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "pad"
@@ -255,7 +263,7 @@ class Level extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "pure-u-1 text-center"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Topic ", topic.Topic), this.renderMedia(topic)), topic.challenges ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "pure-u-1 flex x-space-around"
-    }, topic.challenges.map(challenge => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, this.randomChallenges(topic).map(challenge => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       key: topic.challenges.indexOf(challenge),
       className: "challenge flex x-center pure-u-1-2"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
