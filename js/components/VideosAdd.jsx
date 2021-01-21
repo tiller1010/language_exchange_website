@@ -4,12 +4,26 @@ class VideosAdd extends React.Component {
 	constructor(){
 		super();
 		this.state = {
+			title: ''
 		}
+		this.handleTitleChange = this.handleTitleChange.bind(this);
 		this.handleThumbnailUploadChange = this.handleThumbnailUploadChange.bind(this);
 		this.handleVideoUploadChange = this.handleVideoUploadChange.bind(this);
 	}
 
 	componentDidMount(){
+		const urlParams = new URLSearchParams(window.location.search);
+		const challenge = urlParams.get('challenge');
+
+		this.setState({
+			title: challenge
+		});
+	}
+
+	handleTitleChange(event){
+		this.setState({
+			title: event.target.value
+		});
 	}
 
 	handleThumbnailUploadChange(event){
@@ -63,7 +77,9 @@ class VideosAdd extends React.Component {
 		return (
 			<div className="pad">
 				<h1>Video Add</h1>
-				<a href={`/videos`}>Back</a>
+				<a href={`/`}>Home</a>
+				<span>&nbsp;</span>
+				<a href={`/videos`}>Videos</a>
 				<div className="flex" style={{maxWidth: '1300px'}}>
 					<div className="pure-u-1-2" style={{height: '300px'}}>
 						<h2>Video Preview</h2>
@@ -76,7 +92,7 @@ class VideosAdd extends React.Component {
 					</div>
 				</div>
 				<form action="/videos/add" method="POST" encType="multipart/form-data">
-					<input type="text" name="title" required/>
+					<input type="text" name="title" value={this.state.title} onChange={this.handleTitleChange} required/>
 					<div style={{display: 'flex'}}>
 						<label htmlFor="video">Video</label>
 						<input type="file" name="video" onChange={this.handleVideoUploadChange} required/>

@@ -35,7 +35,13 @@ class Home extends React.Component {
 	}
 
 	randomTopics(level){
-		return level.topics.sort(() => .5 - Math.random()).slice(0, 5);
+		if(level.topicsRandomized){
+			return level.topics;
+		} else {
+			level.topicsRandomized = true;
+			level.topics = level.topics.sort(() => .5 - Math.random()).slice(0, 5);
+			return level.topics;
+		}
 	}
 
 	render(){

@@ -80,6 +80,9 @@ class Topic extends React.Component {
 					    				:
 					    				''
 					    			}
+					    			<div>
+						    			<a href={`/videos/add?challenge=${challenge.Title}`}>Submit your own</a>
+					    			</div>
 					    		</div>
 				    		</div>
 			    		)}
