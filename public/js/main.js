@@ -379,7 +379,11 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "flex x-center pure-u-1-2"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "pad"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, challenge.Title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, challenge.Content), challenge.FeaturedMedia.length ? this.renderMedia(challenge) : '', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, challenge.Title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, challenge.Content), challenge.FeaturedMedia.length ? this.renderMedia(challenge) : '', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "flex x-space-between"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      href: `/videos?keywords=${challenge.Title}`
+    }, "View others"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: `/videos/add?challenge=${challenge.Title}`
     }, "Submit your own")))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No challenges"));
   }
@@ -582,10 +586,12 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
     this.state = {
       videos: [],
       pages: [],
-      currentPage: 1
+      currentPage: 1,
+      keywords: ''
     };
     this.refreshVideos = this.refreshVideos.bind(this);
     this.pagination = this.pagination.bind(this);
+    this.handleKeywordsChange = this.handleKeywordsChange.bind(this);
     this.handleChangePage = this.handleChangePage.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
   }
@@ -593,13 +599,15 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
   async componentDidMount() {
     var urlParams = new URLSearchParams(window.location.search);
     var page = urlParams.get('page') || 1;
+    var keywords = urlParams.get('keywords');
     var newVideos = await getVideos();
 
     if (newVideos) {
       this.setState({
         videos: newVideos.videos,
         pages: this.pagination(newVideos.pages),
-        currentPage: page
+        currentPage: page,
+        keywords
       });
     }
   }
@@ -616,6 +624,12 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
         currentPage: page
       });
     }
+  }
+
+  handleKeywordsChange(event) {
+    this.setState({
+      keywords: event.target.value
+    });
   }
 
   handleChangePage(event) {
@@ -660,7 +674,9 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
       htmlFor: "keywords"
     }, "Search Terms"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "text",
-      name: "keywords"
+      name: "keywords",
+      value: this.state.keywords,
+      onChange: this.handleKeywordsChange
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "submit",
       value: "Search"

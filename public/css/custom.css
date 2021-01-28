@@ -8,6 +8,9 @@
 .flex.x-space-around {
   justify-content: space-around;
 }
+.flex.x-space-between {
+  justify-content: space-between;
+}
 .flex.y-center {
   align-items: center;
 }

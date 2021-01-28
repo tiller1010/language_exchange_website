@@ -19,10 +19,12 @@ class VideosIndex extends React.Component {
 		this.state = {
 			videos: [],
 			pages: [],
-			currentPage: 1
+			currentPage: 1,
+			keywords: ''
 		}
 		this.refreshVideos = this.refreshVideos.bind(this);
 		this.pagination = this.pagination.bind(this);
+		this.handleKeywordsChange = this.handleKeywordsChange.bind(this);
 		this.handleChangePage = this.handleChangePage.bind(this);
 		this.handleSearch = this.handleSearch.bind(this);
 	}
@@ -30,13 +32,15 @@ class VideosIndex extends React.Component {
 	async componentDidMount(){
 		var urlParams = new URLSearchParams(window.location.search);
 		var page = urlParams.get('page') || 1;
+		var keywords = urlParams.get('keywords');
 
 		var newVideos = await getVideos();
 		if(newVideos){
 			this.setState({
 				videos: newVideos.videos,
 				pages: this.pagination(newVideos.pages),
-				currentPage: page
+				currentPage: page,
+				keywords
 			});
 		}
 	}
@@ -53,6 +57,12 @@ class VideosIndex extends React.Component {
 				currentPage: page
 			});
 		}
+	}
+
+	handleKeywordsChange(event){
+		this.setState({
+			keywords: event.target.value
+		});
 	}
 
 	handleChangePage(event){
@@ -90,7 +100,7 @@ class VideosIndex extends React.Component {
 				<button onClick={this.refreshVideos}>Refresh</button>
 				<form action="/videos" method="GET" onSubmit={this.handleSearch}>
 					<label htmlFor="keywords">Search Terms</label>
-					<input type="text" name="keywords"/>
+					<input type="text" name="keywords" value={this.state.keywords} onChange={this.handleKeywordsChange}/>
 					<input type="submit" value="Search"/>
 				</form>
 			    <div>
