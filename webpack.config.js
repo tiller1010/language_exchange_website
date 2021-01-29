@@ -5,6 +5,7 @@ module.exports = {
 	entry: [
 		path.resolve(__dirname, 'js/main.jsx'),
 		path.resolve(__dirname, 'node_modules/purecss/build/pure-min.css'),
+		path.resolve(__dirname, 'node_modules/purecss/build/grids-responsive-min.css'),
 		path.resolve(__dirname, 'sass/custom.scss')
 	],
 	output: {

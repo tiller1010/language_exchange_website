@@ -71,19 +71,21 @@ class Topic extends React.Component {
 			    {this.state.challenges ?
 			    	<div className="challenges pure-u-1 flex x-space-around">
 				    	{this.state.challenges.map((challenge) => 
-				    		<div key={this.state.challenges.indexOf(challenge)} className="flex x-center pure-u-1-2">
-					    		<div className="pad">
-					    			<h2>{challenge.Title}</h2>
-					    			<p>{challenge.Content}</p>
-					    			{challenge.FeaturedMedia.length ?
-					    				this.renderMedia(challenge)
-					    				:
-					    				''
-					    			}
-					    			<div className="flex x-space-between">
-						    			<a href={`/videos?keywords=${challenge.Title}`}>View others</a>
-						    			<a href={`/videos/add?challenge=${challenge.Title}`}>Submit your own</a>
-					    			</div>
+				    		<div key={this.state.challenges.indexOf(challenge)} className="flex x-center pure-u-1 pure-u-lg-1-2">
+					    		<div className="challenge">
+						    		<div className="pad">
+						    			<h2>{challenge.Title}</h2>
+						    			<p>{challenge.Content}</p>
+						    			{challenge.FeaturedMedia.length ?
+						    				this.renderMedia(challenge)
+						    				:
+						    				''
+						    			}
+						    			<div className="flex x-space-between">
+							    			<a href={`/videos?keywords=${challenge.Title}`}>View others</a>
+							    			<a href={`/videos/add?challenge=${challenge.Title}`}>Submit your own</a>
+						    			</div>
+						    		</div>
 					    		</div>
 				    		</div>
 			    		)}

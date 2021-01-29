@@ -65,7 +65,7 @@ class Home extends React.Component {
 				    		{level.topics ?
 				    			<div className="topics pure-u-1 flex x-space-around">
 					    			{this.randomTopics(level).map((topic) =>
-				    					<a key={level.topics.indexOf(topic)} href={`/level/${level.id}/topics/${topic.id}`} className="topic pure-u-1-2">
+				    					<a key={level.topics.indexOf(topic)} href={`/level/${level.id}/topics/${topic.id}`} className="topic pure-u-1 pure-u-lg-1-2">
 						    					<h3 className="text-center">{topic.Topic}</h3>
 						    					{this.renderMedia(topic)}
 				    					</a>

@@ -69,7 +69,7 @@ class Level extends React.Component {
 								{this.renderMedia(topic)}
 				    		</a>
 				    		{topic.challenges ?
-			    				<div className="pure-u-1 flex x-space-around">
+			    				<div className="challenges pure-u-1 flex x-space-around">
 					    			{this.randomChallenges(topic).map((challenge) =>
 					    				<div key={topic.challenges.indexOf(challenge)} className="challenge flex x-center pure-u-1-2">
 						    				<div className="pad">

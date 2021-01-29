@@ -173,7 +173,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }, this.randomTopics(level).map(topic => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       key: level.topics.indexOf(topic),
       href: `/level/${level.id}/topics/${topic.id}`,
-      className: "topic pure-u-1-2"
+      className: "topic pure-u-1 pure-u-lg-1-2"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
       className: "text-center"
     }, topic.Topic), this.renderMedia(topic)))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "No topics"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No levels"));
@@ -268,7 +268,7 @@ class Level extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       href: `/level/${this.props.levelID}/topics/${topic.id}`,
       className: "pure-u-1 text-center"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Topic ", topic.Topic), this.renderMedia(topic)), topic.challenges ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "pure-u-1 flex x-space-around"
+      className: "challenges pure-u-1 flex x-space-around"
     }, this.randomChallenges(topic).map(challenge => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       key: topic.challenges.indexOf(challenge),
       className: "challenge flex x-center pure-u-1-2"
@@ -376,7 +376,9 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "challenges pure-u-1 flex x-space-around"
     }, this.state.challenges.map(challenge => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       key: this.state.challenges.indexOf(challenge),
-      className: "flex x-center pure-u-1-2"
+      className: "flex x-center pure-u-1 pure-u-lg-1-2"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "challenge"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "pad"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, challenge.Title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, challenge.Content), challenge.FeaturedMedia.length ? this.renderMedia(challenge) : '', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -385,7 +387,7 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       href: `/videos?keywords=${challenge.Title}`
     }, "View others"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: `/videos/add?challenge=${challenge.Title}`
-    }, "Submit your own")))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No challenges"));
+    }, "Submit your own"))))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No challenges"));
   }
 
 }
@@ -2625,6 +2627,19 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/grids-responsive-min.css":
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./node_modules/file-loader/dist/cjs.js??ref--5-1!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/grids-responsive-min.css ***!
+  \*****************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "css/grids-responsive-min.css");
+
+/***/ }),
+
 /***/ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/pure-min.css":
 /*!*****************************************************************************************************************************************!*\
   !*** ./node_modules/file-loader/dist/cjs.js??ref--5-1!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/pure-min.css ***!
@@ -3104,6 +3119,35 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
+
+/***/ }),
+
+/***/ "./node_modules/purecss/build/grids-responsive-min.css":
+/*!*************************************************************!*\
+  !*** ./node_modules/purecss/build/grids-responsive-min.css ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var api = __webpack_require__(/*! ../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+            var content = __webpack_require__(/*! !../../file-loader/dist/cjs.js??ref--5-1!../../sass-loader/dist/cjs.js!./grids-responsive-min.css */ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/grids-responsive-min.css");
+
+            content = content.__esModule ? content.default : content;
+
+            if (typeof content === 'string') {
+              content = [[module.i, content, '']];
+            }
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = api(content, options);
+
+
+
+module.exports = content.locals || {};
 
 /***/ }),
 
@@ -31721,14 +31765,15 @@ module.exports = content.locals || {};
 /***/ }),
 
 /***/ 0:
-/*!****************************************************************************************!*\
-  !*** multi ./js/main.jsx ./node_modules/purecss/build/pure-min.css ./sass/custom.scss ***!
-  \****************************************************************************************/
+/*!**********************************************************************************************************************************************!*\
+  !*** multi ./js/main.jsx ./node_modules/purecss/build/pure-min.css ./node_modules/purecss/build/grids-responsive-min.css ./sass/custom.scss ***!
+  \**********************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! C:\Users\tille\Desktop\nodeApps\mern-app\js\main.jsx */"./js/main.jsx");
 __webpack_require__(/*! C:\Users\tille\Desktop\nodeApps\mern-app\node_modules\purecss\build\pure-min.css */"./node_modules/purecss/build/pure-min.css");
+__webpack_require__(/*! C:\Users\tille\Desktop\nodeApps\mern-app\node_modules\purecss\build\grids-responsive-min.css */"./node_modules/purecss/build/grids-responsive-min.css");
 module.exports = __webpack_require__(/*! C:\Users\tille\Desktop\nodeApps\mern-app\sass\custom.scss */"./sass/custom.scss");
 
 

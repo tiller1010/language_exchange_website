@@ -119,3 +119,7 @@ i {
 .topics a.topic .img-container {
   height: 400px;
 }
+
+.challenges .challenge {
+  max-width: 440px;
+}
