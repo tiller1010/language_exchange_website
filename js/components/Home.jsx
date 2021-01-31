@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
 
 class Home extends React.Component {
 	constructor(){
@@ -48,13 +50,19 @@ class Home extends React.Component {
 		var { strapiTestImage } = this.state || 'notfound';
 		return (
 			<div className="pad">
+				<p>Let's enjoy</p>
 				<h1>Video Submissions</h1>
 				<form action="/videos" method="GET">
-					<label htmlFor="keywords">Search Terms</label>
-					<input type="text" name="keywords"/>
-					<input type="submit" value="Search"/>
+					<div className="search-input">
+						<input type="text" name="keywords" placeholder="Search video submissions"/>
+				        <FontAwesomeIcon icon={faSearch}/>
+						<input type="submit" value="Search"/>
+					</div>
 				</form>
-			    <a href="/videos">View all videos</a>
+			    <a href="/videos" className="button">
+				    View all videos
+				    <FontAwesomeIcon icon={faLongArrowAltRight}/>
+			    </a>
 
 			    <hr/>
 

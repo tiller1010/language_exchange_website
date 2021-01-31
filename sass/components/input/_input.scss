@@ -1,0 +1,28 @@
+input{
+	border-radius: 100px;
+	padding: 10px;
+}
+.search-input{
+	position: relative;
+	input[type="text"]{
+		border: none;
+		padding-left: 40px;
+		padding-right: 60px;
+	}
+	svg{
+	    position: absolute;
+	    left: 15px;
+	    top: 11px;
+	    cursor: pointer;
+	    transform: scale(1.3);
+	    color: $input-gray;
+    }
+    input[type="submit"]{
+    	position: absolute;
+    	top: 0;
+    	left: 0;
+    	opacity: 0;
+    	width: 40px;
+    	cursor: pointer;
+    }
+}
