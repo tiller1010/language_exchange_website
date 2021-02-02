@@ -1,5 +1,7 @@
 import React from 'react';
 import lozad from 'lozad';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome } from '@fortawesome/free-solid-svg-icons';
 
 async function getVideos(){
 	var urlParams = new URLSearchParams(window.location.search);
@@ -40,7 +42,7 @@ class VideosIndex extends React.Component {
 				videos: newVideos.videos,
 				pages: this.pagination(newVideos.pages),
 				currentPage: page,
-				keywords
+				keywords: keywords || ''
 			});
 		}
 	}
@@ -95,19 +97,33 @@ class VideosIndex extends React.Component {
 			<div className="pad">			
 				<h1>Videos</h1>
 				<div>
-					<a href={`/`}>Home</a>
+					<a href={`/`} className="button">
+						Home
+				        <FontAwesomeIcon icon={faHome}/>
+					</a>
 				</div>
-				<button onClick={this.refreshVideos}>Refresh</button>
+				<button onClick={this.refreshVideos}>
+					Refresh
+			        <FontAwesomeIcon icon={faSync}/>
+				</button>
 				<form action="/videos" method="GET" onSubmit={this.handleSearch}>
-					<label htmlFor="keywords">Search Terms</label>
-					<input type="text" name="keywords" value={this.state.keywords} onChange={this.handleKeywordsChange}/>
-					<input type="submit" value="Search"/>
+					<div className="search-input">
+						<input type="text" name="keywords" value={this.state.keywords} onChange={this.handleKeywordsChange}  placeholder="Search video submissions"/>
+				        <FontAwesomeIcon icon={faSearch}/>
+						<input type="submit" value="Search"/>
+				    </div>
 				</form>
 			    <div>
-				    <a onClick={this.handleChangePage} href="/videos">Clear filters</a>
+				    <a onClick={this.handleChangePage} href="/videos" className="button">
+					    Clear filters
+				        <FontAwesomeIcon icon={faSync}/>
+				    </a>
 			    </div>
 			    <div>
-				    <a href="/videos/add">Add a video</a>
+				    <a href="/videos/add" className="button">
+					    Add a video
+				        <FontAwesomeIcon icon={faPlus}/>
+				    </a>
 			    </div>
 				<div>
 					{this.state.pages.length ?

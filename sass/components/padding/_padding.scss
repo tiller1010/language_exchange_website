@@ -1,3 +1,23 @@
 .pad{
 	padding: 20px;
+	&.no-x{
+		padding-left: 0;
+		padding-right: 0;
+	}
+	&.no-y{
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+	&.no-left{
+		padding-left: 0;
+	}
+	&.no-right{
+		padding-right: 0;
+	}
+	&.no-top{
+		padding-top: 0;
+	}
+	&.no-bottom{
+		padding-bottom: 0;
+	}
 }

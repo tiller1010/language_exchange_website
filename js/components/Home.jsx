@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faLongArrowAltRight, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
 
 class Home extends React.Component {
 	constructor(){
@@ -69,14 +69,26 @@ class Home extends React.Component {
 			    {this.state.levels ?
 			    	this.state.levels.map((level) => 
 			    		<div key={this.state.levels.indexOf(level)} className="flex x-center">
-				    		<a href={`/level/${level.id}`} className="pure-u-1 text-center"><h2>Level {level.Level}</h2></a>
+				    		<h2 className="pad">Level {level.Level}</h2>
+				    		<a href={`/level/${level.id}`} className="button">
+					    		View all
+					    		<FontAwesomeIcon icon={faLongArrowAltRight}/>
+				    		</a>
 				    		{level.topics ?
 				    			<div className="topics pure-u-1 flex x-space-around">
 					    			{this.randomTopics(level).map((topic) =>
-				    					<a key={level.topics.indexOf(topic)} href={`/level/${level.id}/topics/${topic.id}`} className="topic pure-u-1 pure-u-lg-1-2">
-						    					<h3 className="text-center">{topic.Topic}</h3>
+					    				<div className="topic pure-u-1 pure-u-md-11-24" key={level.topics.indexOf(topic)}>
+						    				<div className="flex x-space-between">
+						    					<h3 className="pad no-y no-left">{topic.Topic}</h3>
+						    					<a href={`/level/${level.id}/topics/${topic.id}`} className="button">
+												    View all
+												    <FontAwesomeIcon icon={faLongArrowAltRight}/>
+											    </a>
+										    </div>
+					    					<a href={`/level/${level.id}/topics/${topic.id}`}>
 						    					{this.renderMedia(topic)}
-				    					</a>
+					    					</a>
+				    					</div>
 				    				)}
 			    				</div>
 			    				:

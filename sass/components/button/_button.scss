@@ -10,6 +10,8 @@ button, a.button{
 	text-decoration: none;
 	color: $blue;
 	transition: background-color .25s ease;
+	align-self: center;
+	cursor: pointer;
 	&:hover{
 		background-color: $blue;
 		color: $white;

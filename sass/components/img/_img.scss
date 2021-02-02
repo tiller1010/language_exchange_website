@@ -1,8 +1,10 @@
 .img-container{
+	border-radius: 25px;
+	overflow: hidden;
 	img{
 		width: 100%;
-		max-height: 400px;
-		object-fit: contain;
+		height: 400px;
+		object-fit: cover;
 		border: none;
 	}
 }

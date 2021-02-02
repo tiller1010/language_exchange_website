@@ -16,7 +16,7 @@ class VideosAdd extends React.Component {
 		const challenge = urlParams.get('challenge');
 
 		this.setState({
-			title: challenge
+			title: challenge || ''
 		});
 	}
 
