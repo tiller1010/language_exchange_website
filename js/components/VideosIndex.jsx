@@ -93,6 +93,8 @@ class VideosIndex extends React.Component {
 		var urlParams = new URLSearchParams(window.location.search);
 		var keywords = urlParams.get('keywords') || null;
 
+		window.onpopstate = this.refreshVideos(); 
+
 		return (
 			<div className="pad">			
 				<h1>Videos</h1>

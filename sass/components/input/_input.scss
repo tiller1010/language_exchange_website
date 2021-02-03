@@ -1,11 +1,49 @@
-input{
+input[type="text"]{
 	border-radius: 100px;
 	padding: 10px;
+	border: none;
+}
+.upload-container{
+	position: relative;
+	width: max-content;
+    cursor: pointer;
+    &:hover{
+		input[type="file"] + label{
+	    	background-color: $white;
+	    	color: $blue;
+	    }
+    }
+	input[type="file"]{
+		opacity: 0;
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	    cursor: pointer;
+		border-radius: 100px;
+		border: none;
+		&::-webkit-file-upload-button{
+			display: none;
+		}
+		+ label {
+			z-index: 1;
+			display: block;
+			border-radius: 100px;
+			margin: 10px 0;
+			padding: 10px 15px;
+		    background-color: $blue;
+		    color: $white;
+		    transition: background-color .25s ease;
+		    svg{
+		    	padding: 0 4px;
+		    }
+		}
+	}
 }
 .search-input{
 	position: relative;
 	input[type="text"]{
-		border: none;
 		padding-left: 40px;
 		padding-right: 60px;
 	}

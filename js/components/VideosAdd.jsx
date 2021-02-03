@@ -1,4 +1,6 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome, faPlay, faUpload } from '@fortawesome/free-solid-svg-icons';
 
 class VideosAdd extends React.Component {
 	constructor(){
@@ -77,9 +79,14 @@ class VideosAdd extends React.Component {
 		return (
 			<div className="pad">
 				<h1>Video Add</h1>
-				<a href={`/`}>Home</a>
-				<span>&nbsp;</span>
-				<a href={`/videos`}>Videos</a>
+				<a href={`/`} className="button">
+					Home
+			        <FontAwesomeIcon icon={faHome}/>
+				</a>
+				<a href={`/videos`} className="button">
+					Videos
+			        <FontAwesomeIcon icon={faPlay}/>
+				</a>
 				<div className="flex" style={{maxWidth: '1300px'}}>
 					<div className="pure-u-1-2" style={{height: '300px'}}>
 						<h2>Video Preview</h2>
@@ -92,16 +99,24 @@ class VideosAdd extends React.Component {
 					</div>
 				</div>
 				<form action="/videos/add" method="POST" encType="multipart/form-data">
-					<input type="text" name="title" value={this.state.title} onChange={this.handleTitleChange} required/>
-					<div style={{display: 'flex'}}>
-						<label htmlFor="video">Video</label>
+					<input type="text" name="title" value={this.state.title} onChange={this.handleTitleChange} placeholder="Title" required/>
+					<div className="upload-container">
 						<input type="file" name="video" onChange={this.handleVideoUploadChange} required/>
+						<label htmlFor="video">
+							Video
+							<FontAwesomeIcon icon={faUpload}/>
+						</label>
 					</div>
-					<div style={{display: 'flex'}}>
-						<label htmlFor="thumbnail">Thumbnail</label>
+					<div className="upload-container">
 						<input type="file" name="thumbnail" onChange={this.handleThumbnailUploadChange} required/>
+						<label htmlFor="thumbnail">Thumbnail
+							<FontAwesomeIcon icon={faUpload}/>
+						</label>
 					</div>
-					<input type="submit" value="Submit"/>
+					<button type="submit">
+						Submit
+						<FontAwesomeIcon icon={faPlus}/>
+					</button>
 				</form>
 			</div>
 		);

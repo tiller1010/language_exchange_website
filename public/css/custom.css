@@ -39,16 +39,53 @@ body {
     max-width: unset;
   }
 }
-input {
+input[type=text] {
   border-radius: 100px;
   padding: 10px;
+  border: none;
+}
+
+.upload-container {
+  position: relative;
+  width: max-content;
+  cursor: pointer;
+}
+.upload-container:hover input[type=file] + label {
+  background-color: #fff;
+  color: #9f74e4;
+}
+.upload-container input[type=file] {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  border-radius: 100px;
+  border: none;
+}
+.upload-container input[type=file]::-webkit-file-upload-button {
+  display: none;
+}
+.upload-container input[type=file] + label {
+  z-index: 1;
+  display: block;
+  border-radius: 100px;
+  margin: 10px 0;
+  padding: 10px 15px;
+  background-color: #9f74e4;
+  color: #fff;
+  transition: background-color 0.25s ease;
+}
+.upload-container input[type=file] + label svg {
+  padding: 0 4px;
 }
 
 .search-input {
   position: relative;
 }
 .search-input input[type=text] {
-  border: none;
   padding-left: 40px;
   padding-right: 60px;
 }
