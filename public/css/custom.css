@@ -39,6 +39,11 @@ body {
     max-width: unset;
   }
 }
+video {
+  border-radius: 25px;
+  overflow: hidden;
+}
+
 input[type=text] {
   border-radius: 100px;
   padding: 10px;
@@ -121,11 +126,32 @@ button, a.button {
   align-self: center;
   cursor: pointer;
 }
-button:hover, a.button:hover {
+button.icon-left, a.button.icon-left {
+  padding-left: 40px;
+  padding-right: 10px;
+}
+button.icon-left svg, a.button.icon-left svg {
+  right: unset;
+  left: 11px;
+}
+button.no-icon, a.button.no-icon {
+  text-align: center;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+button:hover, button.selected, button[type=submit], a.button:hover, a.button.selected, a.button[type=submit] {
   background-color: #9f74e4;
   color: #fff;
 }
-button:hover svg, a.button:hover svg {
+button:hover[type=submit]:hover, button.selected[type=submit]:hover, button[type=submit][type=submit]:hover, a.button:hover[type=submit]:hover, a.button.selected[type=submit]:hover, a.button[type=submit][type=submit]:hover {
+  border-color: #fff;
+  background-color: #fff;
+  color: #9f74e4;
+}
+button:hover[type=submit]:hover svg, button.selected[type=submit]:hover svg, button[type=submit][type=submit]:hover svg, a.button:hover[type=submit]:hover svg, a.button.selected[type=submit]:hover svg, a.button[type=submit][type=submit]:hover svg {
+  color: #9f74e4;
+}
+button:hover svg, button.selected svg, button[type=submit] svg, a.button:hover svg, a.button.selected svg, a.button[type=submit] svg {
   color: #fff;
 }
 button svg, a.button svg {

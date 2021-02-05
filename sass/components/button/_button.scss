@@ -12,9 +12,30 @@ button, a.button{
 	transition: background-color .25s ease;
 	align-self: center;
 	cursor: pointer;
-	&:hover{
+	&.icon-left{
+		padding-left: 40px;
+		padding-right: 10px;
+		svg{
+			right: unset;
+			left: 11px;
+		}
+	}
+	&.no-icon{
+		text-align: center;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+	&:hover, &.selected, &[type="submit"]{
 		background-color: $blue;
 		color: $white;
+		&[type="submit"]:hover{
+			border-color: $white;
+			background-color: $white;
+			color: $blue;
+			svg{
+				color: $blue;
+			}
+		}
 		svg{
 			color: $white;
 		}

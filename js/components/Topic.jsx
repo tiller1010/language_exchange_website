@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome } from '@fortawesome/free-solid-svg-icons';
 
 class Topic extends React.Component {
 	constructor(){
@@ -64,9 +66,14 @@ class Topic extends React.Component {
 	render(){
 		return (
 			<div className="pad">
-				<a href={`/`}>Home</a>
-				<span>&nbsp;</span>
-				<a href={`/level/${this.props.levelID}`}>Back</a>
+				<a href={`/`} className="button">
+					Home
+			        <FontAwesomeIcon icon={faHome}/>
+				</a>
+				<a href={`/level/${this.props.levelID}`} className="button icon-left">
+					<FontAwesomeIcon icon={faLongArrowAltLeft}/>
+					Back
+				</a>
 				<h2 className="text-center">{this.state.topic}</h2>
 			    {this.state.challenges ?
 			    	<div className="challenges pure-u-1 flex x-space-around">
@@ -82,8 +89,14 @@ class Topic extends React.Component {
 						    				''
 						    			}
 						    			<div className="flex x-space-between">
-							    			<a href={`/videos?keywords=${challenge.Title}`}>View others</a>
-							    			<a href={`/videos/add?challenge=${challenge.Title}`}>Submit your own</a>
+							    			<a href={`/videos?keywords=${challenge.Title}`} className="button">
+								    			View others
+												<FontAwesomeIcon icon={faSearch}/>
+							    			</a>
+							    			<a href={`/videos/add?challenge=${challenge.Title}`} className="button">
+								    			Submit your own
+												<FontAwesomeIcon icon={faPlus}/>
+							    			</a>
 						    			</div>
 						    		</div>
 					    		</div>

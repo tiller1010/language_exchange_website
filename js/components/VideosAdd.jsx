@@ -95,7 +95,7 @@ class VideosAdd extends React.Component {
 					</div>
 					<div className="pure-u-1-2">
 						<h2>Thumbnail Preview</h2>
-						<div className="thumbnail-preview" style={{height: '225px', width: '400px', border: '1px solid'}}></div>
+						<div className="thumbnail-preview img-container" style={{height: '225px', width: '400px', border: '1px solid'}}></div>
 					</div>
 				</div>
 				<form action="/videos/add" method="POST" encType="multipart/form-data">

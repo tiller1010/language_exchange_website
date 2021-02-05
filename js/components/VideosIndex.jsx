@@ -132,19 +132,36 @@ class VideosIndex extends React.Component {
 						<ul className="pagination flex">
 							{this.state.currentPage > 1 ?
 								<li>
-									<a onClick={this.handleChangePage} href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}`}>Prev</a>
+									<a onClick={this.handleChangePage}
+										href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}`}
+										className="button icon-left"
+										aria-label="previous"
+									>
+								        <FontAwesomeIcon icon={faLongArrowAltLeft}/>
+										Prev
+									</a>
 								</li>
 								:
 								''
 							}
 							{this.state.pages.map((page) =>
 								<li key={this.state.pages.indexOf(page)}>
-									<a onClick={this.handleChangePage} href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}`}>{page.pageNumber}</a>
+									<a onClick={this.handleChangePage} href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}`}
+										className={`button no-icon ${page.pageNumber == this.state.currentPage ? 'selected' : ''}`}
+										aria-label={`page ${page.pageNumber}`}
+									>
+										{page.pageNumber}
+									</a>
 								</li>
 							)}
 							{this.state.currentPage < this.state.pages.length ?
 								<li>
-									<a onClick={this.handleChangePage} href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}`}>Next</a>
+									<a onClick={this.handleChangePage} href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}`}
+										className="button"
+									>
+										Next
+										<FontAwesomeIcon icon={faLongArrowAltRight}/>
+									</a>
 								</li>
 								:
 								''
@@ -175,19 +192,36 @@ class VideosIndex extends React.Component {
 						<ul className="pagination flex">
 							{this.state.currentPage > 1 ?
 								<li>
-									<a onClick={this.handleChangePage} href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}`}>Prev</a>
+									<a onClick={this.handleChangePage}
+										href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}`}
+										className="button icon-left"
+										aria-label="previous"
+									>
+								        <FontAwesomeIcon icon={faLongArrowAltLeft}/>
+										Prev
+									</a>
 								</li>
 								:
 								''
 							}
 							{this.state.pages.map((page) =>
 								<li key={this.state.pages.indexOf(page)}>
-									<a onClick={this.handleChangePage} href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}`}>{page.pageNumber}</a>
+									<a onClick={this.handleChangePage} href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}`}
+										className={`button no-icon ${page.pageNumber == this.state.currentPage ? 'selected' : ''}`}
+										aria-label={`page ${page.pageNumber}`}
+									>
+										{page.pageNumber}
+									</a>
 								</li>
 							)}
 							{this.state.currentPage < this.state.pages.length ?
 								<li>
-									<a onClick={this.handleChangePage} href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}`}>Next</a>
+									<a onClick={this.handleChangePage} href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}`}
+										className="button"
+									>
+										Next
+										<FontAwesomeIcon icon={faLongArrowAltRight}/>
+									</a>
 								</li>
 								:
 								''

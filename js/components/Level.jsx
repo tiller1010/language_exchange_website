@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome } from '@fortawesome/free-solid-svg-icons';
 
 class Level extends React.Component {
 	constructor(){
@@ -60,12 +62,19 @@ class Level extends React.Component {
 	render(){
 		return (
 			<div className="pad">
-				<a href={`/`}>Home</a>
+				<a href={`/`} className="button">
+					Home
+			        <FontAwesomeIcon icon={faHome}/>
+				</a>
 			    {this.state.topics ?
 			    	this.state.topics.map((topic) => 
 			    		<div key={this.state.topics.indexOf(topic)} className="flex x-center">
-				    		<a href={`/level/${this.props.levelID}/topics/${topic.id}`} className="pure-u-1 text-center">
-					    		<h2>Topic {topic.Topic}</h2>
+				    		<h2 className="pad">Topic {topic.Topic}</h2>
+				    		<a href={`/level/${this.props.levelID}/topics/${topic.id}`} className="button">
+					    		View all
+					    		<FontAwesomeIcon icon={faLongArrowAltRight}/>
+				    		</a>
+				    		<a href={`/level/${this.props.levelID}/topics/${topic.id}`}>
 								{this.renderMedia(topic)}
 				    		</a>
 				    		{topic.challenges ?
