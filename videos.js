@@ -20,4 +20,10 @@ async function add(video){
 	return video;
 }
 
-module.exports = { index, add };
+async function getRecent(limit = 6){
+	const db = getDB();
+	const videos = await db.collection('videos').find({}).sort({created: -1}).limit(5).toArray();
+	return {videos};
+}
+
+module.exports = { index, add, getRecent };

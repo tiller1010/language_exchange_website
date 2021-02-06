@@ -4,7 +4,7 @@ var upload = multer({ dest: 'public/assets/' });
 const path = require('path');
 const port = process.env.PORT || 3000;
 const { connectToDB, getDB } = require('./db.js');
-const { index, add } = require('./videos.js');
+const { index, add, getRecent } = require('./videos.js');
 const feathers = require('@feathersjs/feathers');
 const service = require('feathers-mongodb');
 const search = require('feathers-mongodb-fuzzy-search');
@@ -71,6 +71,11 @@ var upload = multer({ storage });
 			res.render('home');
 		});
 
+		app.get('/recent-videos', async (req, res) => {
+			const videos = await getRecent();
+			res.send(JSON.stringify(videos));
+		});
+
 		// Levels route
 		app.get('/level/:levelID', (req, res) => {
 			res.render('level.jsx', {levelID: req.params.levelID});
@@ -88,8 +93,8 @@ var upload = multer({ storage });
 		app.get('/videos:format?', async (req, res) => {
 			let keywords = req.query.keywords || false;
 			let videos = null;
-			// If using search keywords
 			const page = req.query.page || 1;
+			// If using search keywords
 			if(keywords){
 				const searchPageLength = 3;
 				videos = await VideoService.find({
@@ -107,7 +112,7 @@ var upload = multer({ storage });
 			    	pages
 			    }
 			} else {
-				videos = await index(req.query.page);
+				videos = await index(page);
 			}
 			if(req.params.format){
 				res.format({
@@ -130,7 +135,8 @@ var upload = multer({ storage });
 				src: 'assets/' + req.files['video'][0].filename,
 				originalName: req.files['video'][0].originalname,
 				thumbnailSrc: 'assets/' + req.files['thumbnail'][0].filename,
-				originalThumbnailName: req.files['thumbnail'][0].originalname
+				originalThumbnailName: req.files['thumbnail'][0].originalname,
+				created: new Date()
 			});
 			if(req.body.nativeFlag){
 				res.status(200).send('Successful upload');

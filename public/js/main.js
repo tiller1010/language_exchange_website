@@ -113,6 +113,13 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   }
 
   componentDidMount() {
+    // Get recent videos
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`${document.location.origin}/recent-videos`).then(res => {
+      console.log(res);
+      this.setState({
+        recentVideos: res.data.videos
+      });
+    });
     axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:1337/levels').then(res => {
       console.log(res);
       this.setState({
@@ -172,7 +179,24 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "button"
     }, "View all videos", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
       icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faLongArrowAltRight"]
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.state.levels ? this.state.levels.map(level => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    })), this.state.recentVideos ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "flex"
+    }, this.state.recentVideos.map(video => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      key: video._id
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, video.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      style: {
+        height: '300px'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+      type: "video/mp4",
+      className: "video-preview lozad",
+      height: "225",
+      width: "400",
+      poster: video.thumbnailSrc || "/images/videoPlaceholder.png",
+      controls: true
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
+      src: video.src
+    })))))) : '', this.state.levels ? this.state.levels.map(level => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       key: this.state.levels.indexOf(level),
       className: "flex x-center"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {

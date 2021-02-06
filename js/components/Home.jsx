@@ -12,13 +12,22 @@ class Home extends React.Component {
 
 	componentDidMount(){
 
+		// Get recent videos
+		axios.get(`${document.location.origin}/recent-videos`)
+			.then(res => {
+				console.log(res)
+				this.setState({
+					recentVideos: res.data.videos
+				});
+			});
+
 		axios.get('http://localhost:1337/levels')
 			.then(res => {
 				console.log(res)
 				this.setState({
 					levels: res.data
 				});
-			})
+			});
 	}
 
 	renderMedia(topic){
@@ -64,7 +73,24 @@ class Home extends React.Component {
 				    <FontAwesomeIcon icon={faLongArrowAltRight}/>
 			    </a>
 
-			    <hr/>
+			    {this.state.recentVideos ?
+		    		<div className="flex">
+				    	{this.state.recentVideos.map((video) => 
+				    		<div key={video._id}>
+								<h3>{video.title}</h3>
+								<div style={{height: '300px'}}>
+									<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
+										video.thumbnailSrc || "/images/videoPlaceholder.png"
+									} controls>
+										<source src={video.src}></source>
+									</video>
+								</div>
+							</div>
+			    		)}
+		    		</div>
+			    	:
+			    	''
+			    }
 
 			    {this.state.levels ?
 			    	this.state.levels.map((level) => 
