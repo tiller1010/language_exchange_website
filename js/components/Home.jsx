@@ -1,7 +1,13 @@
 import React from 'react';
 import axios from 'axios';
+import lozad from 'lozad';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faLongArrowAltRight, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
+import Slider from 'react-slick';
+
+// Enable lazy loading
+const lozadObserver = lozad();
+lozadObserver.observe();
 
 class Home extends React.Component {
 	constructor(){
@@ -74,7 +80,21 @@ class Home extends React.Component {
 			    </a>
 
 			    {this.state.recentVideos ?
-		    		<div className="flex">
+		    		<Slider {...{
+						dots: false,
+						infinite: false,
+						speed: 500,
+						slidesToShow: 3,
+						slidesToScroll: 1,
+						responsive: [
+							{
+								breakpoint: 1024,
+								settings: {
+									slidesToShow: 1.5
+								}
+							}
+						]
+		    		}}>
 				    	{this.state.recentVideos.map((video) => 
 				    		<div key={video._id}>
 								<h3>{video.title}</h3>
@@ -87,7 +107,7 @@ class Home extends React.Component {
 								</div>
 							</div>
 			    		)}
-		    		</div>
+		    		</Slider>
 			    	:
 			    	''
 			    }

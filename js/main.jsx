@@ -5,6 +5,8 @@ import VideosIndex from './components/VideosIndex.jsx';
 import VideosAdd from './components/VideosAdd.jsx';
 import Level from './components/Level.jsx';
 import Topic from './components/Topic.jsx';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 if(document.getElementById('home')){
 	ReactDOM.render(<Home/>, document.getElementById('home'));

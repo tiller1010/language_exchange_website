@@ -88,12 +88,12 @@ class VideosAdd extends React.Component {
 			        <FontAwesomeIcon icon={faPlay}/>
 				</a>
 				<div className="flex" style={{maxWidth: '1300px'}}>
-					<div className="pure-u-1-2" style={{height: '300px'}}>
+					<div className="pure-u-l pure-u-md-1-2" style={{height: '300px'}}>
 						<h2>Video Preview</h2>
 						<video type="video/mp4" className="video-preview" height="225" width="400" controls>
 						</video>
 					</div>
-					<div className="pure-u-1-2">
+					<div className="pure-u-l pure-u-md-1-2">
 						<h2>Thumbnail Preview</h2>
 						<div className="thumbnail-preview img-container" style={{height: '225px', width: '400px', border: '1px solid'}}></div>
 					</div>

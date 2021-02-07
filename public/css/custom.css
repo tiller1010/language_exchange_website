@@ -42,6 +42,7 @@ body {
 video {
   border-radius: 25px;
   overflow: hidden;
+  max-width: 100%;
 }
 
 input[type=text] {
@@ -269,4 +270,27 @@ i {
 
 .challenges .challenge {
   max-width: 440px;
+}
+
+.slick-slider .slick-slide {
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+.slick-slider .slick-prev, .slick-slider .slick-next {
+  z-index: 1;
+  top: 90%;
+}
+.slick-slider .slick-prev {
+  left: unset;
+  right: 120px;
+}
+.slick-slider .slick-next {
+  right: 50px;
+}
+.slick-slider .slick-prev:before, .slick-slider .slick-next:before {
+  color: #fff;
+  font-size: 30px;
+  padding: 5px 10px;
+  border-radius: 25px;
+  background-color: #9f74e4;
 }
