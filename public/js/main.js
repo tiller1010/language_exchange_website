@@ -119,6 +119,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   constructor() {
     super();
     this.state = {};
+    this.handleSortChange = this.handleSortChange.bind(this);
   }
 
   componentDidMount() {
@@ -135,6 +136,14 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         levels: res.data
       });
     });
+  }
+
+  handleSortChange(event) {
+    this.setState({
+      sort: event.target.value
+    }); // This approach triggers the onSubmit handler
+
+    event.target.form.querySelector('input[type="submit"]').click();
   }
 
   renderMedia(topic) {
@@ -183,7 +192,33 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "submit",
       value: "Search"
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "flex"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      htmlFor: "sort"
+    }, "All"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "",
+      checked: this.state.sort === '' ? true : false,
+      onChange: this.handleSortChange
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      htmlFor: "sort"
+    }, "Oldest"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "Oldest",
+      checked: this.state.sort === 'Oldest' ? true : false,
+      onChange: this.handleSortChange
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      htmlFor: "sort"
+    }, "Recent"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "Recent",
+      checked: this.state.sort === 'Recent' ? true : false,
+      onChange: this.handleSortChange
+    }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: "/videos",
       className: "button"
     }, "View all videos", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
@@ -685,7 +720,10 @@ async function getVideos() {
   var urlParams = new URLSearchParams(window.location.search);
   var searchKeywords = urlParams.get('keywords') || '';
   var page = urlParams.get('page') || '';
-  return fetch(`${document.location.origin}/videos.json?${searchKeywords ? 'keywords=' + searchKeywords + '&' : ''}${page ? 'page=' + page : ''}`).then(response => response.json());
+  var sort = urlParams.get('sort') || '';
+  return fetch(`${document.location.origin}/videos.json?${searchKeywords ? 'keywords=' + searchKeywords + '&' : ''}
+			${page ? 'page=' + page : ''}
+			${sort ? '&sort=' + sort : ''}`).then(response => response.json());
 } // Enable lazy loading
 
 
@@ -704,14 +742,20 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
     this.refreshVideos = this.refreshVideos.bind(this);
     this.pagination = this.pagination.bind(this);
     this.handleKeywordsChange = this.handleKeywordsChange.bind(this);
+    this.handleSortChange = this.handleSortChange.bind(this);
     this.handleChangePage = this.handleChangePage.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
   }
 
   async componentDidMount() {
+    this.refreshVideos();
+  }
+
+  async refreshVideos() {
     var urlParams = new URLSearchParams(window.location.search);
     var page = urlParams.get('page') || 1;
     var keywords = urlParams.get('keywords');
+    var sort = urlParams.get('sort');
     var newVideos = await getVideos();
 
     if (newVideos) {
@@ -719,21 +763,8 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
         videos: newVideos.videos,
         pages: this.pagination(newVideos.pages),
         currentPage: page,
-        keywords: keywords || ''
-      });
-    }
-  }
-
-  async refreshVideos() {
-    var urlParams = new URLSearchParams(window.location.search);
-    var page = urlParams.get('page') || 1;
-    var newVideos = await getVideos();
-
-    if (newVideos) {
-      this.setState({
-        videos: newVideos.videos,
-        pages: this.pagination(newVideos.pages),
-        currentPage: page
+        keywords: keywords || '',
+        sort: sort || ''
       });
     }
   }
@@ -742,6 +773,14 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
     this.setState({
       keywords: event.target.value
     });
+  }
+
+  handleSortChange(event) {
+    this.setState({
+      sort: event.target.value
+    }); // This approach triggers the onSubmit handler
+
+    event.target.form.querySelector('input[type="submit"]').click();
   }
 
   handleChangePage(event) {
@@ -772,7 +811,13 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
   render() {
     var urlParams = new URLSearchParams(window.location.search);
     var keywords = urlParams.get('keywords') || null;
-    window.onpopstate = this.refreshVideos();
+    var context = this; // When using back or forward buttons in browser
+
+    window.addEventListener('popstate', function (event) {
+      if (event != null) {
+        context.refreshVideos();
+      }
+    });
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "pad"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Videos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -801,7 +846,33 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "submit",
       value: "Search"
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "flex"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      htmlFor: "sort"
+    }, "All"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "",
+      checked: this.state.sort === '' ? true : false,
+      onChange: this.handleSortChange
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      htmlFor: "sort"
+    }, "Oldest"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "Oldest",
+      checked: this.state.sort === 'Oldest' ? true : false,
+      onChange: this.handleSortChange
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      htmlFor: "sort"
+    }, "Recent"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "Recent",
+      checked: this.state.sort === 'Recent' ? true : false,
+      onChange: this.handleSortChange
+    }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       onClick: this.handleChangePage,
       href: "/videos",
       className: "button"

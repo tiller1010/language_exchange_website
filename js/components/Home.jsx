@@ -14,6 +14,7 @@ class Home extends React.Component {
 		super();
 		this.state = {
 		}
+		this.handleSortChange = this.handleSortChange.bind(this);
 	}
 
 	componentDidMount(){
@@ -34,6 +35,14 @@ class Home extends React.Component {
 					levels: res.data
 				});
 			});
+	}
+
+	handleSortChange(event){
+		this.setState({
+			sort: event.target.value
+		});
+		// This approach triggers the onSubmit handler
+		event.target.form.querySelector('input[type="submit"]').click();
 	}
 
 	renderMedia(topic){
@@ -72,6 +81,20 @@ class Home extends React.Component {
 						<input type="text" name="keywords" placeholder="Search video submissions"/>
 				        <FontAwesomeIcon icon={faSearch}/>
 						<input type="submit" value="Search"/>
+						<div className="flex">
+							<div>
+								<label htmlFor="sort">All</label>
+								<input type="radio" name="sort" value="" checked={this.state.sort === '' ? true : false} onChange={this.handleSortChange}/>
+							</div>
+							<div>
+								<label htmlFor="sort">Oldest</label>
+								<input type="radio" name="sort" value="Oldest" checked={this.state.sort === 'Oldest' ? true : false} onChange={this.handleSortChange}/>
+							</div>
+							<div>
+								<label htmlFor="sort">Recent</label>
+								<input type="radio" name="sort" value="Recent" checked={this.state.sort === 'Recent' ? true : false} onChange={this.handleSortChange}/>
+							</div>
+						</div>
 					</div>
 				</form>
 			    <a href="/videos" className="button">

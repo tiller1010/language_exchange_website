@@ -92,14 +92,25 @@ var upload = multer({ storage });
 		// Index videos route
 		app.get('/videos:format?', async (req, res) => {
 			let keywords = req.query.keywords || false;
+			let sort = req.query.sort || false;
 			let videos = null;
 			const page = req.query.page || 1;
+
+			// If using sort
+			let sortObject = {};
+			if(sort === 'Recent'){
+				sortObject = {created: -1};
+			} else if(sort === 'Oldest'){
+				sortObject = {created: 1};
+			}
+
 			// If using search keywords
 			if(keywords){
 				const searchPageLength = 3;
 				videos = await VideoService.find({
 					query: {
 						$search: keywords,
+						$sort: sortObject,
 						$limit: searchPageLength,
 						$skip: (page - 1) * searchPageLength
 					}
@@ -112,8 +123,9 @@ var upload = multer({ storage });
 			    	pages
 			    }
 			} else {
-				videos = await index(page);
+				videos = await index(page, sortObject);
 			}
+
 			if(req.params.format){
 				res.format({
 					json: function(){
@@ -121,6 +133,7 @@ var upload = multer({ storage });
 					}
 				})
 			}
+			
 			res.render('videos');
 		});
 

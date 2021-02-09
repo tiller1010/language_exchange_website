@@ -7,7 +7,11 @@ async function getVideos(){
 	var urlParams = new URLSearchParams(window.location.search);
 	var searchKeywords = urlParams.get('keywords') || '';
 	var page = urlParams.get('page') || '';
-	return fetch(`${document.location.origin}/videos.json?${searchKeywords ? 'keywords=' + searchKeywords + '&' : ''}${page ? 'page=' + page : ''}`)
+	var sort = urlParams.get('sort') || '';
+	return fetch(`${document.location.origin}/videos.json?${searchKeywords ? 'keywords=' + searchKeywords + '&' : ''}
+			${page ? 'page=' + page : ''}
+			${sort ? '&sort=' + sort : ''}`
+		)
 		.then((response) => response.json());
 }
 
@@ -27,14 +31,20 @@ class VideosIndex extends React.Component {
 		this.refreshVideos = this.refreshVideos.bind(this);
 		this.pagination = this.pagination.bind(this);
 		this.handleKeywordsChange = this.handleKeywordsChange.bind(this);
+		this.handleSortChange = this.handleSortChange.bind(this);
 		this.handleChangePage = this.handleChangePage.bind(this);
 		this.handleSearch = this.handleSearch.bind(this);
 	}
 
 	async componentDidMount(){
+		this.refreshVideos();
+	}
+
+	async refreshVideos(){
 		var urlParams = new URLSearchParams(window.location.search);
 		var page = urlParams.get('page') || 1;
 		var keywords = urlParams.get('keywords');
+		var sort = urlParams.get('sort');
 
 		var newVideos = await getVideos();
 		if(newVideos){
@@ -42,21 +52,8 @@ class VideosIndex extends React.Component {
 				videos: newVideos.videos,
 				pages: this.pagination(newVideos.pages),
 				currentPage: page,
-				keywords: keywords || ''
-			});
-		}
-	}
-
-	async refreshVideos(){
-		var urlParams = new URLSearchParams(window.location.search);
-		var page = urlParams.get('page') || 1;
-
-		var newVideos = await getVideos();
-		if(newVideos){
-			this.setState({
-				videos: newVideos.videos,
-				pages: this.pagination(newVideos.pages),
-				currentPage: page
+				keywords: keywords || '',
+				sort: sort || ''
 			});
 		}
 	}
@@ -65,6 +62,14 @@ class VideosIndex extends React.Component {
 		this.setState({
 			keywords: event.target.value
 		});
+	}
+
+	handleSortChange(event){
+		this.setState({
+			sort: event.target.value
+		});
+		// This approach triggers the onSubmit handler
+		event.target.form.querySelector('input[type="submit"]').click();
 	}
 
 	handleChangePage(event){
@@ -92,8 +97,14 @@ class VideosIndex extends React.Component {
 
 		var urlParams = new URLSearchParams(window.location.search);
 		var keywords = urlParams.get('keywords') || null;
+		var context = this;
 
-		window.onpopstate = this.refreshVideos(); 
+		// When using back or forward buttons in browser
+		window.addEventListener('popstate', function(event){
+			if(event != null){
+				context.refreshVideos();
+			}
+		}); 
 
 		return (
 			<div className="pad">			
@@ -113,6 +124,20 @@ class VideosIndex extends React.Component {
 						<input type="text" name="keywords" value={this.state.keywords} onChange={this.handleKeywordsChange}  placeholder="Search video submissions"/>
 				        <FontAwesomeIcon icon={faSearch}/>
 						<input type="submit" value="Search"/>
+						<div className="flex">
+							<div>
+								<label htmlFor="sort">All</label>
+								<input type="radio" name="sort" value="" checked={this.state.sort === '' ? true : false} onChange={this.handleSortChange}/>
+							</div>
+							<div>
+								<label htmlFor="sort">Oldest</label>
+								<input type="radio" name="sort" value="Oldest" checked={this.state.sort === 'Oldest' ? true : false} onChange={this.handleSortChange}/>
+							</div>
+							<div>
+								<label htmlFor="sort">Recent</label>
+								<input type="radio" name="sort" value="Recent" checked={this.state.sort === 'Recent' ? true : false} onChange={this.handleSortChange}/>
+							</div>
+						</div>
 				    </div>
 				</form>
 			    <div>
