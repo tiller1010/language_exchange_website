@@ -118,7 +118,10 @@ lozadObserver.observe();
 class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      sortControlStatus: ''
+    };
+    this.toggleSortControls = this.toggleSortControls.bind(this);
     this.handleSortChange = this.handleSortChange.bind(this);
   }
 
@@ -135,6 +138,13 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       this.setState({
         levels: res.data
       });
+    });
+  }
+
+  toggleSortControls() {
+    let newStatus = this.state.sortControlStatus ? '' : 'open';
+    this.setState({
+      sortControlStatus: newStatus
     });
   }
 
@@ -182,6 +192,8 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       action: "/videos",
       method: "GET"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "flex"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "search-input"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "text",
@@ -192,8 +204,15 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "submit",
       value: "Search"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "sort-controls flex"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "control-icon pure-u-1",
+      onClick: this.toggleSortControls
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faSlidersH"]
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: `sort-options flex pure-u-1 ${this.state.sortControlStatus}`
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
       htmlFor: "sort"
     }, "All"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -218,7 +237,23 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       value: "Recent",
       checked: this.state.sort === 'Recent' ? true : false,
       onChange: this.handleSortChange
-    }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      htmlFor: "sort"
+    }, "A-Z"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "A-Z",
+      checked: this.state.sort === 'A-Z' ? true : false,
+      onChange: this.handleSortChange
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      htmlFor: "sort"
+    }, "Z-A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "Z-A",
+      checked: this.state.sort === 'Z-A' ? true : false,
+      onChange: this.handleSortChange
+    })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: "/videos",
       className: "button"
     }, "View all videos", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
@@ -742,6 +777,7 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
     this.refreshVideos = this.refreshVideos.bind(this);
     this.pagination = this.pagination.bind(this);
     this.handleKeywordsChange = this.handleKeywordsChange.bind(this);
+    this.toggleSortControls = this.toggleSortControls.bind(this);
     this.handleSortChange = this.handleSortChange.bind(this);
     this.handleChangePage = this.handleChangePage.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
@@ -772,6 +808,13 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
   handleKeywordsChange(event) {
     this.setState({
       keywords: event.target.value
+    });
+  }
+
+  toggleSortControls() {
+    let newStatus = this.state.sortControlStatus ? '' : 'open';
+    this.setState({
+      sortControlStatus: newStatus
     });
   }
 
@@ -831,8 +874,9 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
       icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faSync"]
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
       action: "/videos",
-      method: "GET",
-      onSubmit: this.handleSearch
+      method: "GET"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "flex"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "search-input"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -846,8 +890,15 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "submit",
       value: "Search"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "sort-controls flex"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "control-icon pure-u-1",
+      onClick: this.toggleSortControls
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faSlidersH"]
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: `sort-options flex pure-u-1 ${this.state.sortControlStatus}`
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
       htmlFor: "sort"
     }, "All"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -872,7 +923,23 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
       value: "Recent",
       checked: this.state.sort === 'Recent' ? true : false,
       onChange: this.handleSortChange
-    }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      htmlFor: "sort"
+    }, "A-Z"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "A-Z",
+      checked: this.state.sort === 'A-Z' ? true : false,
+      onChange: this.handleSortChange
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      htmlFor: "sort"
+    }, "Z-A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "Z-A",
+      checked: this.state.sort === 'Z-A' ? true : false,
+      onChange: this.handleSortChange
+    })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       onClick: this.handleChangePage,
       href: "/videos",
       className: "button"

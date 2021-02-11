@@ -112,6 +112,53 @@ input[type=text] {
   cursor: pointer;
 }
 
+.sort-controls {
+  position: relative;
+}
+.sort-controls .control-icon {
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background-color: #9f74e4;
+  margin-left: 20px;
+  cursor: pointer;
+}
+.sort-controls .control-icon svg {
+  color: #fff;
+}
+.sort-controls .sort-options {
+  z-index: 1;
+  position: absolute;
+  bottom: -35px;
+  right: 0;
+  flex-flow: row;
+  white-space: nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 50px;
+  width: 0px;
+  background: #9f74e4;
+  border-radius: 25px 0px 25px 25px;
+  overflow: hidden;
+  transition: width 0.25s ease;
+}
+.sort-controls .sort-options.open {
+  width: 320px;
+  padding: 0 10px;
+}
+.sort-controls .sort-options label {
+  color: #fff;
+}
+.sort-controls .sort-options input {
+  margin-left: 3px;
+  margin-right: 10px;
+  padding: 10px;
+}
+
 button, a.button {
   position: relative;
   display: block;

@@ -102,6 +102,10 @@ var upload = multer({ storage });
 				sortObject = {created: -1};
 			} else if(sort === 'Oldest'){
 				sortObject = {created: 1};
+			} else if(sort === 'A-Z'){
+				sortObject = {title: 1};
+			} else if(sort === 'Z-A'){
+				sortObject = {title: -1};
 			}
 
 			// If using search keywords
@@ -133,7 +137,7 @@ var upload = multer({ storage });
 					}
 				})
 			}
-			
+
 			res.render('videos');
 		});
 
