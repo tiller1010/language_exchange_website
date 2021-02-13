@@ -99,24 +99,24 @@ class Home extends React.Component {
 							</div>
 							<div className={`sort-options flex pure-u-1 ${this.state.sortControlStatus}`}>
 								<div>
-									<label htmlFor="sort">All</label>
-									<input type="radio" name="sort" value="" checked={this.state.sort === '' ? true : false} onChange={this.handleSortChange}/>
+									<label htmlFor="sort-all">All</label>
+									<input type="radio" name="sort" value="" id="sort-all" checked={this.state.sort === '' ? true : false} onChange={this.handleSortChange}/>
 								</div>
 								<div>
-									<label htmlFor="sort">Oldest</label>
-									<input type="radio" name="sort" value="Oldest" checked={this.state.sort === 'Oldest' ? true : false} onChange={this.handleSortChange}/>
+									<label htmlFor="sort-oldest">Oldest</label>
+									<input type="radio" name="sort" value="Oldest" id="sort-oldest" checked={this.state.sort === 'Oldest' ? true : false} onChange={this.handleSortChange}/>
 								</div>
 								<div>
-									<label htmlFor="sort">Recent</label>
-									<input type="radio" name="sort" value="Recent" checked={this.state.sort === 'Recent' ? true : false} onChange={this.handleSortChange}/>
+									<label htmlFor="sort-recent">Recent</label>
+									<input type="radio" name="sort" value="Recent" id="sort-recent" checked={this.state.sort === 'Recent' ? true : false} onChange={this.handleSortChange}/>
 								</div>
 								<div>
-									<label htmlFor="sort">A-Z</label>
-									<input type="radio" name="sort" value="A-Z" checked={this.state.sort === 'A-Z' ? true : false} onChange={this.handleSortChange}/>
+									<label htmlFor="sort-AZ">A-Z</label>
+									<input type="radio" name="sort" value="A-Z" id="sort-AZ" checked={this.state.sort === 'A-Z' ? true : false} onChange={this.handleSortChange}/>
 								</div>
 								<div>
-									<label htmlFor="sort">Z-A</label>
-									<input type="radio" name="sort" value="Z-A" checked={this.state.sort === 'Z-A' ? true : false} onChange={this.handleSortChange}/>
+									<label htmlFor="sort-ZA">Z-A</label>
+									<input type="radio" name="sort" value="Z-A" id="sort-ZA" checked={this.state.sort === 'Z-A' ? true : false} onChange={this.handleSortChange}/>
 								</div>
 							</div>
 						</div>

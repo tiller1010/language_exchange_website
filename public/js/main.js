@@ -214,43 +214,48 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: `sort-options flex pure-u-1 ${this.state.sortControlStatus}`
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      htmlFor: "sort"
+      htmlFor: "sort-all"
     }, "All"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "radio",
       name: "sort",
       value: "",
+      id: "sort-all",
       checked: this.state.sort === '' ? true : false,
       onChange: this.handleSortChange
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      htmlFor: "sort"
+      htmlFor: "sort-oldest"
     }, "Oldest"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "radio",
       name: "sort",
       value: "Oldest",
+      id: "sort-oldest",
       checked: this.state.sort === 'Oldest' ? true : false,
       onChange: this.handleSortChange
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      htmlFor: "sort"
+      htmlFor: "sort-recent"
     }, "Recent"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "radio",
       name: "sort",
       value: "Recent",
+      id: "sort-recent",
       checked: this.state.sort === 'Recent' ? true : false,
       onChange: this.handleSortChange
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      htmlFor: "sort"
+      htmlFor: "sort-AZ"
     }, "A-Z"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "radio",
       name: "sort",
       value: "A-Z",
+      id: "sort-AZ",
       checked: this.state.sort === 'A-Z' ? true : false,
       onChange: this.handleSortChange
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      htmlFor: "sort"
+      htmlFor: "sort-ZA"
     }, "Z-A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "radio",
       name: "sort",
       value: "Z-A",
+      id: "sort-ZA",
       checked: this.state.sort === 'Z-A' ? true : false,
       onChange: this.handleSortChange
     })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -900,43 +905,48 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: `sort-options flex pure-u-1 ${this.state.sortControlStatus}`
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      htmlFor: "sort"
+      htmlFor: "sort-all"
     }, "All"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "radio",
       name: "sort",
       value: "",
+      id: "sort-all",
       checked: this.state.sort === '' ? true : false,
       onChange: this.handleSortChange
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      htmlFor: "sort"
+      htmlFor: "sort-oldest"
     }, "Oldest"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "radio",
       name: "sort",
       value: "Oldest",
+      id: "sort-oldest",
       checked: this.state.sort === 'Oldest' ? true : false,
       onChange: this.handleSortChange
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      htmlFor: "sort"
+      htmlFor: "sort-recent"
     }, "Recent"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "radio",
       name: "sort",
       value: "Recent",
+      id: "sort-recent",
       checked: this.state.sort === 'Recent' ? true : false,
       onChange: this.handleSortChange
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      htmlFor: "sort"
+      htmlFor: "sort-AZ"
     }, "A-Z"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "radio",
       name: "sort",
       value: "A-Z",
+      id: "sort-AZ",
       checked: this.state.sort === 'A-Z' ? true : false,
       onChange: this.handleSortChange
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      htmlFor: "sort"
+      htmlFor: "sort-ZA"
     }, "Z-A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "radio",
       name: "sort",
       value: "Z-A",
+      id: "sort-ZA",
       checked: this.state.sort === 'Z-A' ? true : false,
       onChange: this.handleSortChange
     })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
