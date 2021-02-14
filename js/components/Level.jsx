@@ -12,14 +12,14 @@ class Level extends React.Component {
 	}
 
 	componentDidMount(){
-		axios.get(`http://localhost:1337/levels/${this.props.levelID}`)
+		axios.get(`${process.env.STRAPI_URL}/levels/${this.props.levelID}`)
 			.then(res => {
 				this.setState({
 					topics: res.data.topics
 				});
 			})
 
-		axios.get(`http://localhost:1337/challenges`)
+		axios.get(`${process.env.STRAPI_URL}/challenges`)
 			.then(res => {
 				console.log(res)
 				if(res.data){
@@ -46,7 +46,7 @@ class Level extends React.Component {
 				case 'image/jpeg':
 					return (
 						<div className="img-container">
-							<img src={`http://localhost:1337${topic.FeaturedImage.url}`}/>
+							<img src={`${process.env.STRAPI_URL}${topic.FeaturedImage.url}`}/>
 						</div>
 					);
 				default:
@@ -69,7 +69,7 @@ class Level extends React.Component {
 			    {this.state.topics ?
 			    	this.state.topics.map((topic) => 
 			    		<div key={this.state.topics.indexOf(topic)} className="flex x-center">
-				    		<h2 className="pad">Topic {topic.Topic}</h2>
+				    		<h2 className="pad">{topic.Topic}</h2>
 				    		<a href={`/level/${this.props.levelID}/topics/${topic.id}`} className="button">
 					    		View all
 					    		<FontAwesomeIcon icon={faLongArrowAltRight}/>

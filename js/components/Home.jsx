@@ -30,7 +30,7 @@ class Home extends React.Component {
 				});
 			});
 
-		axios.get('http://localhost:1337/levels')
+		axios.get(`${process.env.STRAPI_URL}/levels`)
 			.then(res => {
 				console.log(res)
 				this.setState({
@@ -60,7 +60,7 @@ class Home extends React.Component {
 				case 'image/jpeg':
 					return (
 						<div className="img-container">
-							<img src={`http://localhost:1337${topic.FeaturedImage.url}`}/>
+							<img src={`${process.env.STRAPI_URL}${topic.FeaturedImage.url}`}/>
 						</div>
 					);
 				default:
@@ -129,34 +129,37 @@ class Home extends React.Component {
 			    </a>
 
 			    {this.state.recentVideos ?
-		    		<Slider {...{
-						dots: false,
-						infinite: false,
-						speed: 500,
-						slidesToShow: 3,
-						slidesToScroll: 1,
-						responsive: [
-							{
-								breakpoint: 1024,
-								settings: {
-									slidesToShow: 1.5
+			    	<div className="pad no-x">
+			    		<h2>Recent Submissions</h2>
+			    		<Slider {...{
+							dots: false,
+							infinite: false,
+							speed: 500,
+							slidesToShow: 3,
+							slidesToScroll: 1,
+							responsive: [
+								{
+									breakpoint: 1024,
+									settings: {
+										slidesToShow: 1.5
+									}
 								}
-							}
-						]
-		    		}}>
-				    	{this.state.recentVideos.map((video) => 
-				    		<div key={video._id}>
-								<h3>{video.title}</h3>
-								<div style={{height: '300px'}}>
-									<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
-										video.thumbnailSrc || "/images/videoPlaceholder.png"
-									} controls>
-										<source src={video.src}></source>
-									</video>
+							]
+			    		}}>
+					    	{this.state.recentVideos.map((video) => 
+					    		<div key={video._id}>
+									<h3>{video.title}</h3>
+									<div style={{height: '300px'}}>
+										<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
+											video.thumbnailSrc || "/images/videoPlaceholder.png"
+										} controls>
+											<source src={video.src}></source>
+										</video>
+									</div>
 								</div>
-							</div>
-			    		)}
-		    		</Slider>
+				    		)}
+			    		</Slider>
+			    	</div>
 			    	:
 			    	''
 			    }

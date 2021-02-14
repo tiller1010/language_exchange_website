@@ -1,8 +1,9 @@
+require('dotenv').config();
 const express = require('express');
 const multer  = require('multer');
 var upload = multer({ dest: 'public/assets/' });
 const path = require('path');
-const port = process.env.PORT || 3000;
+const appPort = process.env.APP_PORT || 3000;
 const { connectToDB, getDB } = require('./db.js');
 const { index, add, getRecent } = require('./videos.js');
 const feathers = require('@feathersjs/feathers');
@@ -163,10 +164,8 @@ var upload = multer({ storage });
 		});
 
 		// Start app
-		app.listen(port, () => {
-			if(port === 3000){
-				console.log('App up on http://localhost:3000');
-			}
+		app.listen(appPort, () => {
+			console.log(`App up on port ${appPort}`);
 		});
 	} catch(err){
 		console.log(`Error: ${err}`);

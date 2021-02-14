@@ -323,6 +323,9 @@ i {
   padding: 0 10px;
   box-sizing: border-box;
 }
+.slick-slider .slick-slide div {
+  outline: none;
+}
 .slick-slider .slick-prev, .slick-slider .slick-next {
   z-index: 1;
   top: 90%;

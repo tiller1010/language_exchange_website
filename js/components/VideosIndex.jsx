@@ -26,7 +26,8 @@ class VideosIndex extends React.Component {
 			videos: [],
 			pages: [],
 			currentPage: 1,
-			keywords: ''
+			keywords: '',
+			sort: ''
 		}
 		this.refreshVideos = this.refreshVideos.bind(this);
 		this.pagination = this.pagination.bind(this);
@@ -183,7 +184,8 @@ class VideosIndex extends React.Component {
 							{this.state.currentPage > 1 ?
 								<li>
 									<a onClick={this.handleChangePage}
-										href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}`}
+										href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}
+											${this.state.sort ? '&sort=' + this.state.sort : ''}`}
 										className="button icon-left"
 										aria-label="previous"
 									>
@@ -196,7 +198,9 @@ class VideosIndex extends React.Component {
 							}
 							{this.state.pages.map((page) =>
 								<li key={this.state.pages.indexOf(page)}>
-									<a onClick={this.handleChangePage} href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}`}
+									<a onClick={this.handleChangePage}
+										href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}
+											${this.state.sort ? '&sort=' + this.state.sort : ''}`}
 										className={`button no-icon ${page.pageNumber == this.state.currentPage ? 'selected' : ''}`}
 										aria-label={`page ${page.pageNumber}`}
 									>
@@ -206,7 +210,9 @@ class VideosIndex extends React.Component {
 							)}
 							{this.state.currentPage < this.state.pages.length ?
 								<li>
-									<a onClick={this.handleChangePage} href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}`}
+									<a onClick={this.handleChangePage}
+										href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}
+											${this.state.sort ? '&sort=' + this.state.sort : ''}`}
 										className="button"
 									>
 										Next
@@ -243,7 +249,8 @@ class VideosIndex extends React.Component {
 							{this.state.currentPage > 1 ?
 								<li>
 									<a onClick={this.handleChangePage}
-										href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}`}
+										href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}
+											${this.state.sort ? '&sort=' + this.state.sort : ''}`}
 										className="button icon-left"
 										aria-label="previous"
 									>
@@ -256,7 +263,9 @@ class VideosIndex extends React.Component {
 							}
 							{this.state.pages.map((page) =>
 								<li key={this.state.pages.indexOf(page)}>
-									<a onClick={this.handleChangePage} href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}`}
+									<a onClick={this.handleChangePage}
+										href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}
+											${this.state.sort ? '&sort=' + this.state.sort : ''}`}
 										className={`button no-icon ${page.pageNumber == this.state.currentPage ? 'selected' : ''}`}
 										aria-label={`page ${page.pageNumber}`}
 									>
@@ -266,7 +275,9 @@ class VideosIndex extends React.Component {
 							)}
 							{this.state.currentPage < this.state.pages.length ?
 								<li>
-									<a onClick={this.handleChangePage} href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}`}
+									<a onClick={this.handleChangePage}
+										href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}
+											${this.state.sort ? '&sort=' + this.state.sort : ''}`}
 										className="button"
 									>
 										Next

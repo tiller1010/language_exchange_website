@@ -2,6 +2,9 @@
 	.slick-slide{
 		padding: 0 10px;
 		box-sizing: border-box;
+		div{
+			outline: none;
+		}
 	}
 	.slick-prev, .slick-next{
 		z-index: 1;

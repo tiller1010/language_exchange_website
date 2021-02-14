@@ -12,7 +12,7 @@ class Topic extends React.Component {
 	}
 
 	componentDidMount(){
-		axios.get(`http://localhost:1337/topics/${this.props.topicID}`)
+		axios.get(`${process.env.STRAPI_URL}/topics/${this.props.topicID}`)
 			.then(res => {
 				console.log(res)
 				if(res.data){
@@ -22,7 +22,7 @@ class Topic extends React.Component {
 				}
 			})
 
-		axios.get(`http://localhost:1337/challenges`)
+		axios.get(`${process.env.STRAPI_URL}/challenges`)
 			.then(res => {
 				if(res.data){
 					res.data.forEach((challenge) => {
@@ -47,13 +47,13 @@ class Topic extends React.Component {
 					case 'image/jpeg':
 						return (
 							<div className="img-container">
-								<img src={`http://localhost:1337${challenge.FeaturedMedia[0].url}`}/>
+								<img src={`${process.env.STRAPI_URL}${challenge.FeaturedMedia[0].url}`}/>
 							</div>
 						);
 					case 'video/mp4':
 						return (
 							<video height="225" width="400" controls>
-								<source src={`http://localhost:1337${challenge.FeaturedMedia[0].url}`} type="video/mp4"/>
+								<source src={`${process.env.STRAPI_URL}${challenge.FeaturedMedia[0].url}`} type="video/mp4"/>
 							</video>
 						);
 					default:

@@ -133,7 +133,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         recentVideos: res.data.videos
       });
     });
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:1337/levels').then(res => {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`${"http://localhost:1337"}/levels`).then(res => {
       console.log(res);
       this.setState({
         levels: res.data
@@ -163,7 +163,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "img-container"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-            src: `http://localhost:1337${topic.FeaturedImage.url}`
+            src: `${"http://localhost:1337"}${topic.FeaturedImage.url}`
           }));
 
         default:
@@ -263,7 +263,9 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "button"
     }, "View all videos", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
       icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faLongArrowAltRight"]
-    })), this.state.recentVideos ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_slick__WEBPACK_IMPORTED_MODULE_5___default.a, {
+    })), this.state.recentVideos ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "pad no-x"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Recent Submissions"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_slick__WEBPACK_IMPORTED_MODULE_5___default.a, {
       dots: false,
       infinite: false,
       speed: 500,
@@ -290,7 +292,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       controls: true
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
       src: video.src
-    })))))) : '', this.state.levels ? this.state.levels.map(level => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }))))))) : '', this.state.levels ? this.state.levels.map(level => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       key: this.state.levels.indexOf(level),
       className: "flex x-center"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
@@ -354,12 +356,12 @@ class Level extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   }
 
   componentDidMount() {
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`http://localhost:1337/levels/${this.props.levelID}`).then(res => {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`${"http://localhost:1337"}/levels/${this.props.levelID}`).then(res => {
       this.setState({
         topics: res.data.topics
       });
     });
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`http://localhost:1337/challenges`).then(res => {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`${"http://localhost:1337"}/challenges`).then(res => {
       console.log(res);
 
       if (res.data) {
@@ -387,7 +389,7 @@ class Level extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "img-container"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-            src: `http://localhost:1337${topic.FeaturedImage.url}`
+            src: `${"http://localhost:1337"}${topic.FeaturedImage.url}`
           }));
 
         default:
@@ -413,7 +415,7 @@ class Level extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "flex x-center"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
       className: "pad"
-    }, "Topic ", topic.Topic), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    }, topic.Topic), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: `/level/${this.props.levelID}/topics/${topic.id}`,
       className: "button"
     }, "View all", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
@@ -465,7 +467,7 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   }
 
   componentDidMount() {
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`http://localhost:1337/topics/${this.props.topicID}`).then(res => {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`${"http://localhost:1337"}/topics/${this.props.topicID}`).then(res => {
       console.log(res);
 
       if (res.data) {
@@ -474,7 +476,7 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         });
       }
     });
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`http://localhost:1337/challenges`).then(res => {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`${"http://localhost:1337"}/challenges`).then(res => {
       if (res.data) {
         res.data.forEach(challenge => {
           if (challenge.topic) {
@@ -500,7 +502,7 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
             return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
               className: "img-container"
             }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-              src: `http://localhost:1337${challenge.FeaturedMedia[0].url}`
+              src: `${"http://localhost:1337"}${challenge.FeaturedMedia[0].url}`
             }));
 
           case 'video/mp4':
@@ -509,7 +511,7 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
               width: "400",
               controls: true
             }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
-              src: `http://localhost:1337${challenge.FeaturedMedia[0].url}`,
+              src: `${"http://localhost:1337"}${challenge.FeaturedMedia[0].url}`,
               type: "video/mp4"
             }));
 
@@ -777,7 +779,8 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
       videos: [],
       pages: [],
       currentPage: 1,
-      keywords: ''
+      keywords: '',
+      sort: ''
     };
     this.refreshVideos = this.refreshVideos.bind(this);
     this.pagination = this.pagination.bind(this);
@@ -964,7 +967,8 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
       className: "pagination flex"
     }, this.state.currentPage > 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       onClick: this.handleChangePage,
-      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}`,
+      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}
+											${this.state.sort ? '&sort=' + this.state.sort : ''}`,
       className: "button icon-left",
       "aria-label": "previous"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
@@ -973,12 +977,14 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
       key: this.state.pages.indexOf(page)
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       onClick: this.handleChangePage,
-      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}`,
+      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}
+											${this.state.sort ? '&sort=' + this.state.sort : ''}`,
       className: `button no-icon ${page.pageNumber == this.state.currentPage ? 'selected' : ''}`,
       "aria-label": `page ${page.pageNumber}`
     }, page.pageNumber))), this.state.currentPage < this.state.pages.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       onClick: this.handleChangePage,
-      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}`,
+      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}
+											${this.state.sort ? '&sort=' + this.state.sort : ''}`,
       className: "button"
     }, "Next", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
       icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faLongArrowAltRight"]
@@ -1001,7 +1007,8 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
       className: "pagination flex"
     }, this.state.currentPage > 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       onClick: this.handleChangePage,
-      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}`,
+      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}
+											${this.state.sort ? '&sort=' + this.state.sort : ''}`,
       className: "button icon-left",
       "aria-label": "previous"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
@@ -1010,12 +1017,14 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
       key: this.state.pages.indexOf(page)
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       onClick: this.handleChangePage,
-      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}`,
+      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}
+											${this.state.sort ? '&sort=' + this.state.sort : ''}`,
       className: `button no-icon ${page.pageNumber == this.state.currentPage ? 'selected' : ''}`,
       "aria-label": `page ${page.pageNumber}`
     }, page.pageNumber))), this.state.currentPage < this.state.pages.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       onClick: this.handleChangePage,
-      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}`,
+      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}
+											${this.state.sort ? '&sort=' + this.state.sort : ''}`,
       className: "button"
     }, "Next", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
       icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faLongArrowAltRight"]
