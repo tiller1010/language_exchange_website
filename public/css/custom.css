@@ -23,6 +23,54 @@ body {
   background-color: #eee;
 }
 
+.frame {
+  padding: 100px 20px;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #747de8;
+  border-radius: 0 0 0 25px;
+  z-index: 10;
+}
+nav a.button {
+  border-color: #fff;
+  color: #fff;
+}
+nav a.button svg {
+  color: #fff;
+}
+
+@media (max-width: 815px) {
+  nav {
+    width: 100%;
+    top: unset;
+    bottom: 0;
+    border-radius: 25px 25px 0 0;
+  }
+  nav .flex {
+    justify-content: center;
+  }
+  nav a.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 10px;
+    box-sizing: border-box;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    border-radius: 50%;
+  }
+  nav a.button span {
+    display: none;
+  }
+  nav a.button svg {
+    position: static;
+  }
+}
 .img-container {
   border-radius: 25px;
   overflow: hidden;
@@ -278,6 +326,30 @@ button svg, a.button svg {
   padding-bottom: 0;
 }
 
+.small-pad {
+  padding: 10px;
+}
+.small-pad.no-x {
+  padding-left: 0;
+  padding-right: 0;
+}
+.small-pad.no-y {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.small-pad.no-left {
+  padding-left: 0;
+}
+.small-pad.no-right {
+  padding-right: 0;
+}
+.small-pad.no-top {
+  padding-top: 0;
+}
+.small-pad.no-bottom {
+  padding-bottom: 0;
+}
+
 .inner.typography {
   padding-top: 20px;
 }
@@ -299,6 +371,12 @@ i {
     width: 100%;
   }
 }
+.page-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
 .pagination {
   list-style: none;
   padding: 0;

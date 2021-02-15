@@ -4,6 +4,7 @@ import lozad from 'lozad';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSlidersH } from '@fortawesome/free-solid-svg-icons';
 import Slider from 'react-slick';
+import Navigation from './Navigation.jsx';
 
 // Enable lazy loading
 const lozadObserver = lozad();
@@ -82,51 +83,48 @@ class Home extends React.Component {
 	render(){
 		var { strapiTestImage } = this.state || 'notfound';
 		return (
-			<div className="pad">
-				<p>Let's enjoy</p>
-				<h1>Video Submissions</h1>
-
-				<form action="/videos" method="GET">
-					<div className="flex">
-						<div className="search-input">
-							<input type="text" name="keywords" placeholder="Search video submissions"/>
-					        <FontAwesomeIcon icon={faSearch}/>
-							<input type="submit" value="Search"/>
-						</div>
-						<div className="sort-controls flex">
-							<div className="control-icon pure-u-1" onClick={this.toggleSortControls}>
-								<FontAwesomeIcon icon={faSlidersH}/>
+			<div className="frame">
+				<Navigation/>
+				<div className="page-form">
+					<p>Let's enjoy your</p>
+					<h1>User Submissions</h1>
+					<form action="/videos" method="GET">
+						<div className="flex">
+							<div className="search-input">
+								<input type="text" name="keywords" placeholder="Search video submissions"/>
+						        <FontAwesomeIcon icon={faSearch}/>
+								<input type="submit" value="Search"/>
 							</div>
-							<div className={`sort-options flex pure-u-1 ${this.state.sortControlStatus}`}>
-								<div>
-									<label htmlFor="sort-all">All</label>
-									<input type="radio" name="sort" value="" id="sort-all" checked={this.state.sort === '' ? true : false} onChange={this.handleSortChange}/>
+							<div className="sort-controls flex">
+								<div className="control-icon pure-u-1" onClick={this.toggleSortControls}>
+									<FontAwesomeIcon icon={faSlidersH}/>
 								</div>
-								<div>
-									<label htmlFor="sort-oldest">Oldest</label>
-									<input type="radio" name="sort" value="Oldest" id="sort-oldest" checked={this.state.sort === 'Oldest' ? true : false} onChange={this.handleSortChange}/>
-								</div>
-								<div>
-									<label htmlFor="sort-recent">Recent</label>
-									<input type="radio" name="sort" value="Recent" id="sort-recent" checked={this.state.sort === 'Recent' ? true : false} onChange={this.handleSortChange}/>
-								</div>
-								<div>
-									<label htmlFor="sort-AZ">A-Z</label>
-									<input type="radio" name="sort" value="A-Z" id="sort-AZ" checked={this.state.sort === 'A-Z' ? true : false} onChange={this.handleSortChange}/>
-								</div>
-								<div>
-									<label htmlFor="sort-ZA">Z-A</label>
-									<input type="radio" name="sort" value="Z-A" id="sort-ZA" checked={this.state.sort === 'Z-A' ? true : false} onChange={this.handleSortChange}/>
+								<div className={`sort-options flex pure-u-1 ${this.state.sortControlStatus}`}>
+									<div>
+										<label htmlFor="sort-all">All</label>
+										<input type="radio" name="sort" value="" id="sort-all" checked={this.state.sort === '' ? true : false} onChange={this.handleSortChange}/>
+									</div>
+									<div>
+										<label htmlFor="sort-oldest">Oldest</label>
+										<input type="radio" name="sort" value="Oldest" id="sort-oldest" checked={this.state.sort === 'Oldest' ? true : false} onChange={this.handleSortChange}/>
+									</div>
+									<div>
+										<label htmlFor="sort-recent">Recent</label>
+										<input type="radio" name="sort" value="Recent" id="sort-recent" checked={this.state.sort === 'Recent' ? true : false} onChange={this.handleSortChange}/>
+									</div>
+									<div>
+										<label htmlFor="sort-AZ">A-Z</label>
+										<input type="radio" name="sort" value="A-Z" id="sort-AZ" checked={this.state.sort === 'A-Z' ? true : false} onChange={this.handleSortChange}/>
+									</div>
+									<div>
+										<label htmlFor="sort-ZA">Z-A</label>
+										<input type="radio" name="sort" value="Z-A" id="sort-ZA" checked={this.state.sort === 'Z-A' ? true : false} onChange={this.handleSortChange}/>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</form>
-
-			    <a href="/videos" className="button">
-				    View all videos
-				    <FontAwesomeIcon icon={faLongArrowAltRight}/>
-			    </a>
+					</form>
+				</div>
 
 			    {this.state.recentVideos ?
 			    	<div className="pad no-x">

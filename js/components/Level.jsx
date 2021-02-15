@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome } from '@fortawesome/free-solid-svg-icons';
+import Navigation from './Navigation.jsx';
 
 class Level extends React.Component {
 	constructor(){
@@ -61,11 +62,8 @@ class Level extends React.Component {
 
 	render(){
 		return (
-			<div className="pad">
-				<a href={`/`} className="button">
-					Home
-			        <FontAwesomeIcon icon={faHome}/>
-				</a>
+			<div className="frame">
+				<Navigation/>
 			    {this.state.topics ?
 			    	this.state.topics.map((topic) => 
 			    		<div key={this.state.topics.indexOf(topic)} className="flex x-center">

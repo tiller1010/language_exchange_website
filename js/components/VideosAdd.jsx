@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome, faPlay, faUpload } from '@fortawesome/free-solid-svg-icons';
+import Navigation from './Navigation.jsx';
 
 class VideosAdd extends React.Component {
 	constructor(){
@@ -77,16 +78,33 @@ class VideosAdd extends React.Component {
 	render(){
 
 		return (
-			<div className="pad">
-				<h1>Video Add</h1>
-				<a href={`/`} className="button">
-					Home
-			        <FontAwesomeIcon icon={faHome}/>
-				</a>
-				<a href={`/videos`} className="button">
-					Videos
-			        <FontAwesomeIcon icon={faPlay}/>
-				</a>
+			<div className="frame">
+				<Navigation/>
+
+				<div className="page-form">
+					<h1>Video Add</h1>
+					<form action="/videos/add" method="POST" encType="multipart/form-data">
+						<input type="text" name="title" value={this.state.title} onChange={this.handleTitleChange} placeholder="Title" required/>
+						<div className="upload-container">
+							<input type="file" name="video" onChange={this.handleVideoUploadChange} required/>
+							<label htmlFor="video">
+								Video
+								<FontAwesomeIcon icon={faUpload}/>
+							</label>
+						</div>
+						<div className="upload-container">
+							<input type="file" name="thumbnail" onChange={this.handleThumbnailUploadChange} required/>
+							<label htmlFor="thumbnail">Thumbnail
+								<FontAwesomeIcon icon={faUpload}/>
+							</label>
+						</div>
+						<button type="submit">
+							Submit
+							<FontAwesomeIcon icon={faPlus}/>
+						</button>
+					</form>
+				</div>
+
 				<div className="flex" style={{maxWidth: '1300px'}}>
 					<div className="pure-u-l pure-u-md-1-2" style={{height: '300px'}}>
 						<h2>Video Preview</h2>
@@ -98,26 +116,6 @@ class VideosAdd extends React.Component {
 						<div className="thumbnail-preview img-container" style={{height: '225px', width: '400px', border: '1px solid'}}></div>
 					</div>
 				</div>
-				<form action="/videos/add" method="POST" encType="multipart/form-data">
-					<input type="text" name="title" value={this.state.title} onChange={this.handleTitleChange} placeholder="Title" required/>
-					<div className="upload-container">
-						<input type="file" name="video" onChange={this.handleVideoUploadChange} required/>
-						<label htmlFor="video">
-							Video
-							<FontAwesomeIcon icon={faUpload}/>
-						</label>
-					</div>
-					<div className="upload-container">
-						<input type="file" name="thumbnail" onChange={this.handleThumbnailUploadChange} required/>
-						<label htmlFor="thumbnail">Thumbnail
-							<FontAwesomeIcon icon={faUpload}/>
-						</label>
-					</div>
-					<button type="submit">
-						Submit
-						<FontAwesomeIcon icon={faPlus}/>
-					</button>
-				</form>
 			</div>
 		);
 	}

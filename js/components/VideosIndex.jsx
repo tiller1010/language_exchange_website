@@ -2,6 +2,7 @@ import React from 'react';
 import lozad from 'lozad';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome, faSlidersH } from '@fortawesome/free-solid-svg-icons';
+import Navigation from './Navigation.jsx';
 
 async function getVideos(){
 	var urlParams = new URLSearchParams(window.location.search);
@@ -116,68 +117,63 @@ class VideosIndex extends React.Component {
 		}); 
 
 		return (
-			<div className="pad">			
-				<h1>Videos</h1>
-				<div>
-					<a href={`/`} className="button">
-						Home
-				        <FontAwesomeIcon icon={faHome}/>
-					</a>
-				</div>
-				<button onClick={this.refreshVideos}>
-					Refresh
-			        <FontAwesomeIcon icon={faSync}/>
-				</button>
-
-				<form action="/videos" method="GET">
-					<div className="flex">
-						<div className="search-input">
-							<input type="text" name="keywords" value={this.state.keywords} onChange={this.handleKeywordsChange}  placeholder="Search video submissions"/>
-					        <FontAwesomeIcon icon={faSearch}/>
-							<input type="submit" value="Search"/>
-						</div>
-						<div className="sort-controls flex">
-							<div className="control-icon pure-u-1" onClick={this.toggleSortControls}>
-								<FontAwesomeIcon icon={faSlidersH}/>
+			<div className="frame">			
+				<Navigation/>
+				<div className="page-form">
+					<h1>Videos</h1>
+					<form action="/videos" method="GET">
+						<div className="flex">
+							<div className="search-input">
+								<input type="text" name="keywords" value={this.state.keywords} onChange={this.handleKeywordsChange}  placeholder="Search video submissions"/>
+						        <FontAwesomeIcon icon={faSearch}/>
+								<input type="submit" value="Search"/>
 							</div>
-							<div className={`sort-options flex pure-u-1 ${this.state.sortControlStatus}`}>
-								<div>
-									<label htmlFor="sort-all">All</label>
-									<input type="radio" name="sort" value="" id="sort-all" checked={this.state.sort === '' ? true : false} onChange={this.handleSortChange}/>
+							<div className="sort-controls flex">
+								<div className="control-icon pure-u-1" onClick={this.toggleSortControls}>
+									<FontAwesomeIcon icon={faSlidersH}/>
 								</div>
-								<div>
-									<label htmlFor="sort-oldest">Oldest</label>
-									<input type="radio" name="sort" value="Oldest" id="sort-oldest" checked={this.state.sort === 'Oldest' ? true : false} onChange={this.handleSortChange}/>
-								</div>
-								<div>
-									<label htmlFor="sort-recent">Recent</label>
-									<input type="radio" name="sort" value="Recent" id="sort-recent" checked={this.state.sort === 'Recent' ? true : false} onChange={this.handleSortChange}/>
-								</div>
-								<div>
-									<label htmlFor="sort-AZ">A-Z</label>
-									<input type="radio" name="sort" value="A-Z" id="sort-AZ" checked={this.state.sort === 'A-Z' ? true : false} onChange={this.handleSortChange}/>
-								</div>
-								<div>
-									<label htmlFor="sort-ZA">Z-A</label>
-									<input type="radio" name="sort" value="Z-A" id="sort-ZA" checked={this.state.sort === 'Z-A' ? true : false} onChange={this.handleSortChange}/>
+								<div className={`sort-options flex pure-u-1 ${this.state.sortControlStatus}`}>
+									<div>
+										<label htmlFor="sort-all">All</label>
+										<input type="radio" name="sort" value="" id="sort-all" checked={this.state.sort === '' ? true : false} onChange={this.handleSortChange}/>
+									</div>
+									<div>
+										<label htmlFor="sort-oldest">Oldest</label>
+										<input type="radio" name="sort" value="Oldest" id="sort-oldest" checked={this.state.sort === 'Oldest' ? true : false} onChange={this.handleSortChange}/>
+									</div>
+									<div>
+										<label htmlFor="sort-recent">Recent</label>
+										<input type="radio" name="sort" value="Recent" id="sort-recent" checked={this.state.sort === 'Recent' ? true : false} onChange={this.handleSortChange}/>
+									</div>
+									<div>
+										<label htmlFor="sort-AZ">A-Z</label>
+										<input type="radio" name="sort" value="A-Z" id="sort-AZ" checked={this.state.sort === 'A-Z' ? true : false} onChange={this.handleSortChange}/>
+									</div>
+									<div>
+										<label htmlFor="sort-ZA">Z-A</label>
+										<input type="radio" name="sort" value="Z-A" id="sort-ZA" checked={this.state.sort === 'Z-A' ? true : false} onChange={this.handleSortChange}/>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</form>
-
-			    <div>
-				    <a onClick={this.handleChangePage} href="/videos" className="button">
-					    Clear filters
-				        <FontAwesomeIcon icon={faSync}/>
-				    </a>
+					</form>
+				    <div className="flex">
+					    <div>
+							<button onClick={this.refreshVideos}>
+								Refresh
+						        <FontAwesomeIcon icon={faSync}/>
+							</button>
+					    </div>
+					    <span>&nbsp;</span>
+					    <div>
+						    <a onClick={this.handleChangePage} href="/videos" className="button">
+							    Clear filters
+						        <FontAwesomeIcon icon={faSync}/>
+						    </a>
+					    </div>
+				    </div>
 			    </div>
-			    <div>
-				    <a href="/videos/add" className="button">
-					    Add a video
-				        <FontAwesomeIcon icon={faPlus}/>
-				    </a>
-			    </div>
+			    
 				<div>
 					{this.state.pages.length ?
 						<ul className="pagination flex">
@@ -227,9 +223,9 @@ class VideosIndex extends React.Component {
 						<p></p>
 					}
 					{this.state.videos.length ?
-						<div>
+						<div className="flex">
 							{this.state.videos.map((video) => 
-								<div key={video._id}>
+								<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
 									<h3>{video.title}</h3>
 									<div style={{height: '300px'}}>
 										<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
