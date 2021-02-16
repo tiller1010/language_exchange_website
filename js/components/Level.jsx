@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome } from '@fortawesome/free-solid-svg-icons';
+import Slider from 'react-slick';
 import Navigation from './Navigation.jsx';
 
 class Level extends React.Component {
@@ -66,25 +67,39 @@ class Level extends React.Component {
 				<Navigation/>
 			    {this.state.topics ?
 			    	this.state.topics.map((topic) => 
-			    		<div key={this.state.topics.indexOf(topic)} className="flex x-center">
-				    		<h2 className="pad">{topic.Topic}</h2>
-				    		<a href={`/level/${this.props.levelID}/topics/${topic.id}`} className="button">
-					    		View all
-					    		<FontAwesomeIcon icon={faLongArrowAltRight}/>
-				    		</a>
-				    		<a href={`/level/${this.props.levelID}/topics/${topic.id}`}>
-								{this.renderMedia(topic)}
-				    		</a>
+			    		<div key={this.state.topics.indexOf(topic)}>
+				    		<div className="flex x-center">
+					    		<h2 className="pad">{topic.Topic}</h2>
+					    		<a href={`/level/${this.props.levelID}/topics/${topic.id}`} className="button">
+						    		View all
+						    		<FontAwesomeIcon icon={faLongArrowAltRight}/>
+					    		</a>
+					    		<a href={`/level/${this.props.levelID}/topics/${topic.id}`}>
+									{this.renderMedia(topic)}
+					    		</a>
+				    		</div>
 				    		{topic.challenges ?
-			    				<div className="challenges pure-u-1 flex x-space-around">
-					    			{this.randomChallenges(topic).map((challenge) =>
-					    				<div key={topic.challenges.indexOf(challenge)} className="challenge flex x-center pure-u-1-2">
-						    				<div className="pad">
-							    				<h2>{challenge.Title}</h2>
-						    					<p>{challenge.Content}</p>
+				    			<div className="challenges">
+						    		<Slider {...{
+										dots: false,
+										arrows: true,
+										infinite: false,
+										speed: 500,
+										slidesToShow: 1,
+										slidesToScroll: 1
+						    		}}>
+							    		<div className="pad">
+								    		<h2>Need a quick refresher? Slide forward.</h2>
+							    		</div>
+						    			{this.randomChallenges(topic).map((challenge) =>
+						    				<div key={topic.challenges.indexOf(challenge)} className="challenge">
+							    				<div className="pad">
+								    				<h2>{challenge.Title}</h2>
+							    					<p>{challenge.Content}</p>
+						    					</div>
 					    					</div>
-				    					</div>
-				    				)}
+					    				)}
+				    				</Slider>
 			    				</div>
 			    				:
 			    				<p>No challenges</p>

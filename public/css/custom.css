@@ -393,10 +393,6 @@ i {
   height: 400px;
 }
 
-.challenges .challenge {
-  max-width: 440px;
-}
-
 .slick-slider .slick-slide {
   padding: 0 10px;
   box-sizing: border-box;
