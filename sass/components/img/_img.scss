@@ -9,7 +9,7 @@
 	}
 }
 
-@media (max-width: 815px){
+@media only screen and (max-width: 815px){
 	.img-container {
 	    max-width: unset;
 	}

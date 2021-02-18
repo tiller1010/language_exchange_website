@@ -9,5 +9,40 @@
 }
 .challenges{
 	.challenge{
+		p{
+			max-width: 400px;
+		}
+	}
+}
+.challenge-options{
+	z-index: 10;
+    position: fixed;
+    top: 0;
+    left: -130px;
+    height: 100%;
+    width: 130px;
+    border-right: 20px solid $input-grey;
+    display: flex;
+    flex-direction: column;
+    background-color: #DAD0EB;
+    overflow-y: auto;
+    cursor: pointer;
+    transition: left .25s ease;
+    &.opened{
+    	left: 0;
+    }
+    .correct{
+    	color: $green;
+    }
+}
+@media only screen and (max-width: 815px){
+	.challenge-options{
+		left: 0;
+		height: unset;
+		width: 100%;
+		overflow-y: unset;
+		overflow-x: auto;
+		flex-direction: row;
+		cursor: unset;
 	}
 }

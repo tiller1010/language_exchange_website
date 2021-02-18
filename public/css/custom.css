@@ -24,7 +24,7 @@ body {
 }
 
 .frame {
-  padding: 100px 20px;
+  padding: 100px 20px 150px;
 }
 
 nav {
@@ -43,7 +43,7 @@ nav a.button svg {
   color: #fff;
 }
 
-@media (max-width: 815px) {
+@media only screen and (max-width: 815px) {
   nav {
     width: 100%;
     top: unset;
@@ -82,7 +82,7 @@ nav a.button svg {
   border: none;
 }
 
-@media (max-width: 815px) {
+@media only screen and (max-width: 815px) {
   .img-container {
     max-width: unset;
   }
@@ -366,7 +366,7 @@ i {
   width: 33%;
 }
 
-@media (max-width: 815px) {
+@media only screen and (max-width: 815px) {
   .m-100 {
     width: 100%;
   }
@@ -393,9 +393,47 @@ i {
   height: 400px;
 }
 
+.challenges .challenge p {
+  max-width: 400px;
+}
+
+.challenge-options {
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: -130px;
+  height: 100%;
+  width: 130px;
+  border-right: 20px solid #777;
+  display: flex;
+  flex-direction: column;
+  background-color: #DAD0EB;
+  overflow-y: auto;
+  cursor: pointer;
+  transition: left 0.25s ease;
+}
+.challenge-options.opened {
+  left: 0;
+}
+.challenge-options .correct {
+  color: #25781f;
+}
+
+@media only screen and (max-width: 815px) {
+  .challenge-options {
+    left: 0;
+    height: unset;
+    width: 100%;
+    overflow-y: unset;
+    overflow-x: auto;
+    flex-direction: row;
+    cursor: unset;
+  }
+}
 .slick-slider .slick-slide {
   padding: 0 10px;
   box-sizing: border-box;
+  cursor: pointer;
 }
 .slick-slider .slick-slide div {
   outline: none;

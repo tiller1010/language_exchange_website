@@ -4,12 +4,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome } from '@fortawesome/free-solid-svg-icons';
 import Navigation from './Navigation.jsx';
 
+function shuffleArray(array) {
+	let newArray = [...array];
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = newArray[i];
+        newArray[i] = newArray[j];
+        newArray[j] = temp;
+    }
+    newArray = newArray.sort((a, b) => a.answered ? -1 : 1);
+    return newArray;
+}
+
 class Topic extends React.Component {
 	constructor(){
 		super();
 		this.state = {
-			challenges: []
+			challenges: [],
+			optionsStatus: ''
 		}
+		this.handleToggleOptions = this.handleToggleOptions.bind(this);
+		this.checkAnswerInput = this.checkAnswerInput.bind(this);
 	}
 
 	componentDidMount(){
@@ -41,6 +56,23 @@ class Topic extends React.Component {
 			})
 	}
 
+	handleToggleOptions(){
+		this.setState({
+			optionsStatus: this.state.optionsStatus == 'opened' ? '' : 'opened'
+		})
+	}
+
+	checkAnswerInput(input, challenge){
+		if(input.toLowerCase() == challenge.Title.toLowerCase()){
+			console.log('correct')
+			const newState = this.state;
+			const challengeIndex = newState.challenges.indexOf(challenge);
+			challenge.answered = 'correct';
+			newState.challenges[challengeIndex] = challenge;
+			this.setState({ ...newState });
+		}
+	}
+
 	renderMedia(challenge){
 		if(challenge.FeaturedMedia){
 			if(challenge.FeaturedMedia.length){
@@ -68,18 +100,37 @@ class Topic extends React.Component {
 		return (
 			<div className="frame">
 				<Navigation/>
-				<a href={`/level/${this.props.levelID}`} className="button icon-left">
-					<FontAwesomeIcon icon={faLongArrowAltLeft}/>
-					Topics
-				</a>
-				<h2 className="text-center">{this.state.topic}</h2>
+				<div className="flex x-center">
+					<div>
+						<a href={`/level/${this.props.levelID}`} className="button icon-left">
+							<FontAwesomeIcon icon={faLongArrowAltLeft}/>
+							Topics
+						</a>
+						<h2 className="text-center">{this.state.topic}</h2>
+					</div>
+				</div>
+
+			    {this.state.challenges ?
+			    	<div className={`challenge-options ${this.state.optionsStatus}`} onClick={this.handleToggleOptions}>
+				    	{shuffleArray(this.state.challenges).map((challenge) => 
+				    		<div key={this.state.challenges.indexOf(challenge)}>
+					    		<div className="pad">
+					    			<p className={challenge.answered}>{challenge.Title}</p>
+					    		</div>
+				    		</div>
+			    		)}
+		    		</div>
+			    	:
+			    	<h2>No options</h2>
+			    }
+
 			    {this.state.challenges ?
 			    	<div className="challenges pure-u-1 flex x-space-around">
 				    	{this.state.challenges.map((challenge) => 
 				    		<div key={this.state.challenges.indexOf(challenge)} className="flex x-center pure-u-1 pure-u-lg-1-2">
 					    		<div className="challenge">
 						    		<div className="pad">
-						    			<h2>{challenge.Title}</h2>
+						    			<input type="text" onChange={(event) => this.checkAnswerInput(event.target.value, challenge)}/>
 						    			<p>{challenge.Content}</p>
 						    			{challenge.FeaturedMedia.length ?
 						    				this.renderMedia(challenge)
