@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome, faTimes, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import Navigation from './Navigation.jsx';
 
 function shuffleArray(array) {
@@ -71,6 +71,17 @@ class Topic extends React.Component {
 			newState.challenges[challengeIndex] = challenge;
 			this.setState({ ...newState });
 		}
+
+		// Check to see if all challenges have been answered correctly
+		let allChallengesAnswered = true;
+		this.state.challenges.forEach((challenge) => {
+			if(!challenge.answered){
+				allChallengesAnswered = false;
+			}
+		});
+		if(allChallengesAnswered){
+			alert('Congratulations! You have answered each challenge correctly.');
+		}
 	}
 
 	renderMedia(challenge){
@@ -110,12 +121,22 @@ class Topic extends React.Component {
 					</div>
 				</div>
 
+
+	    		<button className="available-answers button icon-left" onClick={this.handleToggleOptions}>
+					<FontAwesomeIcon icon={faLongArrowAltLeft}/>
+	    			Available Answers
+	    		</button>
+
 			    {this.state.challenges ?
 			    	<div className={`challenge-options ${this.state.optionsStatus}`} onClick={this.handleToggleOptions}>
+				    	<FontAwesomeIcon icon={faTimes} className="close"/>
 				    	{shuffleArray(this.state.challenges).map((challenge) => 
 				    		<div key={this.state.challenges.indexOf(challenge)}>
 					    		<div className="pad">
-					    			<p className={challenge.answered}>{challenge.Title}</p>
+					    			<div className={`challenge-option ${challenge.answered}`}>
+						    			<p>{challenge.Title}</p>
+						    			<FontAwesomeIcon icon={faCheckCircle}/>
+					    			</div>
 					    		</div>
 				    		</div>
 			    		)}
@@ -130,7 +151,13 @@ class Topic extends React.Component {
 				    		<div key={this.state.challenges.indexOf(challenge)} className="flex x-center pure-u-1 pure-u-lg-1-2">
 					    		<div className="challenge">
 						    		<div className="pad">
-						    			<input type="text" onChange={(event) => this.checkAnswerInput(event.target.value, challenge)}/>
+						    			<div className={`challenge-input ${challenge.answered}`}>
+							    			<input type="text" placeholder="Guess meaning" onChange={(event) => this.checkAnswerInput(event.target.value, challenge)}/>
+							    			<div className="input-correct">
+							    				<p>Correct!</p>
+								    			<FontAwesomeIcon icon={faCheckCircle}/>
+							    			</div>
+						    			</div>
 						    			<p>{challenge.Content}</p>
 						    			{challenge.FeaturedMedia.length ?
 						    				this.renderMedia(challenge)

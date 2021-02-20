@@ -89,7 +89,7 @@ class Level extends React.Component {
 										slidesToScroll: 1
 						    		}}>
 							    		<div className="pad">
-								    		<h2>Need a quick refresher? Slide forward.</h2>
+								    		<h2>Need a quick refresher? Slide forward to preview challenges.</h2>
 							    		</div>
 						    			{this.randomChallenges(topic).map((challenge) =>
 						    				<div key={topic.challenges.indexOf(challenge)} className="challenge">

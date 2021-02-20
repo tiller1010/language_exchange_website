@@ -14,13 +14,20 @@
 		}
 	}
 }
+.available-answers{
+	z-index: 9;
+    position: fixed;
+    top: 0;
+    left: 30px;
+    cursor: pointer;
+}
 .challenge-options{
 	z-index: 10;
     position: fixed;
     top: 0;
-    left: -130px;
+    left: -195px;
     height: 100%;
-    width: 130px;
+    width: 195px;
     border-right: 20px solid $input-grey;
     display: flex;
     flex-direction: column;
@@ -31,11 +38,49 @@
     &.opened{
     	left: 0;
     }
-    .correct{
-    	color: $green;
+    svg.close{
+    	align-self: flex-end;
+    	padding: 15px;
+    	font-size: 2em;
+    }
+    .challenge-option{
+    	display: flex;
+    	align-items: center;
+	    &.correct{
+	    	color: $green;
+	    	svg{
+	    		display: block;
+	    	}
+	    }
+    	svg{
+    		display: none;
+    		margin-left: 10px;
+    	}
     }
 }
+.challenge-input{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	&.correct{
+		.input-correct{
+			visibility: visible;
+		}
+	}
+	.input-correct{
+		display: flex;
+		visibility: hidden;
+		align-items: center;
+		color: $green;
+		svg{
+			margin-left: 10px;
+		}
+	}
+}
 @media only screen and (max-width: 815px){
+	.available-answers{
+		display: none;
+	}
 	.challenge-options{
 		left: 0;
 		height: unset;
@@ -44,5 +89,9 @@
 		overflow-x: auto;
 		flex-direction: row;
 		cursor: unset;
+		text-align: center;
+	    svg.close{
+	    	display: none;
+	    }
 	}
 }
