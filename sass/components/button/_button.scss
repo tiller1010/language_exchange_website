@@ -10,7 +10,6 @@ button, a.button{
 	text-decoration: none;
 	color: $blue;
 	transition: background-color .25s ease;
-	align-self: center;
 	cursor: pointer;
 	&.icon-left{
 		padding-left: 40px;

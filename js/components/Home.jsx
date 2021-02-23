@@ -166,7 +166,7 @@ class Home extends React.Component {
 			    	this.state.levels.map((level) => 
 			    		<div key={this.state.levels.indexOf(level)} className="flex x-center">
 				    		<h2 className="pad">Level {level.Level}</h2>
-				    		<a href={`/level/${level.id}`} className="button">
+				    		<a href={`/level/${level.id}`} className="button" style={{ alignSelf: 'center' }}>
 					    		View all
 					    		<FontAwesomeIcon icon={faLongArrowAltRight}/>
 				    		</a>

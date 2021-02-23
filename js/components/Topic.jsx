@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome, faTimes, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome, faTimes, faCheckCircle, faBars } from '@fortawesome/free-solid-svg-icons';
 import Navigation from './Navigation.jsx';
 
 function shuffleArray(array) {
@@ -112,20 +112,18 @@ class Topic extends React.Component {
 			<div className="frame">
 				<Navigation/>
 				<div className="flex x-center">
-					<div>
-						<a href={`/level/${this.props.levelID}`} className="button icon-left">
-							<FontAwesomeIcon icon={faLongArrowAltLeft}/>
-							Topics
-						</a>
-						<h2 className="text-center">{this.state.topic}</h2>
-					</div>
+		    		<button className="available-answers button icon-left" onClick={this.handleToggleOptions}>
+						<FontAwesomeIcon icon={faBars}/>
+		    			Available Answers
+		    		</button>
+					<h2 className="text-center pure-u-1">{this.state.topic}</h2>
 				</div>
 
-
-	    		<button className="available-answers button icon-left" onClick={this.handleToggleOptions}>
+				<a href={`/level/${this.props.levelID}`} className="button icon-left topics-btn">
 					<FontAwesomeIcon icon={faLongArrowAltLeft}/>
-	    			Available Answers
-	    		</button>
+					Topics
+				</a>
+
 
 			    {this.state.challenges ?
 			    	<div className={`challenge-options ${this.state.optionsStatus}`} onClick={this.handleToggleOptions}>

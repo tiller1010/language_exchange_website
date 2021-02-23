@@ -70,7 +70,7 @@ class Level extends React.Component {
 			    		<div key={this.state.topics.indexOf(topic)}>
 				    		<div className="flex x-center">
 					    		<h2 className="pad">{topic.Topic}</h2>
-					    		<a href={`/level/${this.props.levelID}/topics/${topic.id}`} className="button">
+					    		<a href={`/level/${this.props.levelID}/topics/${topic.id}`} className="button" style={{ alignSelf: 'center' }}>
 						    		View all
 						    		<FontAwesomeIcon icon={faLongArrowAltRight}/>
 					    		</a>

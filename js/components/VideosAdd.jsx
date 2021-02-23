@@ -83,7 +83,7 @@ class VideosAdd extends React.Component {
 
 				<div className="page-form">
 					<h1>Video Add</h1>
-					<form action="/videos/add" method="POST" encType="multipart/form-data">
+					<form action="/videos/add" method="POST" encType="multipart/form-data" className="flex-col x-end">
 						<input type="text" name="title" value={this.state.title} onChange={this.handleTitleChange} placeholder="Title" required/>
 						<div className="upload-container">
 							<input type="file" name="video" onChange={this.handleVideoUploadChange} required/>
@@ -107,13 +107,17 @@ class VideosAdd extends React.Component {
 
 				<div className="flex" style={{maxWidth: '1300px'}}>
 					<div className="pure-u-l pure-u-md-1-2" style={{height: '300px'}}>
-						<h2>Video Preview</h2>
-						<video type="video/mp4" className="video-preview" height="225" width="400" controls>
-						</video>
+						<div className="pad">
+							<h2>Video Preview</h2>
+							<video type="video/mp4" className="video-preview" height="225" width="400" controls>
+							</video>
+						</div>
 					</div>
 					<div className="pure-u-l pure-u-md-1-2">
-						<h2>Thumbnail Preview</h2>
-						<div className="thumbnail-preview img-container" style={{height: '225px', width: '400px', border: '1px solid'}}></div>
+						<div className="pad">
+							<h2>Thumbnail Preview</h2>
+							<div className="thumbnail-preview img-container"></div>
+						</div>
 					</div>
 				</div>
 			</div>

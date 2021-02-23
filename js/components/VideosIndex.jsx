@@ -1,7 +1,7 @@
 import React from 'react';
 import lozad from 'lozad';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome, faSlidersH } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome, faSlidersH, faBan } from '@fortawesome/free-solid-svg-icons';
 import Navigation from './Navigation.jsx';
 
 async function getVideos(){
@@ -168,7 +168,7 @@ class VideosIndex extends React.Component {
 					    <div>
 						    <a onClick={this.handleChangePage} href="/videos" className="button">
 							    Clear filters
-						        <FontAwesomeIcon icon={faSync}/>
+						        <FontAwesomeIcon icon={faBan}/>
 						    </a>
 					    </div>
 				    </div>
