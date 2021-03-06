@@ -9,14 +9,26 @@ const { index, add, getRecent } = require('./videos.js');
 const feathers = require('@feathersjs/feathers');
 const service = require('feathers-mongodb');
 const search = require('feathers-mongodb-fuzzy-search');
+const { passport } = require('./passport.js');
+var session = require('express-session');
+var { addUser, findUser } = require('./users.js');
 
 var app = express();
 app.set('views', __dirname + '/views');
 app.set('view engine', '.jsx');
 app.engine('jsx', require('express-react-views').createEngine());
 
+// For login sessions
+app.use(session({
+	secret: 'supersecret',
+	resave: true,
+	saveUninitialized: true
+}));
+
 app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+app.use(passport.session());
 
 function randomFilename() {
   var text = "";
@@ -72,6 +84,7 @@ var upload = multer({ storage });
 			res.render('home');
 		});
 
+		// Recent videos API
 		app.get('/recent-videos', async (req, res) => {
 			const videos = await getRecent();
 			res.send(JSON.stringify(videos));
@@ -142,11 +155,12 @@ var upload = multer({ storage });
 			res.render('videos');
 		});
 
+		// Add video route
 		app.get('/videos/add', (req, res) => {
 			res.render('videos-add');
 		});
 
-		// Add video route
+		// Submit new video route
 		app.post('/videos/add', upload.fields([{name: 'video', maxCount: 1}, {name: 'thumbnail', maxCount: 1}]), async (req, res) => {
 			await add({
 				title: req.body.title,
@@ -160,6 +174,51 @@ var upload = multer({ storage });
 				res.status(200).send('Successful upload');
 			} else {
 				res.redirect('/videos');
+			}
+		});
+
+		// Account profile
+		app.get('/account-profile',
+			async (req, res) => {
+				if(req.isAuthenticated()){
+					const user = await findUser(req.session.passport.user);
+					res.render('account-profile', { user: user });
+				} else {
+					res.redirect('/login');
+				}
+			}
+		);
+
+		// Account login
+		app.get('/login', (req, res) => {
+			res.render('login');
+		});
+
+		// Google login
+		app.get('/auth/google', passport.authenticate('google', { scope: 'https://www.googleapis.com/auth/plus.login' }));
+		app.get('/auth/google/callback', passport.authenticate('google', { successRedirect: '/account-profile', failureRedirect: '/login' }));
+
+		// Account register
+		app.get('/register', (req, res) => {
+			res.render('register');
+		});
+
+		// Account logout
+		app.get('/logout', (req, res) => {
+			req.logout();
+			res.redirect('/');
+		});
+
+		// Find user API
+		app.get('/user:format?/:googleUserID', async (req, res) => {
+			const googleUserID = req.params.googleUserID;
+			const user = await findUser(googleUserID);
+			if(req.params.format){
+				res.format({
+					json: function(){
+						res.send(JSON.stringify(user));
+					}
+				});
 			}
 		});
 

@@ -1,5 +1,4 @@
 const { getDB } = require('./db.js');
-const fs = require('fs');
 
 const pageLength = 3;
 async function index(page = 1, sort = {}){

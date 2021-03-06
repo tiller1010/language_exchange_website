@@ -86,6 +86,61 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./js/components/AccountProfile.jsx":
+/*!******************************************!*\
+  !*** ./js/components/AccountProfile.jsx ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
+
+
+
+
+
+class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {}
+    };
+    this.findUser = this.findUser.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.props.userGoogleID) {
+      this.findUser(this.props.userGoogleID);
+    }
+  }
+
+  async findUser(googleID) {
+    const user = await fetch(`${document.location.origin}/user.json/${googleID}`).then(res => res.json());
+    this.setState({
+      user
+    });
+  }
+
+  render() {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      class: "frame"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome, ", this.state.user.firstName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      href: "/logout"
+    }, "Logout"));
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (AccountProfile);
+
+/***/ }),
+
 /***/ "./js/components/Home.jsx":
 /*!********************************!*\
   !*** ./js/components/Home.jsx ***!
@@ -495,6 +550,13 @@ class Navigation extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component 
       className: "button"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Add a video"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
       icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faPlus"]
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "small-pad"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      href: "/account-profile",
+      className: "button"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Account Profile"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faUser"]
     })))));
   }
 
@@ -1189,10 +1251,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_VideosAdd_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/VideosAdd.jsx */ "./js/components/VideosAdd.jsx");
 /* harmony import */ var _components_Level_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Level.jsx */ "./js/components/Level.jsx");
 /* harmony import */ var _components_Topic_jsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/Topic.jsx */ "./js/components/Topic.jsx");
-/* harmony import */ var slick_carousel_slick_slick_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! slick-carousel/slick/slick.css */ "./node_modules/slick-carousel/slick/slick.css");
-/* harmony import */ var slick_carousel_slick_slick_css__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(slick_carousel_slick_slick_css__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var slick_carousel_slick_slick_theme_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! slick-carousel/slick/slick-theme.css */ "./node_modules/slick-carousel/slick/slick-theme.css");
-/* harmony import */ var slick_carousel_slick_slick_theme_css__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(slick_carousel_slick_slick_theme_css__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _components_AccountProfile_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/AccountProfile.jsx */ "./js/components/AccountProfile.jsx");
+/* harmony import */ var slick_carousel_slick_slick_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! slick-carousel/slick/slick.css */ "./node_modules/slick-carousel/slick/slick.css");
+/* harmony import */ var slick_carousel_slick_slick_css__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(slick_carousel_slick_slick_css__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var slick_carousel_slick_slick_theme_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! slick-carousel/slick/slick-theme.css */ "./node_modules/slick-carousel/slick/slick-theme.css");
+/* harmony import */ var slick_carousel_slick_slick_theme_css__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(slick_carousel_slick_slick_theme_css__WEBPACK_IMPORTED_MODULE_9__);
+
 
 
 
@@ -1229,6 +1293,13 @@ if (document.getElementById('topic')) {
     levelID: levelID,
     topicID: topicID
   }), document.getElementById('topic'));
+}
+
+if (document.getElementById('account-profile')) {
+  var userGoogleID = document.getElementById('account-profile').getAttribute('userGoogleID');
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AccountProfile_jsx__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    userGoogleID: userGoogleID
+  }), document.getElementById('account-profile'));
 }
 
 /***/ }),

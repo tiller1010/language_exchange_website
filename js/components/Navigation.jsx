@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome, faSlidersH, faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faHome, faPlay, faUser } from '@fortawesome/free-solid-svg-icons';
 
 class Navigation extends React.Component {
 
@@ -24,6 +24,12 @@ class Navigation extends React.Component {
 					    <a href="/videos/add" className="button">
 						    <span>Add a video</span>
 					        <FontAwesomeIcon icon={faPlus}/>
+					    </a>
+				    </div>
+				    <div className="small-pad">
+					    <a href="/account-profile" className="button">
+						    <span>Account Profile</span>
+					        <FontAwesomeIcon icon={faUser}/>
 					    </a>
 				    </div>
 				</div>
