@@ -7,9 +7,7 @@ class Login extends React.Component {
 
 		return (
 			<DefaultLayout>
-				<h1>Login placeholder</h1>
-			    <div id="login"></div>
-			    <a href="/auth/google">Login with Google</a>
+			    <div id="login" errors={JSON.stringify(this.props.errors)}></div>
 			</DefaultLayout>
 		);
 	}

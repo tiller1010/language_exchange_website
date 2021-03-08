@@ -7,8 +7,7 @@ class AccountProfile extends React.Component {
 
 		return (
 			<DefaultLayout>
-				<h1>Account placeholder</h1>
-			    <div id="account-profile" userGoogleID={this.props.user.googleID}></div>
+			    <div id="account-profile" identifier={this.props.user.googleID || this.props.user.displayName}></div>
 			</DefaultLayout>
 		);
 	}

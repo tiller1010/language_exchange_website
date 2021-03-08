@@ -1,6 +1,55 @@
 var passport = require('passport');
+var LocalStrategy = require('passport-local');
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 var { addUser, findUser } = require('./users.js');
+var bcrypt = require('bcrypt');
+
+passport.use('local-login', new LocalStrategy({
+		usernameField: 'displayName',
+		passwordField: 'password',
+		passReqToCallback: true
+	}, async (req, displayName, password, done) => {
+		try {
+			let user = await findUser(displayName, 'local');
+
+			if(user){
+				if(!bcrypt.compareSync(password, user.passwordHash)){
+					return done(null, false, { message: 'Incorrect password.' });
+				}
+				return done(null, user);
+			} else {
+				return done(null, false, { message: 'No user found with that name.' });
+			}
+		} catch(error) {
+			console.log(error);
+		}
+	}
+));
+
+passport.use('local-signup', new LocalStrategy({
+		usernameField: 'displayName',
+		passwordField: 'password',
+		passReqToCallback: true
+	}, async (req, displayName, password, done) => {
+		try {
+			let user = await findUser(displayName, 'local');
+			if(user){
+				return done(null, false);
+			} else {
+				let newUser = {
+					displayName,
+					firstName : req.body.firstName,
+					lastName : req.body.lastName,
+					passwordHash: bcrypt.hashSync(password, 10)
+				}
+				let user = await addUser(newUser);
+				return done(null, newUser);
+			}
+		} catch(error) {
+			console.log(error);
+		}
+	}
+));
 
 passport.use(new GoogleStrategy({
 	clientID: process.env.GOOGLE_AUTH_ID,
@@ -16,13 +65,13 @@ passport.use(new GoogleStrategy({
 		}
 
 		try {
-			let user = await findUser(profile.id);
+			let user = await findUser(profile.id, 'google');
 
 			if(user){
-				done(null, user);
+				return done(null, user);
 			} else {
 				let user = await addUser(newUser);
-				done(null, user);
+				return done(null, newUser);
 			}
 		} catch(error) {
 			console.log(error);
@@ -31,12 +80,22 @@ passport.use(new GoogleStrategy({
 ));
 
 passport.serializeUser((user, done) => {
-	done(null, user.googleID);
+	if(user.googleID){
+		return done(null, user.googleID);
+	} else {
+		// done(null, user.ops[0].displayName);
+		return done(null, user.displayName);
+	}
 });
 
-passport.deserializeUser( async (googleID, done) => {
-	const user = await findUser(googleID);
-	done(null, user);
+passport.deserializeUser( async (identifier, done) => {
+	let user = await findUser(identifier, 'google');
+	if(user){
+		return done(null, user);
+	} else {
+		let user = await findUser(identifier, 'local');
+		return done(null, user);
+	}
 });
 
 module.exports.passport = passport;

@@ -12,7 +12,7 @@ async function getVideos(){
 	return fetch(`${document.location.origin}/videos.json?${searchKeywords ? 'keywords=' + searchKeywords + '&' : ''}
 			${page ? 'page=' + page : ''}
 			${sort ? '&sort=' + sort : ''}`
-		)
+		, { credentials: 'include' })
 		.then((response) => response.json());
 }
 

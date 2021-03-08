@@ -11,6 +11,7 @@ const service = require('feathers-mongodb');
 const search = require('feathers-mongodb-fuzzy-search');
 const { passport } = require('./passport.js');
 var session = require('express-session');
+var flash = require('connect-flash');
 var { addUser, findUser } = require('./users.js');
 
 var app = express();
@@ -24,6 +25,7 @@ app.use(session({
 	resave: true,
 	saveUninitialized: true
 }));
+app.use(flash());
 
 app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -121,7 +123,6 @@ var upload = multer({ storage });
 			} else if(sort === 'Z-A'){
 				sortObject = {title: -1};
 			}
-
 			// If using search keywords
 			if(keywords){
 				const searchPageLength = 3;
@@ -150,6 +151,7 @@ var upload = multer({ storage });
 						res.send(JSON.stringify(videos))
 					}
 				})
+				return;
 			}
 
 			res.render('videos');
@@ -181,7 +183,10 @@ var upload = multer({ storage });
 		app.get('/account-profile',
 			async (req, res) => {
 				if(req.isAuthenticated()){
-					const user = await findUser(req.session.passport.user);
+					let user = await findUser(req.session.passport.user, 'google');
+					if(!user){
+						user = await findUser(req.session.passport.user, 'local');
+					}
 					res.render('account-profile', { user: user });
 				} else {
 					res.redirect('/login');
@@ -191,8 +196,15 @@ var upload = multer({ storage });
 
 		// Account login
 		app.get('/login', (req, res) => {
-			res.render('login');
+			const errors = req.flash().error || [];
+			res.render('login', { errors });
 		});
+		// Submit login form
+		app.post('/login', passport.authenticate('local-login', {
+			successRedirect: '/account-profile',
+			failureRedirect: '/login',
+			failureFlash: true 
+		}));
 
 		// Google login
 		app.get('/auth/google', passport.authenticate('google', { scope: 'https://www.googleapis.com/auth/plus.login' }));
@@ -200,8 +212,21 @@ var upload = multer({ storage });
 
 		// Account register
 		app.get('/register', (req, res) => {
+			const errors = req.flash().error || [];
 			res.render('register');
 		});
+		// Submit register form
+		app.post('/register', passport.authenticate('local-signup', {
+				successRedirect: '/account-profile',
+				failureRedirect: '/register',
+				failureFlash: true,
+				successFlash: {
+					type: 'messageSuccess',
+					message: 'Successfully signed up.'
+				}
+			})
+		);
+
 
 		// Account logout
 		app.get('/logout', (req, res) => {
@@ -210,15 +235,19 @@ var upload = multer({ storage });
 		});
 
 		// Find user API
-		app.get('/user:format?/:googleUserID', async (req, res) => {
-			const googleUserID = req.params.googleUserID;
-			const user = await findUser(googleUserID);
+		app.get('/user:format?/:identifier', async (req, res) => {
+			const identifier = req.params.identifier;
+			let user = await findUser(identifier, 'google');
+			if(!user){
+				user = await findUser(identifier, 'local');
+			}
 			if(req.params.format){
 				res.format({
 					json: function(){
 						res.send(JSON.stringify(user));
 					}
 				});
+				return;
 			}
 		});
 

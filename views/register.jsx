@@ -7,8 +7,7 @@ class Register extends React.Component {
 
 		return (
 			<DefaultLayout>
-				<h1>Register placeholder</h1>
-			    <div id="register"></div>
+			    <div id="register" errors={JSON.stringify(this.props.errors)}></div>
 			</DefaultLayout>
 		);
 	}

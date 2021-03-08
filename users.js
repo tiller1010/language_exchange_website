@@ -6,9 +6,18 @@ async function add(user){
 	return newUser;
 }
 
-async function find(userID){
+async function find(identifier, strategy){
 	const db = getDB();
-	const newUser = await db.collection('users').findOne({ googleID: userID });
+	let findObject = {};
+	switch(strategy){
+		case 'local':
+			findObject = { displayName: identifier };
+		break;
+		case 'google':
+			findObject = { googleID: identifier };
+		break;
+	}
+	const newUser = await db.collection('users').findOne(findObject);
 	return newUser;
 }
 
