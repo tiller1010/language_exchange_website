@@ -196,6 +196,9 @@ var upload = multer({ storage });
 
 		// Account login
 		app.get('/login', (req, res) => {
+			if(req.user){
+				return res.redirect('/account-profile');
+			}
 			const errors = req.flash().error || [];
 			res.render('login', { errors });
 		});
@@ -212,8 +215,11 @@ var upload = multer({ storage });
 
 		// Account register
 		app.get('/register', (req, res) => {
+			if(req.user){
+				return res.redirect('/account-profile');
+			}
 			const errors = req.flash().error || [];
-			res.render('register');
+			res.render('register', { errors });
 		});
 		// Submit register form
 		app.post('/register', passport.authenticate('local-signup', {

@@ -34,8 +34,11 @@ passport.use('local-signup', new LocalStrategy({
 		try {
 			let user = await findUser(displayName, 'local');
 			if(user){
-				return done(null, false);
+				return done(null, false, { message: 'User with that name already exists.' });
 			} else {
+				if(password !== req.body.confirmPassword){
+					return done(null, false, { message: 'Passwords do not match.' });
+				}
 				let newUser = {
 					displayName,
 					firstName : req.body.firstName,
@@ -83,7 +86,6 @@ passport.serializeUser((user, done) => {
 	if(user.googleID){
 		return done(null, user.googleID);
 	} else {
-		// done(null, user.ops[0].displayName);
 		return done(null, user.displayName);
 	}
 });

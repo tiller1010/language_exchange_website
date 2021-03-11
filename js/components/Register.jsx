@@ -40,23 +40,27 @@ class Register extends React.Component {
 				}
 
 				<form action="/register" method="POST">
-					<div>
+					<div className="small-pad no-x">
 						<label htmlFor="firstName">First Name</label>
 						<input type="text" name="firstName"/>
 					</div>
-					<div>
+					<div className="small-pad no-x">
 						<label htmlFor="lastName">Last Name</label>
 						<input type="text" name="lastName"/>
 					</div>
-					<div>
+					<div className="small-pad no-x">
 						<label htmlFor="displayName">Display Name</label>
 						<input type="text" name="displayName"/>
 					</div>
-					<div>
+					<div className="small-pad no-x">
 						<label htmlFor="password">Password</label>
 						<input type="password" name="password"/>
 					</div>
-					<div>
+					<div className="small-pad no-x">
+						<label htmlFor="confirmPassword">Confirm Password</label>
+						<input type="password" name="confirmPassword"/>
+					</div>
+					<div className="small-pad no-x">
 						<button type="submit">
 							Register
 							<FontAwesomeIcon icon={faLongArrowAltRight}/>

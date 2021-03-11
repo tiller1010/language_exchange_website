@@ -26,7 +26,7 @@ class Login extends React.Component {
 				<Navigation/>
 
 				<h1>Login</h1>
-				
+
 				{this.state.errors.length ?
 					<ul className="errors">
 						{this.state.errors.map((error) =>
@@ -40,15 +40,15 @@ class Login extends React.Component {
 				}
 
 				<form action="/login" method="POST">
-					<div>
+					<div className="small-pad no-x">
 						<label htmlFor="displayName">Display Name</label>
 						<input type="text" name="displayName"/>
 					</div>
-					<div>
+					<div className="small-pad no-x">
 						<label htmlFor="password">Password</label>
 						<input type="password" name="password"/>
 					</div>
-					<div>
+					<div className="small-pad no-x">
 						<button type="submit">
 							Login
 							<FontAwesomeIcon icon={faLongArrowAltRight}/>
