@@ -1,7 +1,7 @@
 import React from 'react';
 import lozad from 'lozad';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome, faSlidersH, faBan } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome, faSlidersH, faBan, faStar } from '@fortawesome/free-solid-svg-icons';
 import Navigation from './Navigation.jsx';
 
 async function getVideos(){
@@ -37,6 +37,7 @@ class VideosIndex extends React.Component {
 		this.handleSortChange = this.handleSortChange.bind(this);
 		this.handleChangePage = this.handleChangePage.bind(this);
 		this.handleSearch = this.handleSearch.bind(this);
+		this.sendLike = this.sendLike.bind(this);
 	}
 
 	async componentDidMount(){
@@ -101,6 +102,21 @@ class VideosIndex extends React.Component {
 			pageLinks.push({pageNumber: i});
 		}
 		return pageLinks;
+	}
+
+	async sendLike(video){
+		const newLikedVideo = await fetch(`${document.location.origin}/sendLike/${video._id}`)
+			.then(res => res.json())
+			.catch(error => console.log(error));
+		if(newLikedVideo.message){
+			alert(newLikedVideo.message);
+		} else if(newLikedVideo) {
+			let newVideos = this.state.videos;
+			newVideos[newVideos.indexOf(video)] = newLikedVideo;
+			this.setState({
+				videos: newVideos
+			});
+		}
 	}
 
 	render(){
@@ -234,6 +250,11 @@ class VideosIndex extends React.Component {
 											<source src={video.src}></source>
 										</video>
 									</div>
+									<p>Likes: {video.likes || 0}</p>
+									<button onClick={() => this.sendLike(video)}>
+										Like
+										<FontAwesomeIcon icon={faStar}/>
+									</button>
 								</div>
 							)}
 						</div>

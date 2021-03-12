@@ -135,7 +135,23 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compon
       className: "button"
     }, "Logout", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
       icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faSignOutAlt"]
-    })));
+    })), this.state.user.likedVideos ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Liked Videos"), this.state.user.likedVideos.map(video => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      key: video._id,
+      className: "pure-u-1 pure-u-lg-1-3"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, video.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      style: {
+        height: '300px'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+      type: "video/mp4",
+      className: "video-preview lozad",
+      height: "225",
+      width: "400",
+      poster: video.thumbnailSrc || "/images/videoPlaceholder.png",
+      controls: true
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
+      src: video.src
+    })))))) : '');
   }
 
 }
@@ -1181,6 +1197,7 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
     this.handleSortChange = this.handleSortChange.bind(this);
     this.handleChangePage = this.handleChangePage.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.sendLike = this.sendLike.bind(this);
   }
 
   async componentDidMount() {
@@ -1249,6 +1266,20 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
     }
 
     return pageLinks;
+  }
+
+  async sendLike(video) {
+    const newLikedVideo = await fetch(`${document.location.origin}/sendLike/${video._id}`).then(res => res.json()).catch(error => console.log(error));
+
+    if (newLikedVideo.message) {
+      alert(newLikedVideo.message);
+    } else if (newLikedVideo) {
+      let newVideos = this.state.videos;
+      newVideos[newVideos.indexOf(video)] = newLikedVideo;
+      this.setState({
+        videos: newVideos
+      });
+    }
   }
 
   render() {
@@ -1392,7 +1423,11 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
       controls: true
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
       src: video.src
-    })))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "No videos"), this.state.pages.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Likes: ", video.likes || 0), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      onClick: () => this.sendLike(video)
+    }, "Like", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faStar"]
+    }))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "No videos"), this.state.pages.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
       className: "pagination flex"
     }, this.state.currentPage > 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       onClick: this.handleChangePage,

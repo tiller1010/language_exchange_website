@@ -5,7 +5,7 @@ var upload = multer({ dest: 'public/assets/' });
 const path = require('path');
 const appPort = process.env.APP_PORT || 3000;
 const { connectToDB, getDB } = require('./db.js');
-const { index, add, getRecent } = require('./videos.js');
+const { indexVideos, addVideo, getRecent } = require('./videos.js');
 const feathers = require('@feathersjs/feathers');
 const service = require('feathers-mongodb');
 const search = require('feathers-mongodb-fuzzy-search');
@@ -13,6 +13,7 @@ const { passport } = require('./passport.js');
 var session = require('express-session');
 var flash = require('connect-flash');
 var { addUser, findUser } = require('./users.js');
+var { addLike, findUserLikes, findVideoLikeCount } = require('./likes.js');
 
 var app = express();
 app.set('views', __dirname + '/views');
@@ -142,7 +143,7 @@ var upload = multer({ storage });
 			    	pages
 			    }
 			} else {
-				videos = await index(page, sortObject);
+				videos = await indexVideos(page, sortObject);
 			}
 
 			if(req.params.format){
@@ -157,6 +158,17 @@ var upload = multer({ storage });
 			res.render('videos');
 		});
 
+		// Send like API
+		app.get('/sendLike/:videoID', async (req, res) => {
+			// Only can send a like if logged in
+			if(!req.user){
+				return res.send({ message: 'Must be signed in to send like.' });
+			} else {
+				const updatedVideo = await addLike(req.user._id, req.params.videoID);
+				return res.send(updatedVideo);
+			}
+		});
+
 		// Add video route
 		app.get('/videos/add', (req, res) => {
 			res.render('videos-add');
@@ -164,7 +176,7 @@ var upload = multer({ storage });
 
 		// Submit new video route
 		app.post('/videos/add', upload.fields([{name: 'video', maxCount: 1}, {name: 'thumbnail', maxCount: 1}]), async (req, res) => {
-			await add({
+			await addVideo({
 				title: req.body.title,
 				src: 'assets/' + req.files['video'][0].filename,
 				originalName: req.files['video'][0].originalname,

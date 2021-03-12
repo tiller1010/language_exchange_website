@@ -1,12 +1,12 @@
 const { getDB } = require('./db.js');
 
-async function add(user){
+async function addUser(user){
 	const db = getDB();
 	const newUser = await db.collection('users').insertOne(user);
 	return newUser;
 }
 
-async function find(identifier, strategy){
+async function findUser(identifier, strategy){
 	const db = getDB();
 	let findObject = {};
 	switch(strategy){
@@ -22,4 +22,4 @@ async function find(identifier, strategy){
 }
 
 
-module.exports = { addUser: add, findUser: find };
+module.exports = { addUser, findUser };
