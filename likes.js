@@ -4,12 +4,6 @@ const mongo = require('mongodb');
 
 async function addLike(userID, videoID){
 	const db = getDB();
-	// const newLike = {
-	// 	userID = user._id,
-	// 	videoID = video._id
-	// }
-	// const like = await db.collection('likes').insertOne(newLike);
-	// return like;
 
 	let user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
 	let likedVideos = user.likedVideos || [];
@@ -36,21 +30,4 @@ async function addLike(userID, videoID){
 	return false;
 }
 
-async function findUserLikes(user){
-	const db = getDB();
-	// const likes = db.collection('likes').find({ userID: user._id }).toArray();
-	// let likedVideos = [];
-	// likes.forEach((like) => {
-	// 	let video = await db.collection('videos').findOne({ _id: like.videoID });
-	// 	likedVideos.push(video);
-	// });
-	// return likedVideos;
-}
-
-async function findVideoLikeCount(video){
-	const db = getDB();
-	// const likes = db.collection('likes').find({ videoID: video._id }).count();
-	// return likes;
-}
-
-module.exports = { addLike, findUserLikes, findVideoLikeCount };
+module.exports = { addLike };

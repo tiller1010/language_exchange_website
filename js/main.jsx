@@ -15,7 +15,8 @@ if(document.getElementById('home')){
 	ReactDOM.render(<Home/>, document.getElementById('home'));
 }
 if(document.getElementById('videos')){
-	ReactDOM.render(<VideosIndex/>, document.getElementById('videos'));
+	var userLikedVideos = document.getElementById('videos').getAttribute('userLikedVideos');
+	ReactDOM.render(<VideosIndex userLikedVideos={userLikedVideos}/>, document.getElementById('videos'));
 }
 if(document.getElementById('videos-add')){
 	ReactDOM.render(<VideosAdd/>, document.getElementById('videos-add'));

@@ -7,7 +7,7 @@ class Videos extends React.Component {
 
 		return (
 			<DefaultLayout>
-			    <div id="videos"></div>
+			    <div id="videos" userLikedVideos={JSON.stringify(this.props.userLikedVideos)}></div>
 			</DefaultLayout>
 		);
 	}

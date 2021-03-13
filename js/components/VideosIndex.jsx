@@ -2,6 +2,7 @@ import React from 'react';
 import lozad from 'lozad';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome, faSlidersH, faBan, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import Navigation from './Navigation.jsx';
 
 async function getVideos(){
@@ -28,7 +29,8 @@ class VideosIndex extends React.Component {
 			pages: [],
 			currentPage: 1,
 			keywords: '',
-			sort: ''
+			sort: '',
+			userLikedVideos: []
 		}
 		this.refreshVideos = this.refreshVideos.bind(this);
 		this.pagination = this.pagination.bind(this);
@@ -38,10 +40,14 @@ class VideosIndex extends React.Component {
 		this.handleChangePage = this.handleChangePage.bind(this);
 		this.handleSearch = this.handleSearch.bind(this);
 		this.sendLike = this.sendLike.bind(this);
+		this.currentUserHasLikedVideo = this.currentUserHasLikedVideo.bind(this);
 	}
 
 	async componentDidMount(){
 		this.refreshVideos();
+		this.setState({
+			userLikedVideos: JSON.parse(this.props.userLikedVideos)
+		});
 	}
 
 	async refreshVideos(){
@@ -52,6 +58,11 @@ class VideosIndex extends React.Component {
 
 		var newVideos = await getVideos();
 		if(newVideos){
+			// Check if the current user has liked each video
+			newVideos.videos.forEach((video) => {
+				video.likedByCurrentUser = this.currentUserHasLikedVideo(video);
+			});
+
 			this.setState({
 				videos: newVideos.videos,
 				pages: this.pagination(newVideos.pages),
@@ -111,12 +122,23 @@ class VideosIndex extends React.Component {
 		if(newLikedVideo.message){
 			alert(newLikedVideo.message);
 		} else if(newLikedVideo) {
+			newLikedVideo.likedByCurrentUser = true;
 			let newVideos = this.state.videos;
 			newVideos[newVideos.indexOf(video)] = newLikedVideo;
 			this.setState({
 				videos: newVideos
 			});
 		}
+	}
+
+	currentUserHasLikedVideo(video){
+		let liked = false;
+		this.state.userLikedVideos.forEach((userLikedVideo) => {
+			if(userLikedVideo._id === video._id){
+				liked = true;
+			}
+		});
+		return liked;
 	}
 
 	render(){
@@ -243,18 +265,22 @@ class VideosIndex extends React.Component {
 							{this.state.videos.map((video) => 
 								<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
 									<h3>{video.title}</h3>
-									<div style={{height: '300px'}}>
-										<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
-											video.thumbnailSrc || "/images/videoPlaceholder.png"
-										} controls>
-											<source src={video.src}></source>
-										</video>
+									<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
+										video.thumbnailSrc || "/images/videoPlaceholder.png"
+									} controls>
+										<source src={video.src}></source>
+									</video>
+									<div className="flex x-space-around y-center">
+										<p>Likes: {video.likes || 0}</p>
+										<button onClick={() => this.sendLike(video)}>
+											Like
+											{video.likedByCurrentUser ?
+												<FontAwesomeIcon icon={faStar}/>
+												:
+												<FontAwesomeIcon icon={farStar}/>
+											}
+										</button>
 									</div>
-									<p>Likes: {video.likes || 0}</p>
-									<button onClick={() => this.sendLike(video)}>
-										Like
-										<FontAwesomeIcon icon={faStar}/>
-									</button>
 								</div>
 							)}
 						</div>

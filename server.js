@@ -13,7 +13,7 @@ const { passport } = require('./passport.js');
 var session = require('express-session');
 var flash = require('connect-flash');
 var { addUser, findUser } = require('./users.js');
-var { addLike, findUserLikes, findVideoLikeCount } = require('./likes.js');
+var { addLike } = require('./likes.js');
 
 var app = express();
 app.set('views', __dirname + '/views');
@@ -155,7 +155,12 @@ var upload = multer({ storage });
 				return;
 			}
 
-			res.render('videos');
+			let userLikedVideos = [];
+			if(req.user){
+				userLikedVideos = req.user.likedVideos;
+			}
+
+			res.render('videos', { userLikedVideos });
 		});
 
 		// Send like API
