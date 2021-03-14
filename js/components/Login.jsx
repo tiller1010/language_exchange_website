@@ -25,44 +25,44 @@ class Login extends React.Component {
 			<div className="frame">
 				<Navigation/>
 
-				<h1>Login</h1>
+				<div className="page-form">
+					<h1>Login</h1>
 
-				{this.state.errors.length ?
-					<ul className="errors">
-						{this.state.errors.map((error) =>
-							<li key={this.state.errors.indexOf(error)}>
-								{error}
-							</li>
-						)}
-					</ul>
-					:
-					''
-				}
-
-				<form action="/login" method="POST">
-					<div className="small-pad no-x">
-						<label htmlFor="displayName">Display Name</label>
-						<input type="text" name="displayName"/>
-					</div>
-					<div className="small-pad no-x">
-						<label htmlFor="password">Password</label>
-						<input type="password" name="password"/>
-					</div>
-					<div className="small-pad no-x">
-						<button type="submit">
-							Login
-							<FontAwesomeIcon icon={faLongArrowAltRight}/>
-						</button>
-					</div>
-				</form>
-			    <a href="/register" className="button">
-				    Register
-				    <FontAwesomeIcon icon={faLongArrowAltRight}/>
-			    </a>
-			    <a href="/auth/google" className="button">
-				    Login with Google
-				    <FontAwesomeIcon icon={faGoogle}/>
-			    </a>
+					{this.state.errors.length ?
+						<ul className="errors">
+							{this.state.errors.map((error) =>
+								<li key={this.state.errors.indexOf(error)}>
+									{error}
+								</li>
+							)}
+						</ul>
+						:
+						''
+					}
+					
+					<form action="/login" method="POST" className="flex-col x-end">
+						<div className="small-pad no-x">
+							<input type="text" name="displayName" placeholder="Display Name" aria-label="display name"/>
+						</div>
+						<div className="small-pad no-x">
+							<input type="password" name="password" placeholder="Password" aria-label="password"/>
+						</div>
+						<div className="small-pad no-x">
+							<button type="submit">
+								Login
+								<FontAwesomeIcon icon={faLongArrowAltRight}/>
+							</button>
+						</div>
+					</form>
+				    <a href="/register" className="button">
+					    Register
+					    <FontAwesomeIcon icon={faLongArrowAltRight}/>
+				    </a>
+				    <a href="/auth/google" className="button">
+					    Login with Google
+					    <FontAwesomeIcon icon={faGoogle}/>
+				    </a>
+				</div>
 			</div>
 		);
 	}

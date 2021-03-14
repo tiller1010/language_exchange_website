@@ -178,6 +178,7 @@ input[type=text], input[type=password] {
 
 .sort-controls {
   position: relative;
+  margin-left: auto;
 }
 .sort-controls .control-icon {
   z-index: 2;
@@ -395,6 +396,8 @@ i {
 .pagination {
   list-style: none;
   padding: 0;
+  flex-flow: row;
+  overflow-x: auto;
 }
 .pagination li {
   padding: 5px;
@@ -410,13 +413,6 @@ i {
 
 .challenges .challenge p {
   max-width: 400px;
-}
-
-a.topics-btn {
-  left: 30px;
-  z-index: 9;
-  position: fixed;
-  top: 0;
 }
 
 .challenge-options {

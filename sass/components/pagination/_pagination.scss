@@ -1,6 +1,8 @@
 .pagination{
 	list-style: none;
 	padding: 0;
+	flex-flow: row;
+	overflow-x: auto;
 	li{
 		padding: 5px;
 	}

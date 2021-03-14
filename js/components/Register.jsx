@@ -25,52 +25,49 @@ class Register extends React.Component {
 			<div className="frame">
 				<Navigation/>
 
-				<h1>Register</h1>
+				<div className="page-form">
+					<h1>Register</h1>
 
-				{this.state.errors.length ?
-					<ul className="errors">
-						{this.state.errors.map((error) =>
-							<li key={this.state.errors.indexOf(error)}>
-								{error}
-							</li>
-						)}
-					</ul>
-					:
-					''
-				}
+					{this.state.errors.length ?
+						<ul className="errors">
+							{this.state.errors.map((error) =>
+								<li key={this.state.errors.indexOf(error)}>
+									{error}
+								</li>
+							)}
+						</ul>
+						:
+						''
+					}
 
-				<form action="/register" method="POST">
-					<div className="small-pad no-x">
-						<label htmlFor="firstName">First Name</label>
-						<input type="text" name="firstName"/>
-					</div>
-					<div className="small-pad no-x">
-						<label htmlFor="lastName">Last Name</label>
-						<input type="text" name="lastName"/>
-					</div>
-					<div className="small-pad no-x">
-						<label htmlFor="displayName">Display Name</label>
-						<input type="text" name="displayName"/>
-					</div>
-					<div className="small-pad no-x">
-						<label htmlFor="password">Password</label>
-						<input type="password" name="password"/>
-					</div>
-					<div className="small-pad no-x">
-						<label htmlFor="confirmPassword">Confirm Password</label>
-						<input type="password" name="confirmPassword"/>
-					</div>
-					<div className="small-pad no-x">
-						<button type="submit">
-							Register
-							<FontAwesomeIcon icon={faLongArrowAltRight}/>
-						</button>
-					</div>
-				</form>
-			    <a href="/auth/google" className="button">
-				    Register with Google
-				    <FontAwesomeIcon icon={faGoogle}/>
-			    </a>
+					<form action="/register" method="POST" className="flex-col x-end">
+						<div className="small-pad no-x">
+							<input type="text" name="firstName" placeholder="First Name" aria-label="first name"/>
+						</div>
+						<div className="small-pad no-x">
+							<input type="text" name="lastName" placeholder="Last Name" aria-label="last name"/>
+						</div>
+						<div className="small-pad no-x">
+							<input type="text" name="displayName" placeholder="Display Name" aria-label="display name"/>
+						</div>
+						<div className="small-pad no-x">
+							<input type="password" name="password" placeholder="Password" aria-label="password"/>
+						</div>
+						<div className="small-pad no-x">
+							<input type="password" name="confirmPassword" placeholder="Confirm Password" aria-label="confirm password"/>
+						</div>
+						<div className="small-pad no-x">
+							<button type="submit">
+								Register
+								<FontAwesomeIcon icon={faLongArrowAltRight}/>
+							</button>
+						</div>
+					</form>
+				    <a href="/auth/google" className="button">
+					    Register with Google
+					    <FontAwesomeIcon icon={faGoogle}/>
+				    </a>
+				</div>
 			</div>
 		);
 	}

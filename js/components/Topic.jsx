@@ -112,6 +112,11 @@ class Topic extends React.Component {
 			<div className="frame">
 				<Navigation/>
 				<div className="flex x-center">
+					<a href={`/level/${this.props.levelID}`} className="button icon-left">
+						<FontAwesomeIcon icon={faLongArrowAltLeft}/>
+						Back to Topics
+					</a>
+					<span>&nbsp;</span>
 		    		<button className="available-answers button icon-left" onClick={this.handleToggleOptions}>
 						<FontAwesomeIcon icon={faBars}/>
 		    			Available Answers
@@ -119,10 +124,6 @@ class Topic extends React.Component {
 					<h2 className="text-center pure-u-1">{this.state.topic}</h2>
 				</div>
 
-				<a href={`/level/${this.props.levelID}`} className="button icon-left topics-btn">
-					<FontAwesomeIcon icon={faLongArrowAltLeft}/>
-					Topics
-				</a>
 
 
 			    {this.state.challenges ?
