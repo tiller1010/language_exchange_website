@@ -40,6 +40,7 @@ class VideosIndex extends React.Component {
 		this.handleChangePage = this.handleChangePage.bind(this);
 		this.handleSearch = this.handleSearch.bind(this);
 		this.sendLike = this.sendLike.bind(this);
+		this.removeLike = this.removeLike.bind(this);
 		this.currentUserHasLikedVideo = this.currentUserHasLikedVideo.bind(this);
 	}
 
@@ -120,13 +121,45 @@ class VideosIndex extends React.Component {
 			.then(res => res.json())
 			.catch(error => console.log(error));
 		if(newLikedVideo.message){
+			// Display error message if included in response
 			alert(newLikedVideo.message);
 		} else if(newLikedVideo) {
+			// Update the video state to be liked by the current user. Used immediately after liking.
 			newLikedVideo.likedByCurrentUser = true;
 			let newVideos = this.state.videos;
 			newVideos[newVideos.indexOf(video)] = newLikedVideo;
+			// Add video to user's liked videos. Used when a re-render occurs.
+			let newUserLikedVideos = this.state.userLikedVideos;
+			newUserLikedVideos.push(video);
 			this.setState({
-				videos: newVideos
+				videos: newVideos,
+				userLikedVideos: newUserLikedVideos
+			});
+		}
+	}
+
+	async removeLike(video){
+		const newUnlikedVideo = await fetch(`${document.location.origin}/removeLike/${video._id}`)
+			.then(res => res.json())
+			.catch(error => console.log(error));
+		if(newUnlikedVideo.message){
+			// Display error message if included in response
+			alert(newUnlikedVideo.message);
+		} else if(newUnlikedVideo) {
+			// Update the video state to remove like from the current user. Used immediately after unliking.
+			newUnlikedVideo.likedByCurrentUser = false;
+			let newVideos = this.state.videos;
+			newVideos[newVideos.indexOf(video)] = newUnlikedVideo;
+			// Remove video from user's liked videos. Used when a re-render occurs.
+			let newUserLikedVideos = [];
+			this.state.userLikedVideos.forEach((userLikedVideo) => {
+				if(userLikedVideo._id != video._id){
+					newUserLikedVideos.push(userLikedVideo);
+				}
+			});
+			this.setState({
+				videos: newVideos,
+				userLikedVideos: newUserLikedVideos
 			});
 		}
 	}
@@ -272,14 +305,17 @@ class VideosIndex extends React.Component {
 									</video>
 									<div className="flex x-space-around y-center">
 										<p>Likes: {video.likes || 0}</p>
-										<button onClick={() => this.sendLike(video)}>
-											Like
-											{video.likedByCurrentUser ?
+										{video.likedByCurrentUser ?
+											<button onClick={() => this.removeLike(video)}>
+												Liked
 												<FontAwesomeIcon icon={faStar}/>
-												:
+											</button>
+											:
+											<button onClick={() => this.sendLike(video)}>
+												Like
 												<FontAwesomeIcon icon={farStar}/>
-											}
-										</button>
+											</button>
+										}
 									</div>
 								</div>
 							)}

@@ -13,7 +13,7 @@ const { passport } = require('./passport.js');
 var session = require('express-session');
 var flash = require('connect-flash');
 var { addUser, findUser } = require('./users.js');
-var { addLike } = require('./likes.js');
+var { addLike, removeLike } = require('./likes.js');
 
 var app = express();
 app.set('views', __dirname + '/views');
@@ -170,6 +170,17 @@ var upload = multer({ storage });
 				return res.send({ message: 'Must be signed in to send like.' });
 			} else {
 				const updatedVideo = await addLike(req.user._id, req.params.videoID);
+				return res.send(updatedVideo);
+			}
+		});
+
+		// Remove like API
+		app.get('/removeLike/:videoID', async (req, res) => {
+			// Only can remove a like if logged in
+			if(!req.user){
+				return res.send({ message: 'Must be signed in to remove like.' }); // This cannot occur in most cases. Need to be signed in to send likes.
+			} else {
+				const updatedVideo = await removeLike(req.user._id, req.params.videoID);
 				return res.send(updatedVideo);
 			}
 		});

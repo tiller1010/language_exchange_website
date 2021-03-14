@@ -30,4 +30,28 @@ async function addLike(userID, videoID){
 	return false;
 }
 
-module.exports = { addLike };
+async function removeLike(userID, videoID){
+	const db = getDB();
+
+	let user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
+	let likedVideos = user.likedVideos || [];
+	let video = await db.collection('videos').findOne({ _id: new mongo.ObjectID(videoID) });
+
+	// Remove a like from video
+	let videoLikes = video.likes || 0;
+	await db.collection('videos').updateOne({ _id: new mongo.ObjectID(videoID) }, { $set: { likes: videoLikes - 1 } });
+	const updateVideo = await db.collection('videos').findOne({ _id: new mongo.ObjectID(videoID) });
+
+	// Remove the updated video from the users's liked videos
+	let newUserLikedVideos = [];
+	likedVideos.forEach((userLikedVideo) => {
+		if(String(userLikedVideo._id) != String(videoID)){
+			newUserLikedVideos.push(userLikedVideo)
+		}
+	});
+	await db.collection('users').updateOne({ _id: new mongo.ObjectID(userID) }, { $set: { likedVideos: newUserLikedVideos } });
+
+	return updateVideo;
+}
+
+module.exports = { addLike, removeLike };
