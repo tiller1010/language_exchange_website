@@ -198,7 +198,8 @@ var upload = multer({ storage });
 				originalName: req.files['video'][0].originalname,
 				thumbnailSrc: 'assets/' + req.files['thumbnail'][0].filename,
 				originalThumbnailName: req.files['thumbnail'][0].originalname,
-				created: new Date()
+				created: new Date(),
+				uploadedBy: req.user || { displayName: 'Guest' }
 			});
 			if(req.body.nativeFlag){
 				res.status(200).send('Successful upload');

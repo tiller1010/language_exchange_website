@@ -298,6 +298,13 @@ class VideosIndex extends React.Component {
 							{this.state.videos.map((video) => 
 								<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
 									<h3>{video.title}</h3>
+									{video.uploadedBy ?
+									<div>
+										<p>By: {video.uploadedBy.displayName}</p>
+									</div>
+									:
+									<p></p>
+									}
 									<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
 										video.thumbnailSrc || "/images/videoPlaceholder.png"
 									} controls>
