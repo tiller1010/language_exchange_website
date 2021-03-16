@@ -1,4 +1,5 @@
 const { getDB } = require('./db.js');
+const mongo = require('mongodb');
 
 const pageLength = 3;
 async function indexVideos(page = 1, sort = {}){
@@ -16,7 +17,17 @@ async function indexVideos(page = 1, sort = {}){
 async function addVideo(video){
 	const db = getDB();
 	const newVideo = await db.collection('videos').insertOne(video);
-	return video;
+	return newVideo.ops[0];
+}
+
+async function addVideoToUsersUploads(video, userID){
+	const db = getDB();
+	const user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
+	let usersUploads = user.uploadedVideos || [];
+	usersUploads.push(video);
+	console.log(usersUploads)
+	await db.collection('users').updateOne({ _id: new mongo.ObjectID(userID) }, { $set: { uploadedVideos: usersUploads } });
+	return;
 }
 
 async function getRecent(limit = 6){
@@ -25,4 +36,4 @@ async function getRecent(limit = 6){
 	return {videos};
 }
 
-module.exports = { indexVideos, addVideo, getRecent };
+module.exports = { indexVideos, addVideo, getRecent, addVideoToUsersUploads };

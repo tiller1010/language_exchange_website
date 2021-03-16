@@ -1,5 +1,4 @@
 const { getDB } = require('./db.js');
-const { MongoClient } = require('mongodb');
 const mongo = require('mongodb');
 
 async function addLike(userID, videoID){

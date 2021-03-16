@@ -32,6 +32,25 @@ class AccountProfile extends React.Component {
 					Logout
 					<FontAwesomeIcon icon={faSignOutAlt}/>
 				</a>
+				{this.state.user.uploadedVideos ?
+					<div>
+						<h2>Uploaded Videos</h2>
+						{this.state.user.uploadedVideos.map((video) => 
+							<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
+								<h3>{video.title}</h3>
+								<div style={{height: '300px'}}>
+									<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
+										video.thumbnailSrc || "/images/videoPlaceholder.png"
+									} controls>
+										<source src={video.src}></source>
+									</video>
+								</div>
+							</div>
+						)}
+					</div>
+					:
+					''
+				}
 				{this.state.user.likedVideos ?
 					<div>
 						<h2>Liked Videos</h2>

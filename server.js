@@ -5,7 +5,7 @@ var upload = multer({ dest: 'public/assets/' });
 const path = require('path');
 const appPort = process.env.APP_PORT || 3000;
 const { connectToDB, getDB } = require('./db.js');
-const { indexVideos, addVideo, getRecent } = require('./videos.js');
+const { indexVideos, addVideo, getRecent, addVideoToUsersUploads } = require('./videos.js');
 const feathers = require('@feathersjs/feathers');
 const service = require('feathers-mongodb');
 const search = require('feathers-mongodb-fuzzy-search');
@@ -157,7 +157,7 @@ var upload = multer({ storage });
 
 			let userLikedVideos = [];
 			if(req.user){
-				userLikedVideos = req.user.likedVideos;
+				userLikedVideos = req.user.likedVideos || [];
 			}
 
 			res.render('videos', { userLikedVideos });
@@ -192,7 +192,7 @@ var upload = multer({ storage });
 
 		// Submit new video route
 		app.post('/videos/add', upload.fields([{name: 'video', maxCount: 1}, {name: 'thumbnail', maxCount: 1}]), async (req, res) => {
-			await addVideo({
+			const newVideo = await addVideo({
 				title: req.body.title,
 				src: 'assets/' + req.files['video'][0].filename,
 				originalName: req.files['video'][0].originalname,
@@ -201,6 +201,9 @@ var upload = multer({ storage });
 				created: new Date(),
 				uploadedBy: req.user || { displayName: 'Guest' }
 			});
+			if(req.user){
+				await addVideoToUsersUploads(newVideo, req.user._id);
+			}
 			if(req.body.nativeFlag){
 				res.status(200).send('Successful upload');
 			} else {
