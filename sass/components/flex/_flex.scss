@@ -4,6 +4,9 @@
 	&.x-center{
 		justify-content: center;
 	}
+	&.x-end{
+		justify-content: flex-end;
+	}
 	&.x-space-around{
 		justify-content: space-around;
 	}

@@ -97,9 +97,11 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
+/* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/free-regular-svg-icons */ "./node_modules/@fortawesome/free-regular-svg-icons/index.es.js");
+
 
 
 
@@ -109,40 +111,200 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compon
   constructor(props) {
     super(props);
     this.state = {
-      user: {}
+      user: {},
+      openRemovalForm: false
     };
-    this.findUser = this.findUser.bind(this);
+    this.findAndSyncUser = this.findAndSyncUser.bind(this);
+    this.sendLike = this.sendLike.bind(this);
+    this.removeLike = this.removeLike.bind(this);
+    this.currentUserHasLikedVideo = this.currentUserHasLikedVideo.bind(this);
+    this.handleDeleteVideo = this.handleDeleteVideo.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     if (this.props.identifier) {
-      this.findUser(this.props.identifier);
+      this.findAndSyncUser(this.props.identifier);
     }
   }
 
-  async findUser(identifier) {
-    const user = await fetch(`${document.location.origin}/user.json/${identifier}`).then(res => res.json());
+  async findAndSyncUser(identifier) {
+    const user = await fetch(`${document.location.origin}/user.json/${identifier}`).then(res => res.json()); // Check if user has liked their own video
+
+    if (user.uploadedVideos && user.likedVideos) {
+      user.uploadedVideos.forEach(video => {
+        video.likedByCurrentUser = this.currentUserHasLikedVideo(video, user);
+      });
+    } // Set the state of all liked videos to be liked
+
+
+    if (user.likedVideos) {
+      user.likedVideos.forEach(video => {
+        video.likedByCurrentUser = true;
+      });
+    }
+
     this.setState({
       user
     });
   }
 
+  async sendLike(video, videoList, videoListType) {
+    const newLikedVideo = await fetch(`${document.location.origin}/sendLike/${video._id}`).then(res => res.json()).catch(error => console.log(error));
+
+    if (newLikedVideo.message) {
+      // Display error message if included in response
+      alert(newLikedVideo.message);
+    } else if (newLikedVideo) {
+      // Update the video state to be liked by the current user.
+      newLikedVideo.likedByCurrentUser = true;
+      let updatedUser = this.state.user;
+      videoList[videoList.indexOf(video)] = newLikedVideo;
+      updatedUser[videoListType] = videoList; // Check if re-sending like from liked videos so duplicate does not show
+
+      let videoAlreadyLiked = false;
+      updatedUser.likedVideos.forEach(userLikedVideo => {
+        if (String(video._id) == String(userLikedVideo._id)) {
+          videoAlreadyLiked = true; // Restore like to liked video
+
+          updatedUser.likedVideos[updatedUser.likedVideos.indexOf(userLikedVideo)] = newLikedVideo;
+        }
+      });
+
+      if (!videoAlreadyLiked) {
+        // If user likes their own video, add to liked videos
+        updatedUser.likedVideos.push(newLikedVideo);
+      } // Update uploaded video likes if restoring like from one in liked videos
+
+
+      updatedUser.uploadedVideos.forEach(userLikedVideo => {
+        if (String(video._id) == String(userLikedVideo._id)) {
+          videoAlreadyLiked = true; // Restore like to liked video
+
+          updatedUser.uploadedVideos[updatedUser.uploadedVideos.indexOf(userLikedVideo)] = newLikedVideo;
+        }
+      });
+      this.setState({
+        user: updatedUser
+      });
+    }
+  }
+
+  async removeLike(video, videoList, videoListType) {
+    const newUnlikedVideo = await fetch(`${document.location.origin}/removeLike/${video._id}`).then(res => res.json()).catch(error => console.log(error));
+
+    if (newUnlikedVideo.message) {
+      // Display error message if included in response
+      alert(newUnlikedVideo.message);
+    } else if (newUnlikedVideo) {
+      // Update the video state to remove like from the current user. Used immediately after unliking.
+      newUnlikedVideo.likedByCurrentUser = false;
+      let updatedUser = this.state.user;
+      videoList[videoList.indexOf(video)] = newUnlikedVideo;
+      updatedUser[videoListType] = videoList; // Update uploaded video likes if removing like from one in liked videos
+
+      updatedUser.uploadedVideos.forEach(userUploadedVideo => {
+        if (String(video._id) == String(userUploadedVideo._id)) {
+          updatedUser.uploadedVideos[updatedUser.uploadedVideos.indexOf(userUploadedVideo)] = newUnlikedVideo;
+        }
+      }); // Update liked video likes if removing like from one in uploaded videos
+
+      updatedUser.likedVideos.forEach(userLikedVideo => {
+        if (String(video._id) == String(userLikedVideo._id)) {
+          updatedUser.likedVideos[updatedUser.likedVideos.indexOf(userLikedVideo)] = newUnlikedVideo;
+        }
+      });
+      this.setState({
+        user: updatedUser
+      });
+    }
+  }
+
+  currentUserHasLikedVideo(video, user) {
+    let liked = false;
+    user.likedVideos.forEach(userLikedVideo => {
+      if (userLikedVideo._id === video._id) {
+        liked = true;
+      }
+    });
+    return liked;
+  }
+
+  handleDeleteVideo(event) {
+    if (this.state.openRemovalForm) {
+      this.state.openRemovalForm.submit();
+    }
+
+    this.setState({
+      openRemovalForm: event.target.parentElement
+    });
+  }
+
   render() {
+    document.addEventListener('cssmodal:hide', () => {
+      this.setState({
+        openRemovalForm: false
+      });
+    });
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "frame"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome, ", this.state.user.firstName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome, ", this.state.user.firstName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: "/logout",
       className: "button"
-    }, "Logout", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faSignOutAlt"]
-    })), this.state.user.uploadedVideos ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Uploaded Videos"), this.state.user.uploadedVideos.map(video => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, "Logout", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faSignOutAlt"]
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+      className: "modal--show",
+      id: "remove-video",
+      tabIndex: "-1",
+      role: "dialog",
+      "aria-labelledby": "modal-label",
+      "aria-hidden": "true"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "modal-inner"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
+      id: "modal-label"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Remove Video")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "modal-content"
+    }, "Are you sure you want to remove this video?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
+      className: "flex x-space-around"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      className: "button",
+      href: "#remove-video",
+      onClick: this.handleDeleteVideo
+    }, "Remove Video", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faTrash"]
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      href: "#!",
+      className: "button"
+    }, "Close", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faTimes"]
+    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      href: "#!",
+      className: "modal-close",
+      title: "Close this modal",
+      "data-close": "Close",
+      "data-dismiss": "modal"
+    }, "?")), this.state.user.uploadedVideos ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Uploaded Videos"), this.state.user.uploadedVideos.map(video => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       key: video._id,
       className: "pure-u-1 pure-u-lg-1-3"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, video.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      style: {
-        height: '300px'
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "flex x-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "pure-u-1 flex x-space-between y-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, video.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "By: ", video.uploadedBy.displayName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      action: "/videos/remove",
+      method: "POST"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "hidden",
+      name: "videoID",
+      value: video._id
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      className: "button",
+      href: "#remove-video",
+      onClick: this.handleDeleteVideo
+    }, "Remove Video", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faTrash"]
+    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
       type: "video/mp4",
       className: "video-preview lozad",
       height: "225",
@@ -151,14 +313,22 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compon
       controls: true
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
       src: video.src
+    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "flex x-space-around y-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Likes: ", video.likes || 0), video.likedByCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      onClick: () => this.removeLike(video, this.state.user.uploadedVideos, 'uploadedVideos')
+    }, "Liked", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faStar"]
+    })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      onClick: () => this.sendLike(video, this.state.user.uploadedVideos, 'uploadedVideos')
+    }, "Like", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
+      icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faStar"]
     })))))) : '', this.state.user.likedVideos ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Liked Videos"), this.state.user.likedVideos.map(video => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       key: video._id,
       className: "pure-u-1 pure-u-lg-1-3"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, video.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      style: {
-        height: '300px'
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "flex x-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, video.title), video.uploadedBy ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "By: ", video.uploadedBy.displayName)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
       type: "video/mp4",
       className: "video-preview lozad",
       height: "225",
@@ -167,6 +337,16 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compon
       controls: true
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
       src: video.src
+    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "flex x-space-around y-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Likes: ", video.likes || 0), video.likedByCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      onClick: () => this.removeLike(video, this.state.user.likedVideos, 'likedVideos')
+    }, "Liked", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faStar"]
+    })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      onClick: () => this.sendLike(video, this.state.user.likedVideos, 'likedVideos')
+    }, "Like", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
+      icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faStar"]
     })))))) : '');
   }
 
@@ -1570,6 +1750,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var slick_carousel_slick_slick_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(slick_carousel_slick_slick_css__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var slick_carousel_slick_slick_theme_css__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! slick-carousel/slick/slick-theme.css */ "./node_modules/slick-carousel/slick/slick-theme.css");
 /* harmony import */ var slick_carousel_slick_slick_theme_css__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(slick_carousel_slick_slick_theme_css__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var css_modal_build_modal_css__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! css-modal/build/modal.css */ "./node_modules/css-modal/build/modal.css");
+/* harmony import */ var css_modal_build_modal_css__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(css_modal_build_modal_css__WEBPACK_IMPORTED_MODULE_12__);
+
 
 
 
@@ -17752,6 +17935,48 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ }),
 
+/***/ "./node_modules/css-modal/build/modal.css":
+/*!************************************************!*\
+  !*** ./node_modules/css-modal/build/modal.css ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var api = __webpack_require__(/*! ../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+            var content = __webpack_require__(/*! !../../file-loader/dist/cjs.js??ref--6-1!../../sass-loader/dist/cjs.js!./modal.css */ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/css-modal/build/modal.css");
+
+            content = content.__esModule ? content.default : content;
+
+            if (typeof content === 'string') {
+              content = [[module.i, content, '']];
+            }
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = api(content, options);
+
+
+
+module.exports = content.locals || {};
+
+/***/ }),
+
+/***/ "./node_modules/css-modal/modal.js":
+/*!*****************************************!*\
+  !*** ./node_modules/css-modal/modal.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "js/modal.js");
+
+/***/ }),
+
 /***/ "./node_modules/enquire.js/src/MediaQuery.js":
 /*!***************************************************!*\
   !*** ./node_modules/enquire.js/src/MediaQuery.js ***!
@@ -18105,9 +18330,22 @@ module.exports = new MediaQueryDispatch();
 
 /***/ }),
 
+/***/ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/css-modal/build/modal.css":
+/*!****************************************************************************************************************************************!*\
+  !*** ./node_modules/file-loader/dist/cjs.js??ref--6-1!./node_modules/sass-loader/dist/cjs.js!./node_modules/css-modal/build/modal.css ***!
+  \****************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "css/modal.css");
+
+/***/ }),
+
 /***/ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/grids-responsive-min.css":
 /*!*****************************************************************************************************************************************************!*\
-  !*** ./node_modules/file-loader/dist/cjs.js??ref--5-1!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/grids-responsive-min.css ***!
+  !*** ./node_modules/file-loader/dist/cjs.js??ref--6-1!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/grids-responsive-min.css ***!
   \*****************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -18120,7 +18358,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/pure-min.css":
 /*!*****************************************************************************************************************************************!*\
-  !*** ./node_modules/file-loader/dist/cjs.js??ref--5-1!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/pure-min.css ***!
+  !*** ./node_modules/file-loader/dist/cjs.js??ref--6-1!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/pure-min.css ***!
   \*****************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -18133,7 +18371,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/slick-carousel/slick/slick-theme.css":
 /*!***************************************************************************************************************************************************!*\
-  !*** ./node_modules/file-loader/dist/cjs.js??ref--5-1!./node_modules/sass-loader/dist/cjs.js!./node_modules/slick-carousel/slick/slick-theme.css ***!
+  !*** ./node_modules/file-loader/dist/cjs.js??ref--6-1!./node_modules/sass-loader/dist/cjs.js!./node_modules/slick-carousel/slick/slick-theme.css ***!
   \***************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -18146,7 +18384,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/slick-carousel/slick/slick.css":
 /*!*********************************************************************************************************************************************!*\
-  !*** ./node_modules/file-loader/dist/cjs.js??ref--5-1!./node_modules/sass-loader/dist/cjs.js!./node_modules/slick-carousel/slick/slick.css ***!
+  !*** ./node_modules/file-loader/dist/cjs.js??ref--6-1!./node_modules/sass-loader/dist/cjs.js!./node_modules/slick-carousel/slick/slick.css ***!
   \*********************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -18159,7 +18397,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./sass/custom.scss":
 /*!******************************************************************************************************************!*\
-  !*** ./node_modules/file-loader/dist/cjs.js??ref--5-1!./node_modules/sass-loader/dist/cjs.js!./sass/custom.scss ***!
+  !*** ./node_modules/file-loader/dist/cjs.js??ref--6-1!./node_modules/sass-loader/dist/cjs.js!./sass/custom.scss ***!
   \******************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -19713,7 +19951,7 @@ module.exports = ReactPropTypesSecret;
 /***/ (function(module, exports, __webpack_require__) {
 
 var api = __webpack_require__(/*! ../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !../../file-loader/dist/cjs.js??ref--5-1!../../sass-loader/dist/cjs.js!./grids-responsive-min.css */ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/grids-responsive-min.css");
+            var content = __webpack_require__(/*! !../../file-loader/dist/cjs.js??ref--6-1!../../sass-loader/dist/cjs.js!./grids-responsive-min.css */ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/grids-responsive-min.css");
 
             content = content.__esModule ? content.default : content;
 
@@ -19742,7 +19980,7 @@ module.exports = content.locals || {};
 /***/ (function(module, exports, __webpack_require__) {
 
 var api = __webpack_require__(/*! ../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !../../file-loader/dist/cjs.js??ref--5-1!../../sass-loader/dist/cjs.js!./pure-min.css */ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/pure-min.css");
+            var content = __webpack_require__(/*! !../../file-loader/dist/cjs.js??ref--6-1!../../sass-loader/dist/cjs.js!./pure-min.css */ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/pure-min.css");
 
             content = content.__esModule ? content.default : content;
 
@@ -52341,7 +52579,7 @@ if (false) {} else {
 /***/ (function(module, exports, __webpack_require__) {
 
 var api = __webpack_require__(/*! ../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !../../file-loader/dist/cjs.js??ref--5-1!../../sass-loader/dist/cjs.js!./slick-theme.css */ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/slick-carousel/slick/slick-theme.css");
+            var content = __webpack_require__(/*! !../../file-loader/dist/cjs.js??ref--6-1!../../sass-loader/dist/cjs.js!./slick-theme.css */ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/slick-carousel/slick/slick-theme.css");
 
             content = content.__esModule ? content.default : content;
 
@@ -52370,7 +52608,7 @@ module.exports = content.locals || {};
 /***/ (function(module, exports, __webpack_require__) {
 
 var api = __webpack_require__(/*! ../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !../../file-loader/dist/cjs.js??ref--5-1!../../sass-loader/dist/cjs.js!./slick.css */ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/slick-carousel/slick/slick.css");
+            var content = __webpack_require__(/*! !../../file-loader/dist/cjs.js??ref--6-1!../../sass-loader/dist/cjs.js!./slick.css */ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/slick-carousel/slick/slick.css");
 
             content = content.__esModule ? content.default : content;
 
@@ -52804,7 +53042,7 @@ module.exports = g;
 /***/ (function(module, exports, __webpack_require__) {
 
 var api = __webpack_require__(/*! ../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !../node_modules/file-loader/dist/cjs.js??ref--5-1!../node_modules/sass-loader/dist/cjs.js!./custom.scss */ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./sass/custom.scss");
+            var content = __webpack_require__(/*! !../node_modules/file-loader/dist/cjs.js??ref--6-1!../node_modules/sass-loader/dist/cjs.js!./custom.scss */ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./sass/custom.scss");
 
             content = content.__esModule ? content.default : content;
 
@@ -52826,13 +53064,14 @@ module.exports = content.locals || {};
 /***/ }),
 
 /***/ 0:
-/*!**********************************************************************************************************************************************!*\
-  !*** multi ./js/main.jsx ./node_modules/purecss/build/pure-min.css ./node_modules/purecss/build/grids-responsive-min.css ./sass/custom.scss ***!
-  \**********************************************************************************************************************************************/
+/*!********************************************************************************************************************************************************************************!*\
+  !*** multi ./js/main.jsx ./node_modules/css-modal/modal.js ./node_modules/purecss/build/pure-min.css ./node_modules/purecss/build/grids-responsive-min.css ./sass/custom.scss ***!
+  \********************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! C:\Users\tille\Desktop\nodeApps\mern-app\js\main.jsx */"./js/main.jsx");
+__webpack_require__(/*! C:\Users\tille\Desktop\nodeApps\mern-app\node_modules\css-modal\modal.js */"./node_modules/css-modal/modal.js");
 __webpack_require__(/*! C:\Users\tille\Desktop\nodeApps\mern-app\node_modules\purecss\build\pure-min.css */"./node_modules/purecss/build/pure-min.css");
 __webpack_require__(/*! C:\Users\tille\Desktop\nodeApps\mern-app\node_modules\purecss\build\grids-responsive-min.css */"./node_modules/purecss/build/grids-responsive-min.css");
 module.exports = __webpack_require__(/*! C:\Users\tille\Desktop\nodeApps\mern-app\sass\custom.scss */"./sass/custom.scss");

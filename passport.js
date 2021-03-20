@@ -1,7 +1,7 @@
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
-var { addUser, findUser } = require('./users.js');
+var { addUser, findAndSyncUser } = require('./users.js');
 var bcrypt = require('bcrypt');
 
 passport.use('local-login', new LocalStrategy({
@@ -10,7 +10,7 @@ passport.use('local-login', new LocalStrategy({
 		passReqToCallback: true
 	}, async (req, displayName, password, done) => {
 		try {
-			let user = await findUser(displayName, 'local');
+			let user = await findAndSyncUser(displayName, 'local');
 
 			if(user){
 				if(!bcrypt.compareSync(password, user.passwordHash)){
@@ -32,7 +32,7 @@ passport.use('local-signup', new LocalStrategy({
 		passReqToCallback: true
 	}, async (req, displayName, password, done) => {
 		try {
-			let user = await findUser(displayName, 'local');
+			let user = await findAndSyncUser(displayName, 'local');
 			if(user){
 				return done(null, false, { message: 'User with that name already exists.' });
 			} else {
@@ -43,7 +43,9 @@ passport.use('local-signup', new LocalStrategy({
 					displayName,
 					firstName : req.body.firstName,
 					lastName : req.body.lastName,
-					passwordHash: bcrypt.hashSync(password, 10)
+					passwordHash: bcrypt.hashSync(password, 10),
+					uploadedVideos: [],
+					likedVideos: []
 				}
 				let user = await addUser(newUser);
 				return done(null, newUser);
@@ -64,11 +66,13 @@ passport.use(new GoogleStrategy({
 			displayName: profile.displayName,
 			firstName: profile.name.givenName,
 			lastName: profile.name.familyName,
-			image: profile.photos[0]
+			image: profile.photos[0],
+			uploadedVideos: [],
+			likedVideos: []
 		}
 
 		try {
-			let user = await findUser(profile.id, 'google');
+			let user = await findAndSyncUser(profile.id, 'google');
 
 			if(user){
 				return done(null, user);
@@ -91,11 +95,11 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser( async (identifier, done) => {
-	let user = await findUser(identifier, 'google');
+	let user = await findAndSyncUser(identifier, 'google');
 	if(user){
 		return done(null, user);
 	} else {
-		let user = await findUser(identifier, 'local');
+		let user = await findAndSyncUser(identifier, 'local');
 		return done(null, user);
 	}
 });

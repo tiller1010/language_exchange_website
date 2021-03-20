@@ -9,8 +9,10 @@ const DefaultLayout = (props) => {
 			<link href={`${props.pathResolver || ''}css/grids-responsive-min.css`} rel="stylesheet"></link>
 			<link href={`${props.pathResolver || ''}css/slick.css`} rel="stylesheet"></link>
 			<link href={`${props.pathResolver || ''}css/slick-theme.css`} rel="stylesheet"></link>
+			<link href={`${props.pathResolver || ''}css/modal.css`} rel="stylesheet"></link>
 			<link href={`${props.pathResolver || ''}css/custom.css`} rel="stylesheet"></link>
 			<script async src={`${props.pathResolver || ''}js/main.js`}></script>
+			<script async src={`${props.pathResolver || ''}js/modal.js`}></script>
 			<body>{props.children}</body>
 		</html>
 	);

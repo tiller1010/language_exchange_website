@@ -5,6 +5,9 @@
 .flex.x-center {
   justify-content: center;
 }
+.flex.x-end {
+  justify-content: flex-end;
+}
 .flex.x-space-around {
   justify-content: space-around;
 }

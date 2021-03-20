@@ -5,14 +5,14 @@ var upload = multer({ dest: 'public/assets/' });
 const path = require('path');
 const appPort = process.env.APP_PORT || 3000;
 const { connectToDB, getDB } = require('./db.js');
-const { indexVideos, addVideo, getRecent, addVideoToUsersUploads } = require('./videos.js');
+const { indexVideos, addVideo, removeVideo, getRecent, addVideoToUsersUploads } = require('./videos.js');
 const feathers = require('@feathersjs/feathers');
 const service = require('feathers-mongodb');
 const search = require('feathers-mongodb-fuzzy-search');
 const { passport } = require('./passport.js');
 var session = require('express-session');
 var flash = require('connect-flash');
-var { addUser, findUser } = require('./users.js');
+var { addUser, findAndSyncUser } = require('./users.js');
 var { addLike, removeLike } = require('./likes.js');
 
 var app = express();
@@ -199,7 +199,7 @@ var upload = multer({ storage });
 				thumbnailSrc: 'assets/' + req.files['thumbnail'][0].filename,
 				originalThumbnailName: req.files['thumbnail'][0].originalname,
 				created: new Date(),
-				uploadedBy: req.user || { displayName: 'Guest' }
+				uploadedBy: { _id: req.user._id, displayName: req.user.displayName } || { displayName: 'Guest' }
 			});
 			if(req.user){
 				await addVideoToUsersUploads(newVideo, req.user._id);
@@ -211,13 +211,25 @@ var upload = multer({ storage });
 			}
 		});
 
+		// Remove uploaded video route
+		app.post('/videos/remove', async (req, res) => {
+			if(req.user){
+				await removeVideo(req.body.videoID);
+			}
+			if(req.body.nativeFlag){
+				res.status(200).send('Successfully removed');
+			} else {
+				res.redirect('/account-profile');
+			}
+		});
+
 		// Account profile
 		app.get('/account-profile',
 			async (req, res) => {
 				if(req.isAuthenticated()){
-					let user = await findUser(req.session.passport.user, 'google');
+					let user = await findAndSyncUser(req.session.passport.user, 'google');
 					if(!user){
-						user = await findUser(req.session.passport.user, 'local');
+						user = await findAndSyncUser(req.session.passport.user, 'local');
 					}
 					res.render('account-profile', { user: user });
 				} else {
@@ -275,9 +287,9 @@ var upload = multer({ storage });
 		// Find user API
 		app.get('/user:format?/:identifier', async (req, res) => {
 			const identifier = req.params.identifier;
-			let user = await findUser(identifier, 'google');
+			let user = await findAndSyncUser(identifier, 'google');
 			if(!user){
-				user = await findUser(identifier, 'local');
+				user = await findAndSyncUser(identifier, 'local');
 			}
 			if(req.params.format){
 				res.format({

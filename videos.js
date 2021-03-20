@@ -20,12 +20,17 @@ async function addVideo(video){
 	return newVideo.ops[0];
 }
 
+async function removeVideo(videoID){
+	const db = getDB();
+	const newVideo = await db.collection('videos').deleteOne({ _id: new mongo.ObjectID(videoID) });
+	return;
+}
+
 async function addVideoToUsersUploads(video, userID){
 	const db = getDB();
 	const user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
 	let usersUploads = user.uploadedVideos || [];
 	usersUploads.push(video);
-	console.log(usersUploads)
 	await db.collection('users').updateOne({ _id: new mongo.ObjectID(userID) }, { $set: { uploadedVideos: usersUploads } });
 	return;
 }
@@ -36,4 +41,4 @@ async function getRecent(limit = 6){
 	return {videos};
 }
 
-module.exports = { indexVideos, addVideo, getRecent, addVideoToUsersUploads };
+module.exports = { indexVideos, addVideo, removeVideo, getRecent, addVideoToUsersUploads };
