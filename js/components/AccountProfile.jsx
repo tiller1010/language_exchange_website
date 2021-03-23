@@ -19,26 +19,29 @@ class AccountProfile extends React.Component {
 	}
 
 	async componentDidMount(){
-		if(this.props.identifier){
-			this.findAndSyncUser(this.props.identifier);
+		if(this.props.user){
+			this.findAndSyncUser(this.props.user);
 		}
 	}
 
 	async findAndSyncUser(identifier){
-		const user = await fetch(`${document.location.origin}/user.json/${identifier}`).then((res) => res.json());
-		// Check if user has liked their own video
-		if(user.uploadedVideos && user.likedVideos){
-			user.uploadedVideos.forEach((video) => {
-				video.likedByCurrentUser = this.currentUserHasLikedVideo(video, user);
-			});
+		const userProfile = JSON.parse(this.props.user);
+		const authenticatedUser = JSON.parse(this.props.authenticatedUser);
+		if(userProfile && authenticatedUser){
+			// Check if user has liked their own video
+			if(userProfile.uploadedVideos && authenticatedUser.likedVideos){
+				userProfile.uploadedVideos.forEach((video) => {
+					video.likedByCurrentUser = this.currentUserHasLikedVideo(video, authenticatedUser);
+				});
+			}
+			// Check if user has liked their own video
+			if(userProfile.likedVideos && authenticatedUser.likedVideos){
+				userProfile.likedVideos.forEach((video) => {
+					video.likedByCurrentUser = this.currentUserHasLikedVideo(video, authenticatedUser);
+				});
+			}
 		}
-		// Set the state of all liked videos to be liked
-		if(user.likedVideos){
-			user.likedVideos.forEach((video) => {
-				video.likedByCurrentUser = true;
-			});
-		}
-		this.setState({user});
+		this.setState({ user: userProfile });
 	}
 
 	async sendLike(video, videoList, videoListType){
@@ -63,7 +66,7 @@ class AccountProfile extends React.Component {
 					updatedUser.likedVideos[updatedUser.likedVideos.indexOf(userLikedVideo)] = newLikedVideo;
 				}
 			});
-			if(!videoAlreadyLiked){
+			if(!videoAlreadyLiked && this.props.isCurrentUser){
 				// If user likes their own video, add to liked videos
 				updatedUser.likedVideos.push(newLikedVideo);
 			}
@@ -142,32 +145,42 @@ class AccountProfile extends React.Component {
 		return (
 			<div className="frame">
 				<Navigation/>
-				<h1>Welcome, {this.state.user.firstName}</h1>
-				<a href="/logout" className="button">
-					Logout
-					<FontAwesomeIcon icon={faSignOutAlt}/>
-				</a>
-				<section className="modal--show" id="remove-video" tabIndex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
-					<div className="modal-inner">
-						<header id="modal-label">
-							<h2>Remove Video</h2>
-						</header>
-						<div className="modal-content">
-							Are you sure you want to remove this video?
-						</div>
-						<footer className="flex x-space-around">
-							<a className="button" href="#remove-video" onClick={this.handleDeleteVideo}>
-								Remove Video
-								<FontAwesomeIcon icon={faTrash}/>
-							</a>
-							<a href="#!" className="button">
-								Close
-								<FontAwesomeIcon icon={faTimes}/>
-							</a>
-						</footer>
+				{this.props.isCurrentUser ?
+					<div>
+						<h1>Welcome, {this.state.user.firstName}</h1>
+						<a href="/logout" className="button">
+							Logout
+							<FontAwesomeIcon icon={faSignOutAlt}/>
+						</a>
 					</div>
-					<a href="#!" className="modal-close" title="Close this modal" data-close="Close" data-dismiss="modal">?</a>
-				</section>
+					:
+					<h1>{this.state.user.firstName}</h1>
+				}
+				{this.props.isCurrentUser ?
+					<section className="modal--show" id="remove-video" tabIndex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+						<div className="modal-inner">
+							<header id="modal-label">
+								<h2>Remove Video</h2>
+							</header>
+							<div className="modal-content">
+								Are you sure you want to remove this video?
+							</div>
+							<footer className="flex x-space-around">
+								<a className="button" href="#remove-video" onClick={this.handleDeleteVideo}>
+									Remove Video
+									<FontAwesomeIcon icon={faTrash}/>
+								</a>
+								<a href="#!" className="button">
+									Close
+									<FontAwesomeIcon icon={faTimes}/>
+								</a>
+							</footer>
+						</div>
+						<a href="#!" className="modal-close" title="Close this modal" data-close="Close" data-dismiss="modal">?</a>
+					</section>
+					:
+					''
+				}
 				{this.state.user.uploadedVideos ?
 					<div>
 						<h2>Uploaded Videos</h2>
@@ -180,18 +193,22 @@ class AccountProfile extends React.Component {
 												<h3>{video.title}</h3>
 												<p>By: {video.uploadedBy.displayName}</p>
 											</div>
-											<form action="/videos/remove" method="POST">
-												<input type="hidden" name="videoID" value={video._id}/>
-												<a className="button" href="#remove-video" onClick={this.handleDeleteVideo}>
-													Remove Video
-													<FontAwesomeIcon icon={faTrash}/>
-												</a>
-											</form>
+											{this.props.isCurrentUser ?
+												<form action="/videos/remove" method="POST">
+													<input type="hidden" name="videoID" value={video._id}/>
+													<a className="button" href="#remove-video" onClick={this.handleDeleteVideo}>
+														Remove Video
+														<FontAwesomeIcon icon={faTrash}/>
+													</a>
+												</form>
+												:
+												''
+											}
 										</div>
 										<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
-											video.thumbnailSrc || "/images/videoPlaceholder.png"
+											`${this.props.pathResolver}${video.thumbnailSrc}` || "/images/videoPlaceholder.png"
 										} controls>
-											<source src={video.src}></source>
+											<source src={`${this.props.pathResolver}${video.src}`}></source>
 										</video>
 									</div>
 								</div>
@@ -231,9 +248,9 @@ class AccountProfile extends React.Component {
 										<p></p>
 										}
 										<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
-											video.thumbnailSrc || "/images/videoPlaceholder.png"
+											`${this.props.pathResolver}${video.thumbnailSrc}` || "/images/videoPlaceholder.png"
 										} controls>
-											<source src={video.src}></source>
+											<source src={`${this.props.pathResolver}${video.src}`}></source>
 										</video>
 									</div>
 								</div>

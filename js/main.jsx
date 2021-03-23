@@ -16,30 +16,33 @@ if(document.getElementById('home')){
 	ReactDOM.render(<Home/>, document.getElementById('home'));
 }
 if(document.getElementById('videos')){
-	var userLikedVideos = document.getElementById('videos').getAttribute('userLikedVideos');
+	var userLikedVideos = document.getElementById('videos').getAttribute('data-userLikedVideos');
 	ReactDOM.render(<VideosIndex userLikedVideos={userLikedVideos}/>, document.getElementById('videos'));
 }
 if(document.getElementById('videos-add')){
 	ReactDOM.render(<VideosAdd/>, document.getElementById('videos-add'));
 }
 if(document.getElementById('level')){
-	var levelID = document.getElementById('level').getAttribute('levelID');
+	var levelID = document.getElementById('level').getAttribute('data-levelID');
 	ReactDOM.render(<Level levelID={levelID}/>, document.getElementById('level'));
 }
 if(document.getElementById('topic')){
-	var levelID = document.getElementById('topic').getAttribute('levelID');
-	var topicID = document.getElementById('topic').getAttribute('topicID');
+	var levelID = document.getElementById('topic').getAttribute('data-levelID');
+	var topicID = document.getElementById('topic').getAttribute('data-topicID');
 	ReactDOM.render(<Topic levelID={levelID} topicID={topicID}/>, document.getElementById('topic'));
 }
 if(document.getElementById('login')){
-	var errors = document.getElementById('login').getAttribute('errors');
+	var errors = document.getElementById('login').getAttribute('data-errors');
 	ReactDOM.render(<Login errors={errors}/>, document.getElementById('login'));
 }
 if(document.getElementById('register')){
-	var errors = document.getElementById('register').getAttribute('errors');
+	var errors = document.getElementById('register').getAttribute('data-errors');
 	ReactDOM.render(<Register errors={errors}/>, document.getElementById('register'));
 }
 if(document.getElementById('account-profile')){
-	var identifier = document.getElementById('account-profile').getAttribute('identifier');
-	ReactDOM.render(<AccountProfile identifier={identifier}/>, document.getElementById('account-profile'));
+	var user = document.getElementById('account-profile').getAttribute('data-user');
+	var authenticatedUser = document.getElementById('account-profile').getAttribute('data-authenticatedUser');
+	var isCurrentUser = document.getElementById('account-profile').getAttribute('data-isCurrentUser');
+	var pathResolver = document.getElementById('account-profile').getAttribute('data-pathResolver');
+	ReactDOM.render(<AccountProfile user={user} authenticatedUser={authenticatedUser} isCurrentUser={eval(isCurrentUser)} pathResolver={pathResolver}/>, document.getElementById('account-profile'));
 }

@@ -300,12 +300,14 @@ class VideosIndex extends React.Component {
 									<div className="flex x-center">
 										<div>
 											<h3>{video.title}</h3>
-											{video.uploadedBy ?
+											{video.uploadedBy._id ?
+											<div>
+												<p>By: <a href={`/account-profile/${video.uploadedBy._id}`} aria-label={`${video.uploadedBy.displayName} profile`}>{video.uploadedBy.displayName}</a></p>
+											</div>
+											:
 											<div>
 												<p>By: {video.uploadedBy.displayName}</p>
 											</div>
-											:
-											<p></p>
 											}
 											<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
 												video.thumbnailSrc || "/images/videoPlaceholder.png"

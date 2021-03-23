@@ -224,16 +224,25 @@ var upload = multer({ storage });
 		});
 
 		// Account profile
-		app.get('/account-profile',
+		app.get('/account-profile/:viewOtherUserID?',
 			async (req, res) => {
-				if(req.isAuthenticated()){
-					let user = await findAndSyncUser(req.session.passport.user, 'google');
-					if(!user){
-						user = await findAndSyncUser(req.session.passport.user, 'local');
-					}
-					res.render('account-profile', { user: user });
+				if(req.params.viewOtherUserID){
+					let user = await findAndSyncUser(req.params.viewOtherUserID, 'id');
+					return res.render('account-profile', {
+						user,
+						authenticatedUser: req.user || null,
+						isCurrentUser: false,
+						pathResolver: '../'
+					});
+				}else if(req.user){
+					let user = req.user;
+					return res.render('account-profile', {
+						user,
+						authenticatedUser: req.user || null,
+						isCurrentUser: true
+					});
 				} else {
-					res.redirect('/login');
+					return res.redirect('/login');
 				}
 			}
 		);
@@ -277,28 +286,10 @@ var upload = multer({ storage });
 			})
 		);
 
-
 		// Account logout
 		app.get('/logout', (req, res) => {
 			req.logout();
 			res.redirect('/');
-		});
-
-		// Find user API
-		app.get('/user:format?/:identifier', async (req, res) => {
-			const identifier = req.params.identifier;
-			let user = await findAndSyncUser(identifier, 'google');
-			if(!user){
-				user = await findAndSyncUser(identifier, 'local');
-			}
-			if(req.params.format){
-				res.format({
-					json: function(){
-						res.send(JSON.stringify(user));
-					}
-				});
-				return;
-			}
 		});
 
 		// Start app

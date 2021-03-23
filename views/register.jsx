@@ -7,7 +7,7 @@ class Register extends React.Component {
 
 		return (
 			<DefaultLayout>
-			    <div id="register" errors={JSON.stringify(this.props.errors)}></div>
+			    <div id="register" data-errors={JSON.stringify(this.props.errors)}></div>
 			</DefaultLayout>
 		);
 	}

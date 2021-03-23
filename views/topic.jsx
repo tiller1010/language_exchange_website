@@ -7,7 +7,7 @@ const Topic = (props) => {
 		<div className="pad">
 			<h1>Level {props.levelID}</h1>
 		</div>
-		<div id="topic" levelID={props.levelID} topicID={props.topicID}></div>
+		<div id="topic" data-levelID={props.levelID} data-topicID={props.topicID}></div>
 	</DefaultLayout>
   );
 }

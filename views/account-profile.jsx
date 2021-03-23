@@ -6,8 +6,13 @@ class AccountProfile extends React.Component {
 	render(){
 
 		return (
-			<DefaultLayout>
-			    <div id="account-profile" identifier={this.props.user.googleID || this.props.user.displayName}></div>
+			<DefaultLayout pathResolver={this.props.pathResolver || ''}>
+			    <div id="account-profile"
+				    data-user={JSON.stringify(this.props.user)}
+				    data-authenticatedUser={JSON.stringify(this.props.authenticatedUser)}
+				    data-isCurrentUser={this.props.isCurrentUser}
+				    data-pathResolver={this.props.pathResolver || ''}>
+			    </div>
 			</DefaultLayout>
 		);
 	}

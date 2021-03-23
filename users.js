@@ -11,6 +11,9 @@ async function findAndSyncUser(identifier, strategy){
 	const db = getDB();
 	let findObject = {};
 	switch(strategy){
+		case 'id':
+			findObject = { _id: new mongo.ObjectID(identifier) };
+		break;
 		case 'local':
 			findObject = { displayName: identifier };
 		break;

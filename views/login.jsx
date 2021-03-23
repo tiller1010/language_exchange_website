@@ -7,7 +7,7 @@ class Login extends React.Component {
 
 		return (
 			<DefaultLayout>
-			    <div id="login" errors={JSON.stringify(this.props.errors)}></div>
+			    <div id="login" data-errors={JSON.stringify(this.props.errors)}></div>
 			</DefaultLayout>
 		);
 	}
