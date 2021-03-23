@@ -2,7 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import lozad from 'lozad';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSlidersH } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSlidersH, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import Slider from 'react-slick';
 import Navigation from './Navigation.jsx';
 
@@ -14,10 +15,15 @@ class Home extends React.Component {
 	constructor(){
 		super();
 		this.state = {
-			sortControlStatus: ''
+			sortControlStatus: '',
+			recentVideos: [],
+			userLikedVideos: []
 		}
 		this.toggleSortControls = this.toggleSortControls.bind(this);
 		this.handleSortChange = this.handleSortChange.bind(this);
+		this.sendLike = this.sendLike.bind(this);
+		this.removeLike = this.removeLike.bind(this);
+		this.currentUserHasLikedVideo = this.currentUserHasLikedVideo.bind(this);
 	}
 
 	componentDidMount(){
@@ -25,15 +31,31 @@ class Home extends React.Component {
 		// Get recent videos
 		axios.get(`${document.location.origin}/recent-videos`)
 			.then(res => {
-				console.log(res)
+				// console.log(res)
 				this.setState({
 					recentVideos: res.data.videos
+				}, () => {// Check if the current user has liked each video
+					let likedRecentVideos = [];
+					if(this.props.userLikedVideos){
+						console.log(JSON.parse(this.props.userLikedVideos))
+						this.setState({
+							userLikedVideos: JSON.parse(this.props.userLikedVideos)
+						}, () => {
+							this.state.recentVideos.forEach((video) => {
+								video.likedByCurrentUser = this.currentUserHasLikedVideo(video);
+								likedRecentVideos.push(video);
+							});
+							this.setState({
+								recentVideos: likedRecentVideos
+							});
+						});
+					}
 				});
 			});
 
 		axios.get(`${process.env.STRAPI_URL}/levels`)
 			.then(res => {
-				console.log(res)
+				// console.log(res)
 				this.setState({
 					levels: res.data
 				});
@@ -53,6 +75,64 @@ class Home extends React.Component {
 		});
 		// This approach triggers the onSubmit handler
 		event.target.form.querySelector('input[type="submit"]').click();
+	}
+
+	async sendLike(video){
+		const newLikedVideo = await fetch(`${document.location.origin}/sendLike/${video._id}`)
+			.then(res => res.json())
+			.catch(error => console.log(error));
+		if(newLikedVideo.message){
+			// Display error message if included in response
+			alert(newLikedVideo.message);
+		} else if(newLikedVideo) {
+			// Update the video state to be liked by the current user. Used immediately after liking.
+			newLikedVideo.likedByCurrentUser = true;
+			let newVideos = this.state.recentVideos;
+			newVideos[newVideos.indexOf(video)] = newLikedVideo;
+			// Add video to user's liked videos. Used when a re-render occurs.
+			let newUserLikedVideos = this.state.userLikedVideos;
+			newUserLikedVideos.push(video);
+			this.setState({
+				recentVideos: newVideos,
+				userLikedVideos: newUserLikedVideos
+			});
+		}
+	}
+
+	async removeLike(video){
+		const newUnlikedVideo = await fetch(`${document.location.origin}/removeLike/${video._id}`)
+			.then(res => res.json())
+			.catch(error => console.log(error));
+		if(newUnlikedVideo.message){
+			// Display error message if included in response
+			alert(newUnlikedVideo.message);
+		} else if(newUnlikedVideo) {
+			// Update the video state to remove like from the current user. Used immediately after unliking.
+			newUnlikedVideo.likedByCurrentUser = false;
+			let newVideos = this.state.recentVideos;
+			newVideos[newVideos.indexOf(video)] = newUnlikedVideo;
+			// Remove video from user's liked videos. Used when a re-render occurs.
+			let newUserLikedVideos = [];
+			this.state.userLikedVideos.forEach((userLikedVideo) => {
+				if(userLikedVideo._id != video._id){
+					newUserLikedVideos.push(userLikedVideo);
+				}
+			});
+			this.setState({
+				recentVideos: newVideos,
+				userLikedVideos: newUserLikedVideos
+			});
+		}
+	}
+
+	currentUserHasLikedVideo(video){
+		let liked = false;
+		this.state.userLikedVideos.forEach((userLikedVideo) => {
+			if(userLikedVideo._id === video._id){
+				liked = true;
+			}
+		});
+		return liked;
 	}
 
 	renderMedia(topic){
@@ -146,13 +226,38 @@ class Home extends React.Component {
 			    		}}>
 					    	{this.state.recentVideos.map((video) => 
 					    		<div key={video._id}>
-									<h3>{video.title}</h3>
-									<div style={{height: '300px'}}>
-										<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
-											video.thumbnailSrc || "/images/videoPlaceholder.png"
-										} controls>
-											<source src={video.src}></source>
-										</video>
+									<div className="flex x-center">
+										<div>
+											<h3>{video.title}</h3>
+											{video.uploadedBy._id ?
+											<div>
+												<p>By: <a href={`/account-profile/${video.uploadedBy._id}`} aria-label={`${video.uploadedBy.displayName} profile`}>{video.uploadedBy.displayName}</a></p>
+											</div>
+											:
+											<div>
+												<p>By: {video.uploadedBy.displayName}</p>
+											</div>
+											}
+											<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
+												video.thumbnailSrc || "/images/videoPlaceholder.png"
+											} controls>
+												<source src={video.src}></source>
+											</video>
+										</div>
+									</div>
+									<div className="flex x-space-around y-center">
+										<p>Likes: {video.likes || 0}</p>
+										{video.likedByCurrentUser ?
+											<button onClick={() => this.removeLike(video)}>
+												Liked
+												<FontAwesomeIcon icon={faStar}/>
+											</button>
+											:
+											<button onClick={() => this.sendLike(video)}>
+												Like
+												<FontAwesomeIcon icon={farStar}/>
+											</button>
+										}
 									</div>
 								</div>
 				    		)}

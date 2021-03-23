@@ -13,7 +13,8 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'css-modal/build/modal.css';
 
 if(document.getElementById('home')){
-	ReactDOM.render(<Home/>, document.getElementById('home'));
+	var userLikedVideos = document.getElementById('home').getAttribute('data-userLikedVideos');
+	ReactDOM.render(<Home userLikedVideos={userLikedVideos}/>, document.getElementById('home'));
 }
 if(document.getElementById('videos')){
 	var userLikedVideos = document.getElementById('videos').getAttribute('data-userLikedVideos');

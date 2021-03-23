@@ -84,7 +84,11 @@ var upload = multer({ storage });
 
 		// Home route
 		app.get('/', (req, res) => {
-			res.render('home');
+			let userLikedVideos = [];
+			if(req.user){
+				userLikedVideos = req.user.likedVideos || [];
+			}
+			res.render('home', { userLikedVideos });
 		});
 
 		// Recent videos API

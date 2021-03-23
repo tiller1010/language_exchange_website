@@ -377,9 +377,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lozad__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lozad__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
 /* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-slick */ "./node_modules/react-slick/lib/index.js");
-/* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_slick__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
+/* harmony import */ var _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fortawesome/free-regular-svg-icons */ "./node_modules/@fortawesome/free-regular-svg-icons/index.es.js");
+/* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-slick */ "./node_modules/react-slick/lib/index.js");
+/* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_slick__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
+
 
 
 
@@ -395,22 +397,45 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   constructor() {
     super();
     this.state = {
-      sortControlStatus: ''
+      sortControlStatus: '',
+      recentVideos: [],
+      userLikedVideos: []
     };
     this.toggleSortControls = this.toggleSortControls.bind(this);
     this.handleSortChange = this.handleSortChange.bind(this);
+    this.sendLike = this.sendLike.bind(this);
+    this.removeLike = this.removeLike.bind(this);
+    this.currentUserHasLikedVideo = this.currentUserHasLikedVideo.bind(this);
   }
 
   componentDidMount() {
     // Get recent videos
     axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`${document.location.origin}/recent-videos`).then(res => {
-      console.log(res);
+      // console.log(res)
       this.setState({
         recentVideos: res.data.videos
+      }, () => {
+        // Check if the current user has liked each video
+        let likedRecentVideos = [];
+
+        if (this.props.userLikedVideos) {
+          console.log(JSON.parse(this.props.userLikedVideos));
+          this.setState({
+            userLikedVideos: JSON.parse(this.props.userLikedVideos)
+          }, () => {
+            this.state.recentVideos.forEach(video => {
+              video.likedByCurrentUser = this.currentUserHasLikedVideo(video);
+              likedRecentVideos.push(video);
+            });
+            this.setState({
+              recentVideos: likedRecentVideos
+            });
+          });
+        }
       });
     });
     axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`${"http://localhost:1337"}/levels`).then(res => {
-      console.log(res);
+      // console.log(res)
       this.setState({
         levels: res.data
       });
@@ -430,6 +455,62 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }); // This approach triggers the onSubmit handler
 
     event.target.form.querySelector('input[type="submit"]').click();
+  }
+
+  async sendLike(video) {
+    const newLikedVideo = await fetch(`${document.location.origin}/sendLike/${video._id}`).then(res => res.json()).catch(error => console.log(error));
+
+    if (newLikedVideo.message) {
+      // Display error message if included in response
+      alert(newLikedVideo.message);
+    } else if (newLikedVideo) {
+      // Update the video state to be liked by the current user. Used immediately after liking.
+      newLikedVideo.likedByCurrentUser = true;
+      let newVideos = this.state.recentVideos;
+      newVideos[newVideos.indexOf(video)] = newLikedVideo; // Add video to user's liked videos. Used when a re-render occurs.
+
+      let newUserLikedVideos = this.state.userLikedVideos;
+      newUserLikedVideos.push(video);
+      this.setState({
+        recentVideos: newVideos,
+        userLikedVideos: newUserLikedVideos
+      });
+    }
+  }
+
+  async removeLike(video) {
+    const newUnlikedVideo = await fetch(`${document.location.origin}/removeLike/${video._id}`).then(res => res.json()).catch(error => console.log(error));
+
+    if (newUnlikedVideo.message) {
+      // Display error message if included in response
+      alert(newUnlikedVideo.message);
+    } else if (newUnlikedVideo) {
+      // Update the video state to remove like from the current user. Used immediately after unliking.
+      newUnlikedVideo.likedByCurrentUser = false;
+      let newVideos = this.state.recentVideos;
+      newVideos[newVideos.indexOf(video)] = newUnlikedVideo; // Remove video from user's liked videos. Used when a re-render occurs.
+
+      let newUserLikedVideos = [];
+      this.state.userLikedVideos.forEach(userLikedVideo => {
+        if (userLikedVideo._id != video._id) {
+          newUserLikedVideos.push(userLikedVideo);
+        }
+      });
+      this.setState({
+        recentVideos: newVideos,
+        userLikedVideos: newUserLikedVideos
+      });
+    }
+  }
+
+  currentUserHasLikedVideo(video) {
+    let liked = false;
+    this.state.userLikedVideos.forEach(userLikedVideo => {
+      if (userLikedVideo._id === video._id) {
+        liked = true;
+      }
+    });
+    return liked;
   }
 
   renderMedia(topic) {
@@ -464,7 +545,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     } = this.state || 'notfound';
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "frame"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_6__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_7__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "page-form"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Let's enjoy your"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "User Submissions"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
       action: "/videos",
@@ -538,7 +619,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       onChange: this.handleSortChange
     }))))))), this.state.recentVideos ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "pad no-x"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Recent Submissions"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_slick__WEBPACK_IMPORTED_MODULE_5___default.a, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Recent Submissions"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_slick__WEBPACK_IMPORTED_MODULE_6___default.a, {
       dots: false,
       infinite: false,
       speed: 500,
@@ -552,11 +633,12 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       }]
     }, this.state.recentVideos.map(video => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       key: video._id
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, video.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      style: {
-        height: '300px'
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "flex x-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, video.title), video.uploadedBy._id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "By: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      href: `/account-profile/${video.uploadedBy._id}`,
+      "aria-label": `${video.uploadedBy.displayName} profile`
+    }, video.uploadedBy.displayName))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "By: ", video.uploadedBy.displayName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
       type: "video/mp4",
       className: "video-preview lozad",
       height: "225",
@@ -565,6 +647,16 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       controls: true
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
       src: video.src
+    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "flex x-space-around y-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Likes: ", video.likes || 0), video.likedByCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      onClick: () => this.removeLike(video)
+    }, "Liked", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faStar"]
+    })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      onClick: () => this.sendLike(video)
+    }, "Like", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
+      icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faStar"]
     }))))))) : '', this.state.levels ? this.state.levels.map(level => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       key: this.state.levels.indexOf(level),
       className: "flex x-center"
@@ -1774,7 +1866,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 if (document.getElementById('home')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], null), document.getElementById('home'));
+  var userLikedVideos = document.getElementById('home').getAttribute('data-userLikedVideos');
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    userLikedVideos: userLikedVideos
+  }), document.getElementById('home'));
 }
 
 if (document.getElementById('videos')) {

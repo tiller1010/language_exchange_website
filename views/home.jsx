@@ -4,7 +4,7 @@ import DefaultLayout from './layouts/default';
 const Home = (props) => {
   return (
 	<DefaultLayout>
-		<div id="home"></div>
+		<div id="home" data-userLikedVideos={JSON.stringify(props.userLikedVideos)}></div>
 	</DefaultLayout>
   );
 }
