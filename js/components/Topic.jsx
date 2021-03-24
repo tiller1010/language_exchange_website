@@ -81,6 +81,12 @@ class Topic extends React.Component {
 		});
 		if(allChallengesAnswered){
 			alert('Congratulations! You have answered each challenge correctly.');
+			axios.post(`/level/${this.props.levelID}/topics/${this.props.topicID}`)
+				.then(res => {
+					if(res.data){
+						console.log(res.data)
+					}
+				})
 		}
 	}
 
@@ -96,7 +102,7 @@ class Topic extends React.Component {
 						);
 					case 'video/mp4':
 						return (
-							<video height="225" width="400" controls>
+							<video height="225" width="400" controls tabindex="-1">
 								<source src={`${process.env.STRAPI_URL}${challenge.FeaturedMedia[0].url}`} type="video/mp4"/>
 							</video>
 						);

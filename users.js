@@ -37,19 +37,36 @@ async function findAndSyncUser(identifier, strategy){
 		}
 		// Sync liked videos
 		if(user.likedVideos){
-			let syncedUploads = [];
+			let syncedLikes = [];
 			for(video of user.likedVideos){
 				if(video){
 					let upToDateVideo = await db.collection('videos').findOne({ _id: new mongo.ObjectID(video._id) });
-					syncedUploads.push(upToDateVideo);
+					syncedLikes.push(upToDateVideo);
 				}
 			}
-			await db.collection('users').updateOne({ _id: new mongo.ObjectID(user._id) }, { $set: { likedVideos: syncedUploads } });
+			await db.collection('users').updateOne({ _id: new mongo.ObjectID(user._id) }, { $set: { likedVideos: syncedLikes } });
 			user = await db.collection('users').findOne(findObject);
 		}
 	}
 	return user;
 }
 
+async function addCompletedTopic(userID, topic){
+	const db = getDB();
+	let user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
+	// Sync completed topics
+	let completedTopics = user.completedTopics || [];
+	let topicAlreadyCompleted = false;
+	completedTopics.forEach((completeTopic) => {
+		if(topic.id == completeTopic.id){
+			topicAlreadyCompleted = true;
+		}
+	});
+	if(!topicAlreadyCompleted){
+		completedTopics.push(topic);
+	}
+	await db.collection('users').updateOne({ _id: new mongo.ObjectID(user._id) }, { $set: { completedTopics } });
+}
 
-module.exports = { addUser, findAndSyncUser };
+
+module.exports = { addUser, findAndSyncUser, addCompletedTopic };

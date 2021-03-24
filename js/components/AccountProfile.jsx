@@ -156,6 +156,20 @@ class AccountProfile extends React.Component {
 					:
 					<h1>{this.state.user.firstName}</h1>
 				}
+				{this.state.user.completedTopics ?
+					<div>
+						<h2>Completed Topics</h2>
+						<ul>
+							{this.state.user.completedTopics.map((topic) => 
+								<li key={topic.id}>
+									{topic.Topic}
+								</li>
+							)}
+						</ul>
+					</div>
+					:
+					''
+				}
 				{this.props.isCurrentUser ?
 					<section className="modal--show" id="remove-video" tabIndex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
 						<div className="modal-inner">

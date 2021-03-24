@@ -12,7 +12,8 @@ const search = require('feathers-mongodb-fuzzy-search');
 const { passport } = require('./passport.js');
 var session = require('express-session');
 var flash = require('connect-flash');
-var { addUser, findAndSyncUser } = require('./users.js');
+var { addUser, findAndSyncUser, addCompletedTopic } = require('./users.js');
+var { getTopic, getTopicChallenges } = require('./topics.js');
 var { addLike, removeLike } = require('./likes.js');
 
 var app = express();
@@ -109,6 +110,21 @@ var upload = multer({ storage });
 				topicID: req.params.topicID
 			});
 		});
+		app.post('/level/:levelID/topics/:topicID', async (req, res) => {
+			if(req.user && req.params.levelID && req.params.topicID){
+				const topicData = await getTopic(req.params.topicID);
+				const challenges = await getTopicChallenges(req.params.topicID);
+				const topic = {
+					levelID: req.params.levelID,
+					topicID: req.params.topicID,
+					...topicData,
+					challenges
+				}
+				addCompletedTopic(req.user._id, topic);
+				res.send('success');
+			}
+		});
+
 
 		// Index videos route
 		app.get('/videos:format?', async (req, res) => {

@@ -256,7 +256,9 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compon
       className: "button"
     }, "Logout", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
       icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faSignOutAlt"]
-    }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, this.state.user.firstName), this.props.isCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+    }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, this.state.user.firstName), this.state.user.completedTopics ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Completed Topics"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.state.user.completedTopics.map(topic => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      key: topic.id
+    }, topic.Topic)))) : '', this.props.isCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
       className: "modal--show",
       id: "remove-video",
       tabIndex: "-1",
@@ -1173,6 +1175,11 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
 
     if (allChallengesAnswered) {
       alert('Congratulations! You have answered each challenge correctly.');
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(`/level/${this.props.levelID}/topics/${this.props.topicID}`).then(res => {
+        if (res.data) {
+          console.log(res.data);
+        }
+      });
     }
   }
 
@@ -1191,7 +1198,8 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
             return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
               height: "225",
               width: "400",
-              controls: true
+              controls: true,
+              tabindex: "-1"
             }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
               src: `${"http://localhost:1337"}${challenge.FeaturedMedia[0].url}`,
               type: "video/mp4"
