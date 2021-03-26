@@ -162,7 +162,7 @@ class AccountProfile extends React.Component {
 						<ul>
 							{this.state.user.completedTopics.map((topic) => 
 								<li key={topic.id}>
-									{topic.Topic}
+									<a href={`level/${topic.levelID}/topics/${topic.topicID}`}>{topic.Topic}</a>
 								</li>
 							)}
 						</ul>

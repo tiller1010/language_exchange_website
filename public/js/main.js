@@ -258,7 +258,9 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compon
       icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faSignOutAlt"]
     }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, this.state.user.firstName), this.state.user.completedTopics ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Completed Topics"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.state.user.completedTopics.map(topic => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       key: topic.id
-    }, topic.Topic)))) : '', this.props.isCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      href: `level/${topic.levelID}/topics/${topic.topicID}`
+    }, topic.Topic))))) : '', this.props.isCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
       className: "modal--show",
       id: "remove-video",
       tabIndex: "-1",
@@ -1114,10 +1116,12 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     super();
     this.state = {
       challenges: [],
-      optionsStatus: ''
+      optionsStatus: '',
+      allChallengesAnswered: false
     };
     this.handleToggleOptions = this.handleToggleOptions.bind(this);
     this.checkAnswerInput = this.checkAnswerInput.bind(this);
+    this.handleResetTopic = this.handleResetTopic.bind(this);
   }
 
   componentDidMount() {
@@ -1140,6 +1144,18 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
               challenges = challenges.concat(challenge);
               this.setState({
                 challenges
+              }, () => {
+                if (this.props.completed) {
+                  let completedChalleges = [];
+                  this.state.challenges.forEach(stateChallenge => {
+                    stateChallenge.answered = 'correct';
+                    completedChalleges.push(stateChallenge);
+                  });
+                  this.setState({
+                    challenges: completedChalleges,
+                    allChallengesAnswered: true
+                  });
+                }
               });
             }
           }
@@ -1156,7 +1172,6 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
 
   checkAnswerInput(input, challenge) {
     if (input.toLowerCase() == challenge.Title.toLowerCase()) {
-      console.log('correct');
       const newState = this.state;
       const challengeIndex = newState.challenges.indexOf(challenge);
       challenge.answered = 'correct';
@@ -1180,7 +1195,26 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
           console.log(res.data);
         }
       });
+      this.setState({
+        allChallengesAnswered
+      });
     }
+  }
+
+  handleResetTopic() {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(`/level/${this.props.levelID}/topics/${this.props.topicID}/reset`).then(res => {
+      this.setState({
+        allChallengesAnswered: false
+      });
+      let completedChalleges = [];
+      this.state.challenges.forEach(stateChallenge => {
+        delete stateChallenge.answered;
+        completedChalleges.push(stateChallenge);
+      });
+      this.setState({
+        challenges: completedChalleges
+      });
+    });
   }
 
   renderMedia(challenge) {
@@ -1199,7 +1233,7 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
               height: "225",
               width: "400",
               controls: true,
-              tabindex: "-1"
+              tabIndex: "-1"
             }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
               src: `${"http://localhost:1337"}${challenge.FeaturedMedia[0].url}`,
               type: "video/mp4"
@@ -1229,7 +1263,13 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faBars"]
     }), "Available Answers"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
       className: "text-center pure-u-1"
-    }, this.state.topic)), this.state.challenges ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, this.state.topic), this.state.allChallengesAnswered ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "pure-u-1 flex x-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      onClick: this.handleResetTopic
+    }, "Reset Topic", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faSync"]
+    }))) : ''), this.state.challenges ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: `challenge-options ${this.state.optionsStatus}`,
       onClick: this.handleToggleOptions
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
@@ -1259,10 +1299,12 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       placeholder: "Guess meaning",
       onChange: event => this.checkAnswerInput(event.target.value, challenge)
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "correct-answer"
+    }, challenge.Title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "input-correct"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Correct!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
       icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faCheckCircle"]
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, challenge.Content), challenge.FeaturedMedia.length ? this.renderMedia(challenge) : '', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, challenge.Content), challenge.FeaturedMedia.length ? this.renderMedia(challenge) : '', this.state.allChallengesAnswered ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "flex x-space-between"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: `/videos?keywords=${challenge.Title}`,
@@ -1274,7 +1316,7 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "button"
     }, "Submit your own", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
       icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faPlus"]
-    })))))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No challenges"));
+    }))) : ''))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No challenges"));
   }
 
 }
@@ -1901,9 +1943,11 @@ if (document.getElementById('level')) {
 if (document.getElementById('topic')) {
   var levelID = document.getElementById('topic').getAttribute('data-levelID');
   var topicID = document.getElementById('topic').getAttribute('data-topicID');
+  var completed = document.getElementById('topic').getAttribute('data-completed');
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Topic_jsx__WEBPACK_IMPORTED_MODULE_6__["default"], {
     levelID: levelID,
-    topicID: topicID
+    topicID: topicID,
+    completed: eval(completed)
   }), document.getElementById('topic'));
 }
 

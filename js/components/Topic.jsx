@@ -21,10 +21,12 @@ class Topic extends React.Component {
 		super();
 		this.state = {
 			challenges: [],
-			optionsStatus: ''
+			optionsStatus: '',
+			allChallengesAnswered: false
 		}
 		this.handleToggleOptions = this.handleToggleOptions.bind(this);
 		this.checkAnswerInput = this.checkAnswerInput.bind(this);
+		this.handleResetTopic = this.handleResetTopic.bind(this);
 	}
 
 	componentDidMount(){
@@ -48,6 +50,18 @@ class Topic extends React.Component {
 								challenges = challenges.concat(challenge);
 								this.setState({
 									challenges
+								}, () => {
+									if(this.props.completed){
+										let completedChalleges = [];
+										this.state.challenges.forEach((stateChallenge) => {
+											stateChallenge.answered = 'correct';
+											completedChalleges.push(stateChallenge);
+										});
+										this.setState({
+											challenges: completedChalleges,
+											allChallengesAnswered: true
+										});
+									}
 								});
 							}
 						}
@@ -64,7 +78,6 @@ class Topic extends React.Component {
 
 	checkAnswerInput(input, challenge){
 		if(input.toLowerCase() == challenge.Title.toLowerCase()){
-			console.log('correct')
 			const newState = this.state;
 			const challengeIndex = newState.challenges.indexOf(challenge);
 			challenge.answered = 'correct';
@@ -87,7 +100,27 @@ class Topic extends React.Component {
 						console.log(res.data)
 					}
 				})
+			this.setState({
+				allChallengesAnswered
+			});
 		}
+	}
+
+	handleResetTopic(){
+		axios.post(`/level/${this.props.levelID}/topics/${this.props.topicID}/reset`)
+			.then(res => {
+				this.setState({
+					allChallengesAnswered: false
+				});
+				let completedChalleges = [];
+				this.state.challenges.forEach((stateChallenge) => {
+					delete stateChallenge.answered;
+					completedChalleges.push(stateChallenge);
+				});
+				this.setState({
+					challenges: completedChalleges
+				});
+			});
 	}
 
 	renderMedia(challenge){
@@ -102,7 +135,7 @@ class Topic extends React.Component {
 						);
 					case 'video/mp4':
 						return (
-							<video height="225" width="400" controls tabindex="-1">
+							<video height="225" width="400" controls tabIndex="-1">
 								<source src={`${process.env.STRAPI_URL}${challenge.FeaturedMedia[0].url}`} type="video/mp4"/>
 							</video>
 						);
@@ -128,6 +161,16 @@ class Topic extends React.Component {
 		    			Available Answers
 		    		</button>
 					<h2 className="text-center pure-u-1">{this.state.topic}</h2>
+	    			{this.state.allChallengesAnswered ?
+						<div className="pure-u-1 flex x-center">
+							<button onClick={this.handleResetTopic}>
+								Reset Topic
+								<FontAwesomeIcon icon={faSync}/>
+							</button>
+						</div>
+						:
+						''
+					}
 				</div>
 
 
@@ -158,6 +201,7 @@ class Topic extends React.Component {
 						    		<div className="pad">
 						    			<div className={`challenge-input ${challenge.answered}`}>
 							    			<input type="text" placeholder="Guess meaning" onChange={(event) => this.checkAnswerInput(event.target.value, challenge)}/>
+							    			<div className="correct-answer">{challenge.Title}</div>
 							    			<div className="input-correct">
 							    				<p>Correct!</p>
 								    			<FontAwesomeIcon icon={faCheckCircle}/>
@@ -169,16 +213,20 @@ class Topic extends React.Component {
 						    				:
 						    				''
 						    			}
-						    			<div className="flex x-space-between">
-							    			<a href={`/videos?keywords=${challenge.Title}`} className="button">
-								    			View others
-												<FontAwesomeIcon icon={faSearch}/>
-							    			</a>
-							    			<a href={`/videos/add?challenge=${challenge.Title}`} className="button">
-								    			Submit your own
-												<FontAwesomeIcon icon={faPlus}/>
-							    			</a>
-						    			</div>
+						    			{this.state.allChallengesAnswered ?
+							    			<div className="flex x-space-between">
+								    			<a href={`/videos?keywords=${challenge.Title}`} className="button">
+									    			View others
+													<FontAwesomeIcon icon={faSearch}/>
+								    			</a>
+								    			<a href={`/videos/add?challenge=${challenge.Title}`} className="button">
+									    			Submit your own
+													<FontAwesomeIcon icon={faPlus}/>
+								    			</a>
+							    			</div>
+							    			:
+							    			''
+						    			}
 						    		</div>
 					    		</div>
 				    		</div>

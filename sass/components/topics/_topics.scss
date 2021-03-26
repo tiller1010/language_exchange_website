@@ -57,9 +57,12 @@
 	justify-content: space-between;
 	align-items: center;
 	&.correct{
-		.input-correct{
+		.correct-answer, .input-correct{
 			visibility: visible;
 		}
+	}
+	.correct-answer{
+		visibility: hidden;
 	}
 	.input-correct{
 		display: flex;

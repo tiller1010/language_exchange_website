@@ -12,7 +12,7 @@ const search = require('feathers-mongodb-fuzzy-search');
 const { passport } = require('./passport.js');
 var session = require('express-session');
 var flash = require('connect-flash');
-var { addUser, findAndSyncUser, addCompletedTopic } = require('./users.js');
+var { addUser, findAndSyncUser, addCompletedTopic, removeCompletedTopic } = require('./users.js');
 var { getTopic, getTopicChallenges } = require('./topics.js');
 var { addLike, removeLike } = require('./likes.js');
 
@@ -105,9 +105,19 @@ var upload = multer({ storage });
 
 		// Topics route
 		app.get('/level/:levelID/topics/:topicID', (req, res) => {
+			let completed = false;
+			if(req.user){
+				let completedTopics = req.user.completedTopics || [];
+				completedTopics.forEach((topic) => {
+					if(topic.id == req.params.topicID){
+						completed = true;
+					}
+				});
+			}
 			res.render('topic.jsx', {
 				levelID: req.params.levelID,
-				topicID: req.params.topicID
+				topicID: req.params.topicID,
+				completed
 			});
 		});
 		app.post('/level/:levelID/topics/:topicID', async (req, res) => {
@@ -122,6 +132,12 @@ var upload = multer({ storage });
 				}
 				addCompletedTopic(req.user._id, topic);
 				res.send('success');
+			}
+		});
+		app.post('/level/:levelID/topics/:topicID/reset', async (req, res) => {
+			if(req.user && req.params.topicID){
+				removeCompletedTopic(req.user._id, req.params.topicID);
+				res.send('reset');
 			}
 		});
 

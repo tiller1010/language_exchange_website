@@ -461,8 +461,11 @@ i {
   justify-content: space-between;
   align-items: center;
 }
-.challenge-input.correct .input-correct {
+.challenge-input.correct .correct-answer, .challenge-input.correct .input-correct {
   visibility: visible;
+}
+.challenge-input .correct-answer {
+  visibility: hidden;
 }
 .challenge-input .input-correct {
   display: flex;

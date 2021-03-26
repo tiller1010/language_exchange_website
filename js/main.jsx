@@ -30,7 +30,8 @@ if(document.getElementById('level')){
 if(document.getElementById('topic')){
 	var levelID = document.getElementById('topic').getAttribute('data-levelID');
 	var topicID = document.getElementById('topic').getAttribute('data-topicID');
-	ReactDOM.render(<Topic levelID={levelID} topicID={topicID}/>, document.getElementById('topic'));
+	var completed = document.getElementById('topic').getAttribute('data-completed');
+	ReactDOM.render(<Topic levelID={levelID} topicID={topicID} completed={eval(completed)}/>, document.getElementById('topic'));
 }
 if(document.getElementById('login')){
 	var errors = document.getElementById('login').getAttribute('data-errors');

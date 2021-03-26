@@ -68,5 +68,19 @@ async function addCompletedTopic(userID, topic){
 	await db.collection('users').updateOne({ _id: new mongo.ObjectID(user._id) }, { $set: { completedTopics } });
 }
 
+async function removeCompletedTopic(userID, topicID){
+	const db = getDB();
+	let user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
+	// Sync completed topics
+	let completedTopics = user.completedTopics || [];
+	let newCompletedTopics = [];
+	completedTopics.forEach((topic) => {
+		if(!topicID == topic.id){
+			newCompletedTopics.push(topic);
+		}
+	});
+	await db.collection('users').updateOne({ _id: new mongo.ObjectID(user._id) }, { $set: { completedTopics: newCompletedTopics } });
+}
 
-module.exports = { addUser, findAndSyncUser, addCompletedTopic };
+
+module.exports = { addUser, findAndSyncUser, addCompletedTopic, removeCompletedTopic };
