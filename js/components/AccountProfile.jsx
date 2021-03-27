@@ -1,14 +1,19 @@
 import React from 'react';
 import Navigation from './Navigation.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt, faStar, faTrash, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faStar, faTrash, faTimes, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
+import Slider from 'react-slick';
 
 class AccountProfile extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			user: {},
+			user: {
+				completedTopics: [],
+				uploadedVideos: [],
+				likedVideos: []
+			},
 			openRemovalForm: false
 		}
 		this.findAndSyncUser = this.findAndSyncUser.bind(this);
@@ -134,6 +139,21 @@ class AccountProfile extends React.Component {
 		})
 	}
 
+	renderMedia(topic){
+		if(topic.FeaturedImage){
+			switch(topic.FeaturedImage.mime){
+				case 'image/jpeg':
+					return (
+						<div className="img-container">
+							<img src={`${process.env.STRAPI_URL}${topic.FeaturedImage.url}`}/>
+						</div>
+					);
+				default:
+					return <p>Invalid media</p>
+			}
+		}
+	}
+
 	render(){
 
 		document.addEventListener('cssmodal:hide', () => {
@@ -156,19 +176,48 @@ class AccountProfile extends React.Component {
 					:
 					<h1>{this.state.user.firstName}</h1>
 				}
-				{this.state.user.completedTopics ?
-					<div>
-						<h2>Completed Topics</h2>
-						<ul>
+				{this.state.user.completedTopics.length ?
+					<div className="topics">
+						<h2 className="text-center">Completed Topics</h2>
+						<hr/>
+			    		<Slider {...{
+							dots: false,
+							infinite: false,
+							speed: 500,
+							slidesToShow: 3,
+							slidesToScroll: 1,
+							responsive: [
+								{
+									breakpoint: 1024,
+									settings: {
+										slidesToShow: 1.5
+									}
+								}
+							]
+			    		}}>
 							{this.state.user.completedTopics.map((topic) => 
-								<li key={topic.id}>
-									<a href={`level/${topic.levelID}/topics/${topic.topicID}`}>{topic.Topic}</a>
-								</li>
+			    				<div className="topic pure-u-1 pure-u-md-11-24" key={topic.id}>
+				    				<div className="pad">
+					    				<div className="flex x-space-between">
+					    					<h3 className="pad no-y no-left">{topic.Topic}</h3>
+											<a href={`level/${topic.levelID}/topics/${topic.topicID}`} className="button">
+											    View Topic
+											    <FontAwesomeIcon icon={faLongArrowAltRight}/>
+										    </a>
+									    </div>
+				    					<a href={`level/${topic.levelID}/topics/${topic.topicID}`}>
+					    					{this.renderMedia(topic)}
+				    					</a>
+			    					</div>
+		    					</div>
 							)}
-						</ul>
+						</Slider>
 					</div>
 					:
-					''
+					<div>
+						<h2 className="text-center">No Completed Topics</h2>
+						<hr/>
+					</div>
 				}
 				{this.props.isCurrentUser ?
 					<section className="modal--show" id="remove-video" tabIndex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
@@ -195,98 +244,138 @@ class AccountProfile extends React.Component {
 					:
 					''
 				}
-				{this.state.user.uploadedVideos ?
+				{this.state.user.uploadedVideos.length ?
 					<div>
-						<h2>Uploaded Videos</h2>
-						{this.state.user.uploadedVideos.map((video) => 
-							<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
-								<div className="flex x-center">
-									<div>
-										<div className="pure-u-1 flex x-space-between y-center">
+						<h2 className="text-center">Uploaded Videos</h2>
+						<hr/>
+			    		<Slider {...{
+							dots: false,
+							infinite: false,
+							speed: 500,
+							slidesToShow: 3,
+							slidesToScroll: 1,
+							responsive: [
+								{
+									breakpoint: 1024,
+									settings: {
+										slidesToShow: 1.5
+									}
+								}
+							]
+			    		}}>
+							{this.state.user.uploadedVideos.map((video) => 
+								<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
+									<div className="flex x-center">
+										<div>
+											<div className="pure-u-1 flex x-space-between y-center">
+												<div>
+													<h3>{video.title}</h3>
+													<p>By: {video.uploadedBy.displayName}</p>
+												</div>
+												{this.props.isCurrentUser ?
+													<form action="/videos/remove" method="POST">
+														<input type="hidden" name="videoID" value={video._id}/>
+														<a className="button" href="#remove-video" onClick={this.handleDeleteVideo}>
+															Remove Video
+															<FontAwesomeIcon icon={faTrash}/>
+														</a>
+													</form>
+													:
+													''
+												}
+											</div>
+											<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
+												`${this.props.pathResolver}${video.thumbnailSrc}` || "/images/videoPlaceholder.png"
+											} controls>
+												<source src={`${this.props.pathResolver}${video.src}`}></source>
+											</video>
+										</div>
+									</div>
+									<div className="flex x-space-around y-center">
+										<p>Likes: {video.likes || 0}</p>
+										{video.likedByCurrentUser ?
+											<button onClick={() => this.removeLike(video, this.state.user.uploadedVideos, 'uploadedVideos')}>
+												Liked
+												<FontAwesomeIcon icon={faStar}/>
+											</button>
+											:
+											<button onClick={() => this.sendLike(video, this.state.user.uploadedVideos, 'uploadedVideos')}>
+												Like
+												<FontAwesomeIcon icon={farStar}/>
+											</button>
+										}
+									</div>
+								</div>
+							)}
+						</Slider>
+					</div>
+					:
+					<div>
+						<h2 className="text-center">No Uploaded Videos</h2>
+						<hr/>
+					</div>
+				}
+				{this.state.user.likedVideos.length ?
+					<div>
+						<h2 className="text-center">Liked Videos</h2>
+						<hr/>
+			    		<Slider {...{
+							dots: false,
+							infinite: false,
+							speed: 500,
+							slidesToShow: 3,
+							slidesToScroll: 1,
+							responsive: [
+								{
+									breakpoint: 1024,
+									settings: {
+										slidesToShow: 1.5
+									}
+								}
+							]
+			    		}}>
+							{this.state.user.likedVideos.map((video) => 
+								<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
+									<div className="flex x-center">
+										<div>
+											<h3>{video.title}</h3>
+											{video.uploadedBy ?
 											<div>
-												<h3>{video.title}</h3>
 												<p>By: {video.uploadedBy.displayName}</p>
 											</div>
-											{this.props.isCurrentUser ?
-												<form action="/videos/remove" method="POST">
-													<input type="hidden" name="videoID" value={video._id}/>
-													<a className="button" href="#remove-video" onClick={this.handleDeleteVideo}>
-														Remove Video
-														<FontAwesomeIcon icon={faTrash}/>
-													</a>
-												</form>
-												:
-												''
+											:
+											<p></p>
 											}
+											<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
+												`${this.props.pathResolver}${video.thumbnailSrc}` || "/images/videoPlaceholder.png"
+											} controls>
+												<source src={`${this.props.pathResolver}${video.src}`}></source>
+											</video>
 										</div>
-										<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
-											`${this.props.pathResolver}${video.thumbnailSrc}` || "/images/videoPlaceholder.png"
-										} controls>
-											<source src={`${this.props.pathResolver}${video.src}`}></source>
-										</video>
 									</div>
-								</div>
-								<div className="flex x-space-around y-center">
-									<p>Likes: {video.likes || 0}</p>
-									{video.likedByCurrentUser ?
-										<button onClick={() => this.removeLike(video, this.state.user.uploadedVideos, 'uploadedVideos')}>
-											Liked
-											<FontAwesomeIcon icon={faStar}/>
-										</button>
-										:
-										<button onClick={() => this.sendLike(video, this.state.user.uploadedVideos, 'uploadedVideos')}>
-											Like
-											<FontAwesomeIcon icon={farStar}/>
-										</button>
-									}
-								</div>
-							</div>
-						)}
-					</div>
-					:
-					''
-				}
-				{this.state.user.likedVideos ?
-					<div>
-						<h2>Liked Videos</h2>
-						{this.state.user.likedVideos.map((video) => 
-							<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
-								<div className="flex x-center">
-									<div>
-										<h3>{video.title}</h3>
-										{video.uploadedBy ?
-										<div>
-											<p>By: {video.uploadedBy.displayName}</p>
-										</div>
-										:
-										<p></p>
+									<div className="flex x-space-around y-center">
+										<p>Likes: {video.likes || 0}</p>
+										{video.likedByCurrentUser ?
+											<button onClick={() => this.removeLike(video, this.state.user.likedVideos, 'likedVideos')}>
+												Liked
+												<FontAwesomeIcon icon={faStar}/>
+											</button>
+											:
+											<button onClick={() => this.sendLike(video, this.state.user.likedVideos, 'likedVideos')}>
+												Like
+												<FontAwesomeIcon icon={farStar}/>
+											</button>
 										}
-										<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
-											`${this.props.pathResolver}${video.thumbnailSrc}` || "/images/videoPlaceholder.png"
-										} controls>
-											<source src={`${this.props.pathResolver}${video.src}`}></source>
-										</video>
 									</div>
 								</div>
-								<div className="flex x-space-around y-center">
-									<p>Likes: {video.likes || 0}</p>
-									{video.likedByCurrentUser ?
-										<button onClick={() => this.removeLike(video, this.state.user.likedVideos, 'likedVideos')}>
-											Liked
-											<FontAwesomeIcon icon={faStar}/>
-										</button>
-										:
-										<button onClick={() => this.sendLike(video, this.state.user.likedVideos, 'likedVideos')}>
-											Like
-											<FontAwesomeIcon icon={farStar}/>
-										</button>
-									}
-								</div>
-							</div>
-						)}
+							)}
+						</Slider>
 					</div>
 					:
-					''
+					<div>
+						<h2 className="text-center">No Liked Videos</h2>
+						<hr/>
+					</div>
 				}
 			</div>
 		);

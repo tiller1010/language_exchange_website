@@ -235,7 +235,7 @@ var upload = multer({ storage });
 				thumbnailSrc: 'assets/' + req.files['thumbnail'][0].filename,
 				originalThumbnailName: req.files['thumbnail'][0].originalname,
 				created: new Date(),
-				uploadedBy: { _id: req.user._id, displayName: req.user.displayName } || { displayName: 'Guest' }
+				uploadedBy: req.user ? { _id: req.user._id, displayName: req.user.displayName } : { displayName: 'Guest' }
 			});
 			if(req.user){
 				await addVideoToUsersUploads(newVideo, req.user._id);

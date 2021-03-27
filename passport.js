@@ -44,6 +44,7 @@ passport.use('local-signup', new LocalStrategy({
 					firstName : req.body.firstName,
 					lastName : req.body.lastName,
 					passwordHash: bcrypt.hashSync(password, 10),
+					completedTopics: [],
 					uploadedVideos: [],
 					likedVideos: []
 				}
@@ -67,6 +68,7 @@ passport.use(new GoogleStrategy({
 			firstName: profile.name.givenName,
 			lastName: profile.name.familyName,
 			image: profile.photos[0],
+			completedTopics: [],
 			uploadedVideos: [],
 			likedVideos: []
 		}

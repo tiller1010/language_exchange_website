@@ -5,3 +5,8 @@
 	border: 5px solid $blue;
 	box-sizing: border-box;
 }
+@media only screen and (max-width: 815px){
+	.video-add-view{
+		flex-direction: column-reverse;
+	}
+}

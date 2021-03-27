@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome, faSlidersH, faBan, faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import Navigation from './Navigation.jsx';
+import Slider from 'react-slick';
 
 async function getVideos(){
 	var urlParams = new URLSearchParams(window.location.search);
@@ -294,7 +295,21 @@ class VideosIndex extends React.Component {
 						<p></p>
 					}
 					{this.state.videos.length ?
-						<div className="flex">
+			    		<Slider {...{
+							dots: false,
+							infinite: false,
+							speed: 500,
+							slidesToShow: 3,
+							slidesToScroll: 1,
+							responsive: [
+								{
+									breakpoint: 1024,
+									settings: {
+										slidesToShow: 1.5
+									}
+								}
+							]
+			    		}}>
 							{this.state.videos.map((video) => 
 								<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
 									<div className="flex x-center">
@@ -332,7 +347,7 @@ class VideosIndex extends React.Component {
 									</div>
 								</div>
 							)}
-						</div>
+						</Slider>
 						:
 						<p>No videos</p>
 					}

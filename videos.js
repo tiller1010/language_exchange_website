@@ -1,7 +1,7 @@
 const { getDB } = require('./db.js');
 const mongo = require('mongodb');
 
-const pageLength = 3;
+const pageLength = 6;
 async function indexVideos(page = 1, sort = {}){
 	const db = getDB();
 	// Skip items per page, minus the current page

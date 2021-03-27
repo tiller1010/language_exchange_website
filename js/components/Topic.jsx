@@ -153,7 +153,7 @@ class Topic extends React.Component {
 				<div className="flex x-center">
 					<a href={`/level/${this.props.levelID}`} className="button icon-left">
 						<FontAwesomeIcon icon={faLongArrowAltLeft}/>
-						Back to Topics
+						Back to Level
 					</a>
 					<span>&nbsp;</span>
 		    		<button className="available-answers button icon-left" onClick={this.handleToggleOptions}>

@@ -206,7 +206,7 @@ class Home extends React.Component {
 					</form>
 				</div>
 
-			    {this.state.recentVideos ?
+			    {this.state.recentVideos.length ?
 			    	<div className="pad no-x">
 			    		<h2>Recent Submissions</h2>
 			    		<Slider {...{
@@ -269,26 +269,31 @@ class Home extends React.Component {
 
 			    {this.state.levels ?
 			    	this.state.levels.map((level) => 
-			    		<div key={this.state.levels.indexOf(level)} className="flex x-center">
+			    		<div key={level.id} className="flex x-center">
 				    		<h2 className="pad">Level {level.Level}</h2>
 				    		<a href={`/level/${level.id}`} className="button" style={{ alignSelf: 'center' }}>
-					    		View all
+					    		View Level
 					    		<FontAwesomeIcon icon={faLongArrowAltRight}/>
 				    		</a>
+				    		<div className="pure-u-1">
+					    		<hr/>
+				    		</div>
 				    		{level.topics ?
 				    			<div className="topics pure-u-1 flex x-space-around">
 					    			{this.randomTopics(level).map((topic) =>
-					    				<div className="topic pure-u-1 pure-u-md-11-24" key={level.topics.indexOf(topic)}>
-						    				<div className="flex x-space-between">
-						    					<h3 className="pad no-y no-left">{topic.Topic}</h3>
-						    					<a href={`/level/${level.id}/topics/${topic.id}`} className="button">
-												    View all
-												    <FontAwesomeIcon icon={faLongArrowAltRight}/>
-											    </a>
-										    </div>
-					    					<a href={`/level/${level.id}/topics/${topic.id}`}>
-						    					{this.renderMedia(topic)}
-					    					</a>
+					    				<div className="topic pure-u-1 pure-u-md-1-3" key={topic.id}>
+						    				<div className="pad">
+							    				<div className="flex x-space-between">
+							    					<h3 className="pad no-y no-left">{topic.Topic}</h3>
+							    					<a href={`/level/${level.id}/topics/${topic.id}`} className="button">
+													    View Topic
+													    <FontAwesomeIcon icon={faLongArrowAltRight}/>
+												    </a>
+											    </div>
+						    					<a href={`/level/${level.id}/topics/${topic.id}`}>
+							    					{this.renderMedia(topic)}
+						    					</a>
+					    					</div>
 				    					</div>
 				    				)}
 			    				</div>
