@@ -314,16 +314,18 @@ class VideosIndex extends React.Component {
 								<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
 									<div className="flex x-center">
 										<div>
-											<h3>{video.title}</h3>
-											{video.uploadedBy._id ?
-											<div>
-												<p>By: <a href={`/account-profile/${video.uploadedBy._id}`} aria-label={`${video.uploadedBy.displayName} profile`}>{video.uploadedBy.displayName}</a></p>
+											<div className="flex x-space-between y-center">
+												<h3>{video.title}</h3>
+												{video.uploadedBy._id ?
+													<div>
+														<p>By: <a href={`/account-profile/${video.uploadedBy._id}`} aria-label={`${video.uploadedBy.displayName} profile`}>{video.uploadedBy.displayName}</a></p>
+													</div>
+													:
+													<div>
+														<p>By: {video.uploadedBy.displayName}</p>
+													</div>
+												}
 											</div>
-											:
-											<div>
-												<p>By: {video.uploadedBy.displayName}</p>
-											</div>
-											}
 											<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
 												video.thumbnailSrc || "/images/videoPlaceholder.png"
 											} controls>

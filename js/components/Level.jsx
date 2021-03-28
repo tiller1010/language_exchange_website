@@ -66,46 +66,52 @@ class Level extends React.Component {
 			<div className="frame">
 				<Navigation/>
 			    {this.state.topics ?
-			    	this.state.topics.map((topic) => 
-			    		<div key={this.state.topics.indexOf(topic)}>
-				    		<div className="flex x-center">
-					    		<h2 className="pad">{topic.Topic}</h2>
-					    		<a href={`/level/${this.props.levelID}/topics/${topic.id}`} className="button" style={{ alignSelf: 'center' }}>
-						    		View Topic
-						    		<FontAwesomeIcon icon={faLongArrowAltRight}/>
-					    		</a>
-					    		<a href={`/level/${this.props.levelID}/topics/${topic.id}`}>
-									{this.renderMedia(topic)}
-					    		</a>
+			    	<div className="topics pure-u-1 flex x-space-around">
+				    	{this.state.topics.map((topic) => 
+				    		<div key={this.state.topics.indexOf(topic)} className="topic pure-u-1 pure-u-md-1-3">
+					    		<div className="pad">
+						    		<div className="flex x-space-between">
+							    		<h2 className="pad">{topic.Topic}</h2>
+							    		<a href={`/level/${this.props.levelID}/topics/${topic.id}`} className="button" style={{ alignSelf: 'center' }}>
+								    		View Topic
+								    		<FontAwesomeIcon icon={faLongArrowAltRight}/>
+							    		</a>
+							    		<a href={`/level/${this.props.levelID}/topics/${topic.id}`}>
+											{this.renderMedia(topic)}
+							    		</a>
+						    		</div>
+						    		{topic.challenges ?
+						    			<div className="challenges">
+								    		<Slider {...{
+												dots: false,
+												arrows: true,
+												infinite: false,
+												speed: 500,
+												slidesToShow: 1,
+												slidesToScroll: 1
+								    		}}>
+									    		<div>
+										    		<div className="pad">
+											    		<h3>Need a quick refresher? Slide forward to preview challenges.</h3>
+										    		</div>
+									    		</div>
+								    			{this.randomChallenges(topic).map((challenge) =>
+								    				<div key={topic.challenges.indexOf(challenge)} className="challenge">
+									    				<div className="pad">
+										    				<h3>{challenge.Title}</h3>
+									    					<p>{challenge.Content}</p>
+								    					</div>
+							    					</div>
+							    				)}
+						    				</Slider>
+					    				</div>
+					    				:
+					    				<p>No challenges</p>
+						    		}
+					    		</div>
 				    		</div>
-				    		{topic.challenges ?
-				    			<div className="challenges">
-						    		<Slider {...{
-										dots: false,
-										arrows: true,
-										infinite: false,
-										speed: 500,
-										slidesToShow: 1,
-										slidesToScroll: 1
-						    		}}>
-							    		<div className="pad">
-								    		<h2>Need a quick refresher? Slide forward to preview challenges.</h2>
-							    		</div>
-						    			{this.randomChallenges(topic).map((challenge) =>
-						    				<div key={topic.challenges.indexOf(challenge)} className="challenge">
-							    				<div className="pad">
-								    				<h2>{challenge.Title}</h2>
-							    					<p>{challenge.Content}</p>
-						    					</div>
-					    					</div>
-					    				)}
-				    				</Slider>
-			    				</div>
-			    				:
-			    				<p>No challenges</p>
-				    		}
-			    		</div>
-		    		) 
+			    		)}
+		    		</div>
 			    	:
 			    	<h2>No topics</h2>
 			    }

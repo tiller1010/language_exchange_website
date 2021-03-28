@@ -167,7 +167,7 @@ class AccountProfile extends React.Component {
 				<Navigation/>
 				{this.props.isCurrentUser ?
 					<div>
-						<h1>Welcome, {this.state.user.firstName}</h1>
+						<h1>Welcome, {this.state.user.firstName}!</h1>
 						<a href="/logout" className="button">
 							Logout
 							<FontAwesomeIcon icon={faSignOutAlt}/>
@@ -270,7 +270,6 @@ class AccountProfile extends React.Component {
 											<div className="pure-u-1 flex x-space-between y-center">
 												<div>
 													<h3>{video.title}</h3>
-													<p>By: {video.uploadedBy.displayName}</p>
 												</div>
 												{this.props.isCurrentUser ?
 													<form action="/videos/remove" method="POST">
@@ -338,14 +337,18 @@ class AccountProfile extends React.Component {
 								<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
 									<div className="flex x-center">
 										<div>
-											<h3>{video.title}</h3>
-											{video.uploadedBy ?
-											<div>
-												<p>By: {video.uploadedBy.displayName}</p>
+											<div className="flex x-space-between y-center">
+												<h3>{video.title}</h3>
+												{video.uploadedBy._id ?
+													<div>
+														<p>By: <a href={`/account-profile/${video.uploadedBy._id}`} aria-label={`${video.uploadedBy.displayName} profile`}>{video.uploadedBy.displayName}</a></p>
+													</div>
+													:
+													<div>
+														<p>By: {video.uploadedBy.displayName}</p>
+													</div>
+												}
 											</div>
-											:
-											<p></p>
-											}
 											<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
 												`${this.props.pathResolver}${video.thumbnailSrc}` || "/images/videoPlaceholder.png"
 											} controls>
