@@ -51,6 +51,12 @@ async function findAndSyncUser(identifier, strategy){
 	return user;
 }
 
+async function findUserByID(id){
+	const db = getDB();
+	let user = await db.collection('users').findOne({ _id: new mongo.ObjectID(id) });
+	return user;
+}
+
 async function addCompletedTopic(userID, topic){
 	const db = getDB();
 	let user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
@@ -83,4 +89,4 @@ async function removeCompletedTopic(userID, topicID){
 }
 
 
-module.exports = { addUser, findAndSyncUser, addCompletedTopic, removeCompletedTopic };
+module.exports = { addUser, findAndSyncUser, findUserByID, addCompletedTopic, removeCompletedTopic };

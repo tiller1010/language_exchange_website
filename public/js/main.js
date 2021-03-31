@@ -130,11 +130,11 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compon
 
   async componentDidMount() {
     if (this.props.user) {
-      this.findAndSyncUser(this.props.user);
+      this.findAndSyncUser();
     }
   }
 
-  async findAndSyncUser(identifier) {
+  async findAndSyncUser() {
     const userProfile = JSON.parse(this.props.user);
     const authenticatedUser = JSON.parse(this.props.authenticatedUser);
 

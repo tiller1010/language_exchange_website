@@ -25,11 +25,11 @@ class AccountProfile extends React.Component {
 
 	async componentDidMount(){
 		if(this.props.user){
-			this.findAndSyncUser(this.props.user);
+			this.findAndSyncUser();
 		}
 	}
 
-	async findAndSyncUser(identifier){
+	async findAndSyncUser(){
 		const userProfile = JSON.parse(this.props.user);
 		const authenticatedUser = JSON.parse(this.props.authenticatedUser);
 		if(userProfile && authenticatedUser){
