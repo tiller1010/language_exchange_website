@@ -348,6 +348,12 @@ var upload = multer({ storage });
 				}
 			})
 		);
+		// Submit register form from react native
+		app.post('/react-native-register', passport.authenticate('local-signup'), async (req, res) => {
+			if(req.body.nativeFlag && req.user){
+				res.status(200).json(req.user);
+			}
+		});
 
 		// Account logout
 		app.get('/logout', (req, res) => {
