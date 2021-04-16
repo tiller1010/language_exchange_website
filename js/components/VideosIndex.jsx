@@ -295,21 +295,7 @@ class VideosIndex extends React.Component {
 						<p></p>
 					}
 					{this.state.videos.length ?
-			    		<Slider {...{
-							dots: false,
-							infinite: false,
-							speed: 500,
-							slidesToShow: 3,
-							slidesToScroll: 1,
-							responsive: [
-								{
-									breakpoint: 1024,
-									settings: {
-										slidesToShow: 1.5
-									}
-								}
-							]
-			    		}}>
+			    		<div className="flex">
 							{this.state.videos.map((video) => 
 								<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
 									<div className="flex x-center">
@@ -349,7 +335,7 @@ class VideosIndex extends React.Component {
 									</div>
 								</div>
 							)}
-						</Slider>
+						</div>
 						:
 						<p>No videos</p>
 					}

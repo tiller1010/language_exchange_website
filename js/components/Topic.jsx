@@ -151,16 +151,19 @@ class Topic extends React.Component {
 			<div className="frame">
 				<Navigation/>
 				<div className="flex x-center">
-					<a href={`/level/${this.props.levelID}`} className="button icon-left">
-						<FontAwesomeIcon icon={faLongArrowAltLeft}/>
-						Back to Level
-					</a>
-					<span>&nbsp;</span>
-		    		<button className="available-answers button icon-left" onClick={this.handleToggleOptions}>
-						<FontAwesomeIcon icon={faBars}/>
-		    			Available Answers
-		    		</button>
+					<div className="pad">
+						<a href={`/level/${this.props.levelID}`} className="button icon-left">
+							<FontAwesomeIcon icon={faLongArrowAltLeft}/>
+							Back to Level
+						</a>
+					</div>
 					<h2 className="text-center pure-u-1">{this.state.topic}</h2>
+					<div className="pad">
+			    		<button className="available-answers button icon-left" onClick={this.handleToggleOptions}>
+							<FontAwesomeIcon icon={faBars}/>
+			    			Available Answers
+			    		</button>
+		    		</div>
 	    			{this.state.allChallengesAnswered ?
 						<div className="pure-u-1 flex x-center">
 							<button onClick={this.handleResetTopic}>
