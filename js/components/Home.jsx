@@ -6,6 +6,7 @@ import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSlidersH, faStar }
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import Slider from 'react-slick';
 import Navigation from './Navigation.jsx';
+import ReadMore from '@jamespotz/react-simple-readmore';
 
 // Enable lazy loading
 const lozadObserver = lozad();
@@ -229,7 +230,22 @@ class Home extends React.Component {
 									<div className="flex x-center">
 										<div>
 											<div className="flex x-space-between y-center">
-												<h3>{video.title}</h3>
+												<div style={{ maxWidth: '260px' }}>
+													<ReadMore
+											            fade
+											            minHeight={58}
+											            btnStyles={{
+											            	position: 'absolute',
+											            	bottom: '-15px',
+											            	border: 'none',
+											            	margin: 0,
+											            	padding: '5px',
+											            	zIndex: 1
+											            }}
+										            >
+														<h3>{video.title}</h3>
+													</ReadMore>
+												</div>
 												{video.uploadedBy._id ?
 													<div>
 														<p>By: <a href={`/account-profile/${video.uploadedBy._id}`} aria-label={`${video.uploadedBy.displayName} profile`}>{video.uploadedBy.displayName}</a></p>

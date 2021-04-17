@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt, faStar, faTrash, faTimes, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import Slider from 'react-slick';
+import ReadMore from '@jamespotz/react-simple-readmore';
 
 class AccountProfile extends React.Component {
 	constructor(props){
@@ -268,8 +269,21 @@ class AccountProfile extends React.Component {
 									<div className="flex x-center">
 										<div>
 											<div className="pure-u-1 flex x-space-between y-center">
-												<div>
-													<h3>{video.title}</h3>
+												<div style={{ maxWidth: '260px' }}>
+													<ReadMore
+											            fade
+											            minHeight={58}
+											            btnStyles={{
+											            	position: 'absolute',
+											            	bottom: '-15px',
+											            	border: 'none',
+											            	margin: 0,
+											            	padding: '5px',
+											            	zIndex: 1
+											            }}
+										            >
+														<h3>{video.title}</h3>
+													</ReadMore>
 												</div>
 												{this.props.isCurrentUser ?
 													<form action="/videos/remove" method="POST">
@@ -338,7 +352,22 @@ class AccountProfile extends React.Component {
 									<div className="flex x-center">
 										<div>
 											<div className="flex x-space-between y-center">
-												<h3>{video.title}</h3>
+												<div style={{ maxWidth: '260px' }}>
+													<ReadMore
+											            fade
+											            minHeight={58}
+											            btnStyles={{
+											            	position: 'absolute',
+											            	bottom: '-15px',
+											            	border: 'none',
+											            	margin: 0,
+											            	padding: '5px',
+											            	zIndex: 1
+											            }}
+										            >
+														<h3>{video.title}</h3>
+													</ReadMore>
+												</div>
 												{video.uploadedBy._id ?
 													<div>
 														<p>By: <a href={`/account-profile/${video.uploadedBy._id}`} aria-label={`${video.uploadedBy.displayName} profile`}>{video.uploadedBy.displayName}</a></p>

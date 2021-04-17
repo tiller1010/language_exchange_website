@@ -17,6 +17,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.2",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@fortawesome/react-fontawesome": "^0.1.14",
+    "@jamespotz/react-simple-readmore": "^1.0.0",
     "axios": "^0.21.0",
     "bcrypt": "^5.0.1",
     "connect-flash": "^0.1.1",
