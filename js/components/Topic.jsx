@@ -32,7 +32,7 @@ class Topic extends React.Component {
 	componentDidMount(){
 		axios.get(`${process.env.STRAPI_URL}/topics/${this.props.topicID}`)
 			.then(res => {
-				console.log(res)
+				// console.log(res)
 				if(res.data){
 					this.setState({
 						topic: res.data.Topic
@@ -97,7 +97,7 @@ class Topic extends React.Component {
 			axios.post(`/level/${this.props.levelID}/topics/${this.props.topicID}`)
 				.then(res => {
 					if(res.data){
-						console.log(res.data)
+						// console.log(res.data)
 					}
 				})
 			this.setState({
@@ -107,20 +107,18 @@ class Topic extends React.Component {
 	}
 
 	handleResetTopic(){
-		axios.post(`/level/${this.props.levelID}/topics/${this.props.topicID}/reset`)
-			.then(res => {
-				this.setState({
-					allChallengesAnswered: false
-				});
-				let completedChalleges = [];
-				this.state.challenges.forEach((stateChallenge) => {
-					delete stateChallenge.answered;
-					completedChalleges.push(stateChallenge);
-				});
-				this.setState({
-					challenges: completedChalleges
-				});
-			});
+		axios.post(`/level/${this.props.levelID}/topics/${this.props.topicID}/reset`);
+		this.setState({
+			allChallengesAnswered: false
+		});
+		let completedChalleges = [];
+		this.state.challenges.forEach((stateChallenge) => {
+			delete stateChallenge.answered;
+			completedChalleges.push(stateChallenge);
+		});
+		this.setState({
+			challenges: completedChalleges
+		});
 	}
 
 	renderMedia(challenge){

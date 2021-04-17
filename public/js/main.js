@@ -305,7 +305,7 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compon
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
       className: "pad no-y no-left"
     }, topic.Topic), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `level/${topic.levelID}/topics/${topic.topicID}`,
+      href: `${this.props.pathResolver}level/${topic.levelID}/topics/${topic.topicID}`,
       className: "button"
     }, "View Topic", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
       icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faLongArrowAltRight"]
@@ -1227,8 +1227,7 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
 
   componentDidMount() {
     axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`${"http://localhost:1337"}/topics/${this.props.topicID}`).then(res => {
-      console.log(res);
-
+      // console.log(res)
       if (res.data) {
         this.setState({
           topic: res.data.Topic
@@ -1292,8 +1291,7 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     if (allChallengesAnswered) {
       alert('Congratulations! You have answered each challenge correctly.');
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(`/level/${this.props.levelID}/topics/${this.props.topicID}`).then(res => {
-        if (res.data) {
-          console.log(res.data);
+        if (res.data) {// console.log(res.data)
         }
       });
       this.setState({
@@ -1303,18 +1301,17 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   }
 
   handleResetTopic() {
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(`/level/${this.props.levelID}/topics/${this.props.topicID}/reset`).then(res => {
-      this.setState({
-        allChallengesAnswered: false
-      });
-      let completedChalleges = [];
-      this.state.challenges.forEach(stateChallenge => {
-        delete stateChallenge.answered;
-        completedChalleges.push(stateChallenge);
-      });
-      this.setState({
-        challenges: completedChalleges
-      });
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(`/level/${this.props.levelID}/topics/${this.props.topicID}/reset`);
+    this.setState({
+      allChallengesAnswered: false
+    });
+    let completedChalleges = [];
+    this.state.challenges.forEach(stateChallenge => {
+      delete stateChallenge.answered;
+      completedChalleges.push(stateChallenge);
+    });
+    this.setState({
+      challenges: completedChalleges
     });
   }
 

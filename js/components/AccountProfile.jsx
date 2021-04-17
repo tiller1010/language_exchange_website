@@ -200,7 +200,7 @@ class AccountProfile extends React.Component {
 				    				<div className="pad">
 					    				<div className="flex x-space-between">
 					    					<h3 className="pad no-y no-left">{topic.Topic}</h3>
-											<a href={`level/${topic.levelID}/topics/${topic.topicID}`} className="button">
+											<a href={`${this.props.pathResolver}level/${topic.levelID}/topics/${topic.topicID}`} className="button">
 											    View Topic
 											    <FontAwesomeIcon icon={faLongArrowAltRight}/>
 										    </a>
