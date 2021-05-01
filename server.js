@@ -105,7 +105,7 @@ var upload = multer({ storage });
 		});
 
 		// Topics route
-		app.get('/level/:levelID/topics/:topicID', (req, res) => {
+		app.get('/level/:levelID/topic/:topicID', (req, res) => {
 			let completed = false;
 			if(req.user){
 				let completedTopics = req.user.completedTopics || [];
@@ -121,7 +121,7 @@ var upload = multer({ storage });
 				completed
 			});
 		});
-		app.post('/level/:levelID/topics/:topicID', async (req, res) => {
+		app.post('/level/:levelID/topic/:topicID', async (req, res) => {
 			if(req.user && req.params.levelID && req.params.topicID){
 				const topicData = await getTopic(req.params.topicID);
 				const challenges = await getTopicChallenges(req.params.topicID);
@@ -135,7 +135,7 @@ var upload = multer({ storage });
 				res.send('success');
 			}
 		});
-		app.post('/level/:levelID/topics/:topicID/reset', async (req, res) => {
+		app.post('/level/:levelID/topic/:topicID/reset', async (req, res) => {
 			if(req.user && req.params.topicID){
 				removeCompletedTopic(req.user._id, req.params.topicID);
 				res.send('reset');

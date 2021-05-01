@@ -72,11 +72,11 @@ class Level extends React.Component {
 					    		<div className="pad">
 						    		<div className="flex x-space-between">
 							    		<h2 className="pad">{topic.Topic}</h2>
-							    		<a href={`/level/${this.props.levelID}/topics/${topic.id}`} className="button" style={{ alignSelf: 'center' }}>
+							    		<a href={`/level/${this.props.levelID}/topic/${topic.id}`} className="button" style={{ alignSelf: 'center' }}>
 								    		View Topic
 								    		<FontAwesomeIcon icon={faLongArrowAltRight}/>
 							    		</a>
-							    		<a href={`/level/${this.props.levelID}/topics/${topic.id}`}>
+							    		<a href={`/level/${this.props.levelID}/topic/${topic.id}`}>
 											{this.renderMedia(topic)}
 							    		</a>
 						    		</div>

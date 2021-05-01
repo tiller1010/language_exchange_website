@@ -303,12 +303,12 @@ class Home extends React.Component {
 						    				<div className="pad">
 							    				<div className="flex x-space-between">
 							    					<h3 className="pad no-y no-left">{topic.Topic}</h3>
-							    					<a href={`/level/${level.id}/topics/${topic.id}`} className="button">
+							    					<a href={`/level/${level.id}/topic/${topic.id}`} className="button">
 													    View Topic
 													    <FontAwesomeIcon icon={faLongArrowAltRight}/>
 												    </a>
 											    </div>
-						    					<a href={`/level/${level.id}/topics/${topic.id}`}>
+						    					<a href={`/level/${level.id}/topic/${topic.id}`}>
 							    					{this.renderMedia(topic)}
 						    					</a>
 					    					</div>

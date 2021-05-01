@@ -94,7 +94,7 @@ class Topic extends React.Component {
 		});
 		if(allChallengesAnswered){
 			alert('Congratulations! You have answered each challenge correctly.');
-			axios.post(`/level/${this.props.levelID}/topics/${this.props.topicID}`)
+			axios.post(`/level/${this.props.levelID}/topic/${this.props.topicID}`)
 				.then(res => {
 					if(res.data){
 						// console.log(res.data)
@@ -107,7 +107,7 @@ class Topic extends React.Component {
 	}
 
 	handleResetTopic(){
-		axios.post(`/level/${this.props.levelID}/topics/${this.props.topicID}/reset`);
+		axios.post(`/level/${this.props.levelID}/topic/${this.props.topicID}/reset`);
 		this.setState({
 			allChallengesAnswered: false
 		});

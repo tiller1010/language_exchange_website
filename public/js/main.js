@@ -311,12 +311,12 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compon
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
       className: "pad no-y no-left"
     }, topic.Topic), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `${this.props.pathResolver}level/${topic.levelID}/topics/${topic.topicID}`,
+      href: `${this.props.pathResolver}level/${topic.levelID}/topic/${topic.topicID}`,
       className: "button"
     }, "View Topic", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
       icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faLongArrowAltRight"]
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `level/${topic.levelID}/topics/${topic.topicID}`
+      href: `level/${topic.levelID}/topic/${topic.topicID}`
     }, this.renderMedia(topic))))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
       className: "text-center"
     }, "No Completed Topics"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), this.props.isCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
@@ -834,12 +834,12 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
       className: "pad no-y no-left"
     }, topic.Topic), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `/level/${level.id}/topics/${topic.id}`,
+      href: `/level/${level.id}/topic/${topic.id}`,
       className: "button"
     }, "View Topic", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
       icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faLongArrowAltRight"]
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `/level/${level.id}/topics/${topic.id}`
+      href: `/level/${level.id}/topic/${topic.id}`
     }, this.renderMedia(topic)))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "No topics"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No levels"));
   }
 
@@ -944,7 +944,7 @@ class Level extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
       className: "pad"
     }, topic.Topic), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `/level/${this.props.levelID}/topics/${topic.id}`,
+      href: `/level/${this.props.levelID}/topic/${topic.id}`,
       className: "button",
       style: {
         alignSelf: 'center'
@@ -952,7 +952,7 @@ class Level extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }, "View Topic", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
       icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faLongArrowAltRight"]
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `/level/${this.props.levelID}/topics/${topic.id}`
+      href: `/level/${this.props.levelID}/topic/${topic.id}`
     }, this.renderMedia(topic))), topic.challenges ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "challenges"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_slick__WEBPACK_IMPORTED_MODULE_4___default.a, {
@@ -1344,7 +1344,7 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
 
     if (allChallengesAnswered) {
       alert('Congratulations! You have answered each challenge correctly.');
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(`/level/${this.props.levelID}/topics/${this.props.topicID}`).then(res => {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(`/level/${this.props.levelID}/topic/${this.props.topicID}`).then(res => {
         if (res.data) {// console.log(res.data)
         }
       });
@@ -1355,7 +1355,7 @@ class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   }
 
   handleResetTopic() {
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(`/level/${this.props.levelID}/topics/${this.props.topicID}/reset`);
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(`/level/${this.props.levelID}/topic/${this.props.topicID}/reset`);
     this.setState({
       allChallengesAnswered: false
     });
