@@ -1,7 +1,6 @@
 button, a.button{
 	position: relative;
 	display: block;
-	width: max-content;
 	margin: 10px 0;
 	padding: 10px;
 	padding-right: 40px;
@@ -11,6 +10,7 @@ button, a.button{
 	color: $blue;
 	transition: background-color .25s ease;
 	cursor: pointer;
+	white-space: nowrap;
 	&.icon-left{
 		padding-left: 40px;
 		padding-right: 10px;

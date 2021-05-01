@@ -169,7 +169,7 @@ class AccountProfile extends React.Component {
 				{this.props.isCurrentUser ?
 					<div>
 						<h1>Welcome, {this.state.user.firstName}!</h1>
-						<a href="/logout" className="button">
+						<a href="/logout" className="button" style={{ width: 'max-content' }}>
 							Logout
 							<FontAwesomeIcon icon={faSignOutAlt}/>
 						</a>
@@ -269,7 +269,7 @@ class AccountProfile extends React.Component {
 									<div className="flex x-center">
 										<div>
 											<div className="pure-u-1 flex x-space-between y-center">
-												<div style={{ maxWidth: '260px' }}>
+												<div style={{ maxWidth: '65%' }}>
 													<ReadMore
 											            fade
 											            minHeight={58}
@@ -352,7 +352,7 @@ class AccountProfile extends React.Component {
 									<div className="flex x-center">
 										<div>
 											<div className="flex x-space-between y-center">
-												<div style={{ maxWidth: '260px' }}>
+												<div style={{ maxWidth: '65%' }}>
 													<ReadMore
 											            fade
 											            minHeight={58}

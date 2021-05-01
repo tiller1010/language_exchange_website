@@ -302,7 +302,7 @@ class VideosIndex extends React.Component {
 									<div className="flex x-center">
 										<div>
 											<div className="flex x-space-between y-center">
-												<div style={{ maxWidth: '260px' }}>
+												<div style={{ maxWidth: '65%' }}>
 													<ReadMore
 											            fade
 											            minHeight={58}

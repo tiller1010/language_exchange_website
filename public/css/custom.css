@@ -229,13 +229,11 @@ input[type=text], input[type=password] {
 .sort-controls .sort-options input {
   margin-left: 3px;
   margin-right: 10px;
-  padding: 10px;
 }
 
 button, a.button {
   position: relative;
   display: block;
-  width: max-content;
   margin: 10px 0;
   padding: 10px;
   padding-right: 40px;
@@ -245,6 +243,7 @@ button, a.button {
   color: #9f74e4;
   transition: background-color 0.25s ease;
   cursor: pointer;
+  white-space: nowrap;
 }
 button.icon-left, a.button.icon-left {
   padding-left: 40px;
@@ -501,6 +500,9 @@ i {
     display: none;
   }
 }
+.slick-slider {
+  padding-bottom: 50px;
+}
 .slick-slider .slick-slide {
   padding: 0 10px;
   box-sizing: border-box;
@@ -511,19 +513,23 @@ i {
 }
 .slick-slider .slick-prev, .slick-slider .slick-next {
   z-index: 1;
-  top: 105%;
+  top: 90%;
 }
 .slick-slider .slick-prev {
   left: unset;
-  right: 120px;
+  right: 60px;
 }
 .slick-slider .slick-next {
-  right: 50px;
+  right: 0;
+}
+.slick-slider .slick-prev, .slick-slider .slick-next {
+  height: unset;
+  width: unset;
+  padding: 5px 10px;
+  border-radius: 25px;
+  background-color: #9f74e4;
 }
 .slick-slider .slick-prev:before, .slick-slider .slick-next:before {
   color: #fff;
   font-size: 30px;
-  padding: 5px 10px;
-  border-radius: 25px;
-  background-color: #9f74e4;
 }
