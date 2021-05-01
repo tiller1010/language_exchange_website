@@ -229,7 +229,6 @@ input[type=text], input[type=password] {
 .sort-controls .sort-options input {
   margin-left: 3px;
   margin-right: 10px;
-  padding: 10px;
 }
 
 button, a.button {
@@ -245,6 +244,7 @@ button, a.button {
   color: #9f74e4;
   transition: background-color 0.25s ease;
   cursor: pointer;
+  white-space: nowrap;
 }
 button.icon-left, a.button.icon-left {
   padding-left: 40px;

@@ -11,6 +11,7 @@ button, a.button{
 	color: $blue;
 	transition: background-color .25s ease;
 	cursor: pointer;
+	white-space: nowrap;
 	&.icon-left{
 		padding-left: 40px;
 		padding-right: 10px;
