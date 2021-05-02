@@ -57,10 +57,11 @@ passport.use('local-signup', new LocalStrategy({
 	}
 ));
 
+const callbackURL = process.env.SECURED_DOMAIN_WITH_PROTOCOL ? `${process.env.SECURED_DOMAIN_WITH_PROTOCOL}/auth/google/callback` : '/auth/google/callback';
 passport.use(new GoogleStrategy({
 	clientID: process.env.GOOGLE_AUTH_ID,
 	clientSecret: process.env.GOOGLE_AUTH_SECRET,
-	callbackURL: '/auth/google/callback'
+	callbackURL
 }, async (token, tokenSecret, profile, done) => {
 		const newUser = {
 			googleID: profile.id,
