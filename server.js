@@ -326,8 +326,23 @@ var upload = multer({ storage });
 		});
 
 		// Google login
-		app.get('/auth/google', passport.authenticate('google', { scope: 'https://www.googleapis.com/auth/plus.login' }));
-		app.get('/auth/google/callback', passport.authenticate('google', { successRedirect: '/account-profile', failureRedirect: '/login' }));
+		let googleNativeFlag = false;
+		app.get('/auth/google', (req, res, next) => {
+			if(req.query.nativeFlag){
+				googleNativeFlag = true;
+			}
+			next();
+		}, passport.authenticate('google', { scope: 'https://www.googleapis.com/auth/plus.login' }));
+		app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
+			if(googleNativeFlag && req.user){
+				googleNativeFlag = false;
+				res.redirect(process.env.REACT_NATIVE_APP_URL + '?userID=' + String(req.user._id));
+				return;
+			} else {
+				res.redirect('/account-profile');
+				return;
+			}
+		});
 
 		// Account register
 		app.get('/register', (req, res) => {
