@@ -7,6 +7,7 @@ import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import Slider from 'react-slick';
 import Navigation from './Navigation.jsx';
 import ReadMore from '@jamespotz/react-simple-readmore';
+import VideoPlayer from './VideoPlayer.tsx';
 
 // Enable lazy loading
 const lozadObserver = lozad();
@@ -227,56 +228,15 @@ class Home extends React.Component {
 			    		}}>
 					    	{this.state.recentVideos.map((video) => 
 					    		<div key={video._id}>
-									<div className="flex x-center">
-										<div>
-											<div className="flex x-space-between y-center">
-												<div style={{ maxWidth: '65%' }}>
-													<ReadMore
-											            fade
-											            minHeight={58}
-											            btnStyles={{
-											            	position: 'absolute',
-											            	bottom: '-15px',
-											            	border: 'none',
-											            	margin: 0,
-											            	padding: '5px',
-											            	zIndex: 1
-											            }}
-										            >
-														<h3>{video.title}</h3>
-													</ReadMore>
-												</div>
-												{video.uploadedBy._id ?
-													<div>
-														<p>By: <a href={`/account-profile/${video.uploadedBy._id}`} aria-label={`${video.uploadedBy.displayName} profile`}>{video.uploadedBy.displayName}</a></p>
-													</div>
-													:
-													<div>
-														<p>By: {video.uploadedBy.displayName}</p>
-													</div>
-												}
-											</div>
-											<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
-												video.thumbnailSrc || "/images/videoPlaceholder.png"
-											} controls>
-												<source src={video.src}></source>
-											</video>
-										</div>
-									</div>
-									<div className="flex x-space-around y-center">
-										<p>Likes: {video.likes || 0}</p>
-										{video.likedByCurrentUser ?
-											<button onClick={() => this.removeLike(video)}>
-												Liked
-												<FontAwesomeIcon icon={faStar}/>
-											</button>
-											:
-											<button onClick={() => this.sendLike(video)}>
-												Like
-												<FontAwesomeIcon icon={farStar}/>
-											</button>
-										}
-									</div>
+						    		<VideoPlayer
+										_id={video._id}
+										title={video.title}
+										src={video.src}
+										thumbnailSrc={video.thumbnailSrc}
+										uploadedBy={video.uploadedBy}
+										likes={video.likes}
+										likedByCurrentUser={this.currentUserHasLikedVideo(video)}
+						    		/>
 								</div>
 				    		)}
 			    		</Slider>
