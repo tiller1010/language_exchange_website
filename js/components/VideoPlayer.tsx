@@ -9,7 +9,22 @@ interface VideoAttributes {
 	likedByCurrentUser: boolean;
 }
 
-export default class VideoPlayer extends React.Component {
+type VideoPlayerProps = {
+	_id: string,
+	title: string,
+	src: string,
+	thumbnailSrc: string,
+	uploadedBy: string,
+	likes: number,
+	likedByCurrentUser: boolean
+}
+
+// let obj: VideoAttributes = {
+// 	likes: 'asd',
+// 	likedByCurrentUser: false
+// }
+
+export default class VideoPlayer extends React.Component<VideoPlayerProps> {
 	constructor(props){
 		super(props);
 		let state: VideoAttributes = {

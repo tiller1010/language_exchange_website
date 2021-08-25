@@ -554,7 +554,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         let likedRecentVideos = [];
 
         if (this.props.userLikedVideos) {
-          console.log(JSON.parse(this.props.userLikedVideos));
+          // console.log(JSON.parse(this.props.userLikedVideos))
           this.setState({
             userLikedVideos: JSON.parse(this.props.userLikedVideos)
           }, () => {
@@ -1472,6 +1472,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+// let obj: VideoAttributes = {
+// 	likes: 'asd',
+// 	likedByCurrentUser: false
+// }
 class VideoPlayer extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   constructor(props) {
     super(props);

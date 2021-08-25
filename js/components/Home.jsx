@@ -39,7 +39,7 @@ class Home extends React.Component {
 				}, () => {// Check if the current user has liked each video
 					let likedRecentVideos = [];
 					if(this.props.userLikedVideos){
-						console.log(JSON.parse(this.props.userLikedVideos))
+						// console.log(JSON.parse(this.props.userLikedVideos))
 						this.setState({
 							userLikedVideos: JSON.parse(this.props.userLikedVideos)
 						}, () => {
