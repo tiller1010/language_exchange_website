@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import ReadMore from '@jamespotz/react-simple-readmore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
@@ -9,14 +9,24 @@ interface VideoAttributes {
 	likedByCurrentUser: boolean;
 }
 
-type VideoPlayerProps = {
-	_id: string,
-	title: string,
-	src: string,
-	thumbnailSrc: string,
-	uploadedBy: string,
-	likes: number,
-	likedByCurrentUser: boolean
+// type VideoPlayerProps = {
+// 	_id: string,
+// 	title: string,
+// 	src: string,
+// 	thumbnailSrc: string,
+// 	uploadedBy: object,
+// 	likes: number,
+// 	likedByCurrentUser: boolean
+// }
+
+interface VideoPlayerProps {
+	_id: string;
+	title: string;
+	src: string;
+	thumbnailSrc: string;
+	uploadedBy: object;
+	likes: number;
+	likedByCurrentUser: boolean;
 }
 
 // let obj: VideoAttributes = {
@@ -25,7 +35,7 @@ type VideoPlayerProps = {
 // }
 
 export default class VideoPlayer extends React.Component<VideoPlayerProps> {
-	constructor(props){
+	constructor(props: VideoPlayerProps){
 		super(props);
 		let state: VideoAttributes = {
 			likes: 0,

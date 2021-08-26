@@ -1,2281 +1,27 @@
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
-/******/ })
-/************************************************************************/
-/******/ ({
-
-/***/ "./js/components/AccountProfile.jsx":
-/*!******************************************!*\
-  !*** ./js/components/AccountProfile.jsx ***!
-  \******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
-/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/free-regular-svg-icons */ "./node_modules/@fortawesome/free-regular-svg-icons/index.es.js");
-/* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-slick */ "./node_modules/react-slick/lib/index.js");
-/* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_slick__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @jamespotz/react-simple-readmore */ "./node_modules/@jamespotz/react-simple-readmore/dist/index.js");
-/* harmony import */ var _jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_6__);
-
-
-
-
-
-
-
-
-class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: {
-        completedTopics: [],
-        uploadedVideos: [],
-        likedVideos: []
-      },
-      openRemovalForm: false
-    };
-    this.findAndSyncUser = this.findAndSyncUser.bind(this);
-    this.sendLike = this.sendLike.bind(this);
-    this.removeLike = this.removeLike.bind(this);
-    this.currentUserHasLikedVideo = this.currentUserHasLikedVideo.bind(this);
-    this.handleDeleteVideo = this.handleDeleteVideo.bind(this);
-  }
-
-  async componentDidMount() {
-    if (this.props.user) {
-      this.findAndSyncUser();
-    }
-  }
-
-  async findAndSyncUser() {
-    const userProfile = JSON.parse(this.props.user);
-    const authenticatedUser = JSON.parse(this.props.authenticatedUser);
-
-    if (userProfile && authenticatedUser) {
-      // Check if user has liked their own video
-      if (userProfile.uploadedVideos && authenticatedUser.likedVideos) {
-        userProfile.uploadedVideos.forEach(video => {
-          video.likedByCurrentUser = this.currentUserHasLikedVideo(video, authenticatedUser);
-        });
-      } // Check if user has liked their own video
-
-
-      if (userProfile.likedVideos && authenticatedUser.likedVideos) {
-        userProfile.likedVideos.forEach(video => {
-          video.likedByCurrentUser = this.currentUserHasLikedVideo(video, authenticatedUser);
-        });
-      }
-    }
-
-    this.setState({
-      user: userProfile
-    });
-  }
-
-  async sendLike(video, videoList, videoListType) {
-    const newLikedVideo = await fetch(`${document.location.origin}/sendLike/${video._id}`).then(res => res.json()).catch(error => console.log(error));
-
-    if (newLikedVideo.message) {
-      // Display error message if included in response
-      alert(newLikedVideo.message);
-    } else if (newLikedVideo) {
-      // Update the video state to be liked by the current user.
-      newLikedVideo.likedByCurrentUser = true;
-      let updatedUser = this.state.user;
-      videoList[videoList.indexOf(video)] = newLikedVideo;
-      updatedUser[videoListType] = videoList; // Check if re-sending like from liked videos so duplicate does not show
-
-      let videoAlreadyLiked = false;
-      updatedUser.likedVideos.forEach(userLikedVideo => {
-        if (String(video._id) == String(userLikedVideo._id)) {
-          videoAlreadyLiked = true; // Restore like to liked video
-
-          updatedUser.likedVideos[updatedUser.likedVideos.indexOf(userLikedVideo)] = newLikedVideo;
-        }
-      });
-
-      if (!videoAlreadyLiked && this.props.isCurrentUser) {
-        // If user likes their own video, add to liked videos
-        updatedUser.likedVideos.push(newLikedVideo);
-      } // Update uploaded video likes if restoring like from one in liked videos
-
-
-      updatedUser.uploadedVideos.forEach(userLikedVideo => {
-        if (String(video._id) == String(userLikedVideo._id)) {
-          videoAlreadyLiked = true; // Restore like to liked video
-
-          updatedUser.uploadedVideos[updatedUser.uploadedVideos.indexOf(userLikedVideo)] = newLikedVideo;
-        }
-      });
-      this.setState({
-        user: updatedUser
-      });
-    }
-  }
-
-  async removeLike(video, videoList, videoListType) {
-    const newUnlikedVideo = await fetch(`${document.location.origin}/removeLike/${video._id}`).then(res => res.json()).catch(error => console.log(error));
-
-    if (newUnlikedVideo.message) {
-      // Display error message if included in response
-      alert(newUnlikedVideo.message);
-    } else if (newUnlikedVideo) {
-      // Update the video state to remove like from the current user. Used immediately after unliking.
-      newUnlikedVideo.likedByCurrentUser = false;
-      let updatedUser = this.state.user;
-      videoList[videoList.indexOf(video)] = newUnlikedVideo;
-      updatedUser[videoListType] = videoList; // Update uploaded video likes if removing like from one in liked videos
-
-      updatedUser.uploadedVideos.forEach(userUploadedVideo => {
-        if (String(video._id) == String(userUploadedVideo._id)) {
-          updatedUser.uploadedVideos[updatedUser.uploadedVideos.indexOf(userUploadedVideo)] = newUnlikedVideo;
-        }
-      }); // Update liked video likes if removing like from one in uploaded videos
-
-      updatedUser.likedVideos.forEach(userLikedVideo => {
-        if (String(video._id) == String(userLikedVideo._id)) {
-          updatedUser.likedVideos[updatedUser.likedVideos.indexOf(userLikedVideo)] = newUnlikedVideo;
-        }
-      });
-      this.setState({
-        user: updatedUser
-      });
-    }
-  }
-
-  currentUserHasLikedVideo(video, user) {
-    let liked = false;
-    user.likedVideos.forEach(userLikedVideo => {
-      if (userLikedVideo._id === video._id) {
-        liked = true;
-      }
-    });
-    return liked;
-  }
-
-  handleDeleteVideo(event) {
-    if (this.state.openRemovalForm) {
-      this.state.openRemovalForm.submit();
-    }
-
-    this.setState({
-      openRemovalForm: event.target.parentElement
-    });
-  }
-
-  renderMedia(topic) {
-    if (topic.FeaturedImage) {
-      switch (topic.FeaturedImage.mime) {
-        case 'image/jpeg':
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "img-container"
-          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-            src: `${"http://localhost:1337"}${topic.FeaturedImage.url}`
-          }));
-
-        default:
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Invalid media");
-      }
-    }
-  }
-
-  render() {
-    document.addEventListener('cssmodal:hide', () => {
-      this.setState({
-        openRemovalForm: false
-      });
-    });
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "frame"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], null), this.props.isCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome, ", this.state.user.firstName, "!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: "/logout",
-      className: "button",
-      style: {
-        width: 'max-content'
-      }
-    }, "Logout", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faSignOutAlt"]
-    }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, this.state.user.firstName), this.state.user.completedTopics.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "topics"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-      className: "text-center"
-    }, "Completed Topics"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_slick__WEBPACK_IMPORTED_MODULE_5___default.a, {
-      dots: false,
-      infinite: false,
-      speed: 500,
-      slidesToShow: 3,
-      slidesToScroll: 1,
-      responsive: [{
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 1.5
-        }
-      }]
-    }, this.state.user.completedTopics.map(topic => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "topic pure-u-1 pure-u-md-11-24",
-      key: topic.id
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "pad"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex x-space-between"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
-      className: "pad no-y no-left"
-    }, topic.Topic), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `${this.props.pathResolver}level/${topic.levelID}/topic/${topic.topicID}`,
-      className: "button"
-    }, "View Topic", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faLongArrowAltRight"]
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `level/${topic.levelID}/topic/${topic.topicID}`
-    }, this.renderMedia(topic))))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-      className: "text-center"
-    }, "No Completed Topics"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), this.props.isCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-      className: "modal--show",
-      id: "remove-video",
-      tabIndex: "-1",
-      role: "dialog",
-      "aria-labelledby": "modal-label",
-      "aria-hidden": "true"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "modal-inner"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
-      id: "modal-label"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Remove Video")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "modal-content"
-    }, "Are you sure you want to remove this video?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
-      className: "flex x-space-around"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      className: "button",
-      href: "#remove-video",
-      onClick: this.handleDeleteVideo
-    }, "Remove Video", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faTrash"]
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: "#!",
-      className: "button"
-    }, "Close", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faTimes"]
-    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: "#!",
-      className: "modal-close",
-      title: "Close this modal",
-      "data-close": "Close",
-      "data-dismiss": "modal"
-    }, "?")) : '', this.state.user.uploadedVideos.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-      className: "text-center"
-    }, "Uploaded Videos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_slick__WEBPACK_IMPORTED_MODULE_5___default.a, {
-      dots: false,
-      infinite: false,
-      speed: 500,
-      slidesToShow: 3,
-      slidesToScroll: 1,
-      responsive: [{
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 1.5
-        }
-      }]
-    }, this.state.user.uploadedVideos.map(video => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      key: video._id,
-      className: "pure-u-1 pure-u-lg-1-3"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex x-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "pure-u-1 flex x-space-between y-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      style: {
-        maxWidth: '65%'
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_6___default.a, {
-      fade: true,
-      minHeight: 58,
-      btnStyles: {
-        position: 'absolute',
-        bottom: '-15px',
-        border: 'none',
-        margin: 0,
-        padding: '5px',
-        zIndex: 1
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, video.title))), this.props.isCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-      action: "/videos/remove",
-      method: "POST"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "hidden",
-      name: "videoID",
-      value: video._id
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      className: "button",
-      href: "#remove-video",
-      onClick: this.handleDeleteVideo
-    }, "Remove Video", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faTrash"]
-    }))) : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
-      type: "video/mp4",
-      className: "video-preview lozad",
-      height: "225",
-      width: "400",
-      poster: `${this.props.pathResolver}${video.thumbnailSrc}` || "/images/videoPlaceholder.png",
-      controls: true
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
-      src: `${this.props.pathResolver}${video.src}`
-    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex x-space-around y-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Likes: ", video.likes || 0), video.likedByCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      onClick: () => this.removeLike(video, this.state.user.uploadedVideos, 'uploadedVideos')
-    }, "Liked", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faStar"]
-    })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      onClick: () => this.sendLike(video, this.state.user.uploadedVideos, 'uploadedVideos')
-    }, "Like", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faStar"]
-    }))))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-      className: "text-center"
-    }, "No Uploaded Videos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), this.state.user.likedVideos.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-      className: "text-center"
-    }, "Liked Videos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_slick__WEBPACK_IMPORTED_MODULE_5___default.a, {
-      dots: false,
-      infinite: false,
-      speed: 500,
-      slidesToShow: 3,
-      slidesToScroll: 1,
-      responsive: [{
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 1.5
-        }
-      }]
-    }, this.state.user.likedVideos.map(video => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      key: video._id,
-      className: "pure-u-1 pure-u-lg-1-3"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex x-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex x-space-between y-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      style: {
-        maxWidth: '65%'
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_6___default.a, {
-      fade: true,
-      minHeight: 58,
-      btnStyles: {
-        position: 'absolute',
-        bottom: '-15px',
-        border: 'none',
-        margin: 0,
-        padding: '5px',
-        zIndex: 1
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, video.title))), video.uploadedBy._id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "By: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `/account-profile/${video.uploadedBy._id}`,
-      "aria-label": `${video.uploadedBy.displayName} profile`
-    }, video.uploadedBy.displayName))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "By: ", video.uploadedBy.displayName))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
-      type: "video/mp4",
-      className: "video-preview lozad",
-      height: "225",
-      width: "400",
-      poster: `${this.props.pathResolver}${video.thumbnailSrc}` || "/images/videoPlaceholder.png",
-      controls: true
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
-      src: `${this.props.pathResolver}${video.src}`
-    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex x-space-around y-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Likes: ", video.likes || 0), video.likedByCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      onClick: () => this.removeLike(video, this.state.user.likedVideos, 'likedVideos')
-    }, "Liked", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faStar"]
-    })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      onClick: () => this.sendLike(video, this.state.user.likedVideos, 'likedVideos')
-    }, "Like", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faStar"]
-    }))))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-      className: "text-center"
-    }, "No Liked Videos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)));
-  }
-
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (AccountProfile);
-
-/***/ }),
-
-/***/ "./js/components/Home.jsx":
-/*!********************************!*\
-  !*** ./js/components/Home.jsx ***!
-  \********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var lozad__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lozad */ "./node_modules/lozad/dist/lozad.min.js");
-/* harmony import */ var lozad__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lozad__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fortawesome/free-regular-svg-icons */ "./node_modules/@fortawesome/free-regular-svg-icons/index.es.js");
-/* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-slick */ "./node_modules/react-slick/lib/index.js");
-/* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_slick__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
-/* harmony import */ var _jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @jamespotz/react-simple-readmore */ "./node_modules/@jamespotz/react-simple-readmore/dist/index.js");
-/* harmony import */ var _jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./VideoPlayer.tsx */ "./js/components/VideoPlayer.tsx");
-
-
-
-
-
-
-
-
-
- // Enable lazy loading
-
-const lozadObserver = lozad__WEBPACK_IMPORTED_MODULE_2___default()();
-lozadObserver.observe();
-
-class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
-  constructor() {
-    super();
-    this.state = {
-      sortControlStatus: '',
-      recentVideos: [],
-      userLikedVideos: []
-    };
-    this.toggleSortControls = this.toggleSortControls.bind(this);
-    this.handleSortChange = this.handleSortChange.bind(this);
-    this.sendLike = this.sendLike.bind(this);
-    this.removeLike = this.removeLike.bind(this);
-    this.currentUserHasLikedVideo = this.currentUserHasLikedVideo.bind(this);
-  }
-
-  componentDidMount() {
-    // Get recent videos
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`${document.location.origin}/recent-videos`).then(res => {
-      // console.log(res)
-      this.setState({
-        recentVideos: res.data.videos
-      }, () => {
-        // Check if the current user has liked each video
-        let likedRecentVideos = [];
-
-        if (this.props.userLikedVideos) {
-          // console.log(JSON.parse(this.props.userLikedVideos))
-          this.setState({
-            userLikedVideos: JSON.parse(this.props.userLikedVideos)
-          }, () => {
-            this.state.recentVideos.forEach(video => {
-              video.likedByCurrentUser = this.currentUserHasLikedVideo(video);
-              likedRecentVideos.push(video);
-            });
-            this.setState({
-              recentVideos: likedRecentVideos
-            });
-          });
-        }
-      });
-    });
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`${"http://localhost:1337"}/levels`).then(res => {
-      // console.log(res)
-      this.setState({
-        levels: res.data
-      });
-    });
-  }
-
-  toggleSortControls() {
-    let newStatus = this.state.sortControlStatus ? '' : 'open';
-    this.setState({
-      sortControlStatus: newStatus
-    });
-  }
-
-  handleSortChange(event) {
-    this.setState({
-      sort: event.target.value
-    }); // This approach triggers the onSubmit handler
-
-    event.target.form.querySelector('input[type="submit"]').click();
-  }
-
-  async sendLike(video) {
-    const newLikedVideo = await fetch(`${document.location.origin}/sendLike/${video._id}`).then(res => res.json()).catch(error => console.log(error));
-
-    if (newLikedVideo.message) {
-      // Display error message if included in response
-      alert(newLikedVideo.message);
-    } else if (newLikedVideo) {
-      // Update the video state to be liked by the current user. Used immediately after liking.
-      newLikedVideo.likedByCurrentUser = true;
-      let newVideos = this.state.recentVideos;
-      newVideos[newVideos.indexOf(video)] = newLikedVideo; // Add video to user's liked videos. Used when a re-render occurs.
-
-      let newUserLikedVideos = this.state.userLikedVideos;
-      newUserLikedVideos.push(video);
-      this.setState({
-        recentVideos: newVideos,
-        userLikedVideos: newUserLikedVideos
-      });
-    }
-  }
-
-  async removeLike(video) {
-    const newUnlikedVideo = await fetch(`${document.location.origin}/removeLike/${video._id}`).then(res => res.json()).catch(error => console.log(error));
-
-    if (newUnlikedVideo.message) {
-      // Display error message if included in response
-      alert(newUnlikedVideo.message);
-    } else if (newUnlikedVideo) {
-      // Update the video state to remove like from the current user. Used immediately after unliking.
-      newUnlikedVideo.likedByCurrentUser = false;
-      let newVideos = this.state.recentVideos;
-      newVideos[newVideos.indexOf(video)] = newUnlikedVideo; // Remove video from user's liked videos. Used when a re-render occurs.
-
-      let newUserLikedVideos = [];
-      this.state.userLikedVideos.forEach(userLikedVideo => {
-        if (userLikedVideo._id != video._id) {
-          newUserLikedVideos.push(userLikedVideo);
-        }
-      });
-      this.setState({
-        recentVideos: newVideos,
-        userLikedVideos: newUserLikedVideos
-      });
-    }
-  }
-
-  currentUserHasLikedVideo(video) {
-    let liked = false;
-    this.state.userLikedVideos.forEach(userLikedVideo => {
-      if (userLikedVideo._id === video._id) {
-        liked = true;
-      }
-    });
-    return liked;
-  }
-
-  renderMedia(topic) {
-    if (topic.FeaturedImage) {
-      switch (topic.FeaturedImage.mime) {
-        case 'image/jpeg':
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "img-container"
-          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-            src: `${"http://localhost:1337"}${topic.FeaturedImage.url}`
-          }));
-
-        default:
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Invalid media");
-      }
-    }
-  }
-
-  randomTopics(level) {
-    if (level.topicsRandomized) {
-      return level.topics;
-    } else {
-      level.topicsRandomized = true;
-      level.topics = level.topics.sort(() => .5 - Math.random()).slice(0, 5);
-      return level.topics;
-    }
-  }
-
-  render() {
-    var {
-      strapiTestImage
-    } = this.state || 'notfound';
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "frame"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_7__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "page-form"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Let's enjoy your"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "User Submissions"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-      action: "/videos",
-      method: "GET"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "search-input"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "text",
-      name: "keywords",
-      placeholder: "Search video submissions"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faSearch"]
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "submit",
-      value: "Search"
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "sort-controls flex"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "control-icon pure-u-1",
-      onClick: this.toggleSortControls
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faSlidersH"]
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: `sort-options flex pure-u-1 ${this.state.sortControlStatus}`
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      htmlFor: "sort-all"
-    }, "All"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "radio",
-      name: "sort",
-      value: "",
-      id: "sort-all",
-      checked: this.state.sort === '' ? true : false,
-      onChange: this.handleSortChange
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      htmlFor: "sort-oldest"
-    }, "Oldest"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "radio",
-      name: "sort",
-      value: "Oldest",
-      id: "sort-oldest",
-      checked: this.state.sort === 'Oldest' ? true : false,
-      onChange: this.handleSortChange
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      htmlFor: "sort-recent"
-    }, "Recent"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "radio",
-      name: "sort",
-      value: "Recent",
-      id: "sort-recent",
-      checked: this.state.sort === 'Recent' ? true : false,
-      onChange: this.handleSortChange
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      htmlFor: "sort-AZ"
-    }, "A-Z"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "radio",
-      name: "sort",
-      value: "A-Z",
-      id: "sort-AZ",
-      checked: this.state.sort === 'A-Z' ? true : false,
-      onChange: this.handleSortChange
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      htmlFor: "sort-ZA"
-    }, "Z-A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "radio",
-      name: "sort",
-      value: "Z-A",
-      id: "sort-ZA",
-      checked: this.state.sort === 'Z-A' ? true : false,
-      onChange: this.handleSortChange
-    }))))))), this.state.recentVideos.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "pad no-x"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Recent Submissions"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_slick__WEBPACK_IMPORTED_MODULE_6___default.a, {
-      dots: false,
-      infinite: false,
-      speed: 500,
-      slidesToShow: 3,
-      slidesToScroll: 1,
-      responsive: [{
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 1.5
-        }
-      }]
-    }, this.state.recentVideos.map(video => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      key: video._id
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_9__["default"], {
-      _id: video._id,
-      title: video.title,
-      src: video.src,
-      thumbnailSrc: video.thumbnailSrc,
-      uploadedBy: video.uploadedBy,
-      likes: video.likes,
-      likedByCurrentUser: this.currentUserHasLikedVideo(video)
-    }))))) : '', this.state.levels ? this.state.levels.map(level => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      key: level.id,
-      className: "flex x-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-      className: "pad"
-    }, "Level ", level.Level), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `/level/${level.id}`,
-      className: "button",
-      style: {
-        alignSelf: 'center'
-      }
-    }, "View Level", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faLongArrowAltRight"]
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "pure-u-1"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), level.topics ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "topics pure-u-1 flex x-space-around"
-    }, this.randomTopics(level).map(topic => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "topic pure-u-1 pure-u-md-1-3",
-      key: topic.id
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "pad"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex x-space-between"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
-      className: "pad no-y no-left"
-    }, topic.Topic), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `/level/${level.id}/topic/${topic.id}`,
-      className: "button"
-    }, "View Topic", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faLongArrowAltRight"]
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `/level/${level.id}/topic/${topic.id}`
-    }, this.renderMedia(topic)))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "No topics"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No levels"));
-  }
-
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (Home);
-
-/***/ }),
-
-/***/ "./js/components/Level.jsx":
-/*!*********************************!*\
-  !*** ./js/components/Level.jsx ***!
-  \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-slick */ "./node_modules/react-slick/lib/index.js");
-/* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_slick__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
-
-
-
-
-
-
-
-class Level extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
-  constructor() {
-    super();
-    this.state = {
-      topics: []
-    };
-  }
-
-  componentDidMount() {
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`${"http://localhost:1337"}/levels/${this.props.levelID}`).then(res => {
-      this.setState({
-        topics: res.data.topics
-      });
-    });
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`${"http://localhost:1337"}/challenges`).then(res => {
-      console.log(res);
-
-      if (res.data) {
-        res.data.forEach(challenge => {
-          if (challenge.topic) {
-            var topics = this.state.topics;
-            topics.forEach(topic => {
-              if (topic.id === challenge.topic.id) {
-                topic.challenges = topic.challenges ? topic.challenges.concat(challenge) : [challenge];
-                this.setState({
-                  topics
-                });
-              }
-            });
-          }
-        });
-      }
-    });
-  }
-
-  renderMedia(topic) {
-    if (topic.FeaturedImage) {
-      switch (topic.FeaturedImage.mime) {
-        case 'image/jpeg':
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "img-container"
-          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-            src: `${"http://localhost:1337"}${topic.FeaturedImage.url}`
-          }));
-
-        default:
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Invalid media");
-      }
-    }
-  }
-
-  randomChallenges(topic) {
-    return topic.challenges.sort(() => .5 - Math.random()).slice(0, 5);
-  }
-
-  render() {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "frame"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], null), this.state.topics ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "topics pure-u-1 flex x-space-around"
-    }, this.state.topics.map(topic => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      key: this.state.topics.indexOf(topic),
-      className: "topic pure-u-1 pure-u-md-1-3"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "pad"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex x-space-between"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-      className: "pad"
-    }, topic.Topic), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `/level/${this.props.levelID}/topic/${topic.id}`,
-      className: "button",
-      style: {
-        alignSelf: 'center'
-      }
-    }, "View Topic", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faLongArrowAltRight"]
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `/level/${this.props.levelID}/topic/${topic.id}`
-    }, this.renderMedia(topic))), topic.challenges ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "challenges"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_slick__WEBPACK_IMPORTED_MODULE_4___default.a, {
-      dots: false,
-      arrows: true,
-      infinite: false,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "pad"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Need a quick refresher? Slide forward to preview challenges."))), this.randomChallenges(topic).map(challenge => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      key: topic.challenges.indexOf(challenge),
-      className: "challenge"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "pad"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, challenge.Title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, challenge.Content)))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "No challenges"))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No topics"));
-  }
-
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (Level);
-
-/***/ }),
-
-/***/ "./js/components/Login.jsx":
-/*!*********************************!*\
-  !*** ./js/components/Login.jsx ***!
-  \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-brands-svg-icons */ "./node_modules/@fortawesome/free-brands-svg-icons/index.es.js");
-/* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
-
-
-
-
-
-
-class Login extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      errors: []
-    };
-  }
-
-  componentDidMount() {
-    if (this.props.errors) {
-      this.setState({
-        errors: JSON.parse(this.props.errors)
-      });
-    }
-  }
-
-  render() {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "frame"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "page-form"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Login"), this.state.errors.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-      className: "errors"
-    }, this.state.errors.map(error => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-      key: this.state.errors.indexOf(error)
-    }, error))) : '', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-      action: "/login",
-      method: "POST",
-      className: "flex-col x-end"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "small-pad no-x"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "text",
-      name: "displayName",
-      placeholder: "Display Name",
-      "aria-label": "display name"
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "small-pad no-x"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "password",
-      name: "password",
-      placeholder: "Password",
-      "aria-label": "password"
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "small-pad no-x"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      type: "submit"
-    }, "Login", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faLongArrowAltRight"]
-    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: "/register",
-      className: "button"
-    }, "Register", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faLongArrowAltRight"]
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: "/auth/google",
-      className: "button"
-    }, "Login with Google", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faGoogle"]
-    }))));
-  }
-
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (Login);
-
-/***/ }),
-
-/***/ "./js/components/Navigation.jsx":
-/*!**************************************!*\
-  !*** ./js/components/Navigation.jsx ***!
-  \**************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-
-
-
-
-class Navigation extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
-  render() {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "small-pad"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `/`,
-      className: "button"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Home"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faHome"]
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "small-pad"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `/videos`,
-      className: "button"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Videos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faPlay"]
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "small-pad"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: "/videos/add",
-      className: "button"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Add a video"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faPlus"]
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "small-pad"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: "/account-profile",
-      className: "button"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Account Profile"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faUser"]
-    })))));
-  }
-
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (Navigation);
-
-/***/ }),
-
-/***/ "./js/components/Register.jsx":
-/*!************************************!*\
-  !*** ./js/components/Register.jsx ***!
-  \************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-brands-svg-icons */ "./node_modules/@fortawesome/free-brands-svg-icons/index.es.js");
-/* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
-
-
-
-
-
-
-class Register extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      errors: []
-    };
-  }
-
-  componentDidMount() {
-    if (this.props.errors) {
-      this.setState({
-        errors: JSON.parse(this.props.errors)
-      });
-    }
-  }
-
-  render() {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "frame"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "page-form"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Register"), this.state.errors.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-      className: "errors"
-    }, this.state.errors.map(error => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-      key: this.state.errors.indexOf(error)
-    }, error))) : '', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-      action: "/register",
-      method: "POST",
-      className: "flex-col x-end"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "small-pad no-x"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "text",
-      name: "firstName",
-      placeholder: "First Name",
-      "aria-label": "first name"
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "small-pad no-x"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "text",
-      name: "lastName",
-      placeholder: "Last Name",
-      "aria-label": "last name"
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "small-pad no-x"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "text",
-      name: "displayName",
-      placeholder: "Display Name",
-      "aria-label": "display name"
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "small-pad no-x"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "password",
-      name: "password",
-      placeholder: "Password",
-      "aria-label": "password"
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "small-pad no-x"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "password",
-      name: "confirmPassword",
-      placeholder: "Confirm Password",
-      "aria-label": "confirm password"
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "small-pad no-x"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      type: "submit"
-    }, "Register", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faLongArrowAltRight"]
-    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: "/auth/google",
-      className: "button"
-    }, "Register with Google", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faGoogle"]
-    }))));
-  }
-
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (Register);
-
-/***/ }),
-
-/***/ "./js/components/Topic.jsx":
-/*!*********************************!*\
-  !*** ./js/components/Topic.jsx ***!
-  \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
-
-
-
-
-
-
-function shuffleArray(array) {
-  let newArray = [...array];
-
-  for (var i = array.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));
-    var temp = newArray[i];
-    newArray[i] = newArray[j];
-    newArray[j] = temp;
-  }
-
-  newArray = newArray.sort((a, b) => a.answered ? -1 : 1);
-  return newArray;
-}
-
-class Topic extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
-  constructor() {
-    super();
-    this.state = {
-      challenges: [],
-      optionsStatus: '',
-      allChallengesAnswered: false
-    };
-    this.handleToggleOptions = this.handleToggleOptions.bind(this);
-    this.checkAnswerInput = this.checkAnswerInput.bind(this);
-    this.handleResetTopic = this.handleResetTopic.bind(this);
-  }
-
-  componentDidMount() {
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`${"http://localhost:1337"}/topics/${this.props.topicID}`).then(res => {
-      // console.log(res)
-      if (res.data) {
-        this.setState({
-          topic: res.data.Topic
-        });
-      }
-    });
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`${"http://localhost:1337"}/challenges`).then(res => {
-      if (res.data) {
-        res.data.forEach(challenge => {
-          if (challenge.topic) {
-            var challenges = this.state.challenges;
-
-            if (this.props.topicID == challenge.topic.id) {
-              challenges = challenges.concat(challenge);
-              this.setState({
-                challenges
-              }, () => {
-                if (this.props.completed) {
-                  let completedChalleges = [];
-                  this.state.challenges.forEach(stateChallenge => {
-                    stateChallenge.answered = 'correct';
-                    completedChalleges.push(stateChallenge);
-                  });
-                  this.setState({
-                    challenges: completedChalleges,
-                    allChallengesAnswered: true
-                  });
-                }
-              });
-            }
-          }
-        });
-      }
-    });
-  }
-
-  handleToggleOptions() {
-    this.setState({
-      optionsStatus: this.state.optionsStatus == 'opened' ? '' : 'opened'
-    });
-  }
-
-  checkAnswerInput(input, challenge) {
-    if (input.toLowerCase() == challenge.Title.toLowerCase()) {
-      const newState = this.state;
-      const challengeIndex = newState.challenges.indexOf(challenge);
-      challenge.answered = 'correct';
-      newState.challenges[challengeIndex] = challenge;
-      this.setState({ ...newState
-      });
-    } // Check to see if all challenges have been answered correctly
-
-
-    let allChallengesAnswered = true;
-    this.state.challenges.forEach(challenge => {
-      if (!challenge.answered) {
-        allChallengesAnswered = false;
-      }
-    });
-
-    if (allChallengesAnswered) {
-      alert('Congratulations! You have answered each challenge correctly.');
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(`/level/${this.props.levelID}/topic/${this.props.topicID}`).then(res => {
-        if (res.data) {// console.log(res.data)
-        }
-      });
-      this.setState({
-        allChallengesAnswered
-      });
-    }
-  }
-
-  handleResetTopic() {
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(`/level/${this.props.levelID}/topic/${this.props.topicID}/reset`);
-    this.setState({
-      allChallengesAnswered: false
-    });
-    let completedChalleges = [];
-    this.state.challenges.forEach(stateChallenge => {
-      delete stateChallenge.answered;
-      completedChalleges.push(stateChallenge);
-    });
-    this.setState({
-      challenges: completedChalleges
-    });
-  }
-
-  renderMedia(challenge) {
-    if (challenge.FeaturedMedia) {
-      if (challenge.FeaturedMedia.length) {
-        switch (challenge.FeaturedMedia[0].mime) {
-          case 'image/jpeg':
-            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-              className: "img-container"
-            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-              src: `${"http://localhost:1337"}${challenge.FeaturedMedia[0].url}`
-            }));
-
-          case 'video/mp4':
-            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
-              height: "225",
-              width: "400",
-              controls: true,
-              tabIndex: "-1"
-            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
-              src: `${"http://localhost:1337"}${challenge.FeaturedMedia[0].url}`,
-              type: "video/mp4"
-            }));
-
-          default:
-            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Invalid media");
-        }
-      }
-    }
-  }
-
-  render() {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "frame"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex x-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "pad"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `/level/${this.props.levelID}`,
-      className: "button icon-left"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faLongArrowAltLeft"]
-    }), "Back to Level")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-      className: "text-center pure-u-1"
-    }, this.state.topic), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "pad"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      className: "available-answers button icon-left",
-      onClick: this.handleToggleOptions
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faBars"]
-    }), "Available Answers")), this.state.allChallengesAnswered ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "pure-u-1 flex x-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      onClick: this.handleResetTopic
-    }, "Reset Topic", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faSync"]
-    }))) : ''), this.state.challenges ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: `challenge-options ${this.state.optionsStatus}`,
-      onClick: this.handleToggleOptions
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faTimes"],
-      className: "close"
-    }), shuffleArray(this.state.challenges).map(challenge => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      key: this.state.challenges.indexOf(challenge)
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "pad"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: `challenge-option ${challenge.answered}`
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, challenge.Title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faCheckCircle"]
-    })))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No options"), this.state.challenges ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "challenges pure-u-1 flex x-space-around"
-    }, this.state.challenges.map(challenge => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      key: this.state.challenges.indexOf(challenge),
-      className: "flex x-center pure-u-1 pure-u-lg-1-2"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "challenge"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "pad"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: `challenge-input ${challenge.answered}`
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "text",
-      placeholder: "Guess meaning",
-      onChange: event => this.checkAnswerInput(event.target.value, challenge)
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "correct-answer"
-    }, challenge.Title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "input-correct"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Correct!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faCheckCircle"]
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, challenge.Content), challenge.FeaturedMedia.length ? this.renderMedia(challenge) : '', this.state.allChallengesAnswered ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex x-space-between"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `/videos?keywords=${challenge.Title}`,
-      className: "button"
-    }, "View others", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faSearch"]
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `/videos/add?challenge=${challenge.Title}`,
-      className: "button"
-    }, "Submit your own", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faPlus"]
-    }))) : ''))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No challenges"));
-  }
-
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (Topic);
-
-/***/ }),
-
-/***/ "./js/components/VideoPlayer.tsx":
-/*!***************************************!*\
-  !*** ./js/components/VideoPlayer.tsx ***!
-  \***************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return VideoPlayer; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @jamespotz/react-simple-readmore */ "./node_modules/@jamespotz/react-simple-readmore/dist/index.js");
-/* harmony import */ var _jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/free-regular-svg-icons */ "./node_modules/@fortawesome/free-regular-svg-icons/index.es.js");
-
-
-
-
-
-// let obj: VideoAttributes = {
-// 	likes: 'asd',
-// 	likedByCurrentUser: false
-// }
-class VideoPlayer extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
-  constructor(props) {
-    super(props);
-    let state = {
-      likes: 0,
-      likedByCurrentUser: false
-    };
-    this.state = state;
-    this.toggleLike = this.toggleLike.bind(this);
-  }
-
-  componentDidMount() {
-    const {
-      likes,
-      likedByCurrentUser
-    } = this.props;
-    this.setState({
-      likes,
-      likedByCurrentUser
-    });
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.likedByCurrentUser != prevProps.likedByCurrentUser) {
-      this.setState({
-        likedByCurrentUser: this.props.likedByCurrentUser
-      });
-    }
-  }
-
-  async toggleLike(_id) {
-    const apiURLSegment = this.state.likedByCurrentUser ? 'removeLike' : 'sendLike';
-    const likeIncrement = this.state.likedByCurrentUser ? -1 : 1;
-    await fetch(`${document.location.origin}/${apiURLSegment}/${_id}`).then(res => res.json()).catch(error => console.log(error));
-    this.setState(prevState => ({
-      likes: prevState.likes + likeIncrement,
-      likedByCurrentUser: !prevState.likedByCurrentUser
-    }));
-  }
-
-  render() {
-    const {
-      likes,
-      likedByCurrentUser
-    } = this.state;
-    const {
-      _id,
-      title,
-      src,
-      thumbnailSrc,
-      uploadedBy
-    } = this.props;
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex x-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex x-space-between y-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      style: {
-        maxWidth: '65%'
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_1___default.a, {
-      fade: true,
-      minHeight: 58,
-      btnStyles: {
-        position: 'absolute',
-        bottom: '-15px',
-        border: 'none',
-        margin: 0,
-        padding: '5px',
-        zIndex: 1
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, title))), uploadedBy._id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "By: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `/account-profile/${uploadedBy._id}`,
-      "aria-label": `${uploadedBy.displayName} profile`
-    }, uploadedBy.displayName))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "By: ", uploadedBy.displayName))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
-      type: "video/mp4",
-      className: "video-preview lozad",
-      height: "225",
-      width: "400",
-      poster: thumbnailSrc || "/images/videoPlaceholder.png",
-      controls: true
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
-      src: src
-    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex x-space-around y-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Likes: ", likes || 0), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      onClick: () => this.toggleLike(_id)
-    }, likedByCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Liked", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faStar"]
-    })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Like", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faStar"]
-    })))));
-  }
-
-}
-
-/***/ }),
-
-/***/ "./js/components/VideosAdd.jsx":
-/*!*************************************!*\
-  !*** ./js/components/VideosAdd.jsx ***!
-  \*************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
-
-
-
-
-
-class VideosAdd extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
-  constructor() {
-    super();
-    this.state = {
-      title: ''
-    };
-    this.handleTitleChange = this.handleTitleChange.bind(this);
-    this.handleThumbnailUploadChange = this.handleThumbnailUploadChange.bind(this);
-    this.handleVideoUploadChange = this.handleVideoUploadChange.bind(this);
-  }
-
-  componentDidMount() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const challenge = urlParams.get('challenge');
-    this.setState({
-      title: challenge || ''
-    });
-  }
-
-  handleTitleChange(event) {
-    this.setState({
-      title: event.target.value
-    });
-  }
-
-  handleThumbnailUploadChange(event) {
-    let key = event.target.name;
-    let newState = {};
-    let image = event.target.files[0];
-
-    if (image) {
-      newState[key] = image.name;
-      this.setState(newState); // Set preview
-
-      let reader = new FileReader();
-      let frame = document.querySelector(`.${key}-preview`);
-      reader.addEventListener('load', function () {
-        if (/jpeg|jpg|png/.test(reader.result.substr(0, 20))) {
-          frame.style.background = `url(${reader.result}) no-repeat center center/cover`;
-        } else {
-          alert('Invalid thumbnail format.');
-        }
-      }, false);
-      reader.readAsDataURL(image);
-    }
-  }
-
-  handleVideoUploadChange(event) {
-    let key = event.target.name;
-    let newState = {};
-    let video = event.target.files[0];
-
-    if (video) {
-      newState[key] = video.name;
-      this.setState(newState); // Set preview
-
-      let reader = new FileReader();
-      let frame = document.querySelector(`.${key}-preview`);
-      reader.addEventListener('load', function () {
-        if (/mp4|quicktime/.test(reader.result.substr(0, 20))) {
-          frame.src = URL.createObjectURL(video);
-          URL.revokeObjectURL(video);
-        } else {
-          alert('Invalid video format.');
-        }
-      }, false);
-      reader.readAsDataURL(video);
-    }
-  }
-
-  render() {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "frame"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "video-add-view flex"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "pure-u-l pure-u-md-3-4",
-      style: {
-        maxWidth: '100%'
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "pure-u-l pure-u-md-1-2",
-      style: {
-        height: '300px'
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "pad"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Video Preview"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
-      type: "video/mp4",
-      className: "video-preview",
-      height: "225",
-      width: "400",
-      controls: true
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "pure-u-l pure-u-md-1-2",
-      style: {
-        maxWidth: '100%'
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "pad"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Thumbnail Preview"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "thumbnail-preview img-container"
-    }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "page-form pure-u-1 pure-u-md-1-4"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Video Add"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-      action: "/videos/add",
-      method: "POST",
-      encType: "multipart/form-data",
-      className: "flex-col x-end"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "text",
-      name: "title",
-      value: this.state.title,
-      onChange: this.handleTitleChange,
-      placeholder: "Title",
-      "aria-label": "title",
-      required: true
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "upload-container"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "file",
-      name: "video",
-      onChange: this.handleVideoUploadChange,
-      required: true
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      htmlFor: "video"
-    }, "Video", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faUpload"]
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "upload-container"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "file",
-      name: "thumbnail",
-      onChange: this.handleThumbnailUploadChange,
-      required: true
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      htmlFor: "thumbnail"
-    }, "Thumbnail", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faUpload"]
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      type: "submit"
-    }, "Submit", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faPlus"]
-    }))))));
-  }
-
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (VideosAdd);
-
-/***/ }),
-
-/***/ "./js/components/VideosIndex.jsx":
-/*!***************************************!*\
-  !*** ./js/components/VideosIndex.jsx ***!
-  \***************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var lozad__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lozad */ "./node_modules/lozad/dist/lozad.min.js");
-/* harmony import */ var lozad__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lozad__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/free-regular-svg-icons */ "./node_modules/@fortawesome/free-regular-svg-icons/index.es.js");
-/* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
-/* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-slick */ "./node_modules/react-slick/lib/index.js");
-/* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_slick__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @jamespotz/react-simple-readmore */ "./node_modules/@jamespotz/react-simple-readmore/dist/index.js");
-/* harmony import */ var _jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_7__);
-
-
-
-
-
-
-
-
-
-async function getVideos() {
-  var urlParams = new URLSearchParams(window.location.search);
-  var searchKeywords = urlParams.get('keywords') || '';
-  var page = urlParams.get('page') || '';
-  var sort = urlParams.get('sort') || '';
-  return fetch(`${document.location.origin}/videos.json?${searchKeywords ? 'keywords=' + searchKeywords + '&' : ''}
-			${page ? 'page=' + page : ''}
-			${sort ? '&sort=' + sort : ''}`, {
-    credentials: 'include'
-  }).then(response => response.json());
-} // Enable lazy loading
-
-
-const lozadObserver = lozad__WEBPACK_IMPORTED_MODULE_1___default()();
-lozadObserver.observe();
-
-class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
-  constructor() {
-    super();
-    this.state = {
-      videos: [],
-      pages: [],
-      currentPage: 1,
-      keywords: '',
-      sort: '',
-      userLikedVideos: []
-    };
-    this.refreshVideos = this.refreshVideos.bind(this);
-    this.pagination = this.pagination.bind(this);
-    this.handleKeywordsChange = this.handleKeywordsChange.bind(this);
-    this.toggleSortControls = this.toggleSortControls.bind(this);
-    this.handleSortChange = this.handleSortChange.bind(this);
-    this.handleChangePage = this.handleChangePage.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
-    this.sendLike = this.sendLike.bind(this);
-    this.removeLike = this.removeLike.bind(this);
-    this.currentUserHasLikedVideo = this.currentUserHasLikedVideo.bind(this);
-  }
-
-  async componentDidMount() {
-    this.refreshVideos();
-    this.setState({
-      userLikedVideos: JSON.parse(this.props.userLikedVideos)
-    });
-  }
-
-  async refreshVideos() {
-    var urlParams = new URLSearchParams(window.location.search);
-    var page = urlParams.get('page') || 1;
-    var keywords = urlParams.get('keywords');
-    var sort = urlParams.get('sort');
-    var newVideos = await getVideos();
-
-    if (newVideos) {
-      // Check if the current user has liked each video
-      newVideos.videos.forEach(video => {
-        video.likedByCurrentUser = this.currentUserHasLikedVideo(video);
-      });
-      this.setState({
-        videos: newVideos.videos,
-        pages: this.pagination(newVideos.pages),
-        currentPage: page,
-        keywords: keywords || '',
-        sort: sort || ''
-      });
-    }
-  }
-
-  handleKeywordsChange(event) {
-    this.setState({
-      keywords: event.target.value
-    });
-  }
-
-  toggleSortControls() {
-    let newStatus = this.state.sortControlStatus ? '' : 'open';
-    this.setState({
-      sortControlStatus: newStatus
-    });
-  }
-
-  handleSortChange(event) {
-    this.setState({
-      sort: event.target.value
-    }); // This approach triggers the onSubmit handler
-
-    event.target.form.querySelector('input[type="submit"]').click();
-  }
-
-  handleChangePage(event) {
-    event.preventDefault();
-    window.history.pushState({}, '', event.target.href);
-    this.refreshVideos();
-  }
-
-  handleSearch(event) {
-    event.preventDefault();
-    var url = event.target.action + '?' + new URLSearchParams(new FormData(event.target)).toString();
-    window.history.pushState({}, '', url);
-    this.refreshVideos();
-  }
-
-  pagination(pages) {
-    var pageLinks = [];
-
-    for (var i = 1; i <= pages; i++) {
-      pageLinks.push({
-        pageNumber: i
-      });
-    }
-
-    return pageLinks;
-  }
-
-  async sendLike(video) {
-    const newLikedVideo = await fetch(`${document.location.origin}/sendLike/${video._id}`).then(res => res.json()).catch(error => console.log(error));
-
-    if (newLikedVideo.message) {
-      // Display error message if included in response
-      alert(newLikedVideo.message);
-    } else if (newLikedVideo) {
-      // Update the video state to be liked by the current user. Used immediately after liking.
-      newLikedVideo.likedByCurrentUser = true;
-      let newVideos = this.state.videos;
-      newVideos[newVideos.indexOf(video)] = newLikedVideo; // Add video to user's liked videos. Used when a re-render occurs.
-
-      let newUserLikedVideos = this.state.userLikedVideos;
-      newUserLikedVideos.push(video);
-      this.setState({
-        videos: newVideos,
-        userLikedVideos: newUserLikedVideos
-      });
-    }
-  }
-
-  async removeLike(video) {
-    const newUnlikedVideo = await fetch(`${document.location.origin}/removeLike/${video._id}`).then(res => res.json()).catch(error => console.log(error));
-
-    if (newUnlikedVideo.message) {
-      // Display error message if included in response
-      alert(newUnlikedVideo.message);
-    } else if (newUnlikedVideo) {
-      // Update the video state to remove like from the current user. Used immediately after unliking.
-      newUnlikedVideo.likedByCurrentUser = false;
-      let newVideos = this.state.videos;
-      newVideos[newVideos.indexOf(video)] = newUnlikedVideo; // Remove video from user's liked videos. Used when a re-render occurs.
-
-      let newUserLikedVideos = [];
-      this.state.userLikedVideos.forEach(userLikedVideo => {
-        if (userLikedVideo._id != video._id) {
-          newUserLikedVideos.push(userLikedVideo);
-        }
-      });
-      this.setState({
-        videos: newVideos,
-        userLikedVideos: newUserLikedVideos
-      });
-    }
-  }
-
-  currentUserHasLikedVideo(video) {
-    let liked = false;
-    this.state.userLikedVideos.forEach(userLikedVideo => {
-      if (userLikedVideo._id === video._id) {
-        liked = true;
-      }
-    });
-    return liked;
-  }
-
-  render() {
-    var urlParams = new URLSearchParams(window.location.search);
-    var keywords = urlParams.get('keywords') || null;
-    var context = this; // When using back or forward buttons in browser
-
-    window.addEventListener('popstate', function (event) {
-      if (event != null) {
-        context.refreshVideos();
-      }
-    });
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "frame"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "page-form"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Videos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-      action: "/videos",
-      method: "GET"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "search-input"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "text",
-      name: "keywords",
-      value: this.state.keywords,
-      onChange: this.handleKeywordsChange,
-      placeholder: "Search video submissions"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faSearch"]
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "submit",
-      value: "Search"
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "sort-controls flex"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "control-icon pure-u-1",
-      onClick: this.toggleSortControls
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faSlidersH"]
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: `sort-options flex pure-u-1 ${this.state.sortControlStatus}`
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      htmlFor: "sort-all"
-    }, "All"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "radio",
-      name: "sort",
-      value: "",
-      id: "sort-all",
-      checked: this.state.sort === '' ? true : false,
-      onChange: this.handleSortChange
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      htmlFor: "sort-oldest"
-    }, "Oldest"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "radio",
-      name: "sort",
-      value: "Oldest",
-      id: "sort-oldest",
-      checked: this.state.sort === 'Oldest' ? true : false,
-      onChange: this.handleSortChange
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      htmlFor: "sort-recent"
-    }, "Recent"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "radio",
-      name: "sort",
-      value: "Recent",
-      id: "sort-recent",
-      checked: this.state.sort === 'Recent' ? true : false,
-      onChange: this.handleSortChange
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      htmlFor: "sort-AZ"
-    }, "A-Z"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "radio",
-      name: "sort",
-      value: "A-Z",
-      id: "sort-AZ",
-      checked: this.state.sort === 'A-Z' ? true : false,
-      onChange: this.handleSortChange
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      htmlFor: "sort-ZA"
-    }, "Z-A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "radio",
-      name: "sort",
-      value: "Z-A",
-      id: "sort-ZA",
-      checked: this.state.sort === 'Z-A' ? true : false,
-      onChange: this.handleSortChange
-    })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      onClick: this.refreshVideos
-    }, "Refresh", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faSync"]
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\xA0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      onClick: this.handleChangePage,
-      href: "/videos",
-      className: "button"
-    }, "Clear filters", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faBan"]
-    }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.pages.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-      className: "pagination flex"
-    }, this.state.currentPage > 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      onClick: this.handleChangePage,
-      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}
-											${this.state.sort ? '&sort=' + this.state.sort : ''}`,
-      className: "button icon-left",
-      "aria-label": "previous"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faLongArrowAltLeft"]
-    }), "Prev")) : '', this.state.pages.map(page => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-      key: this.state.pages.indexOf(page)
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      onClick: this.handleChangePage,
-      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}
-											${this.state.sort ? '&sort=' + this.state.sort : ''}`,
-      className: `button no-icon ${page.pageNumber == this.state.currentPage ? 'selected' : ''}`,
-      "aria-label": `page ${page.pageNumber}`
-    }, page.pageNumber))), this.state.currentPage < this.state.pages.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      onClick: this.handleChangePage,
-      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}
-											${this.state.sort ? '&sort=' + this.state.sort : ''}`,
-      className: "button"
-    }, "Next", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faLongArrowAltRight"]
-    }))) : '') : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null), this.state.videos.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex"
-    }, this.state.videos.map(video => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      key: video._id,
-      className: "pure-u-1 pure-u-lg-1-3"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex x-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex x-space-between y-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      style: {
-        maxWidth: '65%'
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_7___default.a, {
-      fade: true,
-      minHeight: 58,
-      btnStyles: {
-        position: 'absolute',
-        bottom: '-15px',
-        border: 'none',
-        margin: 0,
-        padding: '5px',
-        zIndex: 1
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, video.title))), video.uploadedBy._id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "By: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: `/account-profile/${video.uploadedBy._id}`,
-      "aria-label": `${video.uploadedBy.displayName} profile`
-    }, video.uploadedBy.displayName))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "By: ", video.uploadedBy.displayName))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
-      type: "video/mp4",
-      className: "video-preview lozad",
-      height: "225",
-      width: "400",
-      poster: video.thumbnailSrc || "/images/videoPlaceholder.png",
-      controls: true
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
-      src: video.src
-    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "flex x-space-around y-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Likes: ", video.likes || 0), video.likedByCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      onClick: () => this.removeLike(video)
-    }, "Liked", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faStar"]
-    })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      onClick: () => this.sendLike(video)
-    }, "Like", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faStar"]
-    })))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "No videos"), this.state.pages.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-      className: "pagination flex"
-    }, this.state.currentPage > 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      onClick: this.handleChangePage,
-      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}
-											${this.state.sort ? '&sort=' + this.state.sort : ''}`,
-      className: "button icon-left",
-      "aria-label": "previous"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faLongArrowAltLeft"]
-    }), "Prev")) : '', this.state.pages.map(page => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-      key: this.state.pages.indexOf(page)
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      onClick: this.handleChangePage,
-      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}
-											${this.state.sort ? '&sort=' + this.state.sort : ''}`,
-      className: `button no-icon ${page.pageNumber == this.state.currentPage ? 'selected' : ''}`,
-      "aria-label": `page ${page.pageNumber}`
-    }, page.pageNumber))), this.state.currentPage < this.state.pages.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      onClick: this.handleChangePage,
-      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}
-											${this.state.sort ? '&sort=' + this.state.sort : ''}`,
-      className: "button"
-    }, "Next", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faLongArrowAltRight"]
-    }))) : '') : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null)));
-  }
-
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (VideosIndex);
-
-/***/ }),
-
-/***/ "./js/main.jsx":
-/*!*********************!*\
-  !*** ./js/main.jsx ***!
-  \*********************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _components_Home_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Home.jsx */ "./js/components/Home.jsx");
-/* harmony import */ var _components_VideosIndex_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/VideosIndex.jsx */ "./js/components/VideosIndex.jsx");
-/* harmony import */ var _components_VideosAdd_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/VideosAdd.jsx */ "./js/components/VideosAdd.jsx");
-/* harmony import */ var _components_Level_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Level.jsx */ "./js/components/Level.jsx");
-/* harmony import */ var _components_Topic_jsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/Topic.jsx */ "./js/components/Topic.jsx");
-/* harmony import */ var _components_Login_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/Login.jsx */ "./js/components/Login.jsx");
-/* harmony import */ var _components_Register_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/Register.jsx */ "./js/components/Register.jsx");
-/* harmony import */ var _components_AccountProfile_jsx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/AccountProfile.jsx */ "./js/components/AccountProfile.jsx");
-/* harmony import */ var slick_carousel_slick_slick_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! slick-carousel/slick/slick.css */ "./node_modules/slick-carousel/slick/slick.css");
-/* harmony import */ var slick_carousel_slick_slick_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(slick_carousel_slick_slick_css__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var slick_carousel_slick_slick_theme_css__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! slick-carousel/slick/slick-theme.css */ "./node_modules/slick-carousel/slick/slick-theme.css");
-/* harmony import */ var slick_carousel_slick_slick_theme_css__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(slick_carousel_slick_slick_theme_css__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var css_modal_build_modal_css__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! css-modal/build/modal.css */ "./node_modules/css-modal/build/modal.css");
-/* harmony import */ var css_modal_build_modal_css__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(css_modal_build_modal_css__WEBPACK_IMPORTED_MODULE_12__);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-if (document.getElementById('home')) {
-  var userLikedVideos = document.getElementById('home').getAttribute('data-userLikedVideos');
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    userLikedVideos: userLikedVideos
-  }), document.getElementById('home'));
-}
-
-if (document.getElementById('videos')) {
-  var userLikedVideos = document.getElementById('videos').getAttribute('data-userLikedVideos');
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_VideosIndex_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    userLikedVideos: userLikedVideos
-  }), document.getElementById('videos'));
-}
-
-if (document.getElementById('videos-add')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_VideosAdd_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], null), document.getElementById('videos-add'));
-}
-
-if (document.getElementById('level')) {
-  var levelID = document.getElementById('level').getAttribute('data-levelID');
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Level_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], {
-    levelID: levelID
-  }), document.getElementById('level'));
-}
-
-if (document.getElementById('topic')) {
-  var levelID = document.getElementById('topic').getAttribute('data-levelID');
-  var topicID = document.getElementById('topic').getAttribute('data-topicID');
-  var completed = document.getElementById('topic').getAttribute('data-completed');
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Topic_jsx__WEBPACK_IMPORTED_MODULE_6__["default"], {
-    levelID: levelID,
-    topicID: topicID,
-    completed: eval(completed)
-  }), document.getElementById('topic'));
-}
-
-if (document.getElementById('login')) {
-  var errors = document.getElementById('login').getAttribute('data-errors');
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Login_jsx__WEBPACK_IMPORTED_MODULE_7__["default"], {
-    errors: errors
-  }), document.getElementById('login'));
-}
-
-if (document.getElementById('register')) {
-  var errors = document.getElementById('register').getAttribute('data-errors');
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Register_jsx__WEBPACK_IMPORTED_MODULE_8__["default"], {
-    errors: errors
-  }), document.getElementById('register'));
-}
-
-if (document.getElementById('account-profile')) {
-  var user = document.getElementById('account-profile').getAttribute('data-user');
-  var authenticatedUser = document.getElementById('account-profile').getAttribute('data-authenticatedUser');
-  var isCurrentUser = document.getElementById('account-profile').getAttribute('data-isCurrentUser');
-  var pathResolver = document.getElementById('account-profile').getAttribute('data-pathResolver');
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AccountProfile_jsx__WEBPACK_IMPORTED_MODULE_9__["default"], {
-    user: user,
-    authenticatedUser: authenticatedUser,
-    isCurrentUser: eval(isCurrentUser),
-    pathResolver: pathResolver
-  }), document.getElementById('account-profile'));
-}
-
-/***/ }),
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
 
 /***/ "./node_modules/@fortawesome/fontawesome-svg-core/index.es.js":
 /*!********************************************************************!*\
   !*** ./node_modules/@fortawesome/fontawesome-svg-core/index.es.js ***!
   \********************************************************************/
-/*! exports provided: icon, noAuto, config, toHtml, layer, text, counter, library, dom, parse, findIconDefinition */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(global, setImmediate) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "icon", function() { return icon; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "noAuto", function() { return noAuto; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "config", function() { return config; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toHtml", function() { return toHtml; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "layer", function() { return layer; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "text", function() { return text; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "counter", function() { return counter; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "library", function() { return library; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dom", function() { return dom; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parse", function() { return parse; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "findIconDefinition", function() { return findIconDefinition; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "icon": () => (/* binding */ icon),
+/* harmony export */   "noAuto": () => (/* binding */ noAuto),
+/* harmony export */   "config": () => (/* binding */ config),
+/* harmony export */   "toHtml": () => (/* binding */ toHtml),
+/* harmony export */   "layer": () => (/* binding */ layer),
+/* harmony export */   "text": () => (/* binding */ text),
+/* harmony export */   "counter": () => (/* binding */ counter),
+/* harmony export */   "library": () => (/* binding */ library),
+/* harmony export */   "dom": () => (/* binding */ dom),
+/* harmony export */   "parse": () => (/* binding */ parse),
+/* harmony export */   "findIconDefinition": () => (/* binding */ findIconDefinition)
+/* harmony export */ });
 /*!
  * Font Awesome Free 5.15.2 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
@@ -2590,7 +336,7 @@ var REJECTED = 'rejected';
 
 var NOOP = function NOOP() {};
 
-var isNode = typeof global !== 'undefined' && typeof global.process !== 'undefined' && typeof global.process.emit === 'function';
+var isNode = typeof __webpack_require__.g !== 'undefined' && typeof __webpack_require__.g.process !== 'undefined' && typeof __webpack_require__.g.process.emit === 'function';
 var asyncSetTimer = typeof setImmediate === 'undefined' ? setTimeout : setImmediate;
 var asyncQueue = [];
 var asyncTimer;
@@ -2738,12 +484,12 @@ function publishRejection(promise) {
   publish(promise);
 
   if (!promise._handled && isNode) {
-    global.process.emit('unhandledRejection', promise._data, promise);
+    __webpack_require__.g.process.emit('unhandledRejection', promise._data, promise);
   }
 }
 
 function notifyRejectionHandled(promise) {
-  global.process.emit('rejectionHandled', promise);
+  __webpack_require__.g.process.emit('rejectionHandled', promise);
 }
 /**
  * @class
@@ -4712,7 +2458,6 @@ var autoReplace = function autoReplace() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../../timers-browserify/main.js */ "./node_modules/timers-browserify/main.js").setImmediate))
 
 /***/ }),
 
@@ -4720,471 +2465,472 @@ var autoReplace = function autoReplace() {
 /*!*********************************************************************!*\
   !*** ./node_modules/@fortawesome/free-brands-svg-icons/index.es.js ***!
   \*********************************************************************/
-/*! exports provided: fab, prefix, fa500px, faAccessibleIcon, faAccusoft, faAcquisitionsIncorporated, faAdn, faAdversal, faAffiliatetheme, faAirbnb, faAlgolia, faAlipay, faAmazon, faAmazonPay, faAmilia, faAndroid, faAngellist, faAngrycreative, faAngular, faAppStore, faAppStoreIos, faApper, faApple, faApplePay, faArtstation, faAsymmetrik, faAtlassian, faAudible, faAutoprefixer, faAvianex, faAviato, faAws, faBandcamp, faBattleNet, faBehance, faBehanceSquare, faBimobject, faBitbucket, faBitcoin, faBity, faBlackTie, faBlackberry, faBlogger, faBloggerB, faBluetooth, faBluetoothB, faBootstrap, faBtc, faBuffer, faBuromobelexperte, faBuyNLarge, faBuysellads, faCanadianMapleLeaf, faCcAmazonPay, faCcAmex, faCcApplePay, faCcDinersClub, faCcDiscover, faCcJcb, faCcMastercard, faCcPaypal, faCcStripe, faCcVisa, faCentercode, faCentos, faChrome, faChromecast, faCloudflare, faCloudscale, faCloudsmith, faCloudversify, faCodepen, faCodiepie, faConfluence, faConnectdevelop, faContao, faCottonBureau, faCpanel, faCreativeCommons, faCreativeCommonsBy, faCreativeCommonsNc, faCreativeCommonsNcEu, faCreativeCommonsNcJp, faCreativeCommonsNd, faCreativeCommonsPd, faCreativeCommonsPdAlt, faCreativeCommonsRemix, faCreativeCommonsSa, faCreativeCommonsSampling, faCreativeCommonsSamplingPlus, faCreativeCommonsShare, faCreativeCommonsZero, faCriticalRole, faCss3, faCss3Alt, faCuttlefish, faDAndD, faDAndDBeyond, faDailymotion, faDashcube, faDeezer, faDelicious, faDeploydog, faDeskpro, faDev, faDeviantart, faDhl, faDiaspora, faDigg, faDigitalOcean, faDiscord, faDiscourse, faDochub, faDocker, faDraft2digital, faDribbble, faDribbbleSquare, faDropbox, faDrupal, faDyalog, faEarlybirds, faEbay, faEdge, faEdgeLegacy, faElementor, faEllo, faEmber, faEmpire, faEnvira, faErlang, faEthereum, faEtsy, faEvernote, faExpeditedssl, faFacebook, faFacebookF, faFacebookMessenger, faFacebookSquare, faFantasyFlightGames, faFedex, faFedora, faFigma, faFirefox, faFirefoxBrowser, faFirstOrder, faFirstOrderAlt, faFirstdraft, faFlickr, faFlipboard, faFly, faFontAwesome, faFontAwesomeAlt, faFontAwesomeFlag, faFontAwesomeLogoFull, faFonticons, faFonticonsFi, faFortAwesome, faFortAwesomeAlt, faForumbee, faFoursquare, faFreeCodeCamp, faFreebsd, faFulcrum, faGalacticRepublic, faGalacticSenate, faGetPocket, faGg, faGgCircle, faGit, faGitAlt, faGitSquare, faGithub, faGithubAlt, faGithubSquare, faGitkraken, faGitlab, faGitter, faGlide, faGlideG, faGofore, faGoodreads, faGoodreadsG, faGoogle, faGoogleDrive, faGooglePay, faGooglePlay, faGooglePlus, faGooglePlusG, faGooglePlusSquare, faGoogleWallet, faGratipay, faGrav, faGripfire, faGrunt, faGuilded, faGulp, faHackerNews, faHackerNewsSquare, faHackerrank, faHips, faHireAHelper, faHive, faHooli, faHornbill, faHotjar, faHouzz, faHtml5, faHubspot, faIdeal, faImdb, faInnosoft, faInstagram, faInstagramSquare, faInstalod, faIntercom, faInternetExplorer, faInvision, faIoxhost, faItchIo, faItunes, faItunesNote, faJava, faJediOrder, faJenkins, faJira, faJoget, faJoomla, faJs, faJsSquare, faJsfiddle, faKaggle, faKeybase, faKeycdn, faKickstarter, faKickstarterK, faKorvue, faLaravel, faLastfm, faLastfmSquare, faLeanpub, faLess, faLine, faLinkedin, faLinkedinIn, faLinode, faLinux, faLyft, faMagento, faMailchimp, faMandalorian, faMarkdown, faMastodon, faMaxcdn, faMdb, faMedapps, faMedium, faMediumM, faMedrt, faMeetup, faMegaport, faMendeley, faMicroblog, faMicrosoft, faMix, faMixcloud, faMixer, faMizuni, faModx, faMonero, faNapster, faNeos, faNimblr, faNode, faNodeJs, faNpm, faNs8, faNutritionix, faOctopusDeploy, faOdnoklassniki, faOdnoklassnikiSquare, faOldRepublic, faOpencart, faOpenid, faOpera, faOptinMonster, faOrcid, faOsi, faPage4, faPagelines, faPalfed, faPatreon, faPaypal, faPennyArcade, faPerbyte, faPeriscope, faPhabricator, faPhoenixFramework, faPhoenixSquadron, faPhp, faPiedPiper, faPiedPiperAlt, faPiedPiperHat, faPiedPiperPp, faPiedPiperSquare, faPinterest, faPinterestP, faPinterestSquare, faPlaystation, faProductHunt, faPushed, faPython, faQq, faQuinscape, faQuora, faRProject, faRaspberryPi, faRavelry, faReact, faReacteurope, faReadme, faRebel, faRedRiver, faReddit, faRedditAlien, faRedditSquare, faRedhat, faRenren, faReplyd, faResearchgate, faResolving, faRev, faRocketchat, faRockrms, faRust, faSafari, faSalesforce, faSass, faSchlix, faScribd, faSearchengin, faSellcast, faSellsy, faServicestack, faShirtsinbulk, faShopify, faShopware, faSimplybuilt, faSistrix, faSith, faSketch, faSkyatlas, faSkype, faSlack, faSlackHash, faSlideshare, faSnapchat, faSnapchatGhost, faSnapchatSquare, faSoundcloud, faSourcetree, faSpeakap, faSpeakerDeck, faSpotify, faSquarespace, faStackExchange, faStackOverflow, faStackpath, faStaylinked, faSteam, faSteamSquare, faSteamSymbol, faStickerMule, faStrava, faStripe, faStripeS, faStudiovinari, faStumbleupon, faStumbleuponCircle, faSuperpowers, faSupple, faSuse, faSwift, faSymfony, faTeamspeak, faTelegram, faTelegramPlane, faTencentWeibo, faTheRedYeti, faThemeco, faThemeisle, faThinkPeaks, faTiktok, faTradeFederation, faTrello, faTripadvisor, faTumblr, faTumblrSquare, faTwitch, faTwitter, faTwitterSquare, faTypo3, faUber, faUbuntu, faUikit, faUmbraco, faUncharted, faUniregistry, faUnity, faUnsplash, faUntappd, faUps, faUsb, faUsps, faUssunnah, faVaadin, faViacoin, faViadeo, faViadeoSquare, faViber, faVimeo, faVimeoSquare, faVimeoV, faVine, faVk, faVnv, faVuejs, faWatchmanMonitoring, faWaze, faWeebly, faWeibo, faWeixin, faWhatsapp, faWhatsappSquare, faWhmcs, faWikipediaW, faWindows, faWix, faWizardsOfTheCoast, faWodu, faWolfPackBattalion, faWordpress, faWordpressSimple, faWpbeginner, faWpexplorer, faWpforms, faWpressr, faXbox, faXing, faXingSquare, faYCombinator, faYahoo, faYammer, faYandex, faYandexInternational, faYarn, faYelp, faYoast, faYoutube, faYoutubeSquare, faZhihu */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fab", function() { return _iconsCache; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "prefix", function() { return prefix; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fa500px", function() { return fa500px; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAccessibleIcon", function() { return faAccessibleIcon; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAccusoft", function() { return faAccusoft; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAcquisitionsIncorporated", function() { return faAcquisitionsIncorporated; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAdn", function() { return faAdn; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAdversal", function() { return faAdversal; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAffiliatetheme", function() { return faAffiliatetheme; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAirbnb", function() { return faAirbnb; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAlgolia", function() { return faAlgolia; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAlipay", function() { return faAlipay; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAmazon", function() { return faAmazon; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAmazonPay", function() { return faAmazonPay; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAmilia", function() { return faAmilia; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAndroid", function() { return faAndroid; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAngellist", function() { return faAngellist; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAngrycreative", function() { return faAngrycreative; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAngular", function() { return faAngular; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAppStore", function() { return faAppStore; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAppStoreIos", function() { return faAppStoreIos; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faApper", function() { return faApper; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faApple", function() { return faApple; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faApplePay", function() { return faApplePay; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faArtstation", function() { return faArtstation; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAsymmetrik", function() { return faAsymmetrik; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAtlassian", function() { return faAtlassian; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAudible", function() { return faAudible; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAutoprefixer", function() { return faAutoprefixer; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAvianex", function() { return faAvianex; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAviato", function() { return faAviato; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAws", function() { return faAws; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBandcamp", function() { return faBandcamp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBattleNet", function() { return faBattleNet; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBehance", function() { return faBehance; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBehanceSquare", function() { return faBehanceSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBimobject", function() { return faBimobject; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBitbucket", function() { return faBitbucket; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBitcoin", function() { return faBitcoin; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBity", function() { return faBity; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBlackTie", function() { return faBlackTie; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBlackberry", function() { return faBlackberry; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBlogger", function() { return faBlogger; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBloggerB", function() { return faBloggerB; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBluetooth", function() { return faBluetooth; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBluetoothB", function() { return faBluetoothB; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBootstrap", function() { return faBootstrap; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBtc", function() { return faBtc; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBuffer", function() { return faBuffer; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBuromobelexperte", function() { return faBuromobelexperte; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBuyNLarge", function() { return faBuyNLarge; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBuysellads", function() { return faBuysellads; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCanadianMapleLeaf", function() { return faCanadianMapleLeaf; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCcAmazonPay", function() { return faCcAmazonPay; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCcAmex", function() { return faCcAmex; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCcApplePay", function() { return faCcApplePay; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCcDinersClub", function() { return faCcDinersClub; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCcDiscover", function() { return faCcDiscover; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCcJcb", function() { return faCcJcb; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCcMastercard", function() { return faCcMastercard; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCcPaypal", function() { return faCcPaypal; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCcStripe", function() { return faCcStripe; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCcVisa", function() { return faCcVisa; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCentercode", function() { return faCentercode; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCentos", function() { return faCentos; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChrome", function() { return faChrome; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChromecast", function() { return faChromecast; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCloudflare", function() { return faCloudflare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCloudscale", function() { return faCloudscale; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCloudsmith", function() { return faCloudsmith; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCloudversify", function() { return faCloudversify; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCodepen", function() { return faCodepen; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCodiepie", function() { return faCodiepie; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faConfluence", function() { return faConfluence; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faConnectdevelop", function() { return faConnectdevelop; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faContao", function() { return faContao; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCottonBureau", function() { return faCottonBureau; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCpanel", function() { return faCpanel; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCreativeCommons", function() { return faCreativeCommons; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCreativeCommonsBy", function() { return faCreativeCommonsBy; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCreativeCommonsNc", function() { return faCreativeCommonsNc; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCreativeCommonsNcEu", function() { return faCreativeCommonsNcEu; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCreativeCommonsNcJp", function() { return faCreativeCommonsNcJp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCreativeCommonsNd", function() { return faCreativeCommonsNd; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCreativeCommonsPd", function() { return faCreativeCommonsPd; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCreativeCommonsPdAlt", function() { return faCreativeCommonsPdAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCreativeCommonsRemix", function() { return faCreativeCommonsRemix; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCreativeCommonsSa", function() { return faCreativeCommonsSa; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCreativeCommonsSampling", function() { return faCreativeCommonsSampling; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCreativeCommonsSamplingPlus", function() { return faCreativeCommonsSamplingPlus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCreativeCommonsShare", function() { return faCreativeCommonsShare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCreativeCommonsZero", function() { return faCreativeCommonsZero; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCriticalRole", function() { return faCriticalRole; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCss3", function() { return faCss3; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCss3Alt", function() { return faCss3Alt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCuttlefish", function() { return faCuttlefish; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDAndD", function() { return faDAndD; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDAndDBeyond", function() { return faDAndDBeyond; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDailymotion", function() { return faDailymotion; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDashcube", function() { return faDashcube; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDeezer", function() { return faDeezer; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDelicious", function() { return faDelicious; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDeploydog", function() { return faDeploydog; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDeskpro", function() { return faDeskpro; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDev", function() { return faDev; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDeviantart", function() { return faDeviantart; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDhl", function() { return faDhl; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDiaspora", function() { return faDiaspora; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDigg", function() { return faDigg; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDigitalOcean", function() { return faDigitalOcean; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDiscord", function() { return faDiscord; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDiscourse", function() { return faDiscourse; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDochub", function() { return faDochub; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDocker", function() { return faDocker; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDraft2digital", function() { return faDraft2digital; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDribbble", function() { return faDribbble; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDribbbleSquare", function() { return faDribbbleSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDropbox", function() { return faDropbox; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDrupal", function() { return faDrupal; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDyalog", function() { return faDyalog; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEarlybirds", function() { return faEarlybirds; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEbay", function() { return faEbay; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEdge", function() { return faEdge; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEdgeLegacy", function() { return faEdgeLegacy; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faElementor", function() { return faElementor; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEllo", function() { return faEllo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEmber", function() { return faEmber; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEmpire", function() { return faEmpire; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEnvira", function() { return faEnvira; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faErlang", function() { return faErlang; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEthereum", function() { return faEthereum; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEtsy", function() { return faEtsy; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEvernote", function() { return faEvernote; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faExpeditedssl", function() { return faExpeditedssl; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFacebook", function() { return faFacebook; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFacebookF", function() { return faFacebookF; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFacebookMessenger", function() { return faFacebookMessenger; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFacebookSquare", function() { return faFacebookSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFantasyFlightGames", function() { return faFantasyFlightGames; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFedex", function() { return faFedex; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFedora", function() { return faFedora; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFigma", function() { return faFigma; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFirefox", function() { return faFirefox; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFirefoxBrowser", function() { return faFirefoxBrowser; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFirstOrder", function() { return faFirstOrder; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFirstOrderAlt", function() { return faFirstOrderAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFirstdraft", function() { return faFirstdraft; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFlickr", function() { return faFlickr; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFlipboard", function() { return faFlipboard; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFly", function() { return faFly; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFontAwesome", function() { return faFontAwesome; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFontAwesomeAlt", function() { return faFontAwesomeAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFontAwesomeFlag", function() { return faFontAwesomeFlag; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFontAwesomeLogoFull", function() { return faFontAwesomeLogoFull; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFonticons", function() { return faFonticons; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFonticonsFi", function() { return faFonticonsFi; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFortAwesome", function() { return faFortAwesome; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFortAwesomeAlt", function() { return faFortAwesomeAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faForumbee", function() { return faForumbee; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFoursquare", function() { return faFoursquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFreeCodeCamp", function() { return faFreeCodeCamp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFreebsd", function() { return faFreebsd; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFulcrum", function() { return faFulcrum; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGalacticRepublic", function() { return faGalacticRepublic; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGalacticSenate", function() { return faGalacticSenate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGetPocket", function() { return faGetPocket; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGg", function() { return faGg; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGgCircle", function() { return faGgCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGit", function() { return faGit; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGitAlt", function() { return faGitAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGitSquare", function() { return faGitSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGithub", function() { return faGithub; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGithubAlt", function() { return faGithubAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGithubSquare", function() { return faGithubSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGitkraken", function() { return faGitkraken; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGitlab", function() { return faGitlab; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGitter", function() { return faGitter; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGlide", function() { return faGlide; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGlideG", function() { return faGlideG; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGofore", function() { return faGofore; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGoodreads", function() { return faGoodreads; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGoodreadsG", function() { return faGoodreadsG; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGoogle", function() { return faGoogle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGoogleDrive", function() { return faGoogleDrive; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGooglePay", function() { return faGooglePay; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGooglePlay", function() { return faGooglePlay; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGooglePlus", function() { return faGooglePlus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGooglePlusG", function() { return faGooglePlusG; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGooglePlusSquare", function() { return faGooglePlusSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGoogleWallet", function() { return faGoogleWallet; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGratipay", function() { return faGratipay; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrav", function() { return faGrav; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGripfire", function() { return faGripfire; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrunt", function() { return faGrunt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGuilded", function() { return faGuilded; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGulp", function() { return faGulp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHackerNews", function() { return faHackerNews; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHackerNewsSquare", function() { return faHackerNewsSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHackerrank", function() { return faHackerrank; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHips", function() { return faHips; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHireAHelper", function() { return faHireAHelper; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHive", function() { return faHive; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHooli", function() { return faHooli; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHornbill", function() { return faHornbill; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHotjar", function() { return faHotjar; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHouzz", function() { return faHouzz; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHtml5", function() { return faHtml5; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHubspot", function() { return faHubspot; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faIdeal", function() { return faIdeal; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faImdb", function() { return faImdb; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faInnosoft", function() { return faInnosoft; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faInstagram", function() { return faInstagram; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faInstagramSquare", function() { return faInstagramSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faInstalod", function() { return faInstalod; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faIntercom", function() { return faIntercom; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faInternetExplorer", function() { return faInternetExplorer; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faInvision", function() { return faInvision; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faIoxhost", function() { return faIoxhost; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faItchIo", function() { return faItchIo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faItunes", function() { return faItunes; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faItunesNote", function() { return faItunesNote; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faJava", function() { return faJava; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faJediOrder", function() { return faJediOrder; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faJenkins", function() { return faJenkins; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faJira", function() { return faJira; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faJoget", function() { return faJoget; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faJoomla", function() { return faJoomla; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faJs", function() { return faJs; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faJsSquare", function() { return faJsSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faJsfiddle", function() { return faJsfiddle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faKaggle", function() { return faKaggle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faKeybase", function() { return faKeybase; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faKeycdn", function() { return faKeycdn; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faKickstarter", function() { return faKickstarter; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faKickstarterK", function() { return faKickstarterK; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faKorvue", function() { return faKorvue; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLaravel", function() { return faLaravel; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLastfm", function() { return faLastfm; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLastfmSquare", function() { return faLastfmSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLeanpub", function() { return faLeanpub; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLess", function() { return faLess; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLine", function() { return faLine; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLinkedin", function() { return faLinkedin; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLinkedinIn", function() { return faLinkedinIn; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLinode", function() { return faLinode; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLinux", function() { return faLinux; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLyft", function() { return faLyft; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMagento", function() { return faMagento; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMailchimp", function() { return faMailchimp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMandalorian", function() { return faMandalorian; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMarkdown", function() { return faMarkdown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMastodon", function() { return faMastodon; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMaxcdn", function() { return faMaxcdn; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMdb", function() { return faMdb; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMedapps", function() { return faMedapps; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMedium", function() { return faMedium; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMediumM", function() { return faMediumM; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMedrt", function() { return faMedrt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMeetup", function() { return faMeetup; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMegaport", function() { return faMegaport; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMendeley", function() { return faMendeley; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMicroblog", function() { return faMicroblog; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMicrosoft", function() { return faMicrosoft; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMix", function() { return faMix; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMixcloud", function() { return faMixcloud; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMixer", function() { return faMixer; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMizuni", function() { return faMizuni; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faModx", function() { return faModx; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMonero", function() { return faMonero; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faNapster", function() { return faNapster; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faNeos", function() { return faNeos; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faNimblr", function() { return faNimblr; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faNode", function() { return faNode; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faNodeJs", function() { return faNodeJs; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faNpm", function() { return faNpm; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faNs8", function() { return faNs8; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faNutritionix", function() { return faNutritionix; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faOctopusDeploy", function() { return faOctopusDeploy; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faOdnoklassniki", function() { return faOdnoklassniki; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faOdnoklassnikiSquare", function() { return faOdnoklassnikiSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faOldRepublic", function() { return faOldRepublic; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faOpencart", function() { return faOpencart; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faOpenid", function() { return faOpenid; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faOpera", function() { return faOpera; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faOptinMonster", function() { return faOptinMonster; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faOrcid", function() { return faOrcid; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faOsi", function() { return faOsi; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPage4", function() { return faPage4; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPagelines", function() { return faPagelines; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPalfed", function() { return faPalfed; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPatreon", function() { return faPatreon; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPaypal", function() { return faPaypal; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPennyArcade", function() { return faPennyArcade; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPerbyte", function() { return faPerbyte; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPeriscope", function() { return faPeriscope; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPhabricator", function() { return faPhabricator; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPhoenixFramework", function() { return faPhoenixFramework; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPhoenixSquadron", function() { return faPhoenixSquadron; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPhp", function() { return faPhp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPiedPiper", function() { return faPiedPiper; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPiedPiperAlt", function() { return faPiedPiperAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPiedPiperHat", function() { return faPiedPiperHat; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPiedPiperPp", function() { return faPiedPiperPp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPiedPiperSquare", function() { return faPiedPiperSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPinterest", function() { return faPinterest; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPinterestP", function() { return faPinterestP; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPinterestSquare", function() { return faPinterestSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPlaystation", function() { return faPlaystation; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faProductHunt", function() { return faProductHunt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPushed", function() { return faPushed; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPython", function() { return faPython; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faQq", function() { return faQq; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faQuinscape", function() { return faQuinscape; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faQuora", function() { return faQuora; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRProject", function() { return faRProject; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRaspberryPi", function() { return faRaspberryPi; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRavelry", function() { return faRavelry; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faReact", function() { return faReact; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faReacteurope", function() { return faReacteurope; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faReadme", function() { return faReadme; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRebel", function() { return faRebel; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRedRiver", function() { return faRedRiver; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faReddit", function() { return faReddit; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRedditAlien", function() { return faRedditAlien; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRedditSquare", function() { return faRedditSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRedhat", function() { return faRedhat; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRenren", function() { return faRenren; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faReplyd", function() { return faReplyd; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faResearchgate", function() { return faResearchgate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faResolving", function() { return faResolving; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRev", function() { return faRev; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRocketchat", function() { return faRocketchat; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRockrms", function() { return faRockrms; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRust", function() { return faRust; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSafari", function() { return faSafari; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSalesforce", function() { return faSalesforce; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSass", function() { return faSass; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSchlix", function() { return faSchlix; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faScribd", function() { return faScribd; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSearchengin", function() { return faSearchengin; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSellcast", function() { return faSellcast; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSellsy", function() { return faSellsy; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faServicestack", function() { return faServicestack; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faShirtsinbulk", function() { return faShirtsinbulk; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faShopify", function() { return faShopify; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faShopware", function() { return faShopware; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSimplybuilt", function() { return faSimplybuilt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSistrix", function() { return faSistrix; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSith", function() { return faSith; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSketch", function() { return faSketch; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSkyatlas", function() { return faSkyatlas; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSkype", function() { return faSkype; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSlack", function() { return faSlack; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSlackHash", function() { return faSlackHash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSlideshare", function() { return faSlideshare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSnapchat", function() { return faSnapchat; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSnapchatGhost", function() { return faSnapchatGhost; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSnapchatSquare", function() { return faSnapchatSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSoundcloud", function() { return faSoundcloud; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSourcetree", function() { return faSourcetree; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSpeakap", function() { return faSpeakap; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSpeakerDeck", function() { return faSpeakerDeck; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSpotify", function() { return faSpotify; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSquarespace", function() { return faSquarespace; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStackExchange", function() { return faStackExchange; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStackOverflow", function() { return faStackOverflow; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStackpath", function() { return faStackpath; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStaylinked", function() { return faStaylinked; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSteam", function() { return faSteam; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSteamSquare", function() { return faSteamSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSteamSymbol", function() { return faSteamSymbol; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStickerMule", function() { return faStickerMule; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStrava", function() { return faStrava; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStripe", function() { return faStripe; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStripeS", function() { return faStripeS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStudiovinari", function() { return faStudiovinari; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStumbleupon", function() { return faStumbleupon; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStumbleuponCircle", function() { return faStumbleuponCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSuperpowers", function() { return faSuperpowers; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSupple", function() { return faSupple; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSuse", function() { return faSuse; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSwift", function() { return faSwift; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSymfony", function() { return faSymfony; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTeamspeak", function() { return faTeamspeak; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTelegram", function() { return faTelegram; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTelegramPlane", function() { return faTelegramPlane; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTencentWeibo", function() { return faTencentWeibo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTheRedYeti", function() { return faTheRedYeti; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faThemeco", function() { return faThemeco; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faThemeisle", function() { return faThemeisle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faThinkPeaks", function() { return faThinkPeaks; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTiktok", function() { return faTiktok; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTradeFederation", function() { return faTradeFederation; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTrello", function() { return faTrello; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTripadvisor", function() { return faTripadvisor; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTumblr", function() { return faTumblr; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTumblrSquare", function() { return faTumblrSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTwitch", function() { return faTwitch; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTwitter", function() { return faTwitter; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTwitterSquare", function() { return faTwitterSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTypo3", function() { return faTypo3; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUber", function() { return faUber; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUbuntu", function() { return faUbuntu; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUikit", function() { return faUikit; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUmbraco", function() { return faUmbraco; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUncharted", function() { return faUncharted; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUniregistry", function() { return faUniregistry; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUnity", function() { return faUnity; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUnsplash", function() { return faUnsplash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUntappd", function() { return faUntappd; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUps", function() { return faUps; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUsb", function() { return faUsb; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUsps", function() { return faUsps; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUssunnah", function() { return faUssunnah; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVaadin", function() { return faVaadin; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faViacoin", function() { return faViacoin; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faViadeo", function() { return faViadeo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faViadeoSquare", function() { return faViadeoSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faViber", function() { return faViber; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVimeo", function() { return faVimeo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVimeoSquare", function() { return faVimeoSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVimeoV", function() { return faVimeoV; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVine", function() { return faVine; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVk", function() { return faVk; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVnv", function() { return faVnv; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVuejs", function() { return faVuejs; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWatchmanMonitoring", function() { return faWatchmanMonitoring; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWaze", function() { return faWaze; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWeebly", function() { return faWeebly; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWeibo", function() { return faWeibo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWeixin", function() { return faWeixin; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWhatsapp", function() { return faWhatsapp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWhatsappSquare", function() { return faWhatsappSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWhmcs", function() { return faWhmcs; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWikipediaW", function() { return faWikipediaW; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWindows", function() { return faWindows; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWix", function() { return faWix; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWizardsOfTheCoast", function() { return faWizardsOfTheCoast; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWodu", function() { return faWodu; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWolfPackBattalion", function() { return faWolfPackBattalion; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWordpress", function() { return faWordpress; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWordpressSimple", function() { return faWordpressSimple; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWpbeginner", function() { return faWpbeginner; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWpexplorer", function() { return faWpexplorer; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWpforms", function() { return faWpforms; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWpressr", function() { return faWpressr; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faXbox", function() { return faXbox; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faXing", function() { return faXing; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faXingSquare", function() { return faXingSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faYCombinator", function() { return faYCombinator; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faYahoo", function() { return faYahoo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faYammer", function() { return faYammer; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faYandex", function() { return faYandex; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faYandexInternational", function() { return faYandexInternational; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faYarn", function() { return faYarn; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faYelp", function() { return faYelp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faYoast", function() { return faYoast; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faYoutube", function() { return faYoutube; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faYoutubeSquare", function() { return faYoutubeSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faZhihu", function() { return faZhihu; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "fab": () => (/* binding */ _iconsCache),
+/* harmony export */   "prefix": () => (/* binding */ prefix),
+/* harmony export */   "fa500px": () => (/* binding */ fa500px),
+/* harmony export */   "faAccessibleIcon": () => (/* binding */ faAccessibleIcon),
+/* harmony export */   "faAccusoft": () => (/* binding */ faAccusoft),
+/* harmony export */   "faAcquisitionsIncorporated": () => (/* binding */ faAcquisitionsIncorporated),
+/* harmony export */   "faAdn": () => (/* binding */ faAdn),
+/* harmony export */   "faAdversal": () => (/* binding */ faAdversal),
+/* harmony export */   "faAffiliatetheme": () => (/* binding */ faAffiliatetheme),
+/* harmony export */   "faAirbnb": () => (/* binding */ faAirbnb),
+/* harmony export */   "faAlgolia": () => (/* binding */ faAlgolia),
+/* harmony export */   "faAlipay": () => (/* binding */ faAlipay),
+/* harmony export */   "faAmazon": () => (/* binding */ faAmazon),
+/* harmony export */   "faAmazonPay": () => (/* binding */ faAmazonPay),
+/* harmony export */   "faAmilia": () => (/* binding */ faAmilia),
+/* harmony export */   "faAndroid": () => (/* binding */ faAndroid),
+/* harmony export */   "faAngellist": () => (/* binding */ faAngellist),
+/* harmony export */   "faAngrycreative": () => (/* binding */ faAngrycreative),
+/* harmony export */   "faAngular": () => (/* binding */ faAngular),
+/* harmony export */   "faAppStore": () => (/* binding */ faAppStore),
+/* harmony export */   "faAppStoreIos": () => (/* binding */ faAppStoreIos),
+/* harmony export */   "faApper": () => (/* binding */ faApper),
+/* harmony export */   "faApple": () => (/* binding */ faApple),
+/* harmony export */   "faApplePay": () => (/* binding */ faApplePay),
+/* harmony export */   "faArtstation": () => (/* binding */ faArtstation),
+/* harmony export */   "faAsymmetrik": () => (/* binding */ faAsymmetrik),
+/* harmony export */   "faAtlassian": () => (/* binding */ faAtlassian),
+/* harmony export */   "faAudible": () => (/* binding */ faAudible),
+/* harmony export */   "faAutoprefixer": () => (/* binding */ faAutoprefixer),
+/* harmony export */   "faAvianex": () => (/* binding */ faAvianex),
+/* harmony export */   "faAviato": () => (/* binding */ faAviato),
+/* harmony export */   "faAws": () => (/* binding */ faAws),
+/* harmony export */   "faBandcamp": () => (/* binding */ faBandcamp),
+/* harmony export */   "faBattleNet": () => (/* binding */ faBattleNet),
+/* harmony export */   "faBehance": () => (/* binding */ faBehance),
+/* harmony export */   "faBehanceSquare": () => (/* binding */ faBehanceSquare),
+/* harmony export */   "faBimobject": () => (/* binding */ faBimobject),
+/* harmony export */   "faBitbucket": () => (/* binding */ faBitbucket),
+/* harmony export */   "faBitcoin": () => (/* binding */ faBitcoin),
+/* harmony export */   "faBity": () => (/* binding */ faBity),
+/* harmony export */   "faBlackTie": () => (/* binding */ faBlackTie),
+/* harmony export */   "faBlackberry": () => (/* binding */ faBlackberry),
+/* harmony export */   "faBlogger": () => (/* binding */ faBlogger),
+/* harmony export */   "faBloggerB": () => (/* binding */ faBloggerB),
+/* harmony export */   "faBluetooth": () => (/* binding */ faBluetooth),
+/* harmony export */   "faBluetoothB": () => (/* binding */ faBluetoothB),
+/* harmony export */   "faBootstrap": () => (/* binding */ faBootstrap),
+/* harmony export */   "faBtc": () => (/* binding */ faBtc),
+/* harmony export */   "faBuffer": () => (/* binding */ faBuffer),
+/* harmony export */   "faBuromobelexperte": () => (/* binding */ faBuromobelexperte),
+/* harmony export */   "faBuyNLarge": () => (/* binding */ faBuyNLarge),
+/* harmony export */   "faBuysellads": () => (/* binding */ faBuysellads),
+/* harmony export */   "faCanadianMapleLeaf": () => (/* binding */ faCanadianMapleLeaf),
+/* harmony export */   "faCcAmazonPay": () => (/* binding */ faCcAmazonPay),
+/* harmony export */   "faCcAmex": () => (/* binding */ faCcAmex),
+/* harmony export */   "faCcApplePay": () => (/* binding */ faCcApplePay),
+/* harmony export */   "faCcDinersClub": () => (/* binding */ faCcDinersClub),
+/* harmony export */   "faCcDiscover": () => (/* binding */ faCcDiscover),
+/* harmony export */   "faCcJcb": () => (/* binding */ faCcJcb),
+/* harmony export */   "faCcMastercard": () => (/* binding */ faCcMastercard),
+/* harmony export */   "faCcPaypal": () => (/* binding */ faCcPaypal),
+/* harmony export */   "faCcStripe": () => (/* binding */ faCcStripe),
+/* harmony export */   "faCcVisa": () => (/* binding */ faCcVisa),
+/* harmony export */   "faCentercode": () => (/* binding */ faCentercode),
+/* harmony export */   "faCentos": () => (/* binding */ faCentos),
+/* harmony export */   "faChrome": () => (/* binding */ faChrome),
+/* harmony export */   "faChromecast": () => (/* binding */ faChromecast),
+/* harmony export */   "faCloudflare": () => (/* binding */ faCloudflare),
+/* harmony export */   "faCloudscale": () => (/* binding */ faCloudscale),
+/* harmony export */   "faCloudsmith": () => (/* binding */ faCloudsmith),
+/* harmony export */   "faCloudversify": () => (/* binding */ faCloudversify),
+/* harmony export */   "faCodepen": () => (/* binding */ faCodepen),
+/* harmony export */   "faCodiepie": () => (/* binding */ faCodiepie),
+/* harmony export */   "faConfluence": () => (/* binding */ faConfluence),
+/* harmony export */   "faConnectdevelop": () => (/* binding */ faConnectdevelop),
+/* harmony export */   "faContao": () => (/* binding */ faContao),
+/* harmony export */   "faCottonBureau": () => (/* binding */ faCottonBureau),
+/* harmony export */   "faCpanel": () => (/* binding */ faCpanel),
+/* harmony export */   "faCreativeCommons": () => (/* binding */ faCreativeCommons),
+/* harmony export */   "faCreativeCommonsBy": () => (/* binding */ faCreativeCommonsBy),
+/* harmony export */   "faCreativeCommonsNc": () => (/* binding */ faCreativeCommonsNc),
+/* harmony export */   "faCreativeCommonsNcEu": () => (/* binding */ faCreativeCommonsNcEu),
+/* harmony export */   "faCreativeCommonsNcJp": () => (/* binding */ faCreativeCommonsNcJp),
+/* harmony export */   "faCreativeCommonsNd": () => (/* binding */ faCreativeCommonsNd),
+/* harmony export */   "faCreativeCommonsPd": () => (/* binding */ faCreativeCommonsPd),
+/* harmony export */   "faCreativeCommonsPdAlt": () => (/* binding */ faCreativeCommonsPdAlt),
+/* harmony export */   "faCreativeCommonsRemix": () => (/* binding */ faCreativeCommonsRemix),
+/* harmony export */   "faCreativeCommonsSa": () => (/* binding */ faCreativeCommonsSa),
+/* harmony export */   "faCreativeCommonsSampling": () => (/* binding */ faCreativeCommonsSampling),
+/* harmony export */   "faCreativeCommonsSamplingPlus": () => (/* binding */ faCreativeCommonsSamplingPlus),
+/* harmony export */   "faCreativeCommonsShare": () => (/* binding */ faCreativeCommonsShare),
+/* harmony export */   "faCreativeCommonsZero": () => (/* binding */ faCreativeCommonsZero),
+/* harmony export */   "faCriticalRole": () => (/* binding */ faCriticalRole),
+/* harmony export */   "faCss3": () => (/* binding */ faCss3),
+/* harmony export */   "faCss3Alt": () => (/* binding */ faCss3Alt),
+/* harmony export */   "faCuttlefish": () => (/* binding */ faCuttlefish),
+/* harmony export */   "faDAndD": () => (/* binding */ faDAndD),
+/* harmony export */   "faDAndDBeyond": () => (/* binding */ faDAndDBeyond),
+/* harmony export */   "faDailymotion": () => (/* binding */ faDailymotion),
+/* harmony export */   "faDashcube": () => (/* binding */ faDashcube),
+/* harmony export */   "faDeezer": () => (/* binding */ faDeezer),
+/* harmony export */   "faDelicious": () => (/* binding */ faDelicious),
+/* harmony export */   "faDeploydog": () => (/* binding */ faDeploydog),
+/* harmony export */   "faDeskpro": () => (/* binding */ faDeskpro),
+/* harmony export */   "faDev": () => (/* binding */ faDev),
+/* harmony export */   "faDeviantart": () => (/* binding */ faDeviantart),
+/* harmony export */   "faDhl": () => (/* binding */ faDhl),
+/* harmony export */   "faDiaspora": () => (/* binding */ faDiaspora),
+/* harmony export */   "faDigg": () => (/* binding */ faDigg),
+/* harmony export */   "faDigitalOcean": () => (/* binding */ faDigitalOcean),
+/* harmony export */   "faDiscord": () => (/* binding */ faDiscord),
+/* harmony export */   "faDiscourse": () => (/* binding */ faDiscourse),
+/* harmony export */   "faDochub": () => (/* binding */ faDochub),
+/* harmony export */   "faDocker": () => (/* binding */ faDocker),
+/* harmony export */   "faDraft2digital": () => (/* binding */ faDraft2digital),
+/* harmony export */   "faDribbble": () => (/* binding */ faDribbble),
+/* harmony export */   "faDribbbleSquare": () => (/* binding */ faDribbbleSquare),
+/* harmony export */   "faDropbox": () => (/* binding */ faDropbox),
+/* harmony export */   "faDrupal": () => (/* binding */ faDrupal),
+/* harmony export */   "faDyalog": () => (/* binding */ faDyalog),
+/* harmony export */   "faEarlybirds": () => (/* binding */ faEarlybirds),
+/* harmony export */   "faEbay": () => (/* binding */ faEbay),
+/* harmony export */   "faEdge": () => (/* binding */ faEdge),
+/* harmony export */   "faEdgeLegacy": () => (/* binding */ faEdgeLegacy),
+/* harmony export */   "faElementor": () => (/* binding */ faElementor),
+/* harmony export */   "faEllo": () => (/* binding */ faEllo),
+/* harmony export */   "faEmber": () => (/* binding */ faEmber),
+/* harmony export */   "faEmpire": () => (/* binding */ faEmpire),
+/* harmony export */   "faEnvira": () => (/* binding */ faEnvira),
+/* harmony export */   "faErlang": () => (/* binding */ faErlang),
+/* harmony export */   "faEthereum": () => (/* binding */ faEthereum),
+/* harmony export */   "faEtsy": () => (/* binding */ faEtsy),
+/* harmony export */   "faEvernote": () => (/* binding */ faEvernote),
+/* harmony export */   "faExpeditedssl": () => (/* binding */ faExpeditedssl),
+/* harmony export */   "faFacebook": () => (/* binding */ faFacebook),
+/* harmony export */   "faFacebookF": () => (/* binding */ faFacebookF),
+/* harmony export */   "faFacebookMessenger": () => (/* binding */ faFacebookMessenger),
+/* harmony export */   "faFacebookSquare": () => (/* binding */ faFacebookSquare),
+/* harmony export */   "faFantasyFlightGames": () => (/* binding */ faFantasyFlightGames),
+/* harmony export */   "faFedex": () => (/* binding */ faFedex),
+/* harmony export */   "faFedora": () => (/* binding */ faFedora),
+/* harmony export */   "faFigma": () => (/* binding */ faFigma),
+/* harmony export */   "faFirefox": () => (/* binding */ faFirefox),
+/* harmony export */   "faFirefoxBrowser": () => (/* binding */ faFirefoxBrowser),
+/* harmony export */   "faFirstOrder": () => (/* binding */ faFirstOrder),
+/* harmony export */   "faFirstOrderAlt": () => (/* binding */ faFirstOrderAlt),
+/* harmony export */   "faFirstdraft": () => (/* binding */ faFirstdraft),
+/* harmony export */   "faFlickr": () => (/* binding */ faFlickr),
+/* harmony export */   "faFlipboard": () => (/* binding */ faFlipboard),
+/* harmony export */   "faFly": () => (/* binding */ faFly),
+/* harmony export */   "faFontAwesome": () => (/* binding */ faFontAwesome),
+/* harmony export */   "faFontAwesomeAlt": () => (/* binding */ faFontAwesomeAlt),
+/* harmony export */   "faFontAwesomeFlag": () => (/* binding */ faFontAwesomeFlag),
+/* harmony export */   "faFontAwesomeLogoFull": () => (/* binding */ faFontAwesomeLogoFull),
+/* harmony export */   "faFonticons": () => (/* binding */ faFonticons),
+/* harmony export */   "faFonticonsFi": () => (/* binding */ faFonticonsFi),
+/* harmony export */   "faFortAwesome": () => (/* binding */ faFortAwesome),
+/* harmony export */   "faFortAwesomeAlt": () => (/* binding */ faFortAwesomeAlt),
+/* harmony export */   "faForumbee": () => (/* binding */ faForumbee),
+/* harmony export */   "faFoursquare": () => (/* binding */ faFoursquare),
+/* harmony export */   "faFreeCodeCamp": () => (/* binding */ faFreeCodeCamp),
+/* harmony export */   "faFreebsd": () => (/* binding */ faFreebsd),
+/* harmony export */   "faFulcrum": () => (/* binding */ faFulcrum),
+/* harmony export */   "faGalacticRepublic": () => (/* binding */ faGalacticRepublic),
+/* harmony export */   "faGalacticSenate": () => (/* binding */ faGalacticSenate),
+/* harmony export */   "faGetPocket": () => (/* binding */ faGetPocket),
+/* harmony export */   "faGg": () => (/* binding */ faGg),
+/* harmony export */   "faGgCircle": () => (/* binding */ faGgCircle),
+/* harmony export */   "faGit": () => (/* binding */ faGit),
+/* harmony export */   "faGitAlt": () => (/* binding */ faGitAlt),
+/* harmony export */   "faGitSquare": () => (/* binding */ faGitSquare),
+/* harmony export */   "faGithub": () => (/* binding */ faGithub),
+/* harmony export */   "faGithubAlt": () => (/* binding */ faGithubAlt),
+/* harmony export */   "faGithubSquare": () => (/* binding */ faGithubSquare),
+/* harmony export */   "faGitkraken": () => (/* binding */ faGitkraken),
+/* harmony export */   "faGitlab": () => (/* binding */ faGitlab),
+/* harmony export */   "faGitter": () => (/* binding */ faGitter),
+/* harmony export */   "faGlide": () => (/* binding */ faGlide),
+/* harmony export */   "faGlideG": () => (/* binding */ faGlideG),
+/* harmony export */   "faGofore": () => (/* binding */ faGofore),
+/* harmony export */   "faGoodreads": () => (/* binding */ faGoodreads),
+/* harmony export */   "faGoodreadsG": () => (/* binding */ faGoodreadsG),
+/* harmony export */   "faGoogle": () => (/* binding */ faGoogle),
+/* harmony export */   "faGoogleDrive": () => (/* binding */ faGoogleDrive),
+/* harmony export */   "faGooglePay": () => (/* binding */ faGooglePay),
+/* harmony export */   "faGooglePlay": () => (/* binding */ faGooglePlay),
+/* harmony export */   "faGooglePlus": () => (/* binding */ faGooglePlus),
+/* harmony export */   "faGooglePlusG": () => (/* binding */ faGooglePlusG),
+/* harmony export */   "faGooglePlusSquare": () => (/* binding */ faGooglePlusSquare),
+/* harmony export */   "faGoogleWallet": () => (/* binding */ faGoogleWallet),
+/* harmony export */   "faGratipay": () => (/* binding */ faGratipay),
+/* harmony export */   "faGrav": () => (/* binding */ faGrav),
+/* harmony export */   "faGripfire": () => (/* binding */ faGripfire),
+/* harmony export */   "faGrunt": () => (/* binding */ faGrunt),
+/* harmony export */   "faGuilded": () => (/* binding */ faGuilded),
+/* harmony export */   "faGulp": () => (/* binding */ faGulp),
+/* harmony export */   "faHackerNews": () => (/* binding */ faHackerNews),
+/* harmony export */   "faHackerNewsSquare": () => (/* binding */ faHackerNewsSquare),
+/* harmony export */   "faHackerrank": () => (/* binding */ faHackerrank),
+/* harmony export */   "faHips": () => (/* binding */ faHips),
+/* harmony export */   "faHireAHelper": () => (/* binding */ faHireAHelper),
+/* harmony export */   "faHive": () => (/* binding */ faHive),
+/* harmony export */   "faHooli": () => (/* binding */ faHooli),
+/* harmony export */   "faHornbill": () => (/* binding */ faHornbill),
+/* harmony export */   "faHotjar": () => (/* binding */ faHotjar),
+/* harmony export */   "faHouzz": () => (/* binding */ faHouzz),
+/* harmony export */   "faHtml5": () => (/* binding */ faHtml5),
+/* harmony export */   "faHubspot": () => (/* binding */ faHubspot),
+/* harmony export */   "faIdeal": () => (/* binding */ faIdeal),
+/* harmony export */   "faImdb": () => (/* binding */ faImdb),
+/* harmony export */   "faInnosoft": () => (/* binding */ faInnosoft),
+/* harmony export */   "faInstagram": () => (/* binding */ faInstagram),
+/* harmony export */   "faInstagramSquare": () => (/* binding */ faInstagramSquare),
+/* harmony export */   "faInstalod": () => (/* binding */ faInstalod),
+/* harmony export */   "faIntercom": () => (/* binding */ faIntercom),
+/* harmony export */   "faInternetExplorer": () => (/* binding */ faInternetExplorer),
+/* harmony export */   "faInvision": () => (/* binding */ faInvision),
+/* harmony export */   "faIoxhost": () => (/* binding */ faIoxhost),
+/* harmony export */   "faItchIo": () => (/* binding */ faItchIo),
+/* harmony export */   "faItunes": () => (/* binding */ faItunes),
+/* harmony export */   "faItunesNote": () => (/* binding */ faItunesNote),
+/* harmony export */   "faJava": () => (/* binding */ faJava),
+/* harmony export */   "faJediOrder": () => (/* binding */ faJediOrder),
+/* harmony export */   "faJenkins": () => (/* binding */ faJenkins),
+/* harmony export */   "faJira": () => (/* binding */ faJira),
+/* harmony export */   "faJoget": () => (/* binding */ faJoget),
+/* harmony export */   "faJoomla": () => (/* binding */ faJoomla),
+/* harmony export */   "faJs": () => (/* binding */ faJs),
+/* harmony export */   "faJsSquare": () => (/* binding */ faJsSquare),
+/* harmony export */   "faJsfiddle": () => (/* binding */ faJsfiddle),
+/* harmony export */   "faKaggle": () => (/* binding */ faKaggle),
+/* harmony export */   "faKeybase": () => (/* binding */ faKeybase),
+/* harmony export */   "faKeycdn": () => (/* binding */ faKeycdn),
+/* harmony export */   "faKickstarter": () => (/* binding */ faKickstarter),
+/* harmony export */   "faKickstarterK": () => (/* binding */ faKickstarterK),
+/* harmony export */   "faKorvue": () => (/* binding */ faKorvue),
+/* harmony export */   "faLaravel": () => (/* binding */ faLaravel),
+/* harmony export */   "faLastfm": () => (/* binding */ faLastfm),
+/* harmony export */   "faLastfmSquare": () => (/* binding */ faLastfmSquare),
+/* harmony export */   "faLeanpub": () => (/* binding */ faLeanpub),
+/* harmony export */   "faLess": () => (/* binding */ faLess),
+/* harmony export */   "faLine": () => (/* binding */ faLine),
+/* harmony export */   "faLinkedin": () => (/* binding */ faLinkedin),
+/* harmony export */   "faLinkedinIn": () => (/* binding */ faLinkedinIn),
+/* harmony export */   "faLinode": () => (/* binding */ faLinode),
+/* harmony export */   "faLinux": () => (/* binding */ faLinux),
+/* harmony export */   "faLyft": () => (/* binding */ faLyft),
+/* harmony export */   "faMagento": () => (/* binding */ faMagento),
+/* harmony export */   "faMailchimp": () => (/* binding */ faMailchimp),
+/* harmony export */   "faMandalorian": () => (/* binding */ faMandalorian),
+/* harmony export */   "faMarkdown": () => (/* binding */ faMarkdown),
+/* harmony export */   "faMastodon": () => (/* binding */ faMastodon),
+/* harmony export */   "faMaxcdn": () => (/* binding */ faMaxcdn),
+/* harmony export */   "faMdb": () => (/* binding */ faMdb),
+/* harmony export */   "faMedapps": () => (/* binding */ faMedapps),
+/* harmony export */   "faMedium": () => (/* binding */ faMedium),
+/* harmony export */   "faMediumM": () => (/* binding */ faMediumM),
+/* harmony export */   "faMedrt": () => (/* binding */ faMedrt),
+/* harmony export */   "faMeetup": () => (/* binding */ faMeetup),
+/* harmony export */   "faMegaport": () => (/* binding */ faMegaport),
+/* harmony export */   "faMendeley": () => (/* binding */ faMendeley),
+/* harmony export */   "faMicroblog": () => (/* binding */ faMicroblog),
+/* harmony export */   "faMicrosoft": () => (/* binding */ faMicrosoft),
+/* harmony export */   "faMix": () => (/* binding */ faMix),
+/* harmony export */   "faMixcloud": () => (/* binding */ faMixcloud),
+/* harmony export */   "faMixer": () => (/* binding */ faMixer),
+/* harmony export */   "faMizuni": () => (/* binding */ faMizuni),
+/* harmony export */   "faModx": () => (/* binding */ faModx),
+/* harmony export */   "faMonero": () => (/* binding */ faMonero),
+/* harmony export */   "faNapster": () => (/* binding */ faNapster),
+/* harmony export */   "faNeos": () => (/* binding */ faNeos),
+/* harmony export */   "faNimblr": () => (/* binding */ faNimblr),
+/* harmony export */   "faNode": () => (/* binding */ faNode),
+/* harmony export */   "faNodeJs": () => (/* binding */ faNodeJs),
+/* harmony export */   "faNpm": () => (/* binding */ faNpm),
+/* harmony export */   "faNs8": () => (/* binding */ faNs8),
+/* harmony export */   "faNutritionix": () => (/* binding */ faNutritionix),
+/* harmony export */   "faOctopusDeploy": () => (/* binding */ faOctopusDeploy),
+/* harmony export */   "faOdnoklassniki": () => (/* binding */ faOdnoklassniki),
+/* harmony export */   "faOdnoklassnikiSquare": () => (/* binding */ faOdnoklassnikiSquare),
+/* harmony export */   "faOldRepublic": () => (/* binding */ faOldRepublic),
+/* harmony export */   "faOpencart": () => (/* binding */ faOpencart),
+/* harmony export */   "faOpenid": () => (/* binding */ faOpenid),
+/* harmony export */   "faOpera": () => (/* binding */ faOpera),
+/* harmony export */   "faOptinMonster": () => (/* binding */ faOptinMonster),
+/* harmony export */   "faOrcid": () => (/* binding */ faOrcid),
+/* harmony export */   "faOsi": () => (/* binding */ faOsi),
+/* harmony export */   "faPage4": () => (/* binding */ faPage4),
+/* harmony export */   "faPagelines": () => (/* binding */ faPagelines),
+/* harmony export */   "faPalfed": () => (/* binding */ faPalfed),
+/* harmony export */   "faPatreon": () => (/* binding */ faPatreon),
+/* harmony export */   "faPaypal": () => (/* binding */ faPaypal),
+/* harmony export */   "faPennyArcade": () => (/* binding */ faPennyArcade),
+/* harmony export */   "faPerbyte": () => (/* binding */ faPerbyte),
+/* harmony export */   "faPeriscope": () => (/* binding */ faPeriscope),
+/* harmony export */   "faPhabricator": () => (/* binding */ faPhabricator),
+/* harmony export */   "faPhoenixFramework": () => (/* binding */ faPhoenixFramework),
+/* harmony export */   "faPhoenixSquadron": () => (/* binding */ faPhoenixSquadron),
+/* harmony export */   "faPhp": () => (/* binding */ faPhp),
+/* harmony export */   "faPiedPiper": () => (/* binding */ faPiedPiper),
+/* harmony export */   "faPiedPiperAlt": () => (/* binding */ faPiedPiperAlt),
+/* harmony export */   "faPiedPiperHat": () => (/* binding */ faPiedPiperHat),
+/* harmony export */   "faPiedPiperPp": () => (/* binding */ faPiedPiperPp),
+/* harmony export */   "faPiedPiperSquare": () => (/* binding */ faPiedPiperSquare),
+/* harmony export */   "faPinterest": () => (/* binding */ faPinterest),
+/* harmony export */   "faPinterestP": () => (/* binding */ faPinterestP),
+/* harmony export */   "faPinterestSquare": () => (/* binding */ faPinterestSquare),
+/* harmony export */   "faPlaystation": () => (/* binding */ faPlaystation),
+/* harmony export */   "faProductHunt": () => (/* binding */ faProductHunt),
+/* harmony export */   "faPushed": () => (/* binding */ faPushed),
+/* harmony export */   "faPython": () => (/* binding */ faPython),
+/* harmony export */   "faQq": () => (/* binding */ faQq),
+/* harmony export */   "faQuinscape": () => (/* binding */ faQuinscape),
+/* harmony export */   "faQuora": () => (/* binding */ faQuora),
+/* harmony export */   "faRProject": () => (/* binding */ faRProject),
+/* harmony export */   "faRaspberryPi": () => (/* binding */ faRaspberryPi),
+/* harmony export */   "faRavelry": () => (/* binding */ faRavelry),
+/* harmony export */   "faReact": () => (/* binding */ faReact),
+/* harmony export */   "faReacteurope": () => (/* binding */ faReacteurope),
+/* harmony export */   "faReadme": () => (/* binding */ faReadme),
+/* harmony export */   "faRebel": () => (/* binding */ faRebel),
+/* harmony export */   "faRedRiver": () => (/* binding */ faRedRiver),
+/* harmony export */   "faReddit": () => (/* binding */ faReddit),
+/* harmony export */   "faRedditAlien": () => (/* binding */ faRedditAlien),
+/* harmony export */   "faRedditSquare": () => (/* binding */ faRedditSquare),
+/* harmony export */   "faRedhat": () => (/* binding */ faRedhat),
+/* harmony export */   "faRenren": () => (/* binding */ faRenren),
+/* harmony export */   "faReplyd": () => (/* binding */ faReplyd),
+/* harmony export */   "faResearchgate": () => (/* binding */ faResearchgate),
+/* harmony export */   "faResolving": () => (/* binding */ faResolving),
+/* harmony export */   "faRev": () => (/* binding */ faRev),
+/* harmony export */   "faRocketchat": () => (/* binding */ faRocketchat),
+/* harmony export */   "faRockrms": () => (/* binding */ faRockrms),
+/* harmony export */   "faRust": () => (/* binding */ faRust),
+/* harmony export */   "faSafari": () => (/* binding */ faSafari),
+/* harmony export */   "faSalesforce": () => (/* binding */ faSalesforce),
+/* harmony export */   "faSass": () => (/* binding */ faSass),
+/* harmony export */   "faSchlix": () => (/* binding */ faSchlix),
+/* harmony export */   "faScribd": () => (/* binding */ faScribd),
+/* harmony export */   "faSearchengin": () => (/* binding */ faSearchengin),
+/* harmony export */   "faSellcast": () => (/* binding */ faSellcast),
+/* harmony export */   "faSellsy": () => (/* binding */ faSellsy),
+/* harmony export */   "faServicestack": () => (/* binding */ faServicestack),
+/* harmony export */   "faShirtsinbulk": () => (/* binding */ faShirtsinbulk),
+/* harmony export */   "faShopify": () => (/* binding */ faShopify),
+/* harmony export */   "faShopware": () => (/* binding */ faShopware),
+/* harmony export */   "faSimplybuilt": () => (/* binding */ faSimplybuilt),
+/* harmony export */   "faSistrix": () => (/* binding */ faSistrix),
+/* harmony export */   "faSith": () => (/* binding */ faSith),
+/* harmony export */   "faSketch": () => (/* binding */ faSketch),
+/* harmony export */   "faSkyatlas": () => (/* binding */ faSkyatlas),
+/* harmony export */   "faSkype": () => (/* binding */ faSkype),
+/* harmony export */   "faSlack": () => (/* binding */ faSlack),
+/* harmony export */   "faSlackHash": () => (/* binding */ faSlackHash),
+/* harmony export */   "faSlideshare": () => (/* binding */ faSlideshare),
+/* harmony export */   "faSnapchat": () => (/* binding */ faSnapchat),
+/* harmony export */   "faSnapchatGhost": () => (/* binding */ faSnapchatGhost),
+/* harmony export */   "faSnapchatSquare": () => (/* binding */ faSnapchatSquare),
+/* harmony export */   "faSoundcloud": () => (/* binding */ faSoundcloud),
+/* harmony export */   "faSourcetree": () => (/* binding */ faSourcetree),
+/* harmony export */   "faSpeakap": () => (/* binding */ faSpeakap),
+/* harmony export */   "faSpeakerDeck": () => (/* binding */ faSpeakerDeck),
+/* harmony export */   "faSpotify": () => (/* binding */ faSpotify),
+/* harmony export */   "faSquarespace": () => (/* binding */ faSquarespace),
+/* harmony export */   "faStackExchange": () => (/* binding */ faStackExchange),
+/* harmony export */   "faStackOverflow": () => (/* binding */ faStackOverflow),
+/* harmony export */   "faStackpath": () => (/* binding */ faStackpath),
+/* harmony export */   "faStaylinked": () => (/* binding */ faStaylinked),
+/* harmony export */   "faSteam": () => (/* binding */ faSteam),
+/* harmony export */   "faSteamSquare": () => (/* binding */ faSteamSquare),
+/* harmony export */   "faSteamSymbol": () => (/* binding */ faSteamSymbol),
+/* harmony export */   "faStickerMule": () => (/* binding */ faStickerMule),
+/* harmony export */   "faStrava": () => (/* binding */ faStrava),
+/* harmony export */   "faStripe": () => (/* binding */ faStripe),
+/* harmony export */   "faStripeS": () => (/* binding */ faStripeS),
+/* harmony export */   "faStudiovinari": () => (/* binding */ faStudiovinari),
+/* harmony export */   "faStumbleupon": () => (/* binding */ faStumbleupon),
+/* harmony export */   "faStumbleuponCircle": () => (/* binding */ faStumbleuponCircle),
+/* harmony export */   "faSuperpowers": () => (/* binding */ faSuperpowers),
+/* harmony export */   "faSupple": () => (/* binding */ faSupple),
+/* harmony export */   "faSuse": () => (/* binding */ faSuse),
+/* harmony export */   "faSwift": () => (/* binding */ faSwift),
+/* harmony export */   "faSymfony": () => (/* binding */ faSymfony),
+/* harmony export */   "faTeamspeak": () => (/* binding */ faTeamspeak),
+/* harmony export */   "faTelegram": () => (/* binding */ faTelegram),
+/* harmony export */   "faTelegramPlane": () => (/* binding */ faTelegramPlane),
+/* harmony export */   "faTencentWeibo": () => (/* binding */ faTencentWeibo),
+/* harmony export */   "faTheRedYeti": () => (/* binding */ faTheRedYeti),
+/* harmony export */   "faThemeco": () => (/* binding */ faThemeco),
+/* harmony export */   "faThemeisle": () => (/* binding */ faThemeisle),
+/* harmony export */   "faThinkPeaks": () => (/* binding */ faThinkPeaks),
+/* harmony export */   "faTiktok": () => (/* binding */ faTiktok),
+/* harmony export */   "faTradeFederation": () => (/* binding */ faTradeFederation),
+/* harmony export */   "faTrello": () => (/* binding */ faTrello),
+/* harmony export */   "faTripadvisor": () => (/* binding */ faTripadvisor),
+/* harmony export */   "faTumblr": () => (/* binding */ faTumblr),
+/* harmony export */   "faTumblrSquare": () => (/* binding */ faTumblrSquare),
+/* harmony export */   "faTwitch": () => (/* binding */ faTwitch),
+/* harmony export */   "faTwitter": () => (/* binding */ faTwitter),
+/* harmony export */   "faTwitterSquare": () => (/* binding */ faTwitterSquare),
+/* harmony export */   "faTypo3": () => (/* binding */ faTypo3),
+/* harmony export */   "faUber": () => (/* binding */ faUber),
+/* harmony export */   "faUbuntu": () => (/* binding */ faUbuntu),
+/* harmony export */   "faUikit": () => (/* binding */ faUikit),
+/* harmony export */   "faUmbraco": () => (/* binding */ faUmbraco),
+/* harmony export */   "faUncharted": () => (/* binding */ faUncharted),
+/* harmony export */   "faUniregistry": () => (/* binding */ faUniregistry),
+/* harmony export */   "faUnity": () => (/* binding */ faUnity),
+/* harmony export */   "faUnsplash": () => (/* binding */ faUnsplash),
+/* harmony export */   "faUntappd": () => (/* binding */ faUntappd),
+/* harmony export */   "faUps": () => (/* binding */ faUps),
+/* harmony export */   "faUsb": () => (/* binding */ faUsb),
+/* harmony export */   "faUsps": () => (/* binding */ faUsps),
+/* harmony export */   "faUssunnah": () => (/* binding */ faUssunnah),
+/* harmony export */   "faVaadin": () => (/* binding */ faVaadin),
+/* harmony export */   "faViacoin": () => (/* binding */ faViacoin),
+/* harmony export */   "faViadeo": () => (/* binding */ faViadeo),
+/* harmony export */   "faViadeoSquare": () => (/* binding */ faViadeoSquare),
+/* harmony export */   "faViber": () => (/* binding */ faViber),
+/* harmony export */   "faVimeo": () => (/* binding */ faVimeo),
+/* harmony export */   "faVimeoSquare": () => (/* binding */ faVimeoSquare),
+/* harmony export */   "faVimeoV": () => (/* binding */ faVimeoV),
+/* harmony export */   "faVine": () => (/* binding */ faVine),
+/* harmony export */   "faVk": () => (/* binding */ faVk),
+/* harmony export */   "faVnv": () => (/* binding */ faVnv),
+/* harmony export */   "faVuejs": () => (/* binding */ faVuejs),
+/* harmony export */   "faWatchmanMonitoring": () => (/* binding */ faWatchmanMonitoring),
+/* harmony export */   "faWaze": () => (/* binding */ faWaze),
+/* harmony export */   "faWeebly": () => (/* binding */ faWeebly),
+/* harmony export */   "faWeibo": () => (/* binding */ faWeibo),
+/* harmony export */   "faWeixin": () => (/* binding */ faWeixin),
+/* harmony export */   "faWhatsapp": () => (/* binding */ faWhatsapp),
+/* harmony export */   "faWhatsappSquare": () => (/* binding */ faWhatsappSquare),
+/* harmony export */   "faWhmcs": () => (/* binding */ faWhmcs),
+/* harmony export */   "faWikipediaW": () => (/* binding */ faWikipediaW),
+/* harmony export */   "faWindows": () => (/* binding */ faWindows),
+/* harmony export */   "faWix": () => (/* binding */ faWix),
+/* harmony export */   "faWizardsOfTheCoast": () => (/* binding */ faWizardsOfTheCoast),
+/* harmony export */   "faWodu": () => (/* binding */ faWodu),
+/* harmony export */   "faWolfPackBattalion": () => (/* binding */ faWolfPackBattalion),
+/* harmony export */   "faWordpress": () => (/* binding */ faWordpress),
+/* harmony export */   "faWordpressSimple": () => (/* binding */ faWordpressSimple),
+/* harmony export */   "faWpbeginner": () => (/* binding */ faWpbeginner),
+/* harmony export */   "faWpexplorer": () => (/* binding */ faWpexplorer),
+/* harmony export */   "faWpforms": () => (/* binding */ faWpforms),
+/* harmony export */   "faWpressr": () => (/* binding */ faWpressr),
+/* harmony export */   "faXbox": () => (/* binding */ faXbox),
+/* harmony export */   "faXing": () => (/* binding */ faXing),
+/* harmony export */   "faXingSquare": () => (/* binding */ faXingSquare),
+/* harmony export */   "faYCombinator": () => (/* binding */ faYCombinator),
+/* harmony export */   "faYahoo": () => (/* binding */ faYahoo),
+/* harmony export */   "faYammer": () => (/* binding */ faYammer),
+/* harmony export */   "faYandex": () => (/* binding */ faYandex),
+/* harmony export */   "faYandexInternational": () => (/* binding */ faYandexInternational),
+/* harmony export */   "faYarn": () => (/* binding */ faYarn),
+/* harmony export */   "faYelp": () => (/* binding */ faYelp),
+/* harmony export */   "faYoast": () => (/* binding */ faYoast),
+/* harmony export */   "faYoutube": () => (/* binding */ faYoutube),
+/* harmony export */   "faYoutubeSquare": () => (/* binding */ faYoutubeSquare),
+/* harmony export */   "faZhihu": () => (/* binding */ faZhihu)
+/* harmony export */ });
 /*!
  * Font Awesome Free 5.15.2 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
@@ -7950,165 +5696,166 @@ var _iconsCache = {
 /*!**********************************************************************!*\
   !*** ./node_modules/@fortawesome/free-regular-svg-icons/index.es.js ***!
   \**********************************************************************/
-/*! exports provided: far, prefix, faAddressBook, faAddressCard, faAngry, faArrowAltCircleDown, faArrowAltCircleLeft, faArrowAltCircleRight, faArrowAltCircleUp, faBell, faBellSlash, faBookmark, faBuilding, faCalendar, faCalendarAlt, faCalendarCheck, faCalendarMinus, faCalendarPlus, faCalendarTimes, faCaretSquareDown, faCaretSquareLeft, faCaretSquareRight, faCaretSquareUp, faChartBar, faCheckCircle, faCheckSquare, faCircle, faClipboard, faClock, faClone, faClosedCaptioning, faComment, faCommentAlt, faCommentDots, faComments, faCompass, faCopy, faCopyright, faCreditCard, faDizzy, faDotCircle, faEdit, faEnvelope, faEnvelopeOpen, faEye, faEyeSlash, faFile, faFileAlt, faFileArchive, faFileAudio, faFileCode, faFileExcel, faFileImage, faFilePdf, faFilePowerpoint, faFileVideo, faFileWord, faFlag, faFlushed, faFolder, faFolderOpen, faFontAwesomeLogoFull, faFrown, faFrownOpen, faFutbol, faGem, faGrimace, faGrin, faGrinAlt, faGrinBeam, faGrinBeamSweat, faGrinHearts, faGrinSquint, faGrinSquintTears, faGrinStars, faGrinTears, faGrinTongue, faGrinTongueSquint, faGrinTongueWink, faGrinWink, faHandLizard, faHandPaper, faHandPeace, faHandPointDown, faHandPointLeft, faHandPointRight, faHandPointUp, faHandPointer, faHandRock, faHandScissors, faHandSpock, faHandshake, faHdd, faHeart, faHospital, faHourglass, faIdBadge, faIdCard, faImage, faImages, faKeyboard, faKiss, faKissBeam, faKissWinkHeart, faLaugh, faLaughBeam, faLaughSquint, faLaughWink, faLemon, faLifeRing, faLightbulb, faListAlt, faMap, faMeh, faMehBlank, faMehRollingEyes, faMinusSquare, faMoneyBillAlt, faMoon, faNewspaper, faObjectGroup, faObjectUngroup, faPaperPlane, faPauseCircle, faPlayCircle, faPlusSquare, faQuestionCircle, faRegistered, faSadCry, faSadTear, faSave, faShareSquare, faSmile, faSmileBeam, faSmileWink, faSnowflake, faSquare, faStar, faStarHalf, faStickyNote, faStopCircle, faSun, faSurprise, faThumbsDown, faThumbsUp, faTimesCircle, faTired, faTrashAlt, faUser, faUserCircle, faWindowClose, faWindowMaximize, faWindowMinimize, faWindowRestore */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "far", function() { return _iconsCache; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "prefix", function() { return prefix; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAddressBook", function() { return faAddressBook; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAddressCard", function() { return faAddressCard; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAngry", function() { return faAngry; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faArrowAltCircleDown", function() { return faArrowAltCircleDown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faArrowAltCircleLeft", function() { return faArrowAltCircleLeft; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faArrowAltCircleRight", function() { return faArrowAltCircleRight; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faArrowAltCircleUp", function() { return faArrowAltCircleUp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBell", function() { return faBell; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBellSlash", function() { return faBellSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBookmark", function() { return faBookmark; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBuilding", function() { return faBuilding; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCalendar", function() { return faCalendar; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCalendarAlt", function() { return faCalendarAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCalendarCheck", function() { return faCalendarCheck; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCalendarMinus", function() { return faCalendarMinus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCalendarPlus", function() { return faCalendarPlus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCalendarTimes", function() { return faCalendarTimes; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCaretSquareDown", function() { return faCaretSquareDown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCaretSquareLeft", function() { return faCaretSquareLeft; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCaretSquareRight", function() { return faCaretSquareRight; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCaretSquareUp", function() { return faCaretSquareUp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChartBar", function() { return faChartBar; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCheckCircle", function() { return faCheckCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCheckSquare", function() { return faCheckSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCircle", function() { return faCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faClipboard", function() { return faClipboard; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faClock", function() { return faClock; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faClone", function() { return faClone; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faClosedCaptioning", function() { return faClosedCaptioning; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faComment", function() { return faComment; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCommentAlt", function() { return faCommentAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCommentDots", function() { return faCommentDots; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faComments", function() { return faComments; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCompass", function() { return faCompass; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCopy", function() { return faCopy; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCopyright", function() { return faCopyright; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCreditCard", function() { return faCreditCard; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDizzy", function() { return faDizzy; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDotCircle", function() { return faDotCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEdit", function() { return faEdit; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEnvelope", function() { return faEnvelope; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEnvelopeOpen", function() { return faEnvelopeOpen; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEye", function() { return faEye; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEyeSlash", function() { return faEyeSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFile", function() { return faFile; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileAlt", function() { return faFileAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileArchive", function() { return faFileArchive; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileAudio", function() { return faFileAudio; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileCode", function() { return faFileCode; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileExcel", function() { return faFileExcel; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileImage", function() { return faFileImage; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFilePdf", function() { return faFilePdf; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFilePowerpoint", function() { return faFilePowerpoint; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileVideo", function() { return faFileVideo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileWord", function() { return faFileWord; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFlag", function() { return faFlag; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFlushed", function() { return faFlushed; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFolder", function() { return faFolder; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFolderOpen", function() { return faFolderOpen; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFontAwesomeLogoFull", function() { return faFontAwesomeLogoFull; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFrown", function() { return faFrown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFrownOpen", function() { return faFrownOpen; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFutbol", function() { return faFutbol; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGem", function() { return faGem; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrimace", function() { return faGrimace; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrin", function() { return faGrin; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinAlt", function() { return faGrinAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinBeam", function() { return faGrinBeam; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinBeamSweat", function() { return faGrinBeamSweat; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinHearts", function() { return faGrinHearts; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinSquint", function() { return faGrinSquint; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinSquintTears", function() { return faGrinSquintTears; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinStars", function() { return faGrinStars; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinTears", function() { return faGrinTears; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinTongue", function() { return faGrinTongue; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinTongueSquint", function() { return faGrinTongueSquint; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinTongueWink", function() { return faGrinTongueWink; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinWink", function() { return faGrinWink; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandLizard", function() { return faHandLizard; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandPaper", function() { return faHandPaper; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandPeace", function() { return faHandPeace; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandPointDown", function() { return faHandPointDown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandPointLeft", function() { return faHandPointLeft; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandPointRight", function() { return faHandPointRight; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandPointUp", function() { return faHandPointUp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandPointer", function() { return faHandPointer; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandRock", function() { return faHandRock; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandScissors", function() { return faHandScissors; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandSpock", function() { return faHandSpock; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandshake", function() { return faHandshake; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHdd", function() { return faHdd; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHeart", function() { return faHeart; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHospital", function() { return faHospital; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHourglass", function() { return faHourglass; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faIdBadge", function() { return faIdBadge; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faIdCard", function() { return faIdCard; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faImage", function() { return faImage; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faImages", function() { return faImages; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faKeyboard", function() { return faKeyboard; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faKiss", function() { return faKiss; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faKissBeam", function() { return faKissBeam; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faKissWinkHeart", function() { return faKissWinkHeart; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLaugh", function() { return faLaugh; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLaughBeam", function() { return faLaughBeam; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLaughSquint", function() { return faLaughSquint; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLaughWink", function() { return faLaughWink; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLemon", function() { return faLemon; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLifeRing", function() { return faLifeRing; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLightbulb", function() { return faLightbulb; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faListAlt", function() { return faListAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMap", function() { return faMap; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMeh", function() { return faMeh; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMehBlank", function() { return faMehBlank; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMehRollingEyes", function() { return faMehRollingEyes; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMinusSquare", function() { return faMinusSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMoneyBillAlt", function() { return faMoneyBillAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMoon", function() { return faMoon; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faNewspaper", function() { return faNewspaper; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faObjectGroup", function() { return faObjectGroup; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faObjectUngroup", function() { return faObjectUngroup; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPaperPlane", function() { return faPaperPlane; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPauseCircle", function() { return faPauseCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPlayCircle", function() { return faPlayCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPlusSquare", function() { return faPlusSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faQuestionCircle", function() { return faQuestionCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRegistered", function() { return faRegistered; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSadCry", function() { return faSadCry; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSadTear", function() { return faSadTear; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSave", function() { return faSave; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faShareSquare", function() { return faShareSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSmile", function() { return faSmile; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSmileBeam", function() { return faSmileBeam; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSmileWink", function() { return faSmileWink; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSnowflake", function() { return faSnowflake; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSquare", function() { return faSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStar", function() { return faStar; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStarHalf", function() { return faStarHalf; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStickyNote", function() { return faStickyNote; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStopCircle", function() { return faStopCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSun", function() { return faSun; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSurprise", function() { return faSurprise; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faThumbsDown", function() { return faThumbsDown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faThumbsUp", function() { return faThumbsUp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTimesCircle", function() { return faTimesCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTired", function() { return faTired; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTrashAlt", function() { return faTrashAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUser", function() { return faUser; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserCircle", function() { return faUserCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWindowClose", function() { return faWindowClose; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWindowMaximize", function() { return faWindowMaximize; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWindowMinimize", function() { return faWindowMinimize; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWindowRestore", function() { return faWindowRestore; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "far": () => (/* binding */ _iconsCache),
+/* harmony export */   "prefix": () => (/* binding */ prefix),
+/* harmony export */   "faAddressBook": () => (/* binding */ faAddressBook),
+/* harmony export */   "faAddressCard": () => (/* binding */ faAddressCard),
+/* harmony export */   "faAngry": () => (/* binding */ faAngry),
+/* harmony export */   "faArrowAltCircleDown": () => (/* binding */ faArrowAltCircleDown),
+/* harmony export */   "faArrowAltCircleLeft": () => (/* binding */ faArrowAltCircleLeft),
+/* harmony export */   "faArrowAltCircleRight": () => (/* binding */ faArrowAltCircleRight),
+/* harmony export */   "faArrowAltCircleUp": () => (/* binding */ faArrowAltCircleUp),
+/* harmony export */   "faBell": () => (/* binding */ faBell),
+/* harmony export */   "faBellSlash": () => (/* binding */ faBellSlash),
+/* harmony export */   "faBookmark": () => (/* binding */ faBookmark),
+/* harmony export */   "faBuilding": () => (/* binding */ faBuilding),
+/* harmony export */   "faCalendar": () => (/* binding */ faCalendar),
+/* harmony export */   "faCalendarAlt": () => (/* binding */ faCalendarAlt),
+/* harmony export */   "faCalendarCheck": () => (/* binding */ faCalendarCheck),
+/* harmony export */   "faCalendarMinus": () => (/* binding */ faCalendarMinus),
+/* harmony export */   "faCalendarPlus": () => (/* binding */ faCalendarPlus),
+/* harmony export */   "faCalendarTimes": () => (/* binding */ faCalendarTimes),
+/* harmony export */   "faCaretSquareDown": () => (/* binding */ faCaretSquareDown),
+/* harmony export */   "faCaretSquareLeft": () => (/* binding */ faCaretSquareLeft),
+/* harmony export */   "faCaretSquareRight": () => (/* binding */ faCaretSquareRight),
+/* harmony export */   "faCaretSquareUp": () => (/* binding */ faCaretSquareUp),
+/* harmony export */   "faChartBar": () => (/* binding */ faChartBar),
+/* harmony export */   "faCheckCircle": () => (/* binding */ faCheckCircle),
+/* harmony export */   "faCheckSquare": () => (/* binding */ faCheckSquare),
+/* harmony export */   "faCircle": () => (/* binding */ faCircle),
+/* harmony export */   "faClipboard": () => (/* binding */ faClipboard),
+/* harmony export */   "faClock": () => (/* binding */ faClock),
+/* harmony export */   "faClone": () => (/* binding */ faClone),
+/* harmony export */   "faClosedCaptioning": () => (/* binding */ faClosedCaptioning),
+/* harmony export */   "faComment": () => (/* binding */ faComment),
+/* harmony export */   "faCommentAlt": () => (/* binding */ faCommentAlt),
+/* harmony export */   "faCommentDots": () => (/* binding */ faCommentDots),
+/* harmony export */   "faComments": () => (/* binding */ faComments),
+/* harmony export */   "faCompass": () => (/* binding */ faCompass),
+/* harmony export */   "faCopy": () => (/* binding */ faCopy),
+/* harmony export */   "faCopyright": () => (/* binding */ faCopyright),
+/* harmony export */   "faCreditCard": () => (/* binding */ faCreditCard),
+/* harmony export */   "faDizzy": () => (/* binding */ faDizzy),
+/* harmony export */   "faDotCircle": () => (/* binding */ faDotCircle),
+/* harmony export */   "faEdit": () => (/* binding */ faEdit),
+/* harmony export */   "faEnvelope": () => (/* binding */ faEnvelope),
+/* harmony export */   "faEnvelopeOpen": () => (/* binding */ faEnvelopeOpen),
+/* harmony export */   "faEye": () => (/* binding */ faEye),
+/* harmony export */   "faEyeSlash": () => (/* binding */ faEyeSlash),
+/* harmony export */   "faFile": () => (/* binding */ faFile),
+/* harmony export */   "faFileAlt": () => (/* binding */ faFileAlt),
+/* harmony export */   "faFileArchive": () => (/* binding */ faFileArchive),
+/* harmony export */   "faFileAudio": () => (/* binding */ faFileAudio),
+/* harmony export */   "faFileCode": () => (/* binding */ faFileCode),
+/* harmony export */   "faFileExcel": () => (/* binding */ faFileExcel),
+/* harmony export */   "faFileImage": () => (/* binding */ faFileImage),
+/* harmony export */   "faFilePdf": () => (/* binding */ faFilePdf),
+/* harmony export */   "faFilePowerpoint": () => (/* binding */ faFilePowerpoint),
+/* harmony export */   "faFileVideo": () => (/* binding */ faFileVideo),
+/* harmony export */   "faFileWord": () => (/* binding */ faFileWord),
+/* harmony export */   "faFlag": () => (/* binding */ faFlag),
+/* harmony export */   "faFlushed": () => (/* binding */ faFlushed),
+/* harmony export */   "faFolder": () => (/* binding */ faFolder),
+/* harmony export */   "faFolderOpen": () => (/* binding */ faFolderOpen),
+/* harmony export */   "faFontAwesomeLogoFull": () => (/* binding */ faFontAwesomeLogoFull),
+/* harmony export */   "faFrown": () => (/* binding */ faFrown),
+/* harmony export */   "faFrownOpen": () => (/* binding */ faFrownOpen),
+/* harmony export */   "faFutbol": () => (/* binding */ faFutbol),
+/* harmony export */   "faGem": () => (/* binding */ faGem),
+/* harmony export */   "faGrimace": () => (/* binding */ faGrimace),
+/* harmony export */   "faGrin": () => (/* binding */ faGrin),
+/* harmony export */   "faGrinAlt": () => (/* binding */ faGrinAlt),
+/* harmony export */   "faGrinBeam": () => (/* binding */ faGrinBeam),
+/* harmony export */   "faGrinBeamSweat": () => (/* binding */ faGrinBeamSweat),
+/* harmony export */   "faGrinHearts": () => (/* binding */ faGrinHearts),
+/* harmony export */   "faGrinSquint": () => (/* binding */ faGrinSquint),
+/* harmony export */   "faGrinSquintTears": () => (/* binding */ faGrinSquintTears),
+/* harmony export */   "faGrinStars": () => (/* binding */ faGrinStars),
+/* harmony export */   "faGrinTears": () => (/* binding */ faGrinTears),
+/* harmony export */   "faGrinTongue": () => (/* binding */ faGrinTongue),
+/* harmony export */   "faGrinTongueSquint": () => (/* binding */ faGrinTongueSquint),
+/* harmony export */   "faGrinTongueWink": () => (/* binding */ faGrinTongueWink),
+/* harmony export */   "faGrinWink": () => (/* binding */ faGrinWink),
+/* harmony export */   "faHandLizard": () => (/* binding */ faHandLizard),
+/* harmony export */   "faHandPaper": () => (/* binding */ faHandPaper),
+/* harmony export */   "faHandPeace": () => (/* binding */ faHandPeace),
+/* harmony export */   "faHandPointDown": () => (/* binding */ faHandPointDown),
+/* harmony export */   "faHandPointLeft": () => (/* binding */ faHandPointLeft),
+/* harmony export */   "faHandPointRight": () => (/* binding */ faHandPointRight),
+/* harmony export */   "faHandPointUp": () => (/* binding */ faHandPointUp),
+/* harmony export */   "faHandPointer": () => (/* binding */ faHandPointer),
+/* harmony export */   "faHandRock": () => (/* binding */ faHandRock),
+/* harmony export */   "faHandScissors": () => (/* binding */ faHandScissors),
+/* harmony export */   "faHandSpock": () => (/* binding */ faHandSpock),
+/* harmony export */   "faHandshake": () => (/* binding */ faHandshake),
+/* harmony export */   "faHdd": () => (/* binding */ faHdd),
+/* harmony export */   "faHeart": () => (/* binding */ faHeart),
+/* harmony export */   "faHospital": () => (/* binding */ faHospital),
+/* harmony export */   "faHourglass": () => (/* binding */ faHourglass),
+/* harmony export */   "faIdBadge": () => (/* binding */ faIdBadge),
+/* harmony export */   "faIdCard": () => (/* binding */ faIdCard),
+/* harmony export */   "faImage": () => (/* binding */ faImage),
+/* harmony export */   "faImages": () => (/* binding */ faImages),
+/* harmony export */   "faKeyboard": () => (/* binding */ faKeyboard),
+/* harmony export */   "faKiss": () => (/* binding */ faKiss),
+/* harmony export */   "faKissBeam": () => (/* binding */ faKissBeam),
+/* harmony export */   "faKissWinkHeart": () => (/* binding */ faKissWinkHeart),
+/* harmony export */   "faLaugh": () => (/* binding */ faLaugh),
+/* harmony export */   "faLaughBeam": () => (/* binding */ faLaughBeam),
+/* harmony export */   "faLaughSquint": () => (/* binding */ faLaughSquint),
+/* harmony export */   "faLaughWink": () => (/* binding */ faLaughWink),
+/* harmony export */   "faLemon": () => (/* binding */ faLemon),
+/* harmony export */   "faLifeRing": () => (/* binding */ faLifeRing),
+/* harmony export */   "faLightbulb": () => (/* binding */ faLightbulb),
+/* harmony export */   "faListAlt": () => (/* binding */ faListAlt),
+/* harmony export */   "faMap": () => (/* binding */ faMap),
+/* harmony export */   "faMeh": () => (/* binding */ faMeh),
+/* harmony export */   "faMehBlank": () => (/* binding */ faMehBlank),
+/* harmony export */   "faMehRollingEyes": () => (/* binding */ faMehRollingEyes),
+/* harmony export */   "faMinusSquare": () => (/* binding */ faMinusSquare),
+/* harmony export */   "faMoneyBillAlt": () => (/* binding */ faMoneyBillAlt),
+/* harmony export */   "faMoon": () => (/* binding */ faMoon),
+/* harmony export */   "faNewspaper": () => (/* binding */ faNewspaper),
+/* harmony export */   "faObjectGroup": () => (/* binding */ faObjectGroup),
+/* harmony export */   "faObjectUngroup": () => (/* binding */ faObjectUngroup),
+/* harmony export */   "faPaperPlane": () => (/* binding */ faPaperPlane),
+/* harmony export */   "faPauseCircle": () => (/* binding */ faPauseCircle),
+/* harmony export */   "faPlayCircle": () => (/* binding */ faPlayCircle),
+/* harmony export */   "faPlusSquare": () => (/* binding */ faPlusSquare),
+/* harmony export */   "faQuestionCircle": () => (/* binding */ faQuestionCircle),
+/* harmony export */   "faRegistered": () => (/* binding */ faRegistered),
+/* harmony export */   "faSadCry": () => (/* binding */ faSadCry),
+/* harmony export */   "faSadTear": () => (/* binding */ faSadTear),
+/* harmony export */   "faSave": () => (/* binding */ faSave),
+/* harmony export */   "faShareSquare": () => (/* binding */ faShareSquare),
+/* harmony export */   "faSmile": () => (/* binding */ faSmile),
+/* harmony export */   "faSmileBeam": () => (/* binding */ faSmileBeam),
+/* harmony export */   "faSmileWink": () => (/* binding */ faSmileWink),
+/* harmony export */   "faSnowflake": () => (/* binding */ faSnowflake),
+/* harmony export */   "faSquare": () => (/* binding */ faSquare),
+/* harmony export */   "faStar": () => (/* binding */ faStar),
+/* harmony export */   "faStarHalf": () => (/* binding */ faStarHalf),
+/* harmony export */   "faStickyNote": () => (/* binding */ faStickyNote),
+/* harmony export */   "faStopCircle": () => (/* binding */ faStopCircle),
+/* harmony export */   "faSun": () => (/* binding */ faSun),
+/* harmony export */   "faSurprise": () => (/* binding */ faSurprise),
+/* harmony export */   "faThumbsDown": () => (/* binding */ faThumbsDown),
+/* harmony export */   "faThumbsUp": () => (/* binding */ faThumbsUp),
+/* harmony export */   "faTimesCircle": () => (/* binding */ faTimesCircle),
+/* harmony export */   "faTired": () => (/* binding */ faTired),
+/* harmony export */   "faTrashAlt": () => (/* binding */ faTrashAlt),
+/* harmony export */   "faUser": () => (/* binding */ faUser),
+/* harmony export */   "faUserCircle": () => (/* binding */ faUserCircle),
+/* harmony export */   "faWindowClose": () => (/* binding */ faWindowClose),
+/* harmony export */   "faWindowMaximize": () => (/* binding */ faWindowMaximize),
+/* harmony export */   "faWindowMinimize": () => (/* binding */ faWindowMinimize),
+/* harmony export */   "faWindowRestore": () => (/* binding */ faWindowRestore)
+/* harmony export */ });
 /*!
  * Font Awesome Free 5.15.2 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
@@ -9038,1015 +6785,1016 @@ var _iconsCache = {
 /*!********************************************************************!*\
   !*** ./node_modules/@fortawesome/free-solid-svg-icons/index.es.js ***!
   \********************************************************************/
-/*! exports provided: fas, prefix, faAd, faAddressBook, faAddressCard, faAdjust, faAirFreshener, faAlignCenter, faAlignJustify, faAlignLeft, faAlignRight, faAllergies, faAmbulance, faAmericanSignLanguageInterpreting, faAnchor, faAngleDoubleDown, faAngleDoubleLeft, faAngleDoubleRight, faAngleDoubleUp, faAngleDown, faAngleLeft, faAngleRight, faAngleUp, faAngry, faAnkh, faAppleAlt, faArchive, faArchway, faArrowAltCircleDown, faArrowAltCircleLeft, faArrowAltCircleRight, faArrowAltCircleUp, faArrowCircleDown, faArrowCircleLeft, faArrowCircleRight, faArrowCircleUp, faArrowDown, faArrowLeft, faArrowRight, faArrowUp, faArrowsAlt, faArrowsAltH, faArrowsAltV, faAssistiveListeningSystems, faAsterisk, faAt, faAtlas, faAtom, faAudioDescription, faAward, faBaby, faBabyCarriage, faBackspace, faBackward, faBacon, faBacteria, faBacterium, faBahai, faBalanceScale, faBalanceScaleLeft, faBalanceScaleRight, faBan, faBandAid, faBarcode, faBars, faBaseballBall, faBasketballBall, faBath, faBatteryEmpty, faBatteryFull, faBatteryHalf, faBatteryQuarter, faBatteryThreeQuarters, faBed, faBeer, faBell, faBellSlash, faBezierCurve, faBible, faBicycle, faBiking, faBinoculars, faBiohazard, faBirthdayCake, faBlender, faBlenderPhone, faBlind, faBlog, faBold, faBolt, faBomb, faBone, faBong, faBook, faBookDead, faBookMedical, faBookOpen, faBookReader, faBookmark, faBorderAll, faBorderNone, faBorderStyle, faBowlingBall, faBox, faBoxOpen, faBoxTissue, faBoxes, faBraille, faBrain, faBreadSlice, faBriefcase, faBriefcaseMedical, faBroadcastTower, faBroom, faBrush, faBug, faBuilding, faBullhorn, faBullseye, faBurn, faBus, faBusAlt, faBusinessTime, faCalculator, faCalendar, faCalendarAlt, faCalendarCheck, faCalendarDay, faCalendarMinus, faCalendarPlus, faCalendarTimes, faCalendarWeek, faCamera, faCameraRetro, faCampground, faCandyCane, faCannabis, faCapsules, faCar, faCarAlt, faCarBattery, faCarCrash, faCarSide, faCaravan, faCaretDown, faCaretLeft, faCaretRight, faCaretSquareDown, faCaretSquareLeft, faCaretSquareRight, faCaretSquareUp, faCaretUp, faCarrot, faCartArrowDown, faCartPlus, faCashRegister, faCat, faCertificate, faChair, faChalkboard, faChalkboardTeacher, faChargingStation, faChartArea, faChartBar, faChartLine, faChartPie, faCheck, faCheckCircle, faCheckDouble, faCheckSquare, faCheese, faChess, faChessBishop, faChessBoard, faChessKing, faChessKnight, faChessPawn, faChessQueen, faChessRook, faChevronCircleDown, faChevronCircleLeft, faChevronCircleRight, faChevronCircleUp, faChevronDown, faChevronLeft, faChevronRight, faChevronUp, faChild, faChurch, faCircle, faCircleNotch, faCity, faClinicMedical, faClipboard, faClipboardCheck, faClipboardList, faClock, faClone, faClosedCaptioning, faCloud, faCloudDownloadAlt, faCloudMeatball, faCloudMoon, faCloudMoonRain, faCloudRain, faCloudShowersHeavy, faCloudSun, faCloudSunRain, faCloudUploadAlt, faCocktail, faCode, faCodeBranch, faCoffee, faCog, faCogs, faCoins, faColumns, faComment, faCommentAlt, faCommentDollar, faCommentDots, faCommentMedical, faCommentSlash, faComments, faCommentsDollar, faCompactDisc, faCompass, faCompress, faCompressAlt, faCompressArrowsAlt, faConciergeBell, faCookie, faCookieBite, faCopy, faCopyright, faCouch, faCreditCard, faCrop, faCropAlt, faCross, faCrosshairs, faCrow, faCrown, faCrutch, faCube, faCubes, faCut, faDatabase, faDeaf, faDemocrat, faDesktop, faDharmachakra, faDiagnoses, faDice, faDiceD20, faDiceD6, faDiceFive, faDiceFour, faDiceOne, faDiceSix, faDiceThree, faDiceTwo, faDigitalTachograph, faDirections, faDisease, faDivide, faDizzy, faDna, faDog, faDollarSign, faDolly, faDollyFlatbed, faDonate, faDoorClosed, faDoorOpen, faDotCircle, faDove, faDownload, faDraftingCompass, faDragon, faDrawPolygon, faDrum, faDrumSteelpan, faDrumstickBite, faDumbbell, faDumpster, faDumpsterFire, faDungeon, faEdit, faEgg, faEject, faEllipsisH, faEllipsisV, faEnvelope, faEnvelopeOpen, faEnvelopeOpenText, faEnvelopeSquare, faEquals, faEraser, faEthernet, faEuroSign, faExchangeAlt, faExclamation, faExclamationCircle, faExclamationTriangle, faExpand, faExpandAlt, faExpandArrowsAlt, faExternalLinkAlt, faExternalLinkSquareAlt, faEye, faEyeDropper, faEyeSlash, faFan, faFastBackward, faFastForward, faFaucet, faFax, faFeather, faFeatherAlt, faFemale, faFighterJet, faFile, faFileAlt, faFileArchive, faFileAudio, faFileCode, faFileContract, faFileCsv, faFileDownload, faFileExcel, faFileExport, faFileImage, faFileImport, faFileInvoice, faFileInvoiceDollar, faFileMedical, faFileMedicalAlt, faFilePdf, faFilePowerpoint, faFilePrescription, faFileSignature, faFileUpload, faFileVideo, faFileWord, faFill, faFillDrip, faFilm, faFilter, faFingerprint, faFire, faFireAlt, faFireExtinguisher, faFirstAid, faFish, faFistRaised, faFlag, faFlagCheckered, faFlagUsa, faFlask, faFlushed, faFolder, faFolderMinus, faFolderOpen, faFolderPlus, faFont, faFontAwesomeLogoFull, faFootballBall, faForward, faFrog, faFrown, faFrownOpen, faFunnelDollar, faFutbol, faGamepad, faGasPump, faGavel, faGem, faGenderless, faGhost, faGift, faGifts, faGlassCheers, faGlassMartini, faGlassMartiniAlt, faGlassWhiskey, faGlasses, faGlobe, faGlobeAfrica, faGlobeAmericas, faGlobeAsia, faGlobeEurope, faGolfBall, faGopuram, faGraduationCap, faGreaterThan, faGreaterThanEqual, faGrimace, faGrin, faGrinAlt, faGrinBeam, faGrinBeamSweat, faGrinHearts, faGrinSquint, faGrinSquintTears, faGrinStars, faGrinTears, faGrinTongue, faGrinTongueSquint, faGrinTongueWink, faGrinWink, faGripHorizontal, faGripLines, faGripLinesVertical, faGripVertical, faGuitar, faHSquare, faHamburger, faHammer, faHamsa, faHandHolding, faHandHoldingHeart, faHandHoldingMedical, faHandHoldingUsd, faHandHoldingWater, faHandLizard, faHandMiddleFinger, faHandPaper, faHandPeace, faHandPointDown, faHandPointLeft, faHandPointRight, faHandPointUp, faHandPointer, faHandRock, faHandScissors, faHandSparkles, faHandSpock, faHands, faHandsHelping, faHandsWash, faHandshake, faHandshakeAltSlash, faHandshakeSlash, faHanukiah, faHardHat, faHashtag, faHatCowboy, faHatCowboySide, faHatWizard, faHdd, faHeadSideCough, faHeadSideCoughSlash, faHeadSideMask, faHeadSideVirus, faHeading, faHeadphones, faHeadphonesAlt, faHeadset, faHeart, faHeartBroken, faHeartbeat, faHelicopter, faHighlighter, faHiking, faHippo, faHistory, faHockeyPuck, faHollyBerry, faHome, faHorse, faHorseHead, faHospital, faHospitalAlt, faHospitalSymbol, faHospitalUser, faHotTub, faHotdog, faHotel, faHourglass, faHourglassEnd, faHourglassHalf, faHourglassStart, faHouseDamage, faHouseUser, faHryvnia, faICursor, faIceCream, faIcicles, faIcons, faIdBadge, faIdCard, faIdCardAlt, faIgloo, faImage, faImages, faInbox, faIndent, faIndustry, faInfinity, faInfo, faInfoCircle, faItalic, faJedi, faJoint, faJournalWhills, faKaaba, faKey, faKeyboard, faKhanda, faKiss, faKissBeam, faKissWinkHeart, faKiwiBird, faLandmark, faLanguage, faLaptop, faLaptopCode, faLaptopHouse, faLaptopMedical, faLaugh, faLaughBeam, faLaughSquint, faLaughWink, faLayerGroup, faLeaf, faLemon, faLessThan, faLessThanEqual, faLevelDownAlt, faLevelUpAlt, faLifeRing, faLightbulb, faLink, faLiraSign, faList, faListAlt, faListOl, faListUl, faLocationArrow, faLock, faLockOpen, faLongArrowAltDown, faLongArrowAltLeft, faLongArrowAltRight, faLongArrowAltUp, faLowVision, faLuggageCart, faLungs, faLungsVirus, faMagic, faMagnet, faMailBulk, faMale, faMap, faMapMarked, faMapMarkedAlt, faMapMarker, faMapMarkerAlt, faMapPin, faMapSigns, faMarker, faMars, faMarsDouble, faMarsStroke, faMarsStrokeH, faMarsStrokeV, faMask, faMedal, faMedkit, faMeh, faMehBlank, faMehRollingEyes, faMemory, faMenorah, faMercury, faMeteor, faMicrochip, faMicrophone, faMicrophoneAlt, faMicrophoneAltSlash, faMicrophoneSlash, faMicroscope, faMinus, faMinusCircle, faMinusSquare, faMitten, faMobile, faMobileAlt, faMoneyBill, faMoneyBillAlt, faMoneyBillWave, faMoneyBillWaveAlt, faMoneyCheck, faMoneyCheckAlt, faMonument, faMoon, faMortarPestle, faMosque, faMotorcycle, faMountain, faMouse, faMousePointer, faMugHot, faMusic, faNetworkWired, faNeuter, faNewspaper, faNotEqual, faNotesMedical, faObjectGroup, faObjectUngroup, faOilCan, faOm, faOtter, faOutdent, faPager, faPaintBrush, faPaintRoller, faPalette, faPallet, faPaperPlane, faPaperclip, faParachuteBox, faParagraph, faParking, faPassport, faPastafarianism, faPaste, faPause, faPauseCircle, faPaw, faPeace, faPen, faPenAlt, faPenFancy, faPenNib, faPenSquare, faPencilAlt, faPencilRuler, faPeopleArrows, faPeopleCarry, faPepperHot, faPercent, faPercentage, faPersonBooth, faPhone, faPhoneAlt, faPhoneSlash, faPhoneSquare, faPhoneSquareAlt, faPhoneVolume, faPhotoVideo, faPiggyBank, faPills, faPizzaSlice, faPlaceOfWorship, faPlane, faPlaneArrival, faPlaneDeparture, faPlaneSlash, faPlay, faPlayCircle, faPlug, faPlus, faPlusCircle, faPlusSquare, faPodcast, faPoll, faPollH, faPoo, faPooStorm, faPoop, faPortrait, faPoundSign, faPowerOff, faPray, faPrayingHands, faPrescription, faPrescriptionBottle, faPrescriptionBottleAlt, faPrint, faProcedures, faProjectDiagram, faPumpMedical, faPumpSoap, faPuzzlePiece, faQrcode, faQuestion, faQuestionCircle, faQuidditch, faQuoteLeft, faQuoteRight, faQuran, faRadiation, faRadiationAlt, faRainbow, faRandom, faReceipt, faRecordVinyl, faRecycle, faRedo, faRedoAlt, faRegistered, faRemoveFormat, faReply, faReplyAll, faRepublican, faRestroom, faRetweet, faRibbon, faRing, faRoad, faRobot, faRocket, faRoute, faRss, faRssSquare, faRubleSign, faRuler, faRulerCombined, faRulerHorizontal, faRulerVertical, faRunning, faRupeeSign, faSadCry, faSadTear, faSatellite, faSatelliteDish, faSave, faSchool, faScrewdriver, faScroll, faSdCard, faSearch, faSearchDollar, faSearchLocation, faSearchMinus, faSearchPlus, faSeedling, faServer, faShapes, faShare, faShareAlt, faShareAltSquare, faShareSquare, faShekelSign, faShieldAlt, faShieldVirus, faShip, faShippingFast, faShoePrints, faShoppingBag, faShoppingBasket, faShoppingCart, faShower, faShuttleVan, faSign, faSignInAlt, faSignLanguage, faSignOutAlt, faSignal, faSignature, faSimCard, faSink, faSitemap, faSkating, faSkiing, faSkiingNordic, faSkull, faSkullCrossbones, faSlash, faSleigh, faSlidersH, faSmile, faSmileBeam, faSmileWink, faSmog, faSmoking, faSmokingBan, faSms, faSnowboarding, faSnowflake, faSnowman, faSnowplow, faSoap, faSocks, faSolarPanel, faSort, faSortAlphaDown, faSortAlphaDownAlt, faSortAlphaUp, faSortAlphaUpAlt, faSortAmountDown, faSortAmountDownAlt, faSortAmountUp, faSortAmountUpAlt, faSortDown, faSortNumericDown, faSortNumericDownAlt, faSortNumericUp, faSortNumericUpAlt, faSortUp, faSpa, faSpaceShuttle, faSpellCheck, faSpider, faSpinner, faSplotch, faSprayCan, faSquare, faSquareFull, faSquareRootAlt, faStamp, faStar, faStarAndCrescent, faStarHalf, faStarHalfAlt, faStarOfDavid, faStarOfLife, faStepBackward, faStepForward, faStethoscope, faStickyNote, faStop, faStopCircle, faStopwatch, faStopwatch20, faStore, faStoreAlt, faStoreAltSlash, faStoreSlash, faStream, faStreetView, faStrikethrough, faStroopwafel, faSubscript, faSubway, faSuitcase, faSuitcaseRolling, faSun, faSuperscript, faSurprise, faSwatchbook, faSwimmer, faSwimmingPool, faSynagogue, faSync, faSyncAlt, faSyringe, faTable, faTableTennis, faTablet, faTabletAlt, faTablets, faTachometerAlt, faTag, faTags, faTape, faTasks, faTaxi, faTeeth, faTeethOpen, faTemperatureHigh, faTemperatureLow, faTenge, faTerminal, faTextHeight, faTextWidth, faTh, faThLarge, faThList, faTheaterMasks, faThermometer, faThermometerEmpty, faThermometerFull, faThermometerHalf, faThermometerQuarter, faThermometerThreeQuarters, faThumbsDown, faThumbsUp, faThumbtack, faTicketAlt, faTimes, faTimesCircle, faTint, faTintSlash, faTired, faToggleOff, faToggleOn, faToilet, faToiletPaper, faToiletPaperSlash, faToolbox, faTools, faTooth, faTorah, faToriiGate, faTractor, faTrademark, faTrafficLight, faTrailer, faTrain, faTram, faTransgender, faTransgenderAlt, faTrash, faTrashAlt, faTrashRestore, faTrashRestoreAlt, faTree, faTrophy, faTruck, faTruckLoading, faTruckMonster, faTruckMoving, faTruckPickup, faTshirt, faTty, faTv, faUmbrella, faUmbrellaBeach, faUnderline, faUndo, faUndoAlt, faUniversalAccess, faUniversity, faUnlink, faUnlock, faUnlockAlt, faUpload, faUser, faUserAlt, faUserAltSlash, faUserAstronaut, faUserCheck, faUserCircle, faUserClock, faUserCog, faUserEdit, faUserFriends, faUserGraduate, faUserInjured, faUserLock, faUserMd, faUserMinus, faUserNinja, faUserNurse, faUserPlus, faUserSecret, faUserShield, faUserSlash, faUserTag, faUserTie, faUserTimes, faUsers, faUsersCog, faUsersSlash, faUtensilSpoon, faUtensils, faVectorSquare, faVenus, faVenusDouble, faVenusMars, faVest, faVestPatches, faVial, faVials, faVideo, faVideoSlash, faVihara, faVirus, faVirusSlash, faViruses, faVoicemail, faVolleyballBall, faVolumeDown, faVolumeMute, faVolumeOff, faVolumeUp, faVoteYea, faVrCardboard, faWalking, faWallet, faWarehouse, faWater, faWaveSquare, faWeight, faWeightHanging, faWheelchair, faWifi, faWind, faWindowClose, faWindowMaximize, faWindowMinimize, faWindowRestore, faWineBottle, faWineGlass, faWineGlassAlt, faWonSign, faWrench, faXRay, faYenSign, faYinYang */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fas", function() { return _iconsCache; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "prefix", function() { return prefix; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAd", function() { return faAd; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAddressBook", function() { return faAddressBook; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAddressCard", function() { return faAddressCard; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAdjust", function() { return faAdjust; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAirFreshener", function() { return faAirFreshener; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAlignCenter", function() { return faAlignCenter; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAlignJustify", function() { return faAlignJustify; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAlignLeft", function() { return faAlignLeft; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAlignRight", function() { return faAlignRight; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAllergies", function() { return faAllergies; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAmbulance", function() { return faAmbulance; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAmericanSignLanguageInterpreting", function() { return faAmericanSignLanguageInterpreting; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAnchor", function() { return faAnchor; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAngleDoubleDown", function() { return faAngleDoubleDown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAngleDoubleLeft", function() { return faAngleDoubleLeft; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAngleDoubleRight", function() { return faAngleDoubleRight; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAngleDoubleUp", function() { return faAngleDoubleUp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAngleDown", function() { return faAngleDown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAngleLeft", function() { return faAngleLeft; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAngleRight", function() { return faAngleRight; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAngleUp", function() { return faAngleUp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAngry", function() { return faAngry; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAnkh", function() { return faAnkh; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAppleAlt", function() { return faAppleAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faArchive", function() { return faArchive; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faArchway", function() { return faArchway; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faArrowAltCircleDown", function() { return faArrowAltCircleDown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faArrowAltCircleLeft", function() { return faArrowAltCircleLeft; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faArrowAltCircleRight", function() { return faArrowAltCircleRight; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faArrowAltCircleUp", function() { return faArrowAltCircleUp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faArrowCircleDown", function() { return faArrowCircleDown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faArrowCircleLeft", function() { return faArrowCircleLeft; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faArrowCircleRight", function() { return faArrowCircleRight; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faArrowCircleUp", function() { return faArrowCircleUp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faArrowDown", function() { return faArrowDown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faArrowLeft", function() { return faArrowLeft; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faArrowRight", function() { return faArrowRight; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faArrowUp", function() { return faArrowUp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faArrowsAlt", function() { return faArrowsAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faArrowsAltH", function() { return faArrowsAltH; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faArrowsAltV", function() { return faArrowsAltV; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAssistiveListeningSystems", function() { return faAssistiveListeningSystems; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAsterisk", function() { return faAsterisk; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAt", function() { return faAt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAtlas", function() { return faAtlas; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAtom", function() { return faAtom; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAudioDescription", function() { return faAudioDescription; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faAward", function() { return faAward; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBaby", function() { return faBaby; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBabyCarriage", function() { return faBabyCarriage; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBackspace", function() { return faBackspace; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBackward", function() { return faBackward; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBacon", function() { return faBacon; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBacteria", function() { return faBacteria; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBacterium", function() { return faBacterium; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBahai", function() { return faBahai; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBalanceScale", function() { return faBalanceScale; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBalanceScaleLeft", function() { return faBalanceScaleLeft; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBalanceScaleRight", function() { return faBalanceScaleRight; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBan", function() { return faBan; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBandAid", function() { return faBandAid; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBarcode", function() { return faBarcode; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBars", function() { return faBars; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBaseballBall", function() { return faBaseballBall; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBasketballBall", function() { return faBasketballBall; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBath", function() { return faBath; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBatteryEmpty", function() { return faBatteryEmpty; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBatteryFull", function() { return faBatteryFull; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBatteryHalf", function() { return faBatteryHalf; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBatteryQuarter", function() { return faBatteryQuarter; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBatteryThreeQuarters", function() { return faBatteryThreeQuarters; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBed", function() { return faBed; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBeer", function() { return faBeer; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBell", function() { return faBell; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBellSlash", function() { return faBellSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBezierCurve", function() { return faBezierCurve; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBible", function() { return faBible; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBicycle", function() { return faBicycle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBiking", function() { return faBiking; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBinoculars", function() { return faBinoculars; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBiohazard", function() { return faBiohazard; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBirthdayCake", function() { return faBirthdayCake; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBlender", function() { return faBlender; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBlenderPhone", function() { return faBlenderPhone; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBlind", function() { return faBlind; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBlog", function() { return faBlog; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBold", function() { return faBold; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBolt", function() { return faBolt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBomb", function() { return faBomb; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBone", function() { return faBone; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBong", function() { return faBong; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBook", function() { return faBook; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBookDead", function() { return faBookDead; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBookMedical", function() { return faBookMedical; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBookOpen", function() { return faBookOpen; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBookReader", function() { return faBookReader; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBookmark", function() { return faBookmark; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBorderAll", function() { return faBorderAll; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBorderNone", function() { return faBorderNone; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBorderStyle", function() { return faBorderStyle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBowlingBall", function() { return faBowlingBall; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBox", function() { return faBox; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBoxOpen", function() { return faBoxOpen; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBoxTissue", function() { return faBoxTissue; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBoxes", function() { return faBoxes; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBraille", function() { return faBraille; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBrain", function() { return faBrain; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBreadSlice", function() { return faBreadSlice; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBriefcase", function() { return faBriefcase; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBriefcaseMedical", function() { return faBriefcaseMedical; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBroadcastTower", function() { return faBroadcastTower; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBroom", function() { return faBroom; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBrush", function() { return faBrush; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBug", function() { return faBug; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBuilding", function() { return faBuilding; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBullhorn", function() { return faBullhorn; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBullseye", function() { return faBullseye; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBurn", function() { return faBurn; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBus", function() { return faBus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBusAlt", function() { return faBusAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faBusinessTime", function() { return faBusinessTime; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCalculator", function() { return faCalculator; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCalendar", function() { return faCalendar; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCalendarAlt", function() { return faCalendarAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCalendarCheck", function() { return faCalendarCheck; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCalendarDay", function() { return faCalendarDay; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCalendarMinus", function() { return faCalendarMinus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCalendarPlus", function() { return faCalendarPlus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCalendarTimes", function() { return faCalendarTimes; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCalendarWeek", function() { return faCalendarWeek; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCamera", function() { return faCamera; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCameraRetro", function() { return faCameraRetro; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCampground", function() { return faCampground; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCandyCane", function() { return faCandyCane; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCannabis", function() { return faCannabis; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCapsules", function() { return faCapsules; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCar", function() { return faCar; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCarAlt", function() { return faCarAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCarBattery", function() { return faCarBattery; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCarCrash", function() { return faCarCrash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCarSide", function() { return faCarSide; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCaravan", function() { return faCaravan; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCaretDown", function() { return faCaretDown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCaretLeft", function() { return faCaretLeft; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCaretRight", function() { return faCaretRight; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCaretSquareDown", function() { return faCaretSquareDown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCaretSquareLeft", function() { return faCaretSquareLeft; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCaretSquareRight", function() { return faCaretSquareRight; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCaretSquareUp", function() { return faCaretSquareUp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCaretUp", function() { return faCaretUp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCarrot", function() { return faCarrot; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCartArrowDown", function() { return faCartArrowDown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCartPlus", function() { return faCartPlus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCashRegister", function() { return faCashRegister; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCat", function() { return faCat; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCertificate", function() { return faCertificate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChair", function() { return faChair; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChalkboard", function() { return faChalkboard; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChalkboardTeacher", function() { return faChalkboardTeacher; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChargingStation", function() { return faChargingStation; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChartArea", function() { return faChartArea; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChartBar", function() { return faChartBar; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChartLine", function() { return faChartLine; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChartPie", function() { return faChartPie; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCheck", function() { return faCheck; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCheckCircle", function() { return faCheckCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCheckDouble", function() { return faCheckDouble; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCheckSquare", function() { return faCheckSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCheese", function() { return faCheese; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChess", function() { return faChess; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChessBishop", function() { return faChessBishop; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChessBoard", function() { return faChessBoard; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChessKing", function() { return faChessKing; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChessKnight", function() { return faChessKnight; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChessPawn", function() { return faChessPawn; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChessQueen", function() { return faChessQueen; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChessRook", function() { return faChessRook; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChevronCircleDown", function() { return faChevronCircleDown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChevronCircleLeft", function() { return faChevronCircleLeft; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChevronCircleRight", function() { return faChevronCircleRight; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChevronCircleUp", function() { return faChevronCircleUp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChevronDown", function() { return faChevronDown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChevronLeft", function() { return faChevronLeft; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChevronRight", function() { return faChevronRight; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChevronUp", function() { return faChevronUp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChild", function() { return faChild; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faChurch", function() { return faChurch; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCircle", function() { return faCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCircleNotch", function() { return faCircleNotch; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCity", function() { return faCity; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faClinicMedical", function() { return faClinicMedical; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faClipboard", function() { return faClipboard; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faClipboardCheck", function() { return faClipboardCheck; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faClipboardList", function() { return faClipboardList; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faClock", function() { return faClock; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faClone", function() { return faClone; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faClosedCaptioning", function() { return faClosedCaptioning; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCloud", function() { return faCloud; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCloudDownloadAlt", function() { return faCloudDownloadAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCloudMeatball", function() { return faCloudMeatball; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCloudMoon", function() { return faCloudMoon; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCloudMoonRain", function() { return faCloudMoonRain; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCloudRain", function() { return faCloudRain; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCloudShowersHeavy", function() { return faCloudShowersHeavy; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCloudSun", function() { return faCloudSun; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCloudSunRain", function() { return faCloudSunRain; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCloudUploadAlt", function() { return faCloudUploadAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCocktail", function() { return faCocktail; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCode", function() { return faCode; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCodeBranch", function() { return faCodeBranch; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCoffee", function() { return faCoffee; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCog", function() { return faCog; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCogs", function() { return faCogs; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCoins", function() { return faCoins; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faColumns", function() { return faColumns; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faComment", function() { return faComment; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCommentAlt", function() { return faCommentAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCommentDollar", function() { return faCommentDollar; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCommentDots", function() { return faCommentDots; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCommentMedical", function() { return faCommentMedical; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCommentSlash", function() { return faCommentSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faComments", function() { return faComments; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCommentsDollar", function() { return faCommentsDollar; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCompactDisc", function() { return faCompactDisc; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCompass", function() { return faCompass; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCompress", function() { return faCompress; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCompressAlt", function() { return faCompressAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCompressArrowsAlt", function() { return faCompressArrowsAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faConciergeBell", function() { return faConciergeBell; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCookie", function() { return faCookie; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCookieBite", function() { return faCookieBite; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCopy", function() { return faCopy; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCopyright", function() { return faCopyright; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCouch", function() { return faCouch; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCreditCard", function() { return faCreditCard; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCrop", function() { return faCrop; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCropAlt", function() { return faCropAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCross", function() { return faCross; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCrosshairs", function() { return faCrosshairs; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCrow", function() { return faCrow; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCrown", function() { return faCrown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCrutch", function() { return faCrutch; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCube", function() { return faCube; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCubes", function() { return faCubes; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faCut", function() { return faCut; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDatabase", function() { return faDatabase; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDeaf", function() { return faDeaf; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDemocrat", function() { return faDemocrat; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDesktop", function() { return faDesktop; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDharmachakra", function() { return faDharmachakra; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDiagnoses", function() { return faDiagnoses; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDice", function() { return faDice; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDiceD20", function() { return faDiceD20; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDiceD6", function() { return faDiceD6; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDiceFive", function() { return faDiceFive; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDiceFour", function() { return faDiceFour; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDiceOne", function() { return faDiceOne; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDiceSix", function() { return faDiceSix; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDiceThree", function() { return faDiceThree; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDiceTwo", function() { return faDiceTwo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDigitalTachograph", function() { return faDigitalTachograph; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDirections", function() { return faDirections; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDisease", function() { return faDisease; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDivide", function() { return faDivide; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDizzy", function() { return faDizzy; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDna", function() { return faDna; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDog", function() { return faDog; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDollarSign", function() { return faDollarSign; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDolly", function() { return faDolly; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDollyFlatbed", function() { return faDollyFlatbed; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDonate", function() { return faDonate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDoorClosed", function() { return faDoorClosed; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDoorOpen", function() { return faDoorOpen; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDotCircle", function() { return faDotCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDove", function() { return faDove; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDownload", function() { return faDownload; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDraftingCompass", function() { return faDraftingCompass; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDragon", function() { return faDragon; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDrawPolygon", function() { return faDrawPolygon; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDrum", function() { return faDrum; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDrumSteelpan", function() { return faDrumSteelpan; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDrumstickBite", function() { return faDrumstickBite; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDumbbell", function() { return faDumbbell; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDumpster", function() { return faDumpster; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDumpsterFire", function() { return faDumpsterFire; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faDungeon", function() { return faDungeon; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEdit", function() { return faEdit; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEgg", function() { return faEgg; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEject", function() { return faEject; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEllipsisH", function() { return faEllipsisH; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEllipsisV", function() { return faEllipsisV; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEnvelope", function() { return faEnvelope; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEnvelopeOpen", function() { return faEnvelopeOpen; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEnvelopeOpenText", function() { return faEnvelopeOpenText; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEnvelopeSquare", function() { return faEnvelopeSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEquals", function() { return faEquals; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEraser", function() { return faEraser; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEthernet", function() { return faEthernet; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEuroSign", function() { return faEuroSign; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faExchangeAlt", function() { return faExchangeAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faExclamation", function() { return faExclamation; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faExclamationCircle", function() { return faExclamationCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faExclamationTriangle", function() { return faExclamationTriangle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faExpand", function() { return faExpand; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faExpandAlt", function() { return faExpandAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faExpandArrowsAlt", function() { return faExpandArrowsAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faExternalLinkAlt", function() { return faExternalLinkAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faExternalLinkSquareAlt", function() { return faExternalLinkSquareAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEye", function() { return faEye; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEyeDropper", function() { return faEyeDropper; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faEyeSlash", function() { return faEyeSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFan", function() { return faFan; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFastBackward", function() { return faFastBackward; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFastForward", function() { return faFastForward; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFaucet", function() { return faFaucet; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFax", function() { return faFax; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFeather", function() { return faFeather; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFeatherAlt", function() { return faFeatherAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFemale", function() { return faFemale; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFighterJet", function() { return faFighterJet; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFile", function() { return faFile; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileAlt", function() { return faFileAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileArchive", function() { return faFileArchive; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileAudio", function() { return faFileAudio; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileCode", function() { return faFileCode; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileContract", function() { return faFileContract; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileCsv", function() { return faFileCsv; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileDownload", function() { return faFileDownload; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileExcel", function() { return faFileExcel; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileExport", function() { return faFileExport; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileImage", function() { return faFileImage; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileImport", function() { return faFileImport; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileInvoice", function() { return faFileInvoice; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileInvoiceDollar", function() { return faFileInvoiceDollar; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileMedical", function() { return faFileMedical; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileMedicalAlt", function() { return faFileMedicalAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFilePdf", function() { return faFilePdf; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFilePowerpoint", function() { return faFilePowerpoint; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFilePrescription", function() { return faFilePrescription; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileSignature", function() { return faFileSignature; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileUpload", function() { return faFileUpload; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileVideo", function() { return faFileVideo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFileWord", function() { return faFileWord; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFill", function() { return faFill; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFillDrip", function() { return faFillDrip; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFilm", function() { return faFilm; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFilter", function() { return faFilter; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFingerprint", function() { return faFingerprint; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFire", function() { return faFire; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFireAlt", function() { return faFireAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFireExtinguisher", function() { return faFireExtinguisher; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFirstAid", function() { return faFirstAid; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFish", function() { return faFish; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFistRaised", function() { return faFistRaised; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFlag", function() { return faFlag; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFlagCheckered", function() { return faFlagCheckered; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFlagUsa", function() { return faFlagUsa; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFlask", function() { return faFlask; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFlushed", function() { return faFlushed; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFolder", function() { return faFolder; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFolderMinus", function() { return faFolderMinus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFolderOpen", function() { return faFolderOpen; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFolderPlus", function() { return faFolderPlus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFont", function() { return faFont; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFontAwesomeLogoFull", function() { return faFontAwesomeLogoFull; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFootballBall", function() { return faFootballBall; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faForward", function() { return faForward; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFrog", function() { return faFrog; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFrown", function() { return faFrown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFrownOpen", function() { return faFrownOpen; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFunnelDollar", function() { return faFunnelDollar; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faFutbol", function() { return faFutbol; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGamepad", function() { return faGamepad; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGasPump", function() { return faGasPump; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGavel", function() { return faGavel; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGem", function() { return faGem; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGenderless", function() { return faGenderless; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGhost", function() { return faGhost; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGift", function() { return faGift; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGifts", function() { return faGifts; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGlassCheers", function() { return faGlassCheers; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGlassMartini", function() { return faGlassMartini; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGlassMartiniAlt", function() { return faGlassMartiniAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGlassWhiskey", function() { return faGlassWhiskey; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGlasses", function() { return faGlasses; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGlobe", function() { return faGlobe; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGlobeAfrica", function() { return faGlobeAfrica; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGlobeAmericas", function() { return faGlobeAmericas; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGlobeAsia", function() { return faGlobeAsia; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGlobeEurope", function() { return faGlobeEurope; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGolfBall", function() { return faGolfBall; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGopuram", function() { return faGopuram; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGraduationCap", function() { return faGraduationCap; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGreaterThan", function() { return faGreaterThan; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGreaterThanEqual", function() { return faGreaterThanEqual; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrimace", function() { return faGrimace; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrin", function() { return faGrin; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinAlt", function() { return faGrinAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinBeam", function() { return faGrinBeam; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinBeamSweat", function() { return faGrinBeamSweat; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinHearts", function() { return faGrinHearts; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinSquint", function() { return faGrinSquint; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinSquintTears", function() { return faGrinSquintTears; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinStars", function() { return faGrinStars; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinTears", function() { return faGrinTears; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinTongue", function() { return faGrinTongue; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinTongueSquint", function() { return faGrinTongueSquint; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinTongueWink", function() { return faGrinTongueWink; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGrinWink", function() { return faGrinWink; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGripHorizontal", function() { return faGripHorizontal; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGripLines", function() { return faGripLines; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGripLinesVertical", function() { return faGripLinesVertical; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGripVertical", function() { return faGripVertical; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faGuitar", function() { return faGuitar; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHSquare", function() { return faHSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHamburger", function() { return faHamburger; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHammer", function() { return faHammer; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHamsa", function() { return faHamsa; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandHolding", function() { return faHandHolding; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandHoldingHeart", function() { return faHandHoldingHeart; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandHoldingMedical", function() { return faHandHoldingMedical; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandHoldingUsd", function() { return faHandHoldingUsd; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandHoldingWater", function() { return faHandHoldingWater; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandLizard", function() { return faHandLizard; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandMiddleFinger", function() { return faHandMiddleFinger; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandPaper", function() { return faHandPaper; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandPeace", function() { return faHandPeace; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandPointDown", function() { return faHandPointDown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandPointLeft", function() { return faHandPointLeft; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandPointRight", function() { return faHandPointRight; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandPointUp", function() { return faHandPointUp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandPointer", function() { return faHandPointer; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandRock", function() { return faHandRock; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandScissors", function() { return faHandScissors; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandSparkles", function() { return faHandSparkles; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandSpock", function() { return faHandSpock; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHands", function() { return faHands; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandsHelping", function() { return faHandsHelping; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandsWash", function() { return faHandsWash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandshake", function() { return faHandshake; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandshakeAltSlash", function() { return faHandshakeAltSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHandshakeSlash", function() { return faHandshakeSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHanukiah", function() { return faHanukiah; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHardHat", function() { return faHardHat; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHashtag", function() { return faHashtag; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHatCowboy", function() { return faHatCowboy; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHatCowboySide", function() { return faHatCowboySide; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHatWizard", function() { return faHatWizard; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHdd", function() { return faHdd; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHeadSideCough", function() { return faHeadSideCough; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHeadSideCoughSlash", function() { return faHeadSideCoughSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHeadSideMask", function() { return faHeadSideMask; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHeadSideVirus", function() { return faHeadSideVirus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHeading", function() { return faHeading; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHeadphones", function() { return faHeadphones; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHeadphonesAlt", function() { return faHeadphonesAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHeadset", function() { return faHeadset; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHeart", function() { return faHeart; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHeartBroken", function() { return faHeartBroken; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHeartbeat", function() { return faHeartbeat; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHelicopter", function() { return faHelicopter; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHighlighter", function() { return faHighlighter; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHiking", function() { return faHiking; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHippo", function() { return faHippo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHistory", function() { return faHistory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHockeyPuck", function() { return faHockeyPuck; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHollyBerry", function() { return faHollyBerry; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHome", function() { return faHome; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHorse", function() { return faHorse; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHorseHead", function() { return faHorseHead; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHospital", function() { return faHospital; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHospitalAlt", function() { return faHospitalAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHospitalSymbol", function() { return faHospitalSymbol; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHospitalUser", function() { return faHospitalUser; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHotTub", function() { return faHotTub; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHotdog", function() { return faHotdog; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHotel", function() { return faHotel; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHourglass", function() { return faHourglass; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHourglassEnd", function() { return faHourglassEnd; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHourglassHalf", function() { return faHourglassHalf; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHourglassStart", function() { return faHourglassStart; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHouseDamage", function() { return faHouseDamage; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHouseUser", function() { return faHouseUser; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faHryvnia", function() { return faHryvnia; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faICursor", function() { return faICursor; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faIceCream", function() { return faIceCream; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faIcicles", function() { return faIcicles; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faIcons", function() { return faIcons; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faIdBadge", function() { return faIdBadge; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faIdCard", function() { return faIdCard; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faIdCardAlt", function() { return faIdCardAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faIgloo", function() { return faIgloo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faImage", function() { return faImage; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faImages", function() { return faImages; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faInbox", function() { return faInbox; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faIndent", function() { return faIndent; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faIndustry", function() { return faIndustry; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faInfinity", function() { return faInfinity; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faInfo", function() { return faInfo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faInfoCircle", function() { return faInfoCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faItalic", function() { return faItalic; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faJedi", function() { return faJedi; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faJoint", function() { return faJoint; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faJournalWhills", function() { return faJournalWhills; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faKaaba", function() { return faKaaba; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faKey", function() { return faKey; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faKeyboard", function() { return faKeyboard; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faKhanda", function() { return faKhanda; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faKiss", function() { return faKiss; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faKissBeam", function() { return faKissBeam; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faKissWinkHeart", function() { return faKissWinkHeart; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faKiwiBird", function() { return faKiwiBird; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLandmark", function() { return faLandmark; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLanguage", function() { return faLanguage; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLaptop", function() { return faLaptop; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLaptopCode", function() { return faLaptopCode; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLaptopHouse", function() { return faLaptopHouse; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLaptopMedical", function() { return faLaptopMedical; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLaugh", function() { return faLaugh; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLaughBeam", function() { return faLaughBeam; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLaughSquint", function() { return faLaughSquint; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLaughWink", function() { return faLaughWink; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLayerGroup", function() { return faLayerGroup; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLeaf", function() { return faLeaf; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLemon", function() { return faLemon; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLessThan", function() { return faLessThan; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLessThanEqual", function() { return faLessThanEqual; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLevelDownAlt", function() { return faLevelDownAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLevelUpAlt", function() { return faLevelUpAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLifeRing", function() { return faLifeRing; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLightbulb", function() { return faLightbulb; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLink", function() { return faLink; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLiraSign", function() { return faLiraSign; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faList", function() { return faList; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faListAlt", function() { return faListAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faListOl", function() { return faListOl; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faListUl", function() { return faListUl; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLocationArrow", function() { return faLocationArrow; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLock", function() { return faLock; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLockOpen", function() { return faLockOpen; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLongArrowAltDown", function() { return faLongArrowAltDown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLongArrowAltLeft", function() { return faLongArrowAltLeft; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLongArrowAltRight", function() { return faLongArrowAltRight; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLongArrowAltUp", function() { return faLongArrowAltUp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLowVision", function() { return faLowVision; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLuggageCart", function() { return faLuggageCart; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLungs", function() { return faLungs; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faLungsVirus", function() { return faLungsVirus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMagic", function() { return faMagic; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMagnet", function() { return faMagnet; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMailBulk", function() { return faMailBulk; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMale", function() { return faMale; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMap", function() { return faMap; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMapMarked", function() { return faMapMarked; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMapMarkedAlt", function() { return faMapMarkedAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMapMarker", function() { return faMapMarker; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMapMarkerAlt", function() { return faMapMarkerAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMapPin", function() { return faMapPin; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMapSigns", function() { return faMapSigns; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMarker", function() { return faMarker; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMars", function() { return faMars; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMarsDouble", function() { return faMarsDouble; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMarsStroke", function() { return faMarsStroke; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMarsStrokeH", function() { return faMarsStrokeH; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMarsStrokeV", function() { return faMarsStrokeV; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMask", function() { return faMask; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMedal", function() { return faMedal; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMedkit", function() { return faMedkit; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMeh", function() { return faMeh; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMehBlank", function() { return faMehBlank; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMehRollingEyes", function() { return faMehRollingEyes; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMemory", function() { return faMemory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMenorah", function() { return faMenorah; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMercury", function() { return faMercury; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMeteor", function() { return faMeteor; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMicrochip", function() { return faMicrochip; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMicrophone", function() { return faMicrophone; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMicrophoneAlt", function() { return faMicrophoneAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMicrophoneAltSlash", function() { return faMicrophoneAltSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMicrophoneSlash", function() { return faMicrophoneSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMicroscope", function() { return faMicroscope; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMinus", function() { return faMinus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMinusCircle", function() { return faMinusCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMinusSquare", function() { return faMinusSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMitten", function() { return faMitten; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMobile", function() { return faMobile; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMobileAlt", function() { return faMobileAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMoneyBill", function() { return faMoneyBill; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMoneyBillAlt", function() { return faMoneyBillAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMoneyBillWave", function() { return faMoneyBillWave; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMoneyBillWaveAlt", function() { return faMoneyBillWaveAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMoneyCheck", function() { return faMoneyCheck; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMoneyCheckAlt", function() { return faMoneyCheckAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMonument", function() { return faMonument; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMoon", function() { return faMoon; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMortarPestle", function() { return faMortarPestle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMosque", function() { return faMosque; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMotorcycle", function() { return faMotorcycle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMountain", function() { return faMountain; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMouse", function() { return faMouse; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMousePointer", function() { return faMousePointer; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMugHot", function() { return faMugHot; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faMusic", function() { return faMusic; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faNetworkWired", function() { return faNetworkWired; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faNeuter", function() { return faNeuter; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faNewspaper", function() { return faNewspaper; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faNotEqual", function() { return faNotEqual; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faNotesMedical", function() { return faNotesMedical; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faObjectGroup", function() { return faObjectGroup; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faObjectUngroup", function() { return faObjectUngroup; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faOilCan", function() { return faOilCan; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faOm", function() { return faOm; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faOtter", function() { return faOtter; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faOutdent", function() { return faOutdent; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPager", function() { return faPager; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPaintBrush", function() { return faPaintBrush; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPaintRoller", function() { return faPaintRoller; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPalette", function() { return faPalette; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPallet", function() { return faPallet; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPaperPlane", function() { return faPaperPlane; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPaperclip", function() { return faPaperclip; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faParachuteBox", function() { return faParachuteBox; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faParagraph", function() { return faParagraph; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faParking", function() { return faParking; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPassport", function() { return faPassport; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPastafarianism", function() { return faPastafarianism; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPaste", function() { return faPaste; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPause", function() { return faPause; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPauseCircle", function() { return faPauseCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPaw", function() { return faPaw; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPeace", function() { return faPeace; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPen", function() { return faPen; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPenAlt", function() { return faPenAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPenFancy", function() { return faPenFancy; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPenNib", function() { return faPenNib; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPenSquare", function() { return faPenSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPencilAlt", function() { return faPencilAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPencilRuler", function() { return faPencilRuler; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPeopleArrows", function() { return faPeopleArrows; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPeopleCarry", function() { return faPeopleCarry; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPepperHot", function() { return faPepperHot; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPercent", function() { return faPercent; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPercentage", function() { return faPercentage; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPersonBooth", function() { return faPersonBooth; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPhone", function() { return faPhone; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPhoneAlt", function() { return faPhoneAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPhoneSlash", function() { return faPhoneSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPhoneSquare", function() { return faPhoneSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPhoneSquareAlt", function() { return faPhoneSquareAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPhoneVolume", function() { return faPhoneVolume; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPhotoVideo", function() { return faPhotoVideo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPiggyBank", function() { return faPiggyBank; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPills", function() { return faPills; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPizzaSlice", function() { return faPizzaSlice; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPlaceOfWorship", function() { return faPlaceOfWorship; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPlane", function() { return faPlane; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPlaneArrival", function() { return faPlaneArrival; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPlaneDeparture", function() { return faPlaneDeparture; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPlaneSlash", function() { return faPlaneSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPlay", function() { return faPlay; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPlayCircle", function() { return faPlayCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPlug", function() { return faPlug; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPlus", function() { return faPlus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPlusCircle", function() { return faPlusCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPlusSquare", function() { return faPlusSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPodcast", function() { return faPodcast; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPoll", function() { return faPoll; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPollH", function() { return faPollH; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPoo", function() { return faPoo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPooStorm", function() { return faPooStorm; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPoop", function() { return faPoop; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPortrait", function() { return faPortrait; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPoundSign", function() { return faPoundSign; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPowerOff", function() { return faPowerOff; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPray", function() { return faPray; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPrayingHands", function() { return faPrayingHands; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPrescription", function() { return faPrescription; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPrescriptionBottle", function() { return faPrescriptionBottle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPrescriptionBottleAlt", function() { return faPrescriptionBottleAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPrint", function() { return faPrint; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faProcedures", function() { return faProcedures; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faProjectDiagram", function() { return faProjectDiagram; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPumpMedical", function() { return faPumpMedical; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPumpSoap", function() { return faPumpSoap; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faPuzzlePiece", function() { return faPuzzlePiece; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faQrcode", function() { return faQrcode; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faQuestion", function() { return faQuestion; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faQuestionCircle", function() { return faQuestionCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faQuidditch", function() { return faQuidditch; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faQuoteLeft", function() { return faQuoteLeft; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faQuoteRight", function() { return faQuoteRight; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faQuran", function() { return faQuran; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRadiation", function() { return faRadiation; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRadiationAlt", function() { return faRadiationAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRainbow", function() { return faRainbow; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRandom", function() { return faRandom; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faReceipt", function() { return faReceipt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRecordVinyl", function() { return faRecordVinyl; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRecycle", function() { return faRecycle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRedo", function() { return faRedo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRedoAlt", function() { return faRedoAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRegistered", function() { return faRegistered; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRemoveFormat", function() { return faRemoveFormat; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faReply", function() { return faReply; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faReplyAll", function() { return faReplyAll; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRepublican", function() { return faRepublican; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRestroom", function() { return faRestroom; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRetweet", function() { return faRetweet; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRibbon", function() { return faRibbon; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRing", function() { return faRing; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRoad", function() { return faRoad; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRobot", function() { return faRobot; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRocket", function() { return faRocket; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRoute", function() { return faRoute; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRss", function() { return faRss; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRssSquare", function() { return faRssSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRubleSign", function() { return faRubleSign; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRuler", function() { return faRuler; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRulerCombined", function() { return faRulerCombined; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRulerHorizontal", function() { return faRulerHorizontal; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRulerVertical", function() { return faRulerVertical; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRunning", function() { return faRunning; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faRupeeSign", function() { return faRupeeSign; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSadCry", function() { return faSadCry; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSadTear", function() { return faSadTear; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSatellite", function() { return faSatellite; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSatelliteDish", function() { return faSatelliteDish; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSave", function() { return faSave; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSchool", function() { return faSchool; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faScrewdriver", function() { return faScrewdriver; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faScroll", function() { return faScroll; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSdCard", function() { return faSdCard; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSearch", function() { return faSearch; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSearchDollar", function() { return faSearchDollar; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSearchLocation", function() { return faSearchLocation; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSearchMinus", function() { return faSearchMinus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSearchPlus", function() { return faSearchPlus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSeedling", function() { return faSeedling; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faServer", function() { return faServer; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faShapes", function() { return faShapes; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faShare", function() { return faShare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faShareAlt", function() { return faShareAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faShareAltSquare", function() { return faShareAltSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faShareSquare", function() { return faShareSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faShekelSign", function() { return faShekelSign; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faShieldAlt", function() { return faShieldAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faShieldVirus", function() { return faShieldVirus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faShip", function() { return faShip; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faShippingFast", function() { return faShippingFast; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faShoePrints", function() { return faShoePrints; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faShoppingBag", function() { return faShoppingBag; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faShoppingBasket", function() { return faShoppingBasket; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faShoppingCart", function() { return faShoppingCart; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faShower", function() { return faShower; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faShuttleVan", function() { return faShuttleVan; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSign", function() { return faSign; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSignInAlt", function() { return faSignInAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSignLanguage", function() { return faSignLanguage; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSignOutAlt", function() { return faSignOutAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSignal", function() { return faSignal; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSignature", function() { return faSignature; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSimCard", function() { return faSimCard; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSink", function() { return faSink; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSitemap", function() { return faSitemap; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSkating", function() { return faSkating; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSkiing", function() { return faSkiing; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSkiingNordic", function() { return faSkiingNordic; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSkull", function() { return faSkull; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSkullCrossbones", function() { return faSkullCrossbones; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSlash", function() { return faSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSleigh", function() { return faSleigh; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSlidersH", function() { return faSlidersH; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSmile", function() { return faSmile; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSmileBeam", function() { return faSmileBeam; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSmileWink", function() { return faSmileWink; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSmog", function() { return faSmog; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSmoking", function() { return faSmoking; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSmokingBan", function() { return faSmokingBan; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSms", function() { return faSms; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSnowboarding", function() { return faSnowboarding; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSnowflake", function() { return faSnowflake; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSnowman", function() { return faSnowman; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSnowplow", function() { return faSnowplow; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSoap", function() { return faSoap; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSocks", function() { return faSocks; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSolarPanel", function() { return faSolarPanel; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSort", function() { return faSort; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSortAlphaDown", function() { return faSortAlphaDown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSortAlphaDownAlt", function() { return faSortAlphaDownAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSortAlphaUp", function() { return faSortAlphaUp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSortAlphaUpAlt", function() { return faSortAlphaUpAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSortAmountDown", function() { return faSortAmountDown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSortAmountDownAlt", function() { return faSortAmountDownAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSortAmountUp", function() { return faSortAmountUp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSortAmountUpAlt", function() { return faSortAmountUpAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSortDown", function() { return faSortDown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSortNumericDown", function() { return faSortNumericDown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSortNumericDownAlt", function() { return faSortNumericDownAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSortNumericUp", function() { return faSortNumericUp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSortNumericUpAlt", function() { return faSortNumericUpAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSortUp", function() { return faSortUp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSpa", function() { return faSpa; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSpaceShuttle", function() { return faSpaceShuttle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSpellCheck", function() { return faSpellCheck; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSpider", function() { return faSpider; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSpinner", function() { return faSpinner; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSplotch", function() { return faSplotch; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSprayCan", function() { return faSprayCan; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSquare", function() { return faSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSquareFull", function() { return faSquareFull; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSquareRootAlt", function() { return faSquareRootAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStamp", function() { return faStamp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStar", function() { return faStar; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStarAndCrescent", function() { return faStarAndCrescent; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStarHalf", function() { return faStarHalf; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStarHalfAlt", function() { return faStarHalfAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStarOfDavid", function() { return faStarOfDavid; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStarOfLife", function() { return faStarOfLife; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStepBackward", function() { return faStepBackward; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStepForward", function() { return faStepForward; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStethoscope", function() { return faStethoscope; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStickyNote", function() { return faStickyNote; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStop", function() { return faStop; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStopCircle", function() { return faStopCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStopwatch", function() { return faStopwatch; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStopwatch20", function() { return faStopwatch20; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStore", function() { return faStore; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStoreAlt", function() { return faStoreAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStoreAltSlash", function() { return faStoreAltSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStoreSlash", function() { return faStoreSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStream", function() { return faStream; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStreetView", function() { return faStreetView; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStrikethrough", function() { return faStrikethrough; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faStroopwafel", function() { return faStroopwafel; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSubscript", function() { return faSubscript; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSubway", function() { return faSubway; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSuitcase", function() { return faSuitcase; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSuitcaseRolling", function() { return faSuitcaseRolling; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSun", function() { return faSun; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSuperscript", function() { return faSuperscript; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSurprise", function() { return faSurprise; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSwatchbook", function() { return faSwatchbook; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSwimmer", function() { return faSwimmer; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSwimmingPool", function() { return faSwimmingPool; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSynagogue", function() { return faSynagogue; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSync", function() { return faSync; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSyncAlt", function() { return faSyncAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faSyringe", function() { return faSyringe; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTable", function() { return faTable; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTableTennis", function() { return faTableTennis; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTablet", function() { return faTablet; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTabletAlt", function() { return faTabletAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTablets", function() { return faTablets; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTachometerAlt", function() { return faTachometerAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTag", function() { return faTag; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTags", function() { return faTags; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTape", function() { return faTape; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTasks", function() { return faTasks; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTaxi", function() { return faTaxi; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTeeth", function() { return faTeeth; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTeethOpen", function() { return faTeethOpen; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTemperatureHigh", function() { return faTemperatureHigh; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTemperatureLow", function() { return faTemperatureLow; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTenge", function() { return faTenge; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTerminal", function() { return faTerminal; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTextHeight", function() { return faTextHeight; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTextWidth", function() { return faTextWidth; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTh", function() { return faTh; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faThLarge", function() { return faThLarge; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faThList", function() { return faThList; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTheaterMasks", function() { return faTheaterMasks; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faThermometer", function() { return faThermometer; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faThermometerEmpty", function() { return faThermometerEmpty; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faThermometerFull", function() { return faThermometerFull; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faThermometerHalf", function() { return faThermometerHalf; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faThermometerQuarter", function() { return faThermometerQuarter; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faThermometerThreeQuarters", function() { return faThermometerThreeQuarters; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faThumbsDown", function() { return faThumbsDown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faThumbsUp", function() { return faThumbsUp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faThumbtack", function() { return faThumbtack; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTicketAlt", function() { return faTicketAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTimes", function() { return faTimes; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTimesCircle", function() { return faTimesCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTint", function() { return faTint; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTintSlash", function() { return faTintSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTired", function() { return faTired; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faToggleOff", function() { return faToggleOff; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faToggleOn", function() { return faToggleOn; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faToilet", function() { return faToilet; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faToiletPaper", function() { return faToiletPaper; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faToiletPaperSlash", function() { return faToiletPaperSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faToolbox", function() { return faToolbox; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTools", function() { return faTools; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTooth", function() { return faTooth; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTorah", function() { return faTorah; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faToriiGate", function() { return faToriiGate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTractor", function() { return faTractor; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTrademark", function() { return faTrademark; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTrafficLight", function() { return faTrafficLight; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTrailer", function() { return faTrailer; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTrain", function() { return faTrain; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTram", function() { return faTram; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTransgender", function() { return faTransgender; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTransgenderAlt", function() { return faTransgenderAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTrash", function() { return faTrash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTrashAlt", function() { return faTrashAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTrashRestore", function() { return faTrashRestore; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTrashRestoreAlt", function() { return faTrashRestoreAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTree", function() { return faTree; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTrophy", function() { return faTrophy; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTruck", function() { return faTruck; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTruckLoading", function() { return faTruckLoading; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTruckMonster", function() { return faTruckMonster; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTruckMoving", function() { return faTruckMoving; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTruckPickup", function() { return faTruckPickup; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTshirt", function() { return faTshirt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTty", function() { return faTty; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faTv", function() { return faTv; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUmbrella", function() { return faUmbrella; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUmbrellaBeach", function() { return faUmbrellaBeach; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUnderline", function() { return faUnderline; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUndo", function() { return faUndo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUndoAlt", function() { return faUndoAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUniversalAccess", function() { return faUniversalAccess; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUniversity", function() { return faUniversity; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUnlink", function() { return faUnlink; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUnlock", function() { return faUnlock; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUnlockAlt", function() { return faUnlockAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUpload", function() { return faUpload; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUser", function() { return faUser; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserAlt", function() { return faUserAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserAltSlash", function() { return faUserAltSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserAstronaut", function() { return faUserAstronaut; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserCheck", function() { return faUserCheck; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserCircle", function() { return faUserCircle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserClock", function() { return faUserClock; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserCog", function() { return faUserCog; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserEdit", function() { return faUserEdit; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserFriends", function() { return faUserFriends; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserGraduate", function() { return faUserGraduate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserInjured", function() { return faUserInjured; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserLock", function() { return faUserLock; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserMd", function() { return faUserMd; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserMinus", function() { return faUserMinus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserNinja", function() { return faUserNinja; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserNurse", function() { return faUserNurse; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserPlus", function() { return faUserPlus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserSecret", function() { return faUserSecret; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserShield", function() { return faUserShield; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserSlash", function() { return faUserSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserTag", function() { return faUserTag; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserTie", function() { return faUserTie; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUserTimes", function() { return faUserTimes; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUsers", function() { return faUsers; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUsersCog", function() { return faUsersCog; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUsersSlash", function() { return faUsersSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUtensilSpoon", function() { return faUtensilSpoon; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faUtensils", function() { return faUtensils; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVectorSquare", function() { return faVectorSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVenus", function() { return faVenus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVenusDouble", function() { return faVenusDouble; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVenusMars", function() { return faVenusMars; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVest", function() { return faVest; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVestPatches", function() { return faVestPatches; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVial", function() { return faVial; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVials", function() { return faVials; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVideo", function() { return faVideo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVideoSlash", function() { return faVideoSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVihara", function() { return faVihara; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVirus", function() { return faVirus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVirusSlash", function() { return faVirusSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faViruses", function() { return faViruses; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVoicemail", function() { return faVoicemail; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVolleyballBall", function() { return faVolleyballBall; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVolumeDown", function() { return faVolumeDown; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVolumeMute", function() { return faVolumeMute; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVolumeOff", function() { return faVolumeOff; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVolumeUp", function() { return faVolumeUp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVoteYea", function() { return faVoteYea; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faVrCardboard", function() { return faVrCardboard; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWalking", function() { return faWalking; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWallet", function() { return faWallet; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWarehouse", function() { return faWarehouse; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWater", function() { return faWater; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWaveSquare", function() { return faWaveSquare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWeight", function() { return faWeight; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWeightHanging", function() { return faWeightHanging; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWheelchair", function() { return faWheelchair; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWifi", function() { return faWifi; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWind", function() { return faWind; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWindowClose", function() { return faWindowClose; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWindowMaximize", function() { return faWindowMaximize; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWindowMinimize", function() { return faWindowMinimize; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWindowRestore", function() { return faWindowRestore; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWineBottle", function() { return faWineBottle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWineGlass", function() { return faWineGlass; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWineGlassAlt", function() { return faWineGlassAlt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWonSign", function() { return faWonSign; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faWrench", function() { return faWrench; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faXRay", function() { return faXRay; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faYenSign", function() { return faYenSign; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faYinYang", function() { return faYinYang; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "fas": () => (/* binding */ _iconsCache),
+/* harmony export */   "prefix": () => (/* binding */ prefix),
+/* harmony export */   "faAd": () => (/* binding */ faAd),
+/* harmony export */   "faAddressBook": () => (/* binding */ faAddressBook),
+/* harmony export */   "faAddressCard": () => (/* binding */ faAddressCard),
+/* harmony export */   "faAdjust": () => (/* binding */ faAdjust),
+/* harmony export */   "faAirFreshener": () => (/* binding */ faAirFreshener),
+/* harmony export */   "faAlignCenter": () => (/* binding */ faAlignCenter),
+/* harmony export */   "faAlignJustify": () => (/* binding */ faAlignJustify),
+/* harmony export */   "faAlignLeft": () => (/* binding */ faAlignLeft),
+/* harmony export */   "faAlignRight": () => (/* binding */ faAlignRight),
+/* harmony export */   "faAllergies": () => (/* binding */ faAllergies),
+/* harmony export */   "faAmbulance": () => (/* binding */ faAmbulance),
+/* harmony export */   "faAmericanSignLanguageInterpreting": () => (/* binding */ faAmericanSignLanguageInterpreting),
+/* harmony export */   "faAnchor": () => (/* binding */ faAnchor),
+/* harmony export */   "faAngleDoubleDown": () => (/* binding */ faAngleDoubleDown),
+/* harmony export */   "faAngleDoubleLeft": () => (/* binding */ faAngleDoubleLeft),
+/* harmony export */   "faAngleDoubleRight": () => (/* binding */ faAngleDoubleRight),
+/* harmony export */   "faAngleDoubleUp": () => (/* binding */ faAngleDoubleUp),
+/* harmony export */   "faAngleDown": () => (/* binding */ faAngleDown),
+/* harmony export */   "faAngleLeft": () => (/* binding */ faAngleLeft),
+/* harmony export */   "faAngleRight": () => (/* binding */ faAngleRight),
+/* harmony export */   "faAngleUp": () => (/* binding */ faAngleUp),
+/* harmony export */   "faAngry": () => (/* binding */ faAngry),
+/* harmony export */   "faAnkh": () => (/* binding */ faAnkh),
+/* harmony export */   "faAppleAlt": () => (/* binding */ faAppleAlt),
+/* harmony export */   "faArchive": () => (/* binding */ faArchive),
+/* harmony export */   "faArchway": () => (/* binding */ faArchway),
+/* harmony export */   "faArrowAltCircleDown": () => (/* binding */ faArrowAltCircleDown),
+/* harmony export */   "faArrowAltCircleLeft": () => (/* binding */ faArrowAltCircleLeft),
+/* harmony export */   "faArrowAltCircleRight": () => (/* binding */ faArrowAltCircleRight),
+/* harmony export */   "faArrowAltCircleUp": () => (/* binding */ faArrowAltCircleUp),
+/* harmony export */   "faArrowCircleDown": () => (/* binding */ faArrowCircleDown),
+/* harmony export */   "faArrowCircleLeft": () => (/* binding */ faArrowCircleLeft),
+/* harmony export */   "faArrowCircleRight": () => (/* binding */ faArrowCircleRight),
+/* harmony export */   "faArrowCircleUp": () => (/* binding */ faArrowCircleUp),
+/* harmony export */   "faArrowDown": () => (/* binding */ faArrowDown),
+/* harmony export */   "faArrowLeft": () => (/* binding */ faArrowLeft),
+/* harmony export */   "faArrowRight": () => (/* binding */ faArrowRight),
+/* harmony export */   "faArrowUp": () => (/* binding */ faArrowUp),
+/* harmony export */   "faArrowsAlt": () => (/* binding */ faArrowsAlt),
+/* harmony export */   "faArrowsAltH": () => (/* binding */ faArrowsAltH),
+/* harmony export */   "faArrowsAltV": () => (/* binding */ faArrowsAltV),
+/* harmony export */   "faAssistiveListeningSystems": () => (/* binding */ faAssistiveListeningSystems),
+/* harmony export */   "faAsterisk": () => (/* binding */ faAsterisk),
+/* harmony export */   "faAt": () => (/* binding */ faAt),
+/* harmony export */   "faAtlas": () => (/* binding */ faAtlas),
+/* harmony export */   "faAtom": () => (/* binding */ faAtom),
+/* harmony export */   "faAudioDescription": () => (/* binding */ faAudioDescription),
+/* harmony export */   "faAward": () => (/* binding */ faAward),
+/* harmony export */   "faBaby": () => (/* binding */ faBaby),
+/* harmony export */   "faBabyCarriage": () => (/* binding */ faBabyCarriage),
+/* harmony export */   "faBackspace": () => (/* binding */ faBackspace),
+/* harmony export */   "faBackward": () => (/* binding */ faBackward),
+/* harmony export */   "faBacon": () => (/* binding */ faBacon),
+/* harmony export */   "faBacteria": () => (/* binding */ faBacteria),
+/* harmony export */   "faBacterium": () => (/* binding */ faBacterium),
+/* harmony export */   "faBahai": () => (/* binding */ faBahai),
+/* harmony export */   "faBalanceScale": () => (/* binding */ faBalanceScale),
+/* harmony export */   "faBalanceScaleLeft": () => (/* binding */ faBalanceScaleLeft),
+/* harmony export */   "faBalanceScaleRight": () => (/* binding */ faBalanceScaleRight),
+/* harmony export */   "faBan": () => (/* binding */ faBan),
+/* harmony export */   "faBandAid": () => (/* binding */ faBandAid),
+/* harmony export */   "faBarcode": () => (/* binding */ faBarcode),
+/* harmony export */   "faBars": () => (/* binding */ faBars),
+/* harmony export */   "faBaseballBall": () => (/* binding */ faBaseballBall),
+/* harmony export */   "faBasketballBall": () => (/* binding */ faBasketballBall),
+/* harmony export */   "faBath": () => (/* binding */ faBath),
+/* harmony export */   "faBatteryEmpty": () => (/* binding */ faBatteryEmpty),
+/* harmony export */   "faBatteryFull": () => (/* binding */ faBatteryFull),
+/* harmony export */   "faBatteryHalf": () => (/* binding */ faBatteryHalf),
+/* harmony export */   "faBatteryQuarter": () => (/* binding */ faBatteryQuarter),
+/* harmony export */   "faBatteryThreeQuarters": () => (/* binding */ faBatteryThreeQuarters),
+/* harmony export */   "faBed": () => (/* binding */ faBed),
+/* harmony export */   "faBeer": () => (/* binding */ faBeer),
+/* harmony export */   "faBell": () => (/* binding */ faBell),
+/* harmony export */   "faBellSlash": () => (/* binding */ faBellSlash),
+/* harmony export */   "faBezierCurve": () => (/* binding */ faBezierCurve),
+/* harmony export */   "faBible": () => (/* binding */ faBible),
+/* harmony export */   "faBicycle": () => (/* binding */ faBicycle),
+/* harmony export */   "faBiking": () => (/* binding */ faBiking),
+/* harmony export */   "faBinoculars": () => (/* binding */ faBinoculars),
+/* harmony export */   "faBiohazard": () => (/* binding */ faBiohazard),
+/* harmony export */   "faBirthdayCake": () => (/* binding */ faBirthdayCake),
+/* harmony export */   "faBlender": () => (/* binding */ faBlender),
+/* harmony export */   "faBlenderPhone": () => (/* binding */ faBlenderPhone),
+/* harmony export */   "faBlind": () => (/* binding */ faBlind),
+/* harmony export */   "faBlog": () => (/* binding */ faBlog),
+/* harmony export */   "faBold": () => (/* binding */ faBold),
+/* harmony export */   "faBolt": () => (/* binding */ faBolt),
+/* harmony export */   "faBomb": () => (/* binding */ faBomb),
+/* harmony export */   "faBone": () => (/* binding */ faBone),
+/* harmony export */   "faBong": () => (/* binding */ faBong),
+/* harmony export */   "faBook": () => (/* binding */ faBook),
+/* harmony export */   "faBookDead": () => (/* binding */ faBookDead),
+/* harmony export */   "faBookMedical": () => (/* binding */ faBookMedical),
+/* harmony export */   "faBookOpen": () => (/* binding */ faBookOpen),
+/* harmony export */   "faBookReader": () => (/* binding */ faBookReader),
+/* harmony export */   "faBookmark": () => (/* binding */ faBookmark),
+/* harmony export */   "faBorderAll": () => (/* binding */ faBorderAll),
+/* harmony export */   "faBorderNone": () => (/* binding */ faBorderNone),
+/* harmony export */   "faBorderStyle": () => (/* binding */ faBorderStyle),
+/* harmony export */   "faBowlingBall": () => (/* binding */ faBowlingBall),
+/* harmony export */   "faBox": () => (/* binding */ faBox),
+/* harmony export */   "faBoxOpen": () => (/* binding */ faBoxOpen),
+/* harmony export */   "faBoxTissue": () => (/* binding */ faBoxTissue),
+/* harmony export */   "faBoxes": () => (/* binding */ faBoxes),
+/* harmony export */   "faBraille": () => (/* binding */ faBraille),
+/* harmony export */   "faBrain": () => (/* binding */ faBrain),
+/* harmony export */   "faBreadSlice": () => (/* binding */ faBreadSlice),
+/* harmony export */   "faBriefcase": () => (/* binding */ faBriefcase),
+/* harmony export */   "faBriefcaseMedical": () => (/* binding */ faBriefcaseMedical),
+/* harmony export */   "faBroadcastTower": () => (/* binding */ faBroadcastTower),
+/* harmony export */   "faBroom": () => (/* binding */ faBroom),
+/* harmony export */   "faBrush": () => (/* binding */ faBrush),
+/* harmony export */   "faBug": () => (/* binding */ faBug),
+/* harmony export */   "faBuilding": () => (/* binding */ faBuilding),
+/* harmony export */   "faBullhorn": () => (/* binding */ faBullhorn),
+/* harmony export */   "faBullseye": () => (/* binding */ faBullseye),
+/* harmony export */   "faBurn": () => (/* binding */ faBurn),
+/* harmony export */   "faBus": () => (/* binding */ faBus),
+/* harmony export */   "faBusAlt": () => (/* binding */ faBusAlt),
+/* harmony export */   "faBusinessTime": () => (/* binding */ faBusinessTime),
+/* harmony export */   "faCalculator": () => (/* binding */ faCalculator),
+/* harmony export */   "faCalendar": () => (/* binding */ faCalendar),
+/* harmony export */   "faCalendarAlt": () => (/* binding */ faCalendarAlt),
+/* harmony export */   "faCalendarCheck": () => (/* binding */ faCalendarCheck),
+/* harmony export */   "faCalendarDay": () => (/* binding */ faCalendarDay),
+/* harmony export */   "faCalendarMinus": () => (/* binding */ faCalendarMinus),
+/* harmony export */   "faCalendarPlus": () => (/* binding */ faCalendarPlus),
+/* harmony export */   "faCalendarTimes": () => (/* binding */ faCalendarTimes),
+/* harmony export */   "faCalendarWeek": () => (/* binding */ faCalendarWeek),
+/* harmony export */   "faCamera": () => (/* binding */ faCamera),
+/* harmony export */   "faCameraRetro": () => (/* binding */ faCameraRetro),
+/* harmony export */   "faCampground": () => (/* binding */ faCampground),
+/* harmony export */   "faCandyCane": () => (/* binding */ faCandyCane),
+/* harmony export */   "faCannabis": () => (/* binding */ faCannabis),
+/* harmony export */   "faCapsules": () => (/* binding */ faCapsules),
+/* harmony export */   "faCar": () => (/* binding */ faCar),
+/* harmony export */   "faCarAlt": () => (/* binding */ faCarAlt),
+/* harmony export */   "faCarBattery": () => (/* binding */ faCarBattery),
+/* harmony export */   "faCarCrash": () => (/* binding */ faCarCrash),
+/* harmony export */   "faCarSide": () => (/* binding */ faCarSide),
+/* harmony export */   "faCaravan": () => (/* binding */ faCaravan),
+/* harmony export */   "faCaretDown": () => (/* binding */ faCaretDown),
+/* harmony export */   "faCaretLeft": () => (/* binding */ faCaretLeft),
+/* harmony export */   "faCaretRight": () => (/* binding */ faCaretRight),
+/* harmony export */   "faCaretSquareDown": () => (/* binding */ faCaretSquareDown),
+/* harmony export */   "faCaretSquareLeft": () => (/* binding */ faCaretSquareLeft),
+/* harmony export */   "faCaretSquareRight": () => (/* binding */ faCaretSquareRight),
+/* harmony export */   "faCaretSquareUp": () => (/* binding */ faCaretSquareUp),
+/* harmony export */   "faCaretUp": () => (/* binding */ faCaretUp),
+/* harmony export */   "faCarrot": () => (/* binding */ faCarrot),
+/* harmony export */   "faCartArrowDown": () => (/* binding */ faCartArrowDown),
+/* harmony export */   "faCartPlus": () => (/* binding */ faCartPlus),
+/* harmony export */   "faCashRegister": () => (/* binding */ faCashRegister),
+/* harmony export */   "faCat": () => (/* binding */ faCat),
+/* harmony export */   "faCertificate": () => (/* binding */ faCertificate),
+/* harmony export */   "faChair": () => (/* binding */ faChair),
+/* harmony export */   "faChalkboard": () => (/* binding */ faChalkboard),
+/* harmony export */   "faChalkboardTeacher": () => (/* binding */ faChalkboardTeacher),
+/* harmony export */   "faChargingStation": () => (/* binding */ faChargingStation),
+/* harmony export */   "faChartArea": () => (/* binding */ faChartArea),
+/* harmony export */   "faChartBar": () => (/* binding */ faChartBar),
+/* harmony export */   "faChartLine": () => (/* binding */ faChartLine),
+/* harmony export */   "faChartPie": () => (/* binding */ faChartPie),
+/* harmony export */   "faCheck": () => (/* binding */ faCheck),
+/* harmony export */   "faCheckCircle": () => (/* binding */ faCheckCircle),
+/* harmony export */   "faCheckDouble": () => (/* binding */ faCheckDouble),
+/* harmony export */   "faCheckSquare": () => (/* binding */ faCheckSquare),
+/* harmony export */   "faCheese": () => (/* binding */ faCheese),
+/* harmony export */   "faChess": () => (/* binding */ faChess),
+/* harmony export */   "faChessBishop": () => (/* binding */ faChessBishop),
+/* harmony export */   "faChessBoard": () => (/* binding */ faChessBoard),
+/* harmony export */   "faChessKing": () => (/* binding */ faChessKing),
+/* harmony export */   "faChessKnight": () => (/* binding */ faChessKnight),
+/* harmony export */   "faChessPawn": () => (/* binding */ faChessPawn),
+/* harmony export */   "faChessQueen": () => (/* binding */ faChessQueen),
+/* harmony export */   "faChessRook": () => (/* binding */ faChessRook),
+/* harmony export */   "faChevronCircleDown": () => (/* binding */ faChevronCircleDown),
+/* harmony export */   "faChevronCircleLeft": () => (/* binding */ faChevronCircleLeft),
+/* harmony export */   "faChevronCircleRight": () => (/* binding */ faChevronCircleRight),
+/* harmony export */   "faChevronCircleUp": () => (/* binding */ faChevronCircleUp),
+/* harmony export */   "faChevronDown": () => (/* binding */ faChevronDown),
+/* harmony export */   "faChevronLeft": () => (/* binding */ faChevronLeft),
+/* harmony export */   "faChevronRight": () => (/* binding */ faChevronRight),
+/* harmony export */   "faChevronUp": () => (/* binding */ faChevronUp),
+/* harmony export */   "faChild": () => (/* binding */ faChild),
+/* harmony export */   "faChurch": () => (/* binding */ faChurch),
+/* harmony export */   "faCircle": () => (/* binding */ faCircle),
+/* harmony export */   "faCircleNotch": () => (/* binding */ faCircleNotch),
+/* harmony export */   "faCity": () => (/* binding */ faCity),
+/* harmony export */   "faClinicMedical": () => (/* binding */ faClinicMedical),
+/* harmony export */   "faClipboard": () => (/* binding */ faClipboard),
+/* harmony export */   "faClipboardCheck": () => (/* binding */ faClipboardCheck),
+/* harmony export */   "faClipboardList": () => (/* binding */ faClipboardList),
+/* harmony export */   "faClock": () => (/* binding */ faClock),
+/* harmony export */   "faClone": () => (/* binding */ faClone),
+/* harmony export */   "faClosedCaptioning": () => (/* binding */ faClosedCaptioning),
+/* harmony export */   "faCloud": () => (/* binding */ faCloud),
+/* harmony export */   "faCloudDownloadAlt": () => (/* binding */ faCloudDownloadAlt),
+/* harmony export */   "faCloudMeatball": () => (/* binding */ faCloudMeatball),
+/* harmony export */   "faCloudMoon": () => (/* binding */ faCloudMoon),
+/* harmony export */   "faCloudMoonRain": () => (/* binding */ faCloudMoonRain),
+/* harmony export */   "faCloudRain": () => (/* binding */ faCloudRain),
+/* harmony export */   "faCloudShowersHeavy": () => (/* binding */ faCloudShowersHeavy),
+/* harmony export */   "faCloudSun": () => (/* binding */ faCloudSun),
+/* harmony export */   "faCloudSunRain": () => (/* binding */ faCloudSunRain),
+/* harmony export */   "faCloudUploadAlt": () => (/* binding */ faCloudUploadAlt),
+/* harmony export */   "faCocktail": () => (/* binding */ faCocktail),
+/* harmony export */   "faCode": () => (/* binding */ faCode),
+/* harmony export */   "faCodeBranch": () => (/* binding */ faCodeBranch),
+/* harmony export */   "faCoffee": () => (/* binding */ faCoffee),
+/* harmony export */   "faCog": () => (/* binding */ faCog),
+/* harmony export */   "faCogs": () => (/* binding */ faCogs),
+/* harmony export */   "faCoins": () => (/* binding */ faCoins),
+/* harmony export */   "faColumns": () => (/* binding */ faColumns),
+/* harmony export */   "faComment": () => (/* binding */ faComment),
+/* harmony export */   "faCommentAlt": () => (/* binding */ faCommentAlt),
+/* harmony export */   "faCommentDollar": () => (/* binding */ faCommentDollar),
+/* harmony export */   "faCommentDots": () => (/* binding */ faCommentDots),
+/* harmony export */   "faCommentMedical": () => (/* binding */ faCommentMedical),
+/* harmony export */   "faCommentSlash": () => (/* binding */ faCommentSlash),
+/* harmony export */   "faComments": () => (/* binding */ faComments),
+/* harmony export */   "faCommentsDollar": () => (/* binding */ faCommentsDollar),
+/* harmony export */   "faCompactDisc": () => (/* binding */ faCompactDisc),
+/* harmony export */   "faCompass": () => (/* binding */ faCompass),
+/* harmony export */   "faCompress": () => (/* binding */ faCompress),
+/* harmony export */   "faCompressAlt": () => (/* binding */ faCompressAlt),
+/* harmony export */   "faCompressArrowsAlt": () => (/* binding */ faCompressArrowsAlt),
+/* harmony export */   "faConciergeBell": () => (/* binding */ faConciergeBell),
+/* harmony export */   "faCookie": () => (/* binding */ faCookie),
+/* harmony export */   "faCookieBite": () => (/* binding */ faCookieBite),
+/* harmony export */   "faCopy": () => (/* binding */ faCopy),
+/* harmony export */   "faCopyright": () => (/* binding */ faCopyright),
+/* harmony export */   "faCouch": () => (/* binding */ faCouch),
+/* harmony export */   "faCreditCard": () => (/* binding */ faCreditCard),
+/* harmony export */   "faCrop": () => (/* binding */ faCrop),
+/* harmony export */   "faCropAlt": () => (/* binding */ faCropAlt),
+/* harmony export */   "faCross": () => (/* binding */ faCross),
+/* harmony export */   "faCrosshairs": () => (/* binding */ faCrosshairs),
+/* harmony export */   "faCrow": () => (/* binding */ faCrow),
+/* harmony export */   "faCrown": () => (/* binding */ faCrown),
+/* harmony export */   "faCrutch": () => (/* binding */ faCrutch),
+/* harmony export */   "faCube": () => (/* binding */ faCube),
+/* harmony export */   "faCubes": () => (/* binding */ faCubes),
+/* harmony export */   "faCut": () => (/* binding */ faCut),
+/* harmony export */   "faDatabase": () => (/* binding */ faDatabase),
+/* harmony export */   "faDeaf": () => (/* binding */ faDeaf),
+/* harmony export */   "faDemocrat": () => (/* binding */ faDemocrat),
+/* harmony export */   "faDesktop": () => (/* binding */ faDesktop),
+/* harmony export */   "faDharmachakra": () => (/* binding */ faDharmachakra),
+/* harmony export */   "faDiagnoses": () => (/* binding */ faDiagnoses),
+/* harmony export */   "faDice": () => (/* binding */ faDice),
+/* harmony export */   "faDiceD20": () => (/* binding */ faDiceD20),
+/* harmony export */   "faDiceD6": () => (/* binding */ faDiceD6),
+/* harmony export */   "faDiceFive": () => (/* binding */ faDiceFive),
+/* harmony export */   "faDiceFour": () => (/* binding */ faDiceFour),
+/* harmony export */   "faDiceOne": () => (/* binding */ faDiceOne),
+/* harmony export */   "faDiceSix": () => (/* binding */ faDiceSix),
+/* harmony export */   "faDiceThree": () => (/* binding */ faDiceThree),
+/* harmony export */   "faDiceTwo": () => (/* binding */ faDiceTwo),
+/* harmony export */   "faDigitalTachograph": () => (/* binding */ faDigitalTachograph),
+/* harmony export */   "faDirections": () => (/* binding */ faDirections),
+/* harmony export */   "faDisease": () => (/* binding */ faDisease),
+/* harmony export */   "faDivide": () => (/* binding */ faDivide),
+/* harmony export */   "faDizzy": () => (/* binding */ faDizzy),
+/* harmony export */   "faDna": () => (/* binding */ faDna),
+/* harmony export */   "faDog": () => (/* binding */ faDog),
+/* harmony export */   "faDollarSign": () => (/* binding */ faDollarSign),
+/* harmony export */   "faDolly": () => (/* binding */ faDolly),
+/* harmony export */   "faDollyFlatbed": () => (/* binding */ faDollyFlatbed),
+/* harmony export */   "faDonate": () => (/* binding */ faDonate),
+/* harmony export */   "faDoorClosed": () => (/* binding */ faDoorClosed),
+/* harmony export */   "faDoorOpen": () => (/* binding */ faDoorOpen),
+/* harmony export */   "faDotCircle": () => (/* binding */ faDotCircle),
+/* harmony export */   "faDove": () => (/* binding */ faDove),
+/* harmony export */   "faDownload": () => (/* binding */ faDownload),
+/* harmony export */   "faDraftingCompass": () => (/* binding */ faDraftingCompass),
+/* harmony export */   "faDragon": () => (/* binding */ faDragon),
+/* harmony export */   "faDrawPolygon": () => (/* binding */ faDrawPolygon),
+/* harmony export */   "faDrum": () => (/* binding */ faDrum),
+/* harmony export */   "faDrumSteelpan": () => (/* binding */ faDrumSteelpan),
+/* harmony export */   "faDrumstickBite": () => (/* binding */ faDrumstickBite),
+/* harmony export */   "faDumbbell": () => (/* binding */ faDumbbell),
+/* harmony export */   "faDumpster": () => (/* binding */ faDumpster),
+/* harmony export */   "faDumpsterFire": () => (/* binding */ faDumpsterFire),
+/* harmony export */   "faDungeon": () => (/* binding */ faDungeon),
+/* harmony export */   "faEdit": () => (/* binding */ faEdit),
+/* harmony export */   "faEgg": () => (/* binding */ faEgg),
+/* harmony export */   "faEject": () => (/* binding */ faEject),
+/* harmony export */   "faEllipsisH": () => (/* binding */ faEllipsisH),
+/* harmony export */   "faEllipsisV": () => (/* binding */ faEllipsisV),
+/* harmony export */   "faEnvelope": () => (/* binding */ faEnvelope),
+/* harmony export */   "faEnvelopeOpen": () => (/* binding */ faEnvelopeOpen),
+/* harmony export */   "faEnvelopeOpenText": () => (/* binding */ faEnvelopeOpenText),
+/* harmony export */   "faEnvelopeSquare": () => (/* binding */ faEnvelopeSquare),
+/* harmony export */   "faEquals": () => (/* binding */ faEquals),
+/* harmony export */   "faEraser": () => (/* binding */ faEraser),
+/* harmony export */   "faEthernet": () => (/* binding */ faEthernet),
+/* harmony export */   "faEuroSign": () => (/* binding */ faEuroSign),
+/* harmony export */   "faExchangeAlt": () => (/* binding */ faExchangeAlt),
+/* harmony export */   "faExclamation": () => (/* binding */ faExclamation),
+/* harmony export */   "faExclamationCircle": () => (/* binding */ faExclamationCircle),
+/* harmony export */   "faExclamationTriangle": () => (/* binding */ faExclamationTriangle),
+/* harmony export */   "faExpand": () => (/* binding */ faExpand),
+/* harmony export */   "faExpandAlt": () => (/* binding */ faExpandAlt),
+/* harmony export */   "faExpandArrowsAlt": () => (/* binding */ faExpandArrowsAlt),
+/* harmony export */   "faExternalLinkAlt": () => (/* binding */ faExternalLinkAlt),
+/* harmony export */   "faExternalLinkSquareAlt": () => (/* binding */ faExternalLinkSquareAlt),
+/* harmony export */   "faEye": () => (/* binding */ faEye),
+/* harmony export */   "faEyeDropper": () => (/* binding */ faEyeDropper),
+/* harmony export */   "faEyeSlash": () => (/* binding */ faEyeSlash),
+/* harmony export */   "faFan": () => (/* binding */ faFan),
+/* harmony export */   "faFastBackward": () => (/* binding */ faFastBackward),
+/* harmony export */   "faFastForward": () => (/* binding */ faFastForward),
+/* harmony export */   "faFaucet": () => (/* binding */ faFaucet),
+/* harmony export */   "faFax": () => (/* binding */ faFax),
+/* harmony export */   "faFeather": () => (/* binding */ faFeather),
+/* harmony export */   "faFeatherAlt": () => (/* binding */ faFeatherAlt),
+/* harmony export */   "faFemale": () => (/* binding */ faFemale),
+/* harmony export */   "faFighterJet": () => (/* binding */ faFighterJet),
+/* harmony export */   "faFile": () => (/* binding */ faFile),
+/* harmony export */   "faFileAlt": () => (/* binding */ faFileAlt),
+/* harmony export */   "faFileArchive": () => (/* binding */ faFileArchive),
+/* harmony export */   "faFileAudio": () => (/* binding */ faFileAudio),
+/* harmony export */   "faFileCode": () => (/* binding */ faFileCode),
+/* harmony export */   "faFileContract": () => (/* binding */ faFileContract),
+/* harmony export */   "faFileCsv": () => (/* binding */ faFileCsv),
+/* harmony export */   "faFileDownload": () => (/* binding */ faFileDownload),
+/* harmony export */   "faFileExcel": () => (/* binding */ faFileExcel),
+/* harmony export */   "faFileExport": () => (/* binding */ faFileExport),
+/* harmony export */   "faFileImage": () => (/* binding */ faFileImage),
+/* harmony export */   "faFileImport": () => (/* binding */ faFileImport),
+/* harmony export */   "faFileInvoice": () => (/* binding */ faFileInvoice),
+/* harmony export */   "faFileInvoiceDollar": () => (/* binding */ faFileInvoiceDollar),
+/* harmony export */   "faFileMedical": () => (/* binding */ faFileMedical),
+/* harmony export */   "faFileMedicalAlt": () => (/* binding */ faFileMedicalAlt),
+/* harmony export */   "faFilePdf": () => (/* binding */ faFilePdf),
+/* harmony export */   "faFilePowerpoint": () => (/* binding */ faFilePowerpoint),
+/* harmony export */   "faFilePrescription": () => (/* binding */ faFilePrescription),
+/* harmony export */   "faFileSignature": () => (/* binding */ faFileSignature),
+/* harmony export */   "faFileUpload": () => (/* binding */ faFileUpload),
+/* harmony export */   "faFileVideo": () => (/* binding */ faFileVideo),
+/* harmony export */   "faFileWord": () => (/* binding */ faFileWord),
+/* harmony export */   "faFill": () => (/* binding */ faFill),
+/* harmony export */   "faFillDrip": () => (/* binding */ faFillDrip),
+/* harmony export */   "faFilm": () => (/* binding */ faFilm),
+/* harmony export */   "faFilter": () => (/* binding */ faFilter),
+/* harmony export */   "faFingerprint": () => (/* binding */ faFingerprint),
+/* harmony export */   "faFire": () => (/* binding */ faFire),
+/* harmony export */   "faFireAlt": () => (/* binding */ faFireAlt),
+/* harmony export */   "faFireExtinguisher": () => (/* binding */ faFireExtinguisher),
+/* harmony export */   "faFirstAid": () => (/* binding */ faFirstAid),
+/* harmony export */   "faFish": () => (/* binding */ faFish),
+/* harmony export */   "faFistRaised": () => (/* binding */ faFistRaised),
+/* harmony export */   "faFlag": () => (/* binding */ faFlag),
+/* harmony export */   "faFlagCheckered": () => (/* binding */ faFlagCheckered),
+/* harmony export */   "faFlagUsa": () => (/* binding */ faFlagUsa),
+/* harmony export */   "faFlask": () => (/* binding */ faFlask),
+/* harmony export */   "faFlushed": () => (/* binding */ faFlushed),
+/* harmony export */   "faFolder": () => (/* binding */ faFolder),
+/* harmony export */   "faFolderMinus": () => (/* binding */ faFolderMinus),
+/* harmony export */   "faFolderOpen": () => (/* binding */ faFolderOpen),
+/* harmony export */   "faFolderPlus": () => (/* binding */ faFolderPlus),
+/* harmony export */   "faFont": () => (/* binding */ faFont),
+/* harmony export */   "faFontAwesomeLogoFull": () => (/* binding */ faFontAwesomeLogoFull),
+/* harmony export */   "faFootballBall": () => (/* binding */ faFootballBall),
+/* harmony export */   "faForward": () => (/* binding */ faForward),
+/* harmony export */   "faFrog": () => (/* binding */ faFrog),
+/* harmony export */   "faFrown": () => (/* binding */ faFrown),
+/* harmony export */   "faFrownOpen": () => (/* binding */ faFrownOpen),
+/* harmony export */   "faFunnelDollar": () => (/* binding */ faFunnelDollar),
+/* harmony export */   "faFutbol": () => (/* binding */ faFutbol),
+/* harmony export */   "faGamepad": () => (/* binding */ faGamepad),
+/* harmony export */   "faGasPump": () => (/* binding */ faGasPump),
+/* harmony export */   "faGavel": () => (/* binding */ faGavel),
+/* harmony export */   "faGem": () => (/* binding */ faGem),
+/* harmony export */   "faGenderless": () => (/* binding */ faGenderless),
+/* harmony export */   "faGhost": () => (/* binding */ faGhost),
+/* harmony export */   "faGift": () => (/* binding */ faGift),
+/* harmony export */   "faGifts": () => (/* binding */ faGifts),
+/* harmony export */   "faGlassCheers": () => (/* binding */ faGlassCheers),
+/* harmony export */   "faGlassMartini": () => (/* binding */ faGlassMartini),
+/* harmony export */   "faGlassMartiniAlt": () => (/* binding */ faGlassMartiniAlt),
+/* harmony export */   "faGlassWhiskey": () => (/* binding */ faGlassWhiskey),
+/* harmony export */   "faGlasses": () => (/* binding */ faGlasses),
+/* harmony export */   "faGlobe": () => (/* binding */ faGlobe),
+/* harmony export */   "faGlobeAfrica": () => (/* binding */ faGlobeAfrica),
+/* harmony export */   "faGlobeAmericas": () => (/* binding */ faGlobeAmericas),
+/* harmony export */   "faGlobeAsia": () => (/* binding */ faGlobeAsia),
+/* harmony export */   "faGlobeEurope": () => (/* binding */ faGlobeEurope),
+/* harmony export */   "faGolfBall": () => (/* binding */ faGolfBall),
+/* harmony export */   "faGopuram": () => (/* binding */ faGopuram),
+/* harmony export */   "faGraduationCap": () => (/* binding */ faGraduationCap),
+/* harmony export */   "faGreaterThan": () => (/* binding */ faGreaterThan),
+/* harmony export */   "faGreaterThanEqual": () => (/* binding */ faGreaterThanEqual),
+/* harmony export */   "faGrimace": () => (/* binding */ faGrimace),
+/* harmony export */   "faGrin": () => (/* binding */ faGrin),
+/* harmony export */   "faGrinAlt": () => (/* binding */ faGrinAlt),
+/* harmony export */   "faGrinBeam": () => (/* binding */ faGrinBeam),
+/* harmony export */   "faGrinBeamSweat": () => (/* binding */ faGrinBeamSweat),
+/* harmony export */   "faGrinHearts": () => (/* binding */ faGrinHearts),
+/* harmony export */   "faGrinSquint": () => (/* binding */ faGrinSquint),
+/* harmony export */   "faGrinSquintTears": () => (/* binding */ faGrinSquintTears),
+/* harmony export */   "faGrinStars": () => (/* binding */ faGrinStars),
+/* harmony export */   "faGrinTears": () => (/* binding */ faGrinTears),
+/* harmony export */   "faGrinTongue": () => (/* binding */ faGrinTongue),
+/* harmony export */   "faGrinTongueSquint": () => (/* binding */ faGrinTongueSquint),
+/* harmony export */   "faGrinTongueWink": () => (/* binding */ faGrinTongueWink),
+/* harmony export */   "faGrinWink": () => (/* binding */ faGrinWink),
+/* harmony export */   "faGripHorizontal": () => (/* binding */ faGripHorizontal),
+/* harmony export */   "faGripLines": () => (/* binding */ faGripLines),
+/* harmony export */   "faGripLinesVertical": () => (/* binding */ faGripLinesVertical),
+/* harmony export */   "faGripVertical": () => (/* binding */ faGripVertical),
+/* harmony export */   "faGuitar": () => (/* binding */ faGuitar),
+/* harmony export */   "faHSquare": () => (/* binding */ faHSquare),
+/* harmony export */   "faHamburger": () => (/* binding */ faHamburger),
+/* harmony export */   "faHammer": () => (/* binding */ faHammer),
+/* harmony export */   "faHamsa": () => (/* binding */ faHamsa),
+/* harmony export */   "faHandHolding": () => (/* binding */ faHandHolding),
+/* harmony export */   "faHandHoldingHeart": () => (/* binding */ faHandHoldingHeart),
+/* harmony export */   "faHandHoldingMedical": () => (/* binding */ faHandHoldingMedical),
+/* harmony export */   "faHandHoldingUsd": () => (/* binding */ faHandHoldingUsd),
+/* harmony export */   "faHandHoldingWater": () => (/* binding */ faHandHoldingWater),
+/* harmony export */   "faHandLizard": () => (/* binding */ faHandLizard),
+/* harmony export */   "faHandMiddleFinger": () => (/* binding */ faHandMiddleFinger),
+/* harmony export */   "faHandPaper": () => (/* binding */ faHandPaper),
+/* harmony export */   "faHandPeace": () => (/* binding */ faHandPeace),
+/* harmony export */   "faHandPointDown": () => (/* binding */ faHandPointDown),
+/* harmony export */   "faHandPointLeft": () => (/* binding */ faHandPointLeft),
+/* harmony export */   "faHandPointRight": () => (/* binding */ faHandPointRight),
+/* harmony export */   "faHandPointUp": () => (/* binding */ faHandPointUp),
+/* harmony export */   "faHandPointer": () => (/* binding */ faHandPointer),
+/* harmony export */   "faHandRock": () => (/* binding */ faHandRock),
+/* harmony export */   "faHandScissors": () => (/* binding */ faHandScissors),
+/* harmony export */   "faHandSparkles": () => (/* binding */ faHandSparkles),
+/* harmony export */   "faHandSpock": () => (/* binding */ faHandSpock),
+/* harmony export */   "faHands": () => (/* binding */ faHands),
+/* harmony export */   "faHandsHelping": () => (/* binding */ faHandsHelping),
+/* harmony export */   "faHandsWash": () => (/* binding */ faHandsWash),
+/* harmony export */   "faHandshake": () => (/* binding */ faHandshake),
+/* harmony export */   "faHandshakeAltSlash": () => (/* binding */ faHandshakeAltSlash),
+/* harmony export */   "faHandshakeSlash": () => (/* binding */ faHandshakeSlash),
+/* harmony export */   "faHanukiah": () => (/* binding */ faHanukiah),
+/* harmony export */   "faHardHat": () => (/* binding */ faHardHat),
+/* harmony export */   "faHashtag": () => (/* binding */ faHashtag),
+/* harmony export */   "faHatCowboy": () => (/* binding */ faHatCowboy),
+/* harmony export */   "faHatCowboySide": () => (/* binding */ faHatCowboySide),
+/* harmony export */   "faHatWizard": () => (/* binding */ faHatWizard),
+/* harmony export */   "faHdd": () => (/* binding */ faHdd),
+/* harmony export */   "faHeadSideCough": () => (/* binding */ faHeadSideCough),
+/* harmony export */   "faHeadSideCoughSlash": () => (/* binding */ faHeadSideCoughSlash),
+/* harmony export */   "faHeadSideMask": () => (/* binding */ faHeadSideMask),
+/* harmony export */   "faHeadSideVirus": () => (/* binding */ faHeadSideVirus),
+/* harmony export */   "faHeading": () => (/* binding */ faHeading),
+/* harmony export */   "faHeadphones": () => (/* binding */ faHeadphones),
+/* harmony export */   "faHeadphonesAlt": () => (/* binding */ faHeadphonesAlt),
+/* harmony export */   "faHeadset": () => (/* binding */ faHeadset),
+/* harmony export */   "faHeart": () => (/* binding */ faHeart),
+/* harmony export */   "faHeartBroken": () => (/* binding */ faHeartBroken),
+/* harmony export */   "faHeartbeat": () => (/* binding */ faHeartbeat),
+/* harmony export */   "faHelicopter": () => (/* binding */ faHelicopter),
+/* harmony export */   "faHighlighter": () => (/* binding */ faHighlighter),
+/* harmony export */   "faHiking": () => (/* binding */ faHiking),
+/* harmony export */   "faHippo": () => (/* binding */ faHippo),
+/* harmony export */   "faHistory": () => (/* binding */ faHistory),
+/* harmony export */   "faHockeyPuck": () => (/* binding */ faHockeyPuck),
+/* harmony export */   "faHollyBerry": () => (/* binding */ faHollyBerry),
+/* harmony export */   "faHome": () => (/* binding */ faHome),
+/* harmony export */   "faHorse": () => (/* binding */ faHorse),
+/* harmony export */   "faHorseHead": () => (/* binding */ faHorseHead),
+/* harmony export */   "faHospital": () => (/* binding */ faHospital),
+/* harmony export */   "faHospitalAlt": () => (/* binding */ faHospitalAlt),
+/* harmony export */   "faHospitalSymbol": () => (/* binding */ faHospitalSymbol),
+/* harmony export */   "faHospitalUser": () => (/* binding */ faHospitalUser),
+/* harmony export */   "faHotTub": () => (/* binding */ faHotTub),
+/* harmony export */   "faHotdog": () => (/* binding */ faHotdog),
+/* harmony export */   "faHotel": () => (/* binding */ faHotel),
+/* harmony export */   "faHourglass": () => (/* binding */ faHourglass),
+/* harmony export */   "faHourglassEnd": () => (/* binding */ faHourglassEnd),
+/* harmony export */   "faHourglassHalf": () => (/* binding */ faHourglassHalf),
+/* harmony export */   "faHourglassStart": () => (/* binding */ faHourglassStart),
+/* harmony export */   "faHouseDamage": () => (/* binding */ faHouseDamage),
+/* harmony export */   "faHouseUser": () => (/* binding */ faHouseUser),
+/* harmony export */   "faHryvnia": () => (/* binding */ faHryvnia),
+/* harmony export */   "faICursor": () => (/* binding */ faICursor),
+/* harmony export */   "faIceCream": () => (/* binding */ faIceCream),
+/* harmony export */   "faIcicles": () => (/* binding */ faIcicles),
+/* harmony export */   "faIcons": () => (/* binding */ faIcons),
+/* harmony export */   "faIdBadge": () => (/* binding */ faIdBadge),
+/* harmony export */   "faIdCard": () => (/* binding */ faIdCard),
+/* harmony export */   "faIdCardAlt": () => (/* binding */ faIdCardAlt),
+/* harmony export */   "faIgloo": () => (/* binding */ faIgloo),
+/* harmony export */   "faImage": () => (/* binding */ faImage),
+/* harmony export */   "faImages": () => (/* binding */ faImages),
+/* harmony export */   "faInbox": () => (/* binding */ faInbox),
+/* harmony export */   "faIndent": () => (/* binding */ faIndent),
+/* harmony export */   "faIndustry": () => (/* binding */ faIndustry),
+/* harmony export */   "faInfinity": () => (/* binding */ faInfinity),
+/* harmony export */   "faInfo": () => (/* binding */ faInfo),
+/* harmony export */   "faInfoCircle": () => (/* binding */ faInfoCircle),
+/* harmony export */   "faItalic": () => (/* binding */ faItalic),
+/* harmony export */   "faJedi": () => (/* binding */ faJedi),
+/* harmony export */   "faJoint": () => (/* binding */ faJoint),
+/* harmony export */   "faJournalWhills": () => (/* binding */ faJournalWhills),
+/* harmony export */   "faKaaba": () => (/* binding */ faKaaba),
+/* harmony export */   "faKey": () => (/* binding */ faKey),
+/* harmony export */   "faKeyboard": () => (/* binding */ faKeyboard),
+/* harmony export */   "faKhanda": () => (/* binding */ faKhanda),
+/* harmony export */   "faKiss": () => (/* binding */ faKiss),
+/* harmony export */   "faKissBeam": () => (/* binding */ faKissBeam),
+/* harmony export */   "faKissWinkHeart": () => (/* binding */ faKissWinkHeart),
+/* harmony export */   "faKiwiBird": () => (/* binding */ faKiwiBird),
+/* harmony export */   "faLandmark": () => (/* binding */ faLandmark),
+/* harmony export */   "faLanguage": () => (/* binding */ faLanguage),
+/* harmony export */   "faLaptop": () => (/* binding */ faLaptop),
+/* harmony export */   "faLaptopCode": () => (/* binding */ faLaptopCode),
+/* harmony export */   "faLaptopHouse": () => (/* binding */ faLaptopHouse),
+/* harmony export */   "faLaptopMedical": () => (/* binding */ faLaptopMedical),
+/* harmony export */   "faLaugh": () => (/* binding */ faLaugh),
+/* harmony export */   "faLaughBeam": () => (/* binding */ faLaughBeam),
+/* harmony export */   "faLaughSquint": () => (/* binding */ faLaughSquint),
+/* harmony export */   "faLaughWink": () => (/* binding */ faLaughWink),
+/* harmony export */   "faLayerGroup": () => (/* binding */ faLayerGroup),
+/* harmony export */   "faLeaf": () => (/* binding */ faLeaf),
+/* harmony export */   "faLemon": () => (/* binding */ faLemon),
+/* harmony export */   "faLessThan": () => (/* binding */ faLessThan),
+/* harmony export */   "faLessThanEqual": () => (/* binding */ faLessThanEqual),
+/* harmony export */   "faLevelDownAlt": () => (/* binding */ faLevelDownAlt),
+/* harmony export */   "faLevelUpAlt": () => (/* binding */ faLevelUpAlt),
+/* harmony export */   "faLifeRing": () => (/* binding */ faLifeRing),
+/* harmony export */   "faLightbulb": () => (/* binding */ faLightbulb),
+/* harmony export */   "faLink": () => (/* binding */ faLink),
+/* harmony export */   "faLiraSign": () => (/* binding */ faLiraSign),
+/* harmony export */   "faList": () => (/* binding */ faList),
+/* harmony export */   "faListAlt": () => (/* binding */ faListAlt),
+/* harmony export */   "faListOl": () => (/* binding */ faListOl),
+/* harmony export */   "faListUl": () => (/* binding */ faListUl),
+/* harmony export */   "faLocationArrow": () => (/* binding */ faLocationArrow),
+/* harmony export */   "faLock": () => (/* binding */ faLock),
+/* harmony export */   "faLockOpen": () => (/* binding */ faLockOpen),
+/* harmony export */   "faLongArrowAltDown": () => (/* binding */ faLongArrowAltDown),
+/* harmony export */   "faLongArrowAltLeft": () => (/* binding */ faLongArrowAltLeft),
+/* harmony export */   "faLongArrowAltRight": () => (/* binding */ faLongArrowAltRight),
+/* harmony export */   "faLongArrowAltUp": () => (/* binding */ faLongArrowAltUp),
+/* harmony export */   "faLowVision": () => (/* binding */ faLowVision),
+/* harmony export */   "faLuggageCart": () => (/* binding */ faLuggageCart),
+/* harmony export */   "faLungs": () => (/* binding */ faLungs),
+/* harmony export */   "faLungsVirus": () => (/* binding */ faLungsVirus),
+/* harmony export */   "faMagic": () => (/* binding */ faMagic),
+/* harmony export */   "faMagnet": () => (/* binding */ faMagnet),
+/* harmony export */   "faMailBulk": () => (/* binding */ faMailBulk),
+/* harmony export */   "faMale": () => (/* binding */ faMale),
+/* harmony export */   "faMap": () => (/* binding */ faMap),
+/* harmony export */   "faMapMarked": () => (/* binding */ faMapMarked),
+/* harmony export */   "faMapMarkedAlt": () => (/* binding */ faMapMarkedAlt),
+/* harmony export */   "faMapMarker": () => (/* binding */ faMapMarker),
+/* harmony export */   "faMapMarkerAlt": () => (/* binding */ faMapMarkerAlt),
+/* harmony export */   "faMapPin": () => (/* binding */ faMapPin),
+/* harmony export */   "faMapSigns": () => (/* binding */ faMapSigns),
+/* harmony export */   "faMarker": () => (/* binding */ faMarker),
+/* harmony export */   "faMars": () => (/* binding */ faMars),
+/* harmony export */   "faMarsDouble": () => (/* binding */ faMarsDouble),
+/* harmony export */   "faMarsStroke": () => (/* binding */ faMarsStroke),
+/* harmony export */   "faMarsStrokeH": () => (/* binding */ faMarsStrokeH),
+/* harmony export */   "faMarsStrokeV": () => (/* binding */ faMarsStrokeV),
+/* harmony export */   "faMask": () => (/* binding */ faMask),
+/* harmony export */   "faMedal": () => (/* binding */ faMedal),
+/* harmony export */   "faMedkit": () => (/* binding */ faMedkit),
+/* harmony export */   "faMeh": () => (/* binding */ faMeh),
+/* harmony export */   "faMehBlank": () => (/* binding */ faMehBlank),
+/* harmony export */   "faMehRollingEyes": () => (/* binding */ faMehRollingEyes),
+/* harmony export */   "faMemory": () => (/* binding */ faMemory),
+/* harmony export */   "faMenorah": () => (/* binding */ faMenorah),
+/* harmony export */   "faMercury": () => (/* binding */ faMercury),
+/* harmony export */   "faMeteor": () => (/* binding */ faMeteor),
+/* harmony export */   "faMicrochip": () => (/* binding */ faMicrochip),
+/* harmony export */   "faMicrophone": () => (/* binding */ faMicrophone),
+/* harmony export */   "faMicrophoneAlt": () => (/* binding */ faMicrophoneAlt),
+/* harmony export */   "faMicrophoneAltSlash": () => (/* binding */ faMicrophoneAltSlash),
+/* harmony export */   "faMicrophoneSlash": () => (/* binding */ faMicrophoneSlash),
+/* harmony export */   "faMicroscope": () => (/* binding */ faMicroscope),
+/* harmony export */   "faMinus": () => (/* binding */ faMinus),
+/* harmony export */   "faMinusCircle": () => (/* binding */ faMinusCircle),
+/* harmony export */   "faMinusSquare": () => (/* binding */ faMinusSquare),
+/* harmony export */   "faMitten": () => (/* binding */ faMitten),
+/* harmony export */   "faMobile": () => (/* binding */ faMobile),
+/* harmony export */   "faMobileAlt": () => (/* binding */ faMobileAlt),
+/* harmony export */   "faMoneyBill": () => (/* binding */ faMoneyBill),
+/* harmony export */   "faMoneyBillAlt": () => (/* binding */ faMoneyBillAlt),
+/* harmony export */   "faMoneyBillWave": () => (/* binding */ faMoneyBillWave),
+/* harmony export */   "faMoneyBillWaveAlt": () => (/* binding */ faMoneyBillWaveAlt),
+/* harmony export */   "faMoneyCheck": () => (/* binding */ faMoneyCheck),
+/* harmony export */   "faMoneyCheckAlt": () => (/* binding */ faMoneyCheckAlt),
+/* harmony export */   "faMonument": () => (/* binding */ faMonument),
+/* harmony export */   "faMoon": () => (/* binding */ faMoon),
+/* harmony export */   "faMortarPestle": () => (/* binding */ faMortarPestle),
+/* harmony export */   "faMosque": () => (/* binding */ faMosque),
+/* harmony export */   "faMotorcycle": () => (/* binding */ faMotorcycle),
+/* harmony export */   "faMountain": () => (/* binding */ faMountain),
+/* harmony export */   "faMouse": () => (/* binding */ faMouse),
+/* harmony export */   "faMousePointer": () => (/* binding */ faMousePointer),
+/* harmony export */   "faMugHot": () => (/* binding */ faMugHot),
+/* harmony export */   "faMusic": () => (/* binding */ faMusic),
+/* harmony export */   "faNetworkWired": () => (/* binding */ faNetworkWired),
+/* harmony export */   "faNeuter": () => (/* binding */ faNeuter),
+/* harmony export */   "faNewspaper": () => (/* binding */ faNewspaper),
+/* harmony export */   "faNotEqual": () => (/* binding */ faNotEqual),
+/* harmony export */   "faNotesMedical": () => (/* binding */ faNotesMedical),
+/* harmony export */   "faObjectGroup": () => (/* binding */ faObjectGroup),
+/* harmony export */   "faObjectUngroup": () => (/* binding */ faObjectUngroup),
+/* harmony export */   "faOilCan": () => (/* binding */ faOilCan),
+/* harmony export */   "faOm": () => (/* binding */ faOm),
+/* harmony export */   "faOtter": () => (/* binding */ faOtter),
+/* harmony export */   "faOutdent": () => (/* binding */ faOutdent),
+/* harmony export */   "faPager": () => (/* binding */ faPager),
+/* harmony export */   "faPaintBrush": () => (/* binding */ faPaintBrush),
+/* harmony export */   "faPaintRoller": () => (/* binding */ faPaintRoller),
+/* harmony export */   "faPalette": () => (/* binding */ faPalette),
+/* harmony export */   "faPallet": () => (/* binding */ faPallet),
+/* harmony export */   "faPaperPlane": () => (/* binding */ faPaperPlane),
+/* harmony export */   "faPaperclip": () => (/* binding */ faPaperclip),
+/* harmony export */   "faParachuteBox": () => (/* binding */ faParachuteBox),
+/* harmony export */   "faParagraph": () => (/* binding */ faParagraph),
+/* harmony export */   "faParking": () => (/* binding */ faParking),
+/* harmony export */   "faPassport": () => (/* binding */ faPassport),
+/* harmony export */   "faPastafarianism": () => (/* binding */ faPastafarianism),
+/* harmony export */   "faPaste": () => (/* binding */ faPaste),
+/* harmony export */   "faPause": () => (/* binding */ faPause),
+/* harmony export */   "faPauseCircle": () => (/* binding */ faPauseCircle),
+/* harmony export */   "faPaw": () => (/* binding */ faPaw),
+/* harmony export */   "faPeace": () => (/* binding */ faPeace),
+/* harmony export */   "faPen": () => (/* binding */ faPen),
+/* harmony export */   "faPenAlt": () => (/* binding */ faPenAlt),
+/* harmony export */   "faPenFancy": () => (/* binding */ faPenFancy),
+/* harmony export */   "faPenNib": () => (/* binding */ faPenNib),
+/* harmony export */   "faPenSquare": () => (/* binding */ faPenSquare),
+/* harmony export */   "faPencilAlt": () => (/* binding */ faPencilAlt),
+/* harmony export */   "faPencilRuler": () => (/* binding */ faPencilRuler),
+/* harmony export */   "faPeopleArrows": () => (/* binding */ faPeopleArrows),
+/* harmony export */   "faPeopleCarry": () => (/* binding */ faPeopleCarry),
+/* harmony export */   "faPepperHot": () => (/* binding */ faPepperHot),
+/* harmony export */   "faPercent": () => (/* binding */ faPercent),
+/* harmony export */   "faPercentage": () => (/* binding */ faPercentage),
+/* harmony export */   "faPersonBooth": () => (/* binding */ faPersonBooth),
+/* harmony export */   "faPhone": () => (/* binding */ faPhone),
+/* harmony export */   "faPhoneAlt": () => (/* binding */ faPhoneAlt),
+/* harmony export */   "faPhoneSlash": () => (/* binding */ faPhoneSlash),
+/* harmony export */   "faPhoneSquare": () => (/* binding */ faPhoneSquare),
+/* harmony export */   "faPhoneSquareAlt": () => (/* binding */ faPhoneSquareAlt),
+/* harmony export */   "faPhoneVolume": () => (/* binding */ faPhoneVolume),
+/* harmony export */   "faPhotoVideo": () => (/* binding */ faPhotoVideo),
+/* harmony export */   "faPiggyBank": () => (/* binding */ faPiggyBank),
+/* harmony export */   "faPills": () => (/* binding */ faPills),
+/* harmony export */   "faPizzaSlice": () => (/* binding */ faPizzaSlice),
+/* harmony export */   "faPlaceOfWorship": () => (/* binding */ faPlaceOfWorship),
+/* harmony export */   "faPlane": () => (/* binding */ faPlane),
+/* harmony export */   "faPlaneArrival": () => (/* binding */ faPlaneArrival),
+/* harmony export */   "faPlaneDeparture": () => (/* binding */ faPlaneDeparture),
+/* harmony export */   "faPlaneSlash": () => (/* binding */ faPlaneSlash),
+/* harmony export */   "faPlay": () => (/* binding */ faPlay),
+/* harmony export */   "faPlayCircle": () => (/* binding */ faPlayCircle),
+/* harmony export */   "faPlug": () => (/* binding */ faPlug),
+/* harmony export */   "faPlus": () => (/* binding */ faPlus),
+/* harmony export */   "faPlusCircle": () => (/* binding */ faPlusCircle),
+/* harmony export */   "faPlusSquare": () => (/* binding */ faPlusSquare),
+/* harmony export */   "faPodcast": () => (/* binding */ faPodcast),
+/* harmony export */   "faPoll": () => (/* binding */ faPoll),
+/* harmony export */   "faPollH": () => (/* binding */ faPollH),
+/* harmony export */   "faPoo": () => (/* binding */ faPoo),
+/* harmony export */   "faPooStorm": () => (/* binding */ faPooStorm),
+/* harmony export */   "faPoop": () => (/* binding */ faPoop),
+/* harmony export */   "faPortrait": () => (/* binding */ faPortrait),
+/* harmony export */   "faPoundSign": () => (/* binding */ faPoundSign),
+/* harmony export */   "faPowerOff": () => (/* binding */ faPowerOff),
+/* harmony export */   "faPray": () => (/* binding */ faPray),
+/* harmony export */   "faPrayingHands": () => (/* binding */ faPrayingHands),
+/* harmony export */   "faPrescription": () => (/* binding */ faPrescription),
+/* harmony export */   "faPrescriptionBottle": () => (/* binding */ faPrescriptionBottle),
+/* harmony export */   "faPrescriptionBottleAlt": () => (/* binding */ faPrescriptionBottleAlt),
+/* harmony export */   "faPrint": () => (/* binding */ faPrint),
+/* harmony export */   "faProcedures": () => (/* binding */ faProcedures),
+/* harmony export */   "faProjectDiagram": () => (/* binding */ faProjectDiagram),
+/* harmony export */   "faPumpMedical": () => (/* binding */ faPumpMedical),
+/* harmony export */   "faPumpSoap": () => (/* binding */ faPumpSoap),
+/* harmony export */   "faPuzzlePiece": () => (/* binding */ faPuzzlePiece),
+/* harmony export */   "faQrcode": () => (/* binding */ faQrcode),
+/* harmony export */   "faQuestion": () => (/* binding */ faQuestion),
+/* harmony export */   "faQuestionCircle": () => (/* binding */ faQuestionCircle),
+/* harmony export */   "faQuidditch": () => (/* binding */ faQuidditch),
+/* harmony export */   "faQuoteLeft": () => (/* binding */ faQuoteLeft),
+/* harmony export */   "faQuoteRight": () => (/* binding */ faQuoteRight),
+/* harmony export */   "faQuran": () => (/* binding */ faQuran),
+/* harmony export */   "faRadiation": () => (/* binding */ faRadiation),
+/* harmony export */   "faRadiationAlt": () => (/* binding */ faRadiationAlt),
+/* harmony export */   "faRainbow": () => (/* binding */ faRainbow),
+/* harmony export */   "faRandom": () => (/* binding */ faRandom),
+/* harmony export */   "faReceipt": () => (/* binding */ faReceipt),
+/* harmony export */   "faRecordVinyl": () => (/* binding */ faRecordVinyl),
+/* harmony export */   "faRecycle": () => (/* binding */ faRecycle),
+/* harmony export */   "faRedo": () => (/* binding */ faRedo),
+/* harmony export */   "faRedoAlt": () => (/* binding */ faRedoAlt),
+/* harmony export */   "faRegistered": () => (/* binding */ faRegistered),
+/* harmony export */   "faRemoveFormat": () => (/* binding */ faRemoveFormat),
+/* harmony export */   "faReply": () => (/* binding */ faReply),
+/* harmony export */   "faReplyAll": () => (/* binding */ faReplyAll),
+/* harmony export */   "faRepublican": () => (/* binding */ faRepublican),
+/* harmony export */   "faRestroom": () => (/* binding */ faRestroom),
+/* harmony export */   "faRetweet": () => (/* binding */ faRetweet),
+/* harmony export */   "faRibbon": () => (/* binding */ faRibbon),
+/* harmony export */   "faRing": () => (/* binding */ faRing),
+/* harmony export */   "faRoad": () => (/* binding */ faRoad),
+/* harmony export */   "faRobot": () => (/* binding */ faRobot),
+/* harmony export */   "faRocket": () => (/* binding */ faRocket),
+/* harmony export */   "faRoute": () => (/* binding */ faRoute),
+/* harmony export */   "faRss": () => (/* binding */ faRss),
+/* harmony export */   "faRssSquare": () => (/* binding */ faRssSquare),
+/* harmony export */   "faRubleSign": () => (/* binding */ faRubleSign),
+/* harmony export */   "faRuler": () => (/* binding */ faRuler),
+/* harmony export */   "faRulerCombined": () => (/* binding */ faRulerCombined),
+/* harmony export */   "faRulerHorizontal": () => (/* binding */ faRulerHorizontal),
+/* harmony export */   "faRulerVertical": () => (/* binding */ faRulerVertical),
+/* harmony export */   "faRunning": () => (/* binding */ faRunning),
+/* harmony export */   "faRupeeSign": () => (/* binding */ faRupeeSign),
+/* harmony export */   "faSadCry": () => (/* binding */ faSadCry),
+/* harmony export */   "faSadTear": () => (/* binding */ faSadTear),
+/* harmony export */   "faSatellite": () => (/* binding */ faSatellite),
+/* harmony export */   "faSatelliteDish": () => (/* binding */ faSatelliteDish),
+/* harmony export */   "faSave": () => (/* binding */ faSave),
+/* harmony export */   "faSchool": () => (/* binding */ faSchool),
+/* harmony export */   "faScrewdriver": () => (/* binding */ faScrewdriver),
+/* harmony export */   "faScroll": () => (/* binding */ faScroll),
+/* harmony export */   "faSdCard": () => (/* binding */ faSdCard),
+/* harmony export */   "faSearch": () => (/* binding */ faSearch),
+/* harmony export */   "faSearchDollar": () => (/* binding */ faSearchDollar),
+/* harmony export */   "faSearchLocation": () => (/* binding */ faSearchLocation),
+/* harmony export */   "faSearchMinus": () => (/* binding */ faSearchMinus),
+/* harmony export */   "faSearchPlus": () => (/* binding */ faSearchPlus),
+/* harmony export */   "faSeedling": () => (/* binding */ faSeedling),
+/* harmony export */   "faServer": () => (/* binding */ faServer),
+/* harmony export */   "faShapes": () => (/* binding */ faShapes),
+/* harmony export */   "faShare": () => (/* binding */ faShare),
+/* harmony export */   "faShareAlt": () => (/* binding */ faShareAlt),
+/* harmony export */   "faShareAltSquare": () => (/* binding */ faShareAltSquare),
+/* harmony export */   "faShareSquare": () => (/* binding */ faShareSquare),
+/* harmony export */   "faShekelSign": () => (/* binding */ faShekelSign),
+/* harmony export */   "faShieldAlt": () => (/* binding */ faShieldAlt),
+/* harmony export */   "faShieldVirus": () => (/* binding */ faShieldVirus),
+/* harmony export */   "faShip": () => (/* binding */ faShip),
+/* harmony export */   "faShippingFast": () => (/* binding */ faShippingFast),
+/* harmony export */   "faShoePrints": () => (/* binding */ faShoePrints),
+/* harmony export */   "faShoppingBag": () => (/* binding */ faShoppingBag),
+/* harmony export */   "faShoppingBasket": () => (/* binding */ faShoppingBasket),
+/* harmony export */   "faShoppingCart": () => (/* binding */ faShoppingCart),
+/* harmony export */   "faShower": () => (/* binding */ faShower),
+/* harmony export */   "faShuttleVan": () => (/* binding */ faShuttleVan),
+/* harmony export */   "faSign": () => (/* binding */ faSign),
+/* harmony export */   "faSignInAlt": () => (/* binding */ faSignInAlt),
+/* harmony export */   "faSignLanguage": () => (/* binding */ faSignLanguage),
+/* harmony export */   "faSignOutAlt": () => (/* binding */ faSignOutAlt),
+/* harmony export */   "faSignal": () => (/* binding */ faSignal),
+/* harmony export */   "faSignature": () => (/* binding */ faSignature),
+/* harmony export */   "faSimCard": () => (/* binding */ faSimCard),
+/* harmony export */   "faSink": () => (/* binding */ faSink),
+/* harmony export */   "faSitemap": () => (/* binding */ faSitemap),
+/* harmony export */   "faSkating": () => (/* binding */ faSkating),
+/* harmony export */   "faSkiing": () => (/* binding */ faSkiing),
+/* harmony export */   "faSkiingNordic": () => (/* binding */ faSkiingNordic),
+/* harmony export */   "faSkull": () => (/* binding */ faSkull),
+/* harmony export */   "faSkullCrossbones": () => (/* binding */ faSkullCrossbones),
+/* harmony export */   "faSlash": () => (/* binding */ faSlash),
+/* harmony export */   "faSleigh": () => (/* binding */ faSleigh),
+/* harmony export */   "faSlidersH": () => (/* binding */ faSlidersH),
+/* harmony export */   "faSmile": () => (/* binding */ faSmile),
+/* harmony export */   "faSmileBeam": () => (/* binding */ faSmileBeam),
+/* harmony export */   "faSmileWink": () => (/* binding */ faSmileWink),
+/* harmony export */   "faSmog": () => (/* binding */ faSmog),
+/* harmony export */   "faSmoking": () => (/* binding */ faSmoking),
+/* harmony export */   "faSmokingBan": () => (/* binding */ faSmokingBan),
+/* harmony export */   "faSms": () => (/* binding */ faSms),
+/* harmony export */   "faSnowboarding": () => (/* binding */ faSnowboarding),
+/* harmony export */   "faSnowflake": () => (/* binding */ faSnowflake),
+/* harmony export */   "faSnowman": () => (/* binding */ faSnowman),
+/* harmony export */   "faSnowplow": () => (/* binding */ faSnowplow),
+/* harmony export */   "faSoap": () => (/* binding */ faSoap),
+/* harmony export */   "faSocks": () => (/* binding */ faSocks),
+/* harmony export */   "faSolarPanel": () => (/* binding */ faSolarPanel),
+/* harmony export */   "faSort": () => (/* binding */ faSort),
+/* harmony export */   "faSortAlphaDown": () => (/* binding */ faSortAlphaDown),
+/* harmony export */   "faSortAlphaDownAlt": () => (/* binding */ faSortAlphaDownAlt),
+/* harmony export */   "faSortAlphaUp": () => (/* binding */ faSortAlphaUp),
+/* harmony export */   "faSortAlphaUpAlt": () => (/* binding */ faSortAlphaUpAlt),
+/* harmony export */   "faSortAmountDown": () => (/* binding */ faSortAmountDown),
+/* harmony export */   "faSortAmountDownAlt": () => (/* binding */ faSortAmountDownAlt),
+/* harmony export */   "faSortAmountUp": () => (/* binding */ faSortAmountUp),
+/* harmony export */   "faSortAmountUpAlt": () => (/* binding */ faSortAmountUpAlt),
+/* harmony export */   "faSortDown": () => (/* binding */ faSortDown),
+/* harmony export */   "faSortNumericDown": () => (/* binding */ faSortNumericDown),
+/* harmony export */   "faSortNumericDownAlt": () => (/* binding */ faSortNumericDownAlt),
+/* harmony export */   "faSortNumericUp": () => (/* binding */ faSortNumericUp),
+/* harmony export */   "faSortNumericUpAlt": () => (/* binding */ faSortNumericUpAlt),
+/* harmony export */   "faSortUp": () => (/* binding */ faSortUp),
+/* harmony export */   "faSpa": () => (/* binding */ faSpa),
+/* harmony export */   "faSpaceShuttle": () => (/* binding */ faSpaceShuttle),
+/* harmony export */   "faSpellCheck": () => (/* binding */ faSpellCheck),
+/* harmony export */   "faSpider": () => (/* binding */ faSpider),
+/* harmony export */   "faSpinner": () => (/* binding */ faSpinner),
+/* harmony export */   "faSplotch": () => (/* binding */ faSplotch),
+/* harmony export */   "faSprayCan": () => (/* binding */ faSprayCan),
+/* harmony export */   "faSquare": () => (/* binding */ faSquare),
+/* harmony export */   "faSquareFull": () => (/* binding */ faSquareFull),
+/* harmony export */   "faSquareRootAlt": () => (/* binding */ faSquareRootAlt),
+/* harmony export */   "faStamp": () => (/* binding */ faStamp),
+/* harmony export */   "faStar": () => (/* binding */ faStar),
+/* harmony export */   "faStarAndCrescent": () => (/* binding */ faStarAndCrescent),
+/* harmony export */   "faStarHalf": () => (/* binding */ faStarHalf),
+/* harmony export */   "faStarHalfAlt": () => (/* binding */ faStarHalfAlt),
+/* harmony export */   "faStarOfDavid": () => (/* binding */ faStarOfDavid),
+/* harmony export */   "faStarOfLife": () => (/* binding */ faStarOfLife),
+/* harmony export */   "faStepBackward": () => (/* binding */ faStepBackward),
+/* harmony export */   "faStepForward": () => (/* binding */ faStepForward),
+/* harmony export */   "faStethoscope": () => (/* binding */ faStethoscope),
+/* harmony export */   "faStickyNote": () => (/* binding */ faStickyNote),
+/* harmony export */   "faStop": () => (/* binding */ faStop),
+/* harmony export */   "faStopCircle": () => (/* binding */ faStopCircle),
+/* harmony export */   "faStopwatch": () => (/* binding */ faStopwatch),
+/* harmony export */   "faStopwatch20": () => (/* binding */ faStopwatch20),
+/* harmony export */   "faStore": () => (/* binding */ faStore),
+/* harmony export */   "faStoreAlt": () => (/* binding */ faStoreAlt),
+/* harmony export */   "faStoreAltSlash": () => (/* binding */ faStoreAltSlash),
+/* harmony export */   "faStoreSlash": () => (/* binding */ faStoreSlash),
+/* harmony export */   "faStream": () => (/* binding */ faStream),
+/* harmony export */   "faStreetView": () => (/* binding */ faStreetView),
+/* harmony export */   "faStrikethrough": () => (/* binding */ faStrikethrough),
+/* harmony export */   "faStroopwafel": () => (/* binding */ faStroopwafel),
+/* harmony export */   "faSubscript": () => (/* binding */ faSubscript),
+/* harmony export */   "faSubway": () => (/* binding */ faSubway),
+/* harmony export */   "faSuitcase": () => (/* binding */ faSuitcase),
+/* harmony export */   "faSuitcaseRolling": () => (/* binding */ faSuitcaseRolling),
+/* harmony export */   "faSun": () => (/* binding */ faSun),
+/* harmony export */   "faSuperscript": () => (/* binding */ faSuperscript),
+/* harmony export */   "faSurprise": () => (/* binding */ faSurprise),
+/* harmony export */   "faSwatchbook": () => (/* binding */ faSwatchbook),
+/* harmony export */   "faSwimmer": () => (/* binding */ faSwimmer),
+/* harmony export */   "faSwimmingPool": () => (/* binding */ faSwimmingPool),
+/* harmony export */   "faSynagogue": () => (/* binding */ faSynagogue),
+/* harmony export */   "faSync": () => (/* binding */ faSync),
+/* harmony export */   "faSyncAlt": () => (/* binding */ faSyncAlt),
+/* harmony export */   "faSyringe": () => (/* binding */ faSyringe),
+/* harmony export */   "faTable": () => (/* binding */ faTable),
+/* harmony export */   "faTableTennis": () => (/* binding */ faTableTennis),
+/* harmony export */   "faTablet": () => (/* binding */ faTablet),
+/* harmony export */   "faTabletAlt": () => (/* binding */ faTabletAlt),
+/* harmony export */   "faTablets": () => (/* binding */ faTablets),
+/* harmony export */   "faTachometerAlt": () => (/* binding */ faTachometerAlt),
+/* harmony export */   "faTag": () => (/* binding */ faTag),
+/* harmony export */   "faTags": () => (/* binding */ faTags),
+/* harmony export */   "faTape": () => (/* binding */ faTape),
+/* harmony export */   "faTasks": () => (/* binding */ faTasks),
+/* harmony export */   "faTaxi": () => (/* binding */ faTaxi),
+/* harmony export */   "faTeeth": () => (/* binding */ faTeeth),
+/* harmony export */   "faTeethOpen": () => (/* binding */ faTeethOpen),
+/* harmony export */   "faTemperatureHigh": () => (/* binding */ faTemperatureHigh),
+/* harmony export */   "faTemperatureLow": () => (/* binding */ faTemperatureLow),
+/* harmony export */   "faTenge": () => (/* binding */ faTenge),
+/* harmony export */   "faTerminal": () => (/* binding */ faTerminal),
+/* harmony export */   "faTextHeight": () => (/* binding */ faTextHeight),
+/* harmony export */   "faTextWidth": () => (/* binding */ faTextWidth),
+/* harmony export */   "faTh": () => (/* binding */ faTh),
+/* harmony export */   "faThLarge": () => (/* binding */ faThLarge),
+/* harmony export */   "faThList": () => (/* binding */ faThList),
+/* harmony export */   "faTheaterMasks": () => (/* binding */ faTheaterMasks),
+/* harmony export */   "faThermometer": () => (/* binding */ faThermometer),
+/* harmony export */   "faThermometerEmpty": () => (/* binding */ faThermometerEmpty),
+/* harmony export */   "faThermometerFull": () => (/* binding */ faThermometerFull),
+/* harmony export */   "faThermometerHalf": () => (/* binding */ faThermometerHalf),
+/* harmony export */   "faThermometerQuarter": () => (/* binding */ faThermometerQuarter),
+/* harmony export */   "faThermometerThreeQuarters": () => (/* binding */ faThermometerThreeQuarters),
+/* harmony export */   "faThumbsDown": () => (/* binding */ faThumbsDown),
+/* harmony export */   "faThumbsUp": () => (/* binding */ faThumbsUp),
+/* harmony export */   "faThumbtack": () => (/* binding */ faThumbtack),
+/* harmony export */   "faTicketAlt": () => (/* binding */ faTicketAlt),
+/* harmony export */   "faTimes": () => (/* binding */ faTimes),
+/* harmony export */   "faTimesCircle": () => (/* binding */ faTimesCircle),
+/* harmony export */   "faTint": () => (/* binding */ faTint),
+/* harmony export */   "faTintSlash": () => (/* binding */ faTintSlash),
+/* harmony export */   "faTired": () => (/* binding */ faTired),
+/* harmony export */   "faToggleOff": () => (/* binding */ faToggleOff),
+/* harmony export */   "faToggleOn": () => (/* binding */ faToggleOn),
+/* harmony export */   "faToilet": () => (/* binding */ faToilet),
+/* harmony export */   "faToiletPaper": () => (/* binding */ faToiletPaper),
+/* harmony export */   "faToiletPaperSlash": () => (/* binding */ faToiletPaperSlash),
+/* harmony export */   "faToolbox": () => (/* binding */ faToolbox),
+/* harmony export */   "faTools": () => (/* binding */ faTools),
+/* harmony export */   "faTooth": () => (/* binding */ faTooth),
+/* harmony export */   "faTorah": () => (/* binding */ faTorah),
+/* harmony export */   "faToriiGate": () => (/* binding */ faToriiGate),
+/* harmony export */   "faTractor": () => (/* binding */ faTractor),
+/* harmony export */   "faTrademark": () => (/* binding */ faTrademark),
+/* harmony export */   "faTrafficLight": () => (/* binding */ faTrafficLight),
+/* harmony export */   "faTrailer": () => (/* binding */ faTrailer),
+/* harmony export */   "faTrain": () => (/* binding */ faTrain),
+/* harmony export */   "faTram": () => (/* binding */ faTram),
+/* harmony export */   "faTransgender": () => (/* binding */ faTransgender),
+/* harmony export */   "faTransgenderAlt": () => (/* binding */ faTransgenderAlt),
+/* harmony export */   "faTrash": () => (/* binding */ faTrash),
+/* harmony export */   "faTrashAlt": () => (/* binding */ faTrashAlt),
+/* harmony export */   "faTrashRestore": () => (/* binding */ faTrashRestore),
+/* harmony export */   "faTrashRestoreAlt": () => (/* binding */ faTrashRestoreAlt),
+/* harmony export */   "faTree": () => (/* binding */ faTree),
+/* harmony export */   "faTrophy": () => (/* binding */ faTrophy),
+/* harmony export */   "faTruck": () => (/* binding */ faTruck),
+/* harmony export */   "faTruckLoading": () => (/* binding */ faTruckLoading),
+/* harmony export */   "faTruckMonster": () => (/* binding */ faTruckMonster),
+/* harmony export */   "faTruckMoving": () => (/* binding */ faTruckMoving),
+/* harmony export */   "faTruckPickup": () => (/* binding */ faTruckPickup),
+/* harmony export */   "faTshirt": () => (/* binding */ faTshirt),
+/* harmony export */   "faTty": () => (/* binding */ faTty),
+/* harmony export */   "faTv": () => (/* binding */ faTv),
+/* harmony export */   "faUmbrella": () => (/* binding */ faUmbrella),
+/* harmony export */   "faUmbrellaBeach": () => (/* binding */ faUmbrellaBeach),
+/* harmony export */   "faUnderline": () => (/* binding */ faUnderline),
+/* harmony export */   "faUndo": () => (/* binding */ faUndo),
+/* harmony export */   "faUndoAlt": () => (/* binding */ faUndoAlt),
+/* harmony export */   "faUniversalAccess": () => (/* binding */ faUniversalAccess),
+/* harmony export */   "faUniversity": () => (/* binding */ faUniversity),
+/* harmony export */   "faUnlink": () => (/* binding */ faUnlink),
+/* harmony export */   "faUnlock": () => (/* binding */ faUnlock),
+/* harmony export */   "faUnlockAlt": () => (/* binding */ faUnlockAlt),
+/* harmony export */   "faUpload": () => (/* binding */ faUpload),
+/* harmony export */   "faUser": () => (/* binding */ faUser),
+/* harmony export */   "faUserAlt": () => (/* binding */ faUserAlt),
+/* harmony export */   "faUserAltSlash": () => (/* binding */ faUserAltSlash),
+/* harmony export */   "faUserAstronaut": () => (/* binding */ faUserAstronaut),
+/* harmony export */   "faUserCheck": () => (/* binding */ faUserCheck),
+/* harmony export */   "faUserCircle": () => (/* binding */ faUserCircle),
+/* harmony export */   "faUserClock": () => (/* binding */ faUserClock),
+/* harmony export */   "faUserCog": () => (/* binding */ faUserCog),
+/* harmony export */   "faUserEdit": () => (/* binding */ faUserEdit),
+/* harmony export */   "faUserFriends": () => (/* binding */ faUserFriends),
+/* harmony export */   "faUserGraduate": () => (/* binding */ faUserGraduate),
+/* harmony export */   "faUserInjured": () => (/* binding */ faUserInjured),
+/* harmony export */   "faUserLock": () => (/* binding */ faUserLock),
+/* harmony export */   "faUserMd": () => (/* binding */ faUserMd),
+/* harmony export */   "faUserMinus": () => (/* binding */ faUserMinus),
+/* harmony export */   "faUserNinja": () => (/* binding */ faUserNinja),
+/* harmony export */   "faUserNurse": () => (/* binding */ faUserNurse),
+/* harmony export */   "faUserPlus": () => (/* binding */ faUserPlus),
+/* harmony export */   "faUserSecret": () => (/* binding */ faUserSecret),
+/* harmony export */   "faUserShield": () => (/* binding */ faUserShield),
+/* harmony export */   "faUserSlash": () => (/* binding */ faUserSlash),
+/* harmony export */   "faUserTag": () => (/* binding */ faUserTag),
+/* harmony export */   "faUserTie": () => (/* binding */ faUserTie),
+/* harmony export */   "faUserTimes": () => (/* binding */ faUserTimes),
+/* harmony export */   "faUsers": () => (/* binding */ faUsers),
+/* harmony export */   "faUsersCog": () => (/* binding */ faUsersCog),
+/* harmony export */   "faUsersSlash": () => (/* binding */ faUsersSlash),
+/* harmony export */   "faUtensilSpoon": () => (/* binding */ faUtensilSpoon),
+/* harmony export */   "faUtensils": () => (/* binding */ faUtensils),
+/* harmony export */   "faVectorSquare": () => (/* binding */ faVectorSquare),
+/* harmony export */   "faVenus": () => (/* binding */ faVenus),
+/* harmony export */   "faVenusDouble": () => (/* binding */ faVenusDouble),
+/* harmony export */   "faVenusMars": () => (/* binding */ faVenusMars),
+/* harmony export */   "faVest": () => (/* binding */ faVest),
+/* harmony export */   "faVestPatches": () => (/* binding */ faVestPatches),
+/* harmony export */   "faVial": () => (/* binding */ faVial),
+/* harmony export */   "faVials": () => (/* binding */ faVials),
+/* harmony export */   "faVideo": () => (/* binding */ faVideo),
+/* harmony export */   "faVideoSlash": () => (/* binding */ faVideoSlash),
+/* harmony export */   "faVihara": () => (/* binding */ faVihara),
+/* harmony export */   "faVirus": () => (/* binding */ faVirus),
+/* harmony export */   "faVirusSlash": () => (/* binding */ faVirusSlash),
+/* harmony export */   "faViruses": () => (/* binding */ faViruses),
+/* harmony export */   "faVoicemail": () => (/* binding */ faVoicemail),
+/* harmony export */   "faVolleyballBall": () => (/* binding */ faVolleyballBall),
+/* harmony export */   "faVolumeDown": () => (/* binding */ faVolumeDown),
+/* harmony export */   "faVolumeMute": () => (/* binding */ faVolumeMute),
+/* harmony export */   "faVolumeOff": () => (/* binding */ faVolumeOff),
+/* harmony export */   "faVolumeUp": () => (/* binding */ faVolumeUp),
+/* harmony export */   "faVoteYea": () => (/* binding */ faVoteYea),
+/* harmony export */   "faVrCardboard": () => (/* binding */ faVrCardboard),
+/* harmony export */   "faWalking": () => (/* binding */ faWalking),
+/* harmony export */   "faWallet": () => (/* binding */ faWallet),
+/* harmony export */   "faWarehouse": () => (/* binding */ faWarehouse),
+/* harmony export */   "faWater": () => (/* binding */ faWater),
+/* harmony export */   "faWaveSquare": () => (/* binding */ faWaveSquare),
+/* harmony export */   "faWeight": () => (/* binding */ faWeight),
+/* harmony export */   "faWeightHanging": () => (/* binding */ faWeightHanging),
+/* harmony export */   "faWheelchair": () => (/* binding */ faWheelchair),
+/* harmony export */   "faWifi": () => (/* binding */ faWifi),
+/* harmony export */   "faWind": () => (/* binding */ faWind),
+/* harmony export */   "faWindowClose": () => (/* binding */ faWindowClose),
+/* harmony export */   "faWindowMaximize": () => (/* binding */ faWindowMaximize),
+/* harmony export */   "faWindowMinimize": () => (/* binding */ faWindowMinimize),
+/* harmony export */   "faWindowRestore": () => (/* binding */ faWindowRestore),
+/* harmony export */   "faWineBottle": () => (/* binding */ faWineBottle),
+/* harmony export */   "faWineGlass": () => (/* binding */ faWineGlass),
+/* harmony export */   "faWineGlassAlt": () => (/* binding */ faWineGlassAlt),
+/* harmony export */   "faWonSign": () => (/* binding */ faWonSign),
+/* harmony export */   "faWrench": () => (/* binding */ faWrench),
+/* harmony export */   "faXRay": () => (/* binding */ faXRay),
+/* harmony export */   "faYenSign": () => (/* binding */ faYenSign),
+/* harmony export */   "faYinYang": () => (/* binding */ faYinYang)
+/* harmony export */ });
 /*!
  * Font Awesome Free 5.15.2 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
@@ -16076,17 +13824,17 @@ var _iconsCache = {
 /*!*****************************************************************!*\
   !*** ./node_modules/@fortawesome/react-fontawesome/index.es.js ***!
   \*****************************************************************/
-/*! exports provided: FontAwesomeIcon */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FontAwesomeIcon", function() { return FontAwesomeIcon; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "FontAwesomeIcon": () => (/* binding */ FontAwesomeIcon)
+/* harmony export */ });
 /* harmony import */ var _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @fortawesome/fontawesome-svg-core */ "./node_modules/@fortawesome/fontawesome-svg-core/index.es.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
 
 
 
@@ -16349,8 +14097,8 @@ function log () {
 }
 
 function normalizeIconArgs(icon) {
-  if (_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__["parse"].icon) {
-    return _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__["parse"].icon(icon);
+  if (_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__.parse.icon) {
+    return _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__.parse.icon(icon);
   } // if the icon is null, there's nothing to do
 
 
@@ -16404,9 +14152,9 @@ function FontAwesomeIcon(_ref) {
       titleId = props.titleId;
   var iconLookup = normalizeIconArgs(iconArgs);
   var classes = objectWithKey('classes', [].concat(_toConsumableArray(classList(props)), _toConsumableArray(className.split(' '))));
-  var transform = objectWithKey('transform', typeof props.transform === 'string' ? _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__["parse"].transform(props.transform) : props.transform);
+  var transform = objectWithKey('transform', typeof props.transform === 'string' ? _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__.parse.transform(props.transform) : props.transform);
   var mask = objectWithKey('mask', normalizeIconArgs(maskArgs));
-  var renderedIcon = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__["icon"])(iconLookup, _objectSpread2({}, classes, {}, transform, {}, mask, {
+  var renderedIcon = (0,_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__.icon)(iconLookup, _objectSpread2({}, classes, {}, transform, {}, mask, {
     symbol: symbol,
     title: title,
     titleId: titleId
@@ -16431,23 +14179,23 @@ function FontAwesomeIcon(_ref) {
 }
 FontAwesomeIcon.displayName = 'FontAwesomeIcon';
 FontAwesomeIcon.propTypes = {
-  border: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool,
-  className: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  mask: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object, prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array, prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string]),
-  fixedWidth: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool,
-  inverse: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool,
-  flip: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOf(['horizontal', 'vertical', 'both']),
-  icon: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object, prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array, prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string]),
-  listItem: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool,
-  pull: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOf(['right', 'left']),
-  pulse: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool,
-  rotation: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOf([0, 90, 180, 270]),
-  size: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOf(['lg', 'xs', 'sm', '1x', '2x', '3x', '4x', '5x', '6x', '7x', '8x', '9x', '10x']),
-  spin: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool,
-  symbol: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool, prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string]),
-  title: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  transform: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object]),
-  swapOpacity: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool
+  border: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().bool),
+  className: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().string),
+  mask: prop_types__WEBPACK_IMPORTED_MODULE_1___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_1___default().object), (prop_types__WEBPACK_IMPORTED_MODULE_1___default().array), (prop_types__WEBPACK_IMPORTED_MODULE_1___default().string)]),
+  fixedWidth: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().bool),
+  inverse: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().bool),
+  flip: prop_types__WEBPACK_IMPORTED_MODULE_1___default().oneOf(['horizontal', 'vertical', 'both']),
+  icon: prop_types__WEBPACK_IMPORTED_MODULE_1___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_1___default().object), (prop_types__WEBPACK_IMPORTED_MODULE_1___default().array), (prop_types__WEBPACK_IMPORTED_MODULE_1___default().string)]),
+  listItem: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().bool),
+  pull: prop_types__WEBPACK_IMPORTED_MODULE_1___default().oneOf(['right', 'left']),
+  pulse: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().bool),
+  rotation: prop_types__WEBPACK_IMPORTED_MODULE_1___default().oneOf([0, 90, 180, 270]),
+  size: prop_types__WEBPACK_IMPORTED_MODULE_1___default().oneOf(['lg', 'xs', 'sm', '1x', '2x', '3x', '4x', '5x', '6x', '7x', '8x', '9x', '10x']),
+  spin: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().bool),
+  symbol: prop_types__WEBPACK_IMPORTED_MODULE_1___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_1___default().bool), (prop_types__WEBPACK_IMPORTED_MODULE_1___default().string)]),
+  title: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().string),
+  transform: prop_types__WEBPACK_IMPORTED_MODULE_1___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_1___default().string), (prop_types__WEBPACK_IMPORTED_MODULE_1___default().object)]),
+  swapOpacity: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().bool)
 };
 FontAwesomeIcon.defaultProps = {
   border: false,
@@ -16468,7 +14216,7 @@ FontAwesomeIcon.defaultProps = {
   transform: null,
   swapOpacity: false
 };
-var convertCurry = convert.bind(null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement);
+var convertCurry = convert.bind(null, react__WEBPACK_IMPORTED_MODULE_2__.createElement);
 
 
 
@@ -16479,15 +14227,14 @@ var convertCurry = convert.bind(null, react__WEBPACK_IMPORTED_MODULE_2___default
 /*!******************************************************************************!*\
   !*** ./node_modules/@jamespotz/react-simple-readmore/dist/helpers/helper.js ***!
   \******************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, "__esModule", ({
   value: true
-});
+}));
 exports.preset = exports.animate = void 0;
 
 var animate = function animate(_ref, fn) {
@@ -16569,15 +14316,14 @@ exports.preset = preset;
 /*!*********************************************************************!*\
   !*** ./node_modules/@jamespotz/react-simple-readmore/dist/index.js ***!
   \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, "__esModule", ({
   value: true
-});
+}));
 exports.default = void 0;
 
 var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
@@ -16846,8 +14592,7 @@ exports.default = _default;
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
   \*************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = __webpack_require__(/*! ./lib/axios */ "./node_modules/axios/lib/axios.js");
 
@@ -16857,8 +14602,7 @@ module.exports = __webpack_require__(/*! ./lib/axios */ "./node_modules/axios/li
 /*!************************************************!*\
   !*** ./node_modules/axios/lib/adapters/xhr.js ***!
   \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -17048,8 +14792,7 @@ module.exports = function xhrAdapter(config) {
 /*!*****************************************!*\
   !*** ./node_modules/axios/lib/axios.js ***!
   \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -17113,8 +14856,7 @@ module.exports.default = axios;
 /*!*************************************************!*\
   !*** ./node_modules/axios/lib/cancel/Cancel.js ***!
   \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module) => {
 
 "use strict";
 
@@ -17144,8 +14886,7 @@ module.exports = Cancel;
 /*!******************************************************!*\
   !*** ./node_modules/axios/lib/cancel/CancelToken.js ***!
   \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -17213,8 +14954,7 @@ module.exports = CancelToken;
 /*!***************************************************!*\
   !*** ./node_modules/axios/lib/cancel/isCancel.js ***!
   \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module) => {
 
 "use strict";
 
@@ -17230,8 +14970,7 @@ module.exports = function isCancel(value) {
 /*!**********************************************!*\
   !*** ./node_modules/axios/lib/core/Axios.js ***!
   \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -17337,8 +15076,7 @@ module.exports = Axios;
 /*!***********************************************************!*\
   !*** ./node_modules/axios/lib/core/InterceptorManager.js ***!
   \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -17401,8 +15139,7 @@ module.exports = InterceptorManager;
 /*!******************************************************!*\
   !*** ./node_modules/axios/lib/core/buildFullPath.js ***!
   \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -17433,8 +15170,7 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
 /*!****************************************************!*\
   !*** ./node_modules/axios/lib/core/createError.js ***!
   \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -17463,8 +15199,7 @@ module.exports = function createError(message, config, code, request, response) 
 /*!********************************************************!*\
   !*** ./node_modules/axios/lib/core/dispatchRequest.js ***!
   \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -17554,8 +15289,7 @@ module.exports = function dispatchRequest(config) {
 /*!*****************************************************!*\
   !*** ./node_modules/axios/lib/core/enhanceError.js ***!
   \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module) => {
 
 "use strict";
 
@@ -17608,8 +15342,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 /*!****************************************************!*\
   !*** ./node_modules/axios/lib/core/mergeConfig.js ***!
   \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -17707,8 +15440,7 @@ module.exports = function mergeConfig(config1, config2) {
 /*!***********************************************!*\
   !*** ./node_modules/axios/lib/core/settle.js ***!
   \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -17744,8 +15476,7 @@ module.exports = function settle(resolve, reject, response) {
 /*!******************************************************!*\
   !*** ./node_modules/axios/lib/core/transformData.js ***!
   \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -17776,11 +15507,10 @@ module.exports = function transformData(data, headers, fns) {
 /*!********************************************!*\
   !*** ./node_modules/axios/lib/defaults.js ***!
   \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
+
 
 var utils = __webpack_require__(/*! ./utils */ "./node_modules/axios/lib/utils.js");
 var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ "./node_modules/axios/lib/helpers/normalizeHeaderName.js");
@@ -17879,7 +15609,6 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 
@@ -17887,8 +15616,7 @@ module.exports = defaults;
 /*!************************************************!*\
   !*** ./node_modules/axios/lib/helpers/bind.js ***!
   \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module) => {
 
 "use strict";
 
@@ -17910,8 +15638,7 @@ module.exports = function bind(fn, thisArg) {
 /*!****************************************************!*\
   !*** ./node_modules/axios/lib/helpers/buildURL.js ***!
   \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -17992,8 +15719,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 /*!*******************************************************!*\
   !*** ./node_modules/axios/lib/helpers/combineURLs.js ***!
   \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module) => {
 
 "use strict";
 
@@ -18018,8 +15744,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 /*!***************************************************!*\
   !*** ./node_modules/axios/lib/helpers/cookies.js ***!
   \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -18083,8 +15808,7 @@ module.exports = (
 /*!*********************************************************!*\
   !*** ./node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
   \*********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module) => {
 
 "use strict";
 
@@ -18109,8 +15833,7 @@ module.exports = function isAbsoluteURL(url) {
 /*!***********************************************************!*\
   !*** ./node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
   \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -18189,8 +15912,7 @@ module.exports = (
 /*!***************************************************************!*\
   !*** ./node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
   \***************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -18213,8 +15935,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 /*!********************************************************!*\
   !*** ./node_modules/axios/lib/helpers/parseHeaders.js ***!
   \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -18278,8 +15999,7 @@ module.exports = function parseHeaders(headers) {
 /*!**************************************************!*\
   !*** ./node_modules/axios/lib/helpers/spread.js ***!
   \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module) => {
 
 "use strict";
 
@@ -18317,8 +16037,7 @@ module.exports = function spread(callback) {
 /*!*****************************************!*\
   !*** ./node_modules/axios/lib/utils.js ***!
   \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -18676,12 +16395,2380 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./js/components/AccountProfile.jsx":
+/*!******************************************!*\
+  !*** ./js/components/AccountProfile.jsx ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fortawesome/free-regular-svg-icons */ "./node_modules/@fortawesome/free-regular-svg-icons/index.es.js");
+/* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-slick */ "./node_modules/react-slick/lib/index.js");
+/* harmony import */ var _jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @jamespotz/react-simple-readmore */ "./node_modules/@jamespotz/react-simple-readmore/dist/index.js");
+
+
+
+
+
+
+
+
+class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {
+        completedTopics: [],
+        uploadedVideos: [],
+        likedVideos: []
+      },
+      openRemovalForm: false
+    };
+    this.findAndSyncUser = this.findAndSyncUser.bind(this);
+    this.sendLike = this.sendLike.bind(this);
+    this.removeLike = this.removeLike.bind(this);
+    this.currentUserHasLikedVideo = this.currentUserHasLikedVideo.bind(this);
+    this.handleDeleteVideo = this.handleDeleteVideo.bind(this);
+  }
+
+  async componentDidMount() {
+    if (this.props.user) {
+      this.findAndSyncUser();
+    }
+  }
+
+  async findAndSyncUser() {
+    const userProfile = JSON.parse(this.props.user);
+    const authenticatedUser = JSON.parse(this.props.authenticatedUser);
+
+    if (userProfile && authenticatedUser) {
+      // Check if user has liked their own video
+      if (userProfile.uploadedVideos && authenticatedUser.likedVideos) {
+        userProfile.uploadedVideos.forEach(video => {
+          video.likedByCurrentUser = this.currentUserHasLikedVideo(video, authenticatedUser);
+        });
+      } // Check if user has liked their own video
+
+
+      if (userProfile.likedVideos && authenticatedUser.likedVideos) {
+        userProfile.likedVideos.forEach(video => {
+          video.likedByCurrentUser = this.currentUserHasLikedVideo(video, authenticatedUser);
+        });
+      }
+    }
+
+    this.setState({
+      user: userProfile
+    });
+  }
+
+  async sendLike(video, videoList, videoListType) {
+    const newLikedVideo = await fetch(`${document.location.origin}/sendLike/${video._id}`).then(res => res.json()).catch(error => console.log(error));
+
+    if (newLikedVideo.message) {
+      // Display error message if included in response
+      alert(newLikedVideo.message);
+    } else if (newLikedVideo) {
+      // Update the video state to be liked by the current user.
+      newLikedVideo.likedByCurrentUser = true;
+      let updatedUser = this.state.user;
+      videoList[videoList.indexOf(video)] = newLikedVideo;
+      updatedUser[videoListType] = videoList; // Check if re-sending like from liked videos so duplicate does not show
+
+      let videoAlreadyLiked = false;
+      updatedUser.likedVideos.forEach(userLikedVideo => {
+        if (String(video._id) == String(userLikedVideo._id)) {
+          videoAlreadyLiked = true; // Restore like to liked video
+
+          updatedUser.likedVideos[updatedUser.likedVideos.indexOf(userLikedVideo)] = newLikedVideo;
+        }
+      });
+
+      if (!videoAlreadyLiked && this.props.isCurrentUser) {
+        // If user likes their own video, add to liked videos
+        updatedUser.likedVideos.push(newLikedVideo);
+      } // Update uploaded video likes if restoring like from one in liked videos
+
+
+      updatedUser.uploadedVideos.forEach(userLikedVideo => {
+        if (String(video._id) == String(userLikedVideo._id)) {
+          videoAlreadyLiked = true; // Restore like to liked video
+
+          updatedUser.uploadedVideos[updatedUser.uploadedVideos.indexOf(userLikedVideo)] = newLikedVideo;
+        }
+      });
+      this.setState({
+        user: updatedUser
+      });
+    }
+  }
+
+  async removeLike(video, videoList, videoListType) {
+    const newUnlikedVideo = await fetch(`${document.location.origin}/removeLike/${video._id}`).then(res => res.json()).catch(error => console.log(error));
+
+    if (newUnlikedVideo.message) {
+      // Display error message if included in response
+      alert(newUnlikedVideo.message);
+    } else if (newUnlikedVideo) {
+      // Update the video state to remove like from the current user. Used immediately after unliking.
+      newUnlikedVideo.likedByCurrentUser = false;
+      let updatedUser = this.state.user;
+      videoList[videoList.indexOf(video)] = newUnlikedVideo;
+      updatedUser[videoListType] = videoList; // Update uploaded video likes if removing like from one in liked videos
+
+      updatedUser.uploadedVideos.forEach(userUploadedVideo => {
+        if (String(video._id) == String(userUploadedVideo._id)) {
+          updatedUser.uploadedVideos[updatedUser.uploadedVideos.indexOf(userUploadedVideo)] = newUnlikedVideo;
+        }
+      }); // Update liked video likes if removing like from one in uploaded videos
+
+      updatedUser.likedVideos.forEach(userLikedVideo => {
+        if (String(video._id) == String(userLikedVideo._id)) {
+          updatedUser.likedVideos[updatedUser.likedVideos.indexOf(userLikedVideo)] = newUnlikedVideo;
+        }
+      });
+      this.setState({
+        user: updatedUser
+      });
+    }
+  }
+
+  currentUserHasLikedVideo(video, user) {
+    let liked = false;
+    user.likedVideos.forEach(userLikedVideo => {
+      if (userLikedVideo._id === video._id) {
+        liked = true;
+      }
+    });
+    return liked;
+  }
+
+  handleDeleteVideo(event) {
+    if (this.state.openRemovalForm) {
+      this.state.openRemovalForm.submit();
+    }
+
+    this.setState({
+      openRemovalForm: event.target.parentElement
+    });
+  }
+
+  renderMedia(topic) {
+    if (topic.FeaturedImage) {
+      switch (topic.FeaturedImage.mime) {
+        case 'image/jpeg':
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+            className: "img-container"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+            src: `${"http://localhost:1337"}${topic.FeaturedImage.url}`
+          }));
+
+        default:
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Invalid media");
+      }
+    }
+  }
+
+  render() {
+    document.addEventListener('cssmodal:hide', () => {
+      this.setState({
+        openRemovalForm: false
+      });
+    });
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "frame"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_1__.default, null), this.props.isCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "Welcome, ", this.state.user.firstName, "!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: "/logout",
+      className: "button",
+      style: {
+        width: 'max-content'
+      }
+    }, "Logout", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__.faSignOutAlt
+    }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, this.state.user.firstName), this.state.user.completedTopics.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "topics"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
+      className: "text-center"
+    }, "Completed Topics"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_slick__WEBPACK_IMPORTED_MODULE_3__.default, {
+      dots: false,
+      infinite: false,
+      speed: 500,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      responsive: [{
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 1.5
+        }
+      }]
+    }, this.state.user.completedTopics.map(topic => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "topic pure-u-1 pure-u-md-11-24",
+      key: topic.id
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "pad"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "flex x-space-between"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", {
+      className: "pad no-y no-left"
+    }, topic.Topic), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: `${this.props.pathResolver}level/${topic.levelID}/topic/${topic.topicID}`,
+      className: "button"
+    }, "View Topic", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__.faLongArrowAltRight
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: `level/${topic.levelID}/topic/${topic.topicID}`
+    }, this.renderMedia(topic))))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
+      className: "text-center"
+    }, "No Completed Topics"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", null)), this.props.isCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+      className: "modal--show",
+      id: "remove-video",
+      tabIndex: "-1",
+      role: "dialog",
+      "aria-labelledby": "modal-label",
+      "aria-hidden": "true"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "modal-inner"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("header", {
+      id: "modal-label"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Remove Video")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "modal-content"
+    }, "Are you sure you want to remove this video?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("footer", {
+      className: "flex x-space-around"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      className: "button",
+      href: "#remove-video",
+      onClick: this.handleDeleteVideo
+    }, "Remove Video", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__.faTrash
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: "#!",
+      className: "button"
+    }, "Close", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__.faTimes
+    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: "#!",
+      className: "modal-close",
+      title: "Close this modal",
+      "data-close": "Close",
+      "data-dismiss": "modal"
+    }, "?")) : '', this.state.user.uploadedVideos.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
+      className: "text-center"
+    }, "Uploaded Videos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_slick__WEBPACK_IMPORTED_MODULE_3__.default, {
+      dots: false,
+      infinite: false,
+      speed: 500,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      responsive: [{
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 1.5
+        }
+      }]
+    }, this.state.user.uploadedVideos.map(video => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      key: video._id,
+      className: "pure-u-1 pure-u-lg-1-3"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "flex x-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "pure-u-1 flex x-space-between y-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      style: {
+        maxWidth: '65%'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_4__.default, {
+      fade: true,
+      minHeight: 58,
+      btnStyles: {
+        position: 'absolute',
+        bottom: '-15px',
+        border: 'none',
+        margin: 0,
+        padding: '5px',
+        zIndex: 1
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, video.title))), this.props.isCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+      action: "/videos/remove",
+      method: "POST"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "hidden",
+      name: "videoID",
+      value: video._id
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      className: "button",
+      href: "#remove-video",
+      onClick: this.handleDeleteVideo
+    }, "Remove Video", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__.faTrash
+    }))) : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("video", {
+      type: "video/mp4",
+      className: "video-preview lozad",
+      height: "225",
+      width: "400",
+      poster: `${this.props.pathResolver}${video.thumbnailSrc}` || "/images/videoPlaceholder.png",
+      controls: true
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("source", {
+      src: `${this.props.pathResolver}${video.src}`
+    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "flex x-space-around y-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Likes: ", video.likes || 0), video.likedByCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+      onClick: () => this.removeLike(video, this.state.user.uploadedVideos, 'uploadedVideos')
+    }, "Liked", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__.faStar
+    })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+      onClick: () => this.sendLike(video, this.state.user.uploadedVideos, 'uploadedVideos')
+    }, "Like", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faStar
+    }))))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
+      className: "text-center"
+    }, "No Uploaded Videos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", null)), this.state.user.likedVideos.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
+      className: "text-center"
+    }, "Liked Videos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_slick__WEBPACK_IMPORTED_MODULE_3__.default, {
+      dots: false,
+      infinite: false,
+      speed: 500,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      responsive: [{
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 1.5
+        }
+      }]
+    }, this.state.user.likedVideos.map(video => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      key: video._id,
+      className: "pure-u-1 pure-u-lg-1-3"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "flex x-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "flex x-space-between y-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      style: {
+        maxWidth: '65%'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_4__.default, {
+      fade: true,
+      minHeight: 58,
+      btnStyles: {
+        position: 'absolute',
+        bottom: '-15px',
+        border: 'none',
+        margin: 0,
+        padding: '5px',
+        zIndex: 1
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, video.title))), video.uploadedBy._id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "By: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: `/account-profile/${video.uploadedBy._id}`,
+      "aria-label": `${video.uploadedBy.displayName} profile`
+    }, video.uploadedBy.displayName))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "By: ", video.uploadedBy.displayName))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("video", {
+      type: "video/mp4",
+      className: "video-preview lozad",
+      height: "225",
+      width: "400",
+      poster: `${this.props.pathResolver}${video.thumbnailSrc}` || "/images/videoPlaceholder.png",
+      controls: true
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("source", {
+      src: `${this.props.pathResolver}${video.src}`
+    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "flex x-space-around y-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Likes: ", video.likes || 0), video.likedByCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+      onClick: () => this.removeLike(video, this.state.user.likedVideos, 'likedVideos')
+    }, "Liked", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__.faStar
+    })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+      onClick: () => this.sendLike(video, this.state.user.likedVideos, 'likedVideos')
+    }, "Like", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faStar
+    }))))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
+      className: "text-center"
+    }, "No Liked Videos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", null)));
+  }
+
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AccountProfile);
+
+/***/ }),
+
+/***/ "./js/components/Home.jsx":
+/*!********************************!*\
+  !*** ./js/components/Home.jsx ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var lozad__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lozad */ "./node_modules/lozad/dist/lozad.min.js");
+/* harmony import */ var lozad__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lozad__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-slick */ "./node_modules/react-slick/lib/index.js");
+/* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
+/* harmony import */ var _jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @jamespotz/react-simple-readmore */ "./node_modules/@jamespotz/react-simple-readmore/dist/index.js");
+/* harmony import */ var _VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./VideoPlayer.tsx */ "./js/components/VideoPlayer.tsx");
+/* harmony import */ var _VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_7__);
+
+
+
+
+
+
+
+
+
+ // Enable lazy loading
+
+const lozadObserver = lozad__WEBPACK_IMPORTED_MODULE_2___default()();
+lozadObserver.observe();
+
+class Home extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
+  constructor() {
+    super();
+    this.state = {
+      sortControlStatus: '',
+      recentVideos: [],
+      userLikedVideos: []
+    };
+    this.toggleSortControls = this.toggleSortControls.bind(this);
+    this.handleSortChange = this.handleSortChange.bind(this);
+    this.sendLike = this.sendLike.bind(this);
+    this.removeLike = this.removeLike.bind(this);
+    this.currentUserHasLikedVideo = this.currentUserHasLikedVideo.bind(this);
+  }
+
+  componentDidMount() {
+    // Get recent videos
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get(`${document.location.origin}/recent-videos`).then(res => {
+      // console.log(res)
+      this.setState({
+        recentVideos: res.data.videos
+      }, () => {
+        // Check if the current user has liked each video
+        let likedRecentVideos = [];
+
+        if (this.props.userLikedVideos) {
+          // console.log(JSON.parse(this.props.userLikedVideos))
+          this.setState({
+            userLikedVideos: JSON.parse(this.props.userLikedVideos)
+          }, () => {
+            this.state.recentVideos.forEach(video => {
+              video.likedByCurrentUser = this.currentUserHasLikedVideo(video);
+              likedRecentVideos.push(video);
+            });
+            this.setState({
+              recentVideos: likedRecentVideos
+            });
+          });
+        }
+      });
+    });
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get(`${"http://localhost:1337"}/levels`).then(res => {
+      // console.log(res)
+      this.setState({
+        levels: res.data
+      });
+    });
+  }
+
+  toggleSortControls() {
+    let newStatus = this.state.sortControlStatus ? '' : 'open';
+    this.setState({
+      sortControlStatus: newStatus
+    });
+  }
+
+  handleSortChange(event) {
+    this.setState({
+      sort: event.target.value
+    }); // This approach triggers the onSubmit handler
+
+    event.target.form.querySelector('input[type="submit"]').click();
+  }
+
+  async sendLike(video) {
+    const newLikedVideo = await fetch(`${document.location.origin}/sendLike/${video._id}`).then(res => res.json()).catch(error => console.log(error));
+
+    if (newLikedVideo.message) {
+      // Display error message if included in response
+      alert(newLikedVideo.message);
+    } else if (newLikedVideo) {
+      // Update the video state to be liked by the current user. Used immediately after liking.
+      newLikedVideo.likedByCurrentUser = true;
+      let newVideos = this.state.recentVideos;
+      newVideos[newVideos.indexOf(video)] = newLikedVideo; // Add video to user's liked videos. Used when a re-render occurs.
+
+      let newUserLikedVideos = this.state.userLikedVideos;
+      newUserLikedVideos.push(video);
+      this.setState({
+        recentVideos: newVideos,
+        userLikedVideos: newUserLikedVideos
+      });
+    }
+  }
+
+  async removeLike(video) {
+    const newUnlikedVideo = await fetch(`${document.location.origin}/removeLike/${video._id}`).then(res => res.json()).catch(error => console.log(error));
+
+    if (newUnlikedVideo.message) {
+      // Display error message if included in response
+      alert(newUnlikedVideo.message);
+    } else if (newUnlikedVideo) {
+      // Update the video state to remove like from the current user. Used immediately after unliking.
+      newUnlikedVideo.likedByCurrentUser = false;
+      let newVideos = this.state.recentVideos;
+      newVideos[newVideos.indexOf(video)] = newUnlikedVideo; // Remove video from user's liked videos. Used when a re-render occurs.
+
+      let newUserLikedVideos = [];
+      this.state.userLikedVideos.forEach(userLikedVideo => {
+        if (userLikedVideo._id != video._id) {
+          newUserLikedVideos.push(userLikedVideo);
+        }
+      });
+      this.setState({
+        recentVideos: newVideos,
+        userLikedVideos: newUserLikedVideos
+      });
+    }
+  }
+
+  currentUserHasLikedVideo(video) {
+    let liked = false;
+    this.state.userLikedVideos.forEach(userLikedVideo => {
+      if (userLikedVideo._id === video._id) {
+        liked = true;
+      }
+    });
+    return liked;
+  }
+
+  renderMedia(topic) {
+    if (topic.FeaturedImage) {
+      switch (topic.FeaturedImage.mime) {
+        case 'image/jpeg':
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+            className: "img-container"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+            src: `${"http://localhost:1337"}${topic.FeaturedImage.url}`
+          }));
+
+        default:
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Invalid media");
+      }
+    }
+  }
+
+  randomTopics(level) {
+    if (level.topicsRandomized) {
+      return level.topics;
+    } else {
+      level.topicsRandomized = true;
+      level.topics = level.topics.sort(() => .5 - Math.random()).slice(0, 5);
+      return level.topics;
+    }
+  }
+
+  render() {
+    var {
+      strapiTestImage
+    } = this.state || 'notfound';
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "frame"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_5__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "page-form"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Let's enjoy your"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "User Submissions"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+      action: "/videos",
+      method: "GET"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "flex"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "search-input"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "text",
+      name: "keywords",
+      placeholder: "Search video submissions"
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_8__.faSearch
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "submit",
+      value: "Search"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "sort-controls flex"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "control-icon pure-u-1",
+      onClick: this.toggleSortControls
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_8__.faSlidersH
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: `sort-options flex pure-u-1 ${this.state.sortControlStatus}`
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+      htmlFor: "sort-all"
+    }, "All"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "",
+      id: "sort-all",
+      checked: this.state.sort === '' ? true : false,
+      onChange: this.handleSortChange
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+      htmlFor: "sort-oldest"
+    }, "Oldest"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "Oldest",
+      id: "sort-oldest",
+      checked: this.state.sort === 'Oldest' ? true : false,
+      onChange: this.handleSortChange
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+      htmlFor: "sort-recent"
+    }, "Recent"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "Recent",
+      id: "sort-recent",
+      checked: this.state.sort === 'Recent' ? true : false,
+      onChange: this.handleSortChange
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+      htmlFor: "sort-AZ"
+    }, "A-Z"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "A-Z",
+      id: "sort-AZ",
+      checked: this.state.sort === 'A-Z' ? true : false,
+      onChange: this.handleSortChange
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+      htmlFor: "sort-ZA"
+    }, "Z-A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "Z-A",
+      id: "sort-ZA",
+      checked: this.state.sort === 'Z-A' ? true : false,
+      onChange: this.handleSortChange
+    }))))))), this.state.recentVideos.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "pad no-x"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Recent Submissions"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_slick__WEBPACK_IMPORTED_MODULE_4__.default, {
+      dots: false,
+      infinite: false,
+      speed: 500,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      responsive: [{
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 1.5
+        }
+      }]
+    }, this.state.recentVideos.map(video => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      key: video._id
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_7___default()), {
+      _id: video._id,
+      title: video.title,
+      src: video.src,
+      thumbnailSrc: video.thumbnailSrc,
+      uploadedBy: video.uploadedBy,
+      likes: video.likes,
+      likedByCurrentUser: this.currentUserHasLikedVideo(video)
+    }))))) : '', this.state.levels ? this.state.levels.map(level => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      key: level.id,
+      className: "flex x-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
+      className: "pad"
+    }, "Level ", level.Level), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: `/level/${level.id}`,
+      className: "button",
+      style: {
+        alignSelf: 'center'
+      }
+    }, "View Level", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_8__.faLongArrowAltRight
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "pure-u-1"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", null)), level.topics ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "topics pure-u-1 flex x-space-around"
+    }, this.randomTopics(level).map(topic => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "topic pure-u-1 pure-u-md-1-3",
+      key: topic.id
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "pad"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "flex x-space-between"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", {
+      className: "pad no-y no-left"
+    }, topic.Topic), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: `/level/${level.id}/topic/${topic.id}`,
+      className: "button"
+    }, "View Topic", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_8__.faLongArrowAltRight
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: `/level/${level.id}/topic/${topic.id}`
+    }, this.renderMedia(topic)))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "No topics"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "No levels"));
+  }
+
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Home);
+
+/***/ }),
+
+/***/ "./js/components/Level.jsx":
+/*!*********************************!*\
+  !*** ./js/components/Level.jsx ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-slick */ "./node_modules/react-slick/lib/index.js");
+/* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
+
+
+
+
+
+
+
+class Level extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
+  constructor() {
+    super();
+    this.state = {
+      topics: []
+    };
+  }
+
+  componentDidMount() {
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get(`${"http://localhost:1337"}/levels/${this.props.levelID}`).then(res => {
+      this.setState({
+        topics: res.data.topics
+      });
+    });
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get(`${"http://localhost:1337"}/challenges`).then(res => {
+      console.log(res);
+
+      if (res.data) {
+        res.data.forEach(challenge => {
+          if (challenge.topic) {
+            var topics = this.state.topics;
+            topics.forEach(topic => {
+              if (topic.id === challenge.topic.id) {
+                topic.challenges = topic.challenges ? topic.challenges.concat(challenge) : [challenge];
+                this.setState({
+                  topics
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  }
+
+  renderMedia(topic) {
+    if (topic.FeaturedImage) {
+      switch (topic.FeaturedImage.mime) {
+        case 'image/jpeg':
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+            className: "img-container"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+            src: `${"http://localhost:1337"}${topic.FeaturedImage.url}`
+          }));
+
+        default:
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Invalid media");
+      }
+    }
+  }
+
+  randomChallenges(topic) {
+    return topic.challenges.sort(() => .5 - Math.random()).slice(0, 5);
+  }
+
+  render() {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "frame"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_4__.default, null), this.state.topics ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "topics pure-u-1 flex x-space-around"
+    }, this.state.topics.map(topic => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      key: this.state.topics.indexOf(topic),
+      className: "topic pure-u-1 pure-u-md-1-3"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "pad"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "flex x-space-between"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
+      className: "pad"
+    }, topic.Topic), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: `/level/${this.props.levelID}/topic/${topic.id}`,
+      className: "button",
+      style: {
+        alignSelf: 'center'
+      }
+    }, "View Topic", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__.faLongArrowAltRight
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: `/level/${this.props.levelID}/topic/${topic.id}`
+    }, this.renderMedia(topic))), topic.challenges ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "challenges"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_slick__WEBPACK_IMPORTED_MODULE_3__.default, {
+      dots: false,
+      arrows: true,
+      infinite: false,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "pad"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, "Need a quick refresher? Slide forward to preview challenges."))), this.randomChallenges(topic).map(challenge => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      key: topic.challenges.indexOf(challenge),
+      className: "challenge"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "pad"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, challenge.Title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, challenge.Content)))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "No challenges"))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "No topics"));
+  }
+
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Level);
+
+/***/ }),
+
+/***/ "./js/components/Login.jsx":
+/*!*********************************!*\
+  !*** ./js/components/Login.jsx ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/free-brands-svg-icons */ "./node_modules/@fortawesome/free-brands-svg-icons/index.es.js");
+/* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
+
+
+
+
+
+
+class Login extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      errors: []
+    };
+  }
+
+  componentDidMount() {
+    if (this.props.errors) {
+      this.setState({
+        errors: JSON.parse(this.props.errors)
+      });
+    }
+  }
+
+  render() {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "frame"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_2__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "page-form"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "Login"), this.state.errors.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
+      className: "errors"
+    }, this.state.errors.map(error => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
+      key: this.state.errors.indexOf(error)
+    }, error))) : '', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+      action: "/login",
+      method: "POST",
+      className: "flex-col x-end"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "small-pad no-x"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "text",
+      name: "displayName",
+      placeholder: "Display Name",
+      "aria-label": "display name"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "small-pad no-x"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "password",
+      name: "password",
+      placeholder: "Password",
+      "aria-label": "password"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "small-pad no-x"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+      type: "submit"
+    }, "Login", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faLongArrowAltRight
+    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: "/register",
+      className: "button"
+    }, "Register", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faLongArrowAltRight
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: "/auth/google",
+      className: "button"
+    }, "Login with Google", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+      icon: _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faGoogle
+    }))));
+  }
+
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Login);
+
+/***/ }),
+
+/***/ "./js/components/Navigation.jsx":
+/*!**************************************!*\
+  !*** ./js/components/Navigation.jsx ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+
+
+
+
+class Navigation extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
+  render() {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("nav", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "flex"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "small-pad"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: `/`,
+      className: "button"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Home"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faHome
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "small-pad"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: `/videos`,
+      className: "button"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Videos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faPlay
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "small-pad"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: "/videos/add",
+      className: "button"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Add a video"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faPlus
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "small-pad"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: "/account-profile",
+      className: "button"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Account Profile"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faUser
+    })))));
+  }
+
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Navigation);
+
+/***/ }),
+
+/***/ "./js/components/Register.jsx":
+/*!************************************!*\
+  !*** ./js/components/Register.jsx ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/free-brands-svg-icons */ "./node_modules/@fortawesome/free-brands-svg-icons/index.es.js");
+/* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
+
+
+
+
+
+
+class Register extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      errors: []
+    };
+  }
+
+  componentDidMount() {
+    if (this.props.errors) {
+      this.setState({
+        errors: JSON.parse(this.props.errors)
+      });
+    }
+  }
+
+  render() {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "frame"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_2__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "page-form"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "Register"), this.state.errors.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
+      className: "errors"
+    }, this.state.errors.map(error => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
+      key: this.state.errors.indexOf(error)
+    }, error))) : '', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+      action: "/register",
+      method: "POST",
+      className: "flex-col x-end"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "small-pad no-x"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "text",
+      name: "firstName",
+      placeholder: "First Name",
+      "aria-label": "first name"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "small-pad no-x"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "text",
+      name: "lastName",
+      placeholder: "Last Name",
+      "aria-label": "last name"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "small-pad no-x"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "text",
+      name: "displayName",
+      placeholder: "Display Name",
+      "aria-label": "display name"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "small-pad no-x"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "password",
+      name: "password",
+      placeholder: "Password",
+      "aria-label": "password"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "small-pad no-x"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "password",
+      name: "confirmPassword",
+      placeholder: "Confirm Password",
+      "aria-label": "confirm password"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "small-pad no-x"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+      type: "submit"
+    }, "Register", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faLongArrowAltRight
+    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: "/auth/google",
+      className: "button"
+    }, "Register with Google", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+      icon: _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faGoogle
+    }))));
+  }
+
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Register);
+
+/***/ }),
+
+/***/ "./js/components/Topic.jsx":
+/*!*********************************!*\
+  !*** ./js/components/Topic.jsx ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
+
+
+
+
+
+
+function shuffleArray(array) {
+  let newArray = [...array];
+
+  for (var i = array.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = newArray[i];
+    newArray[i] = newArray[j];
+    newArray[j] = temp;
+  }
+
+  newArray = newArray.sort((a, b) => a.answered ? -1 : 1);
+  return newArray;
+}
+
+class Topic extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
+  constructor() {
+    super();
+    this.state = {
+      challenges: [],
+      optionsStatus: '',
+      allChallengesAnswered: false
+    };
+    this.handleToggleOptions = this.handleToggleOptions.bind(this);
+    this.checkAnswerInput = this.checkAnswerInput.bind(this);
+    this.handleResetTopic = this.handleResetTopic.bind(this);
+  }
+
+  componentDidMount() {
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get(`${"http://localhost:1337"}/topics/${this.props.topicID}`).then(res => {
+      // console.log(res)
+      if (res.data) {
+        this.setState({
+          topic: res.data.Topic
+        });
+      }
+    });
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get(`${"http://localhost:1337"}/challenges`).then(res => {
+      if (res.data) {
+        res.data.forEach(challenge => {
+          if (challenge.topic) {
+            var challenges = this.state.challenges;
+
+            if (this.props.topicID == challenge.topic.id) {
+              challenges = challenges.concat(challenge);
+              this.setState({
+                challenges
+              }, () => {
+                if (this.props.completed) {
+                  let completedChalleges = [];
+                  this.state.challenges.forEach(stateChallenge => {
+                    stateChallenge.answered = 'correct';
+                    completedChalleges.push(stateChallenge);
+                  });
+                  this.setState({
+                    challenges: completedChalleges,
+                    allChallengesAnswered: true
+                  });
+                }
+              });
+            }
+          }
+        });
+      }
+    });
+  }
+
+  handleToggleOptions() {
+    this.setState({
+      optionsStatus: this.state.optionsStatus == 'opened' ? '' : 'opened'
+    });
+  }
+
+  checkAnswerInput(input, challenge) {
+    if (input.toLowerCase() == challenge.Title.toLowerCase()) {
+      const newState = this.state;
+      const challengeIndex = newState.challenges.indexOf(challenge);
+      challenge.answered = 'correct';
+      newState.challenges[challengeIndex] = challenge;
+      this.setState({ ...newState
+      });
+    } // Check to see if all challenges have been answered correctly
+
+
+    let allChallengesAnswered = true;
+    this.state.challenges.forEach(challenge => {
+      if (!challenge.answered) {
+        allChallengesAnswered = false;
+      }
+    });
+
+    if (allChallengesAnswered) {
+      alert('Congratulations! You have answered each challenge correctly.');
+      axios__WEBPACK_IMPORTED_MODULE_1___default().post(`/level/${this.props.levelID}/topic/${this.props.topicID}`).then(res => {
+        if (res.data) {// console.log(res.data)
+        }
+      });
+      this.setState({
+        allChallengesAnswered
+      });
+    }
+  }
+
+  handleResetTopic() {
+    axios__WEBPACK_IMPORTED_MODULE_1___default().post(`/level/${this.props.levelID}/topic/${this.props.topicID}/reset`);
+    this.setState({
+      allChallengesAnswered: false
+    });
+    let completedChalleges = [];
+    this.state.challenges.forEach(stateChallenge => {
+      delete stateChallenge.answered;
+      completedChalleges.push(stateChallenge);
+    });
+    this.setState({
+      challenges: completedChalleges
+    });
+  }
+
+  renderMedia(challenge) {
+    if (challenge.FeaturedMedia) {
+      if (challenge.FeaturedMedia.length) {
+        switch (challenge.FeaturedMedia[0].mime) {
+          case 'image/jpeg':
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+              className: "img-container"
+            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+              src: `${"http://localhost:1337"}${challenge.FeaturedMedia[0].url}`
+            }));
+
+          case 'video/mp4':
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("video", {
+              height: "225",
+              width: "400",
+              controls: true,
+              tabIndex: "-1"
+            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("source", {
+              src: `${"http://localhost:1337"}${challenge.FeaturedMedia[0].url}`,
+              type: "video/mp4"
+            }));
+
+          default:
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Invalid media");
+        }
+      }
+    }
+  }
+
+  render() {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "frame"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_3__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "flex x-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "pad"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: `/level/${this.props.levelID}`,
+      className: "button icon-left"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faLongArrowAltLeft
+    }), "Back to Level")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
+      className: "text-center pure-u-1"
+    }, this.state.topic), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "pad"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+      className: "available-answers button icon-left",
+      onClick: this.handleToggleOptions
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faBars
+    }), "Available Answers")), this.state.allChallengesAnswered ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "pure-u-1 flex x-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+      onClick: this.handleResetTopic
+    }, "Reset Topic", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faSync
+    }))) : ''), this.state.challenges ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: `challenge-options ${this.state.optionsStatus}`,
+      onClick: this.handleToggleOptions
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faTimes,
+      className: "close"
+    }), shuffleArray(this.state.challenges).map(challenge => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      key: this.state.challenges.indexOf(challenge)
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "pad"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: `challenge-option ${challenge.answered}`
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, challenge.Title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faCheckCircle
+    })))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "No options"), this.state.challenges ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "challenges pure-u-1 flex x-space-around"
+    }, this.state.challenges.map(challenge => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      key: this.state.challenges.indexOf(challenge),
+      className: "flex x-center pure-u-1 pure-u-lg-1-2"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "challenge"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "pad"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: `challenge-input ${challenge.answered}`
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "text",
+      placeholder: "Guess meaning",
+      onChange: event => this.checkAnswerInput(event.target.value, challenge)
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "correct-answer"
+    }, challenge.Title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "input-correct"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Correct!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faCheckCircle
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, challenge.Content), challenge.FeaturedMedia.length ? this.renderMedia(challenge) : '', this.state.allChallengesAnswered ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "flex x-space-between"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: `/videos?keywords=${challenge.Title}`,
+      className: "button"
+    }, "View others", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faSearch
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: `/videos/add?challenge=${challenge.Title}`,
+      className: "button"
+    }, "Submit your own", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faPlus
+    }))) : ''))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "No challenges"));
+  }
+
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Topic);
+
+/***/ }),
+
+/***/ "./js/components/VideosAdd.jsx":
+/*!*************************************!*\
+  !*** ./js/components/VideosAdd.jsx ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
+
+
+
+
+
+class VideosAdd extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
+  constructor() {
+    super();
+    this.state = {
+      title: ''
+    };
+    this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleThumbnailUploadChange = this.handleThumbnailUploadChange.bind(this);
+    this.handleVideoUploadChange = this.handleVideoUploadChange.bind(this);
+  }
+
+  componentDidMount() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const challenge = urlParams.get('challenge');
+    this.setState({
+      title: challenge || ''
+    });
+  }
+
+  handleTitleChange(event) {
+    this.setState({
+      title: event.target.value
+    });
+  }
+
+  handleThumbnailUploadChange(event) {
+    let key = event.target.name;
+    let newState = {};
+    let image = event.target.files[0];
+
+    if (image) {
+      newState[key] = image.name;
+      this.setState(newState); // Set preview
+
+      let reader = new FileReader();
+      let frame = document.querySelector(`.${key}-preview`);
+      reader.addEventListener('load', function () {
+        if (/jpeg|jpg|png/.test(reader.result.substr(0, 20))) {
+          frame.style.background = `url(${reader.result}) no-repeat center center/cover`;
+        } else {
+          alert('Invalid thumbnail format.');
+        }
+      }, false);
+      reader.readAsDataURL(image);
+    }
+  }
+
+  handleVideoUploadChange(event) {
+    let key = event.target.name;
+    let newState = {};
+    let video = event.target.files[0];
+
+    if (video) {
+      newState[key] = video.name;
+      this.setState(newState); // Set preview
+
+      let reader = new FileReader();
+      let frame = document.querySelector(`.${key}-preview`);
+      reader.addEventListener('load', function () {
+        if (/mp4|quicktime/.test(reader.result.substr(0, 20))) {
+          frame.src = URL.createObjectURL(video);
+          URL.revokeObjectURL(video);
+        } else {
+          alert('Invalid video format.');
+        }
+      }, false);
+      reader.readAsDataURL(video);
+    }
+  }
+
+  render() {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "frame"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_2__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "video-add-view flex"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "pure-u-l pure-u-md-3-4",
+      style: {
+        maxWidth: '100%'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "flex"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "pure-u-l pure-u-md-1-2",
+      style: {
+        height: '300px'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "pad"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Video Preview"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("video", {
+      type: "video/mp4",
+      className: "video-preview",
+      height: "225",
+      width: "400",
+      controls: true
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "pure-u-l pure-u-md-1-2",
+      style: {
+        maxWidth: '100%'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "pad"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Thumbnail Preview"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "thumbnail-preview img-container"
+    }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "page-form pure-u-1 pure-u-md-1-4"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "Video Add"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+      action: "/videos/add",
+      method: "POST",
+      encType: "multipart/form-data",
+      className: "flex-col x-end"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "text",
+      name: "title",
+      value: this.state.title,
+      onChange: this.handleTitleChange,
+      placeholder: "Title",
+      "aria-label": "title",
+      required: true
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "upload-container"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "file",
+      name: "video",
+      onChange: this.handleVideoUploadChange,
+      required: true
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+      htmlFor: "video"
+    }, "Video", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faUpload
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "upload-container"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "file",
+      name: "thumbnail",
+      onChange: this.handleThumbnailUploadChange,
+      required: true
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+      htmlFor: "thumbnail"
+    }, "Thumbnail", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faUpload
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+      type: "submit"
+    }, "Submit", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faPlus
+    }))))));
+  }
+
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (VideosAdd);
+
+/***/ }),
+
+/***/ "./js/components/VideosIndex.jsx":
+/*!***************************************!*\
+  !*** ./js/components/VideosIndex.jsx ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var lozad__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lozad */ "./node_modules/lozad/dist/lozad.min.js");
+/* harmony import */ var lozad__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lozad__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @fortawesome/free-regular-svg-icons */ "./node_modules/@fortawesome/free-regular-svg-icons/index.es.js");
+/* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
+/* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-slick */ "./node_modules/react-slick/lib/index.js");
+/* harmony import */ var _jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @jamespotz/react-simple-readmore */ "./node_modules/@jamespotz/react-simple-readmore/dist/index.js");
+
+
+
+
+
+
+
+
+
+async function getVideos() {
+  var urlParams = new URLSearchParams(window.location.search);
+  var searchKeywords = urlParams.get('keywords') || '';
+  var page = urlParams.get('page') || '';
+  var sort = urlParams.get('sort') || '';
+  return fetch(`${document.location.origin}/videos.json?${searchKeywords ? 'keywords=' + searchKeywords + '&' : ''}
+			${page ? 'page=' + page : ''}
+			${sort ? '&sort=' + sort : ''}`, {
+    credentials: 'include'
+  }).then(response => response.json());
+} // Enable lazy loading
+
+
+const lozadObserver = lozad__WEBPACK_IMPORTED_MODULE_1___default()();
+lozadObserver.observe();
+
+class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
+  constructor() {
+    super();
+    this.state = {
+      videos: [],
+      pages: [],
+      currentPage: 1,
+      keywords: '',
+      sort: '',
+      userLikedVideos: []
+    };
+    this.refreshVideos = this.refreshVideos.bind(this);
+    this.pagination = this.pagination.bind(this);
+    this.handleKeywordsChange = this.handleKeywordsChange.bind(this);
+    this.toggleSortControls = this.toggleSortControls.bind(this);
+    this.handleSortChange = this.handleSortChange.bind(this);
+    this.handleChangePage = this.handleChangePage.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+    this.sendLike = this.sendLike.bind(this);
+    this.removeLike = this.removeLike.bind(this);
+    this.currentUserHasLikedVideo = this.currentUserHasLikedVideo.bind(this);
+  }
+
+  async componentDidMount() {
+    this.refreshVideos();
+    this.setState({
+      userLikedVideos: JSON.parse(this.props.userLikedVideos)
+    });
+  }
+
+  async refreshVideos() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var page = urlParams.get('page') || 1;
+    var keywords = urlParams.get('keywords');
+    var sort = urlParams.get('sort');
+    var newVideos = await getVideos();
+
+    if (newVideos) {
+      // Check if the current user has liked each video
+      newVideos.videos.forEach(video => {
+        video.likedByCurrentUser = this.currentUserHasLikedVideo(video);
+      });
+      this.setState({
+        videos: newVideos.videos,
+        pages: this.pagination(newVideos.pages),
+        currentPage: page,
+        keywords: keywords || '',
+        sort: sort || ''
+      });
+    }
+  }
+
+  handleKeywordsChange(event) {
+    this.setState({
+      keywords: event.target.value
+    });
+  }
+
+  toggleSortControls() {
+    let newStatus = this.state.sortControlStatus ? '' : 'open';
+    this.setState({
+      sortControlStatus: newStatus
+    });
+  }
+
+  handleSortChange(event) {
+    this.setState({
+      sort: event.target.value
+    }); // This approach triggers the onSubmit handler
+
+    event.target.form.querySelector('input[type="submit"]').click();
+  }
+
+  handleChangePage(event) {
+    event.preventDefault();
+    window.history.pushState({}, '', event.target.href);
+    this.refreshVideos();
+  }
+
+  handleSearch(event) {
+    event.preventDefault();
+    var url = event.target.action + '?' + new URLSearchParams(new FormData(event.target)).toString();
+    window.history.pushState({}, '', url);
+    this.refreshVideos();
+  }
+
+  pagination(pages) {
+    var pageLinks = [];
+
+    for (var i = 1; i <= pages; i++) {
+      pageLinks.push({
+        pageNumber: i
+      });
+    }
+
+    return pageLinks;
+  }
+
+  async sendLike(video) {
+    const newLikedVideo = await fetch(`${document.location.origin}/sendLike/${video._id}`).then(res => res.json()).catch(error => console.log(error));
+
+    if (newLikedVideo.message) {
+      // Display error message if included in response
+      alert(newLikedVideo.message);
+    } else if (newLikedVideo) {
+      // Update the video state to be liked by the current user. Used immediately after liking.
+      newLikedVideo.likedByCurrentUser = true;
+      let newVideos = this.state.videos;
+      newVideos[newVideos.indexOf(video)] = newLikedVideo; // Add video to user's liked videos. Used when a re-render occurs.
+
+      let newUserLikedVideos = this.state.userLikedVideos;
+      newUserLikedVideos.push(video);
+      this.setState({
+        videos: newVideos,
+        userLikedVideos: newUserLikedVideos
+      });
+    }
+  }
+
+  async removeLike(video) {
+    const newUnlikedVideo = await fetch(`${document.location.origin}/removeLike/${video._id}`).then(res => res.json()).catch(error => console.log(error));
+
+    if (newUnlikedVideo.message) {
+      // Display error message if included in response
+      alert(newUnlikedVideo.message);
+    } else if (newUnlikedVideo) {
+      // Update the video state to remove like from the current user. Used immediately after unliking.
+      newUnlikedVideo.likedByCurrentUser = false;
+      let newVideos = this.state.videos;
+      newVideos[newVideos.indexOf(video)] = newUnlikedVideo; // Remove video from user's liked videos. Used when a re-render occurs.
+
+      let newUserLikedVideos = [];
+      this.state.userLikedVideos.forEach(userLikedVideo => {
+        if (userLikedVideo._id != video._id) {
+          newUserLikedVideos.push(userLikedVideo);
+        }
+      });
+      this.setState({
+        videos: newVideos,
+        userLikedVideos: newUserLikedVideos
+      });
+    }
+  }
+
+  currentUserHasLikedVideo(video) {
+    let liked = false;
+    this.state.userLikedVideos.forEach(userLikedVideo => {
+      if (userLikedVideo._id === video._id) {
+        liked = true;
+      }
+    });
+    return liked;
+  }
+
+  render() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var keywords = urlParams.get('keywords') || null;
+    var context = this; // When using back or forward buttons in browser
+
+    window.addEventListener('popstate', function (event) {
+      if (event != null) {
+        context.refreshVideos();
+      }
+    });
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "frame"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_3__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "page-form"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "Videos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+      action: "/videos",
+      method: "GET"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "flex"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "search-input"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "text",
+      name: "keywords",
+      value: this.state.keywords,
+      onChange: this.handleKeywordsChange,
+      placeholder: "Search video submissions"
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faSearch
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "submit",
+      value: "Search"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "sort-controls flex"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "control-icon pure-u-1",
+      onClick: this.toggleSortControls
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faSlidersH
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: `sort-options flex pure-u-1 ${this.state.sortControlStatus}`
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+      htmlFor: "sort-all"
+    }, "All"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "",
+      id: "sort-all",
+      checked: this.state.sort === '' ? true : false,
+      onChange: this.handleSortChange
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+      htmlFor: "sort-oldest"
+    }, "Oldest"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "Oldest",
+      id: "sort-oldest",
+      checked: this.state.sort === 'Oldest' ? true : false,
+      onChange: this.handleSortChange
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+      htmlFor: "sort-recent"
+    }, "Recent"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "Recent",
+      id: "sort-recent",
+      checked: this.state.sort === 'Recent' ? true : false,
+      onChange: this.handleSortChange
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+      htmlFor: "sort-AZ"
+    }, "A-Z"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "A-Z",
+      id: "sort-AZ",
+      checked: this.state.sort === 'A-Z' ? true : false,
+      onChange: this.handleSortChange
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+      htmlFor: "sort-ZA"
+    }, "Z-A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "Z-A",
+      id: "sort-ZA",
+      checked: this.state.sort === 'Z-A' ? true : false,
+      onChange: this.handleSortChange
+    })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "flex"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+      onClick: this.refreshVideos
+    }, "Refresh", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faSync
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "\xA0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      onClick: this.handleChangePage,
+      href: "/videos",
+      className: "button"
+    }, "Clear filters", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faBan
+    }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, this.state.pages.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
+      className: "pagination flex"
+    }, this.state.currentPage > 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      onClick: this.handleChangePage,
+      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}
+											${this.state.sort ? '&sort=' + this.state.sort : ''}`,
+      className: "button icon-left",
+      "aria-label": "previous"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faLongArrowAltLeft
+    }), "Prev")) : '', this.state.pages.map(page => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
+      key: this.state.pages.indexOf(page)
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      onClick: this.handleChangePage,
+      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}
+											${this.state.sort ? '&sort=' + this.state.sort : ''}`,
+      className: `button no-icon ${page.pageNumber == this.state.currentPage ? 'selected' : ''}`,
+      "aria-label": `page ${page.pageNumber}`
+    }, page.pageNumber))), this.state.currentPage < this.state.pages.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      onClick: this.handleChangePage,
+      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}
+											${this.state.sort ? '&sort=' + this.state.sort : ''}`,
+      className: "button"
+    }, "Next", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faLongArrowAltRight
+    }))) : '') : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null), this.state.videos.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "flex"
+    }, this.state.videos.map(video => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      key: video._id,
+      className: "pure-u-1 pure-u-lg-1-3"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "flex x-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "flex x-space-between y-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      style: {
+        maxWidth: '65%'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_5__.default, {
+      fade: true,
+      minHeight: 58,
+      btnStyles: {
+        position: 'absolute',
+        bottom: '-15px',
+        border: 'none',
+        margin: 0,
+        padding: '5px',
+        zIndex: 1
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, video.title))), video.uploadedBy._id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "By: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: `/account-profile/${video.uploadedBy._id}`,
+      "aria-label": `${video.uploadedBy.displayName} profile`
+    }, video.uploadedBy.displayName))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "By: ", video.uploadedBy.displayName))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("video", {
+      type: "video/mp4",
+      className: "video-preview lozad",
+      height: "225",
+      width: "400",
+      poster: video.thumbnailSrc || "/images/videoPlaceholder.png",
+      controls: true
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("source", {
+      src: video.src
+    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "flex x-space-around y-center"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Likes: ", video.likes || 0), video.likedByCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+      onClick: () => this.removeLike(video)
+    }, "Liked", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faStar
+    })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+      onClick: () => this.sendLike(video)
+    }, "Like", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_7__.faStar
+    })))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "No videos"), this.state.pages.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
+      className: "pagination flex"
+    }, this.state.currentPage > 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      onClick: this.handleChangePage,
+      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}
+											${this.state.sort ? '&sort=' + this.state.sort : ''}`,
+      className: "button icon-left",
+      "aria-label": "previous"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faLongArrowAltLeft
+    }), "Prev")) : '', this.state.pages.map(page => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
+      key: this.state.pages.indexOf(page)
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      onClick: this.handleChangePage,
+      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}
+											${this.state.sort ? '&sort=' + this.state.sort : ''}`,
+      className: `button no-icon ${page.pageNumber == this.state.currentPage ? 'selected' : ''}`,
+      "aria-label": `page ${page.pageNumber}`
+    }, page.pageNumber))), this.state.currentPage < this.state.pages.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      onClick: this.handleChangePage,
+      href: `/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}
+											${this.state.sort ? '&sort=' + this.state.sort : ''}`,
+      className: "button"
+    }, "Next", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faLongArrowAltRight
+    }))) : '') : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null)));
+  }
+
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (VideosIndex);
+
+/***/ }),
+
+/***/ "./js/main.jsx":
+/*!*********************!*\
+  !*** ./js/main.jsx ***!
+  \*********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var _components_Home_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Home.jsx */ "./js/components/Home.jsx");
+/* harmony import */ var _components_VideosIndex_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/VideosIndex.jsx */ "./js/components/VideosIndex.jsx");
+/* harmony import */ var _components_VideosAdd_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/VideosAdd.jsx */ "./js/components/VideosAdd.jsx");
+/* harmony import */ var _components_Level_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Level.jsx */ "./js/components/Level.jsx");
+/* harmony import */ var _components_Topic_jsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/Topic.jsx */ "./js/components/Topic.jsx");
+/* harmony import */ var _components_Login_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/Login.jsx */ "./js/components/Login.jsx");
+/* harmony import */ var _components_Register_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/Register.jsx */ "./js/components/Register.jsx");
+/* harmony import */ var _components_AccountProfile_jsx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/AccountProfile.jsx */ "./js/components/AccountProfile.jsx");
+/* harmony import */ var slick_carousel_slick_slick_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! slick-carousel/slick/slick.css */ "./node_modules/slick-carousel/slick/slick.css");
+/* harmony import */ var slick_carousel_slick_slick_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(slick_carousel_slick_slick_css__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var slick_carousel_slick_slick_theme_css__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! slick-carousel/slick/slick-theme.css */ "./node_modules/slick-carousel/slick/slick-theme.css");
+/* harmony import */ var slick_carousel_slick_slick_theme_css__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(slick_carousel_slick_slick_theme_css__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var css_modal_build_modal_css__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! css-modal/build/modal.css */ "./node_modules/css-modal/build/modal.css");
+/* harmony import */ var css_modal_build_modal_css__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(css_modal_build_modal_css__WEBPACK_IMPORTED_MODULE_12__);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if (document.getElementById('home')) {
+  var userLikedVideos = document.getElementById('home').getAttribute('data-userLikedVideos');
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_Home_jsx__WEBPACK_IMPORTED_MODULE_2__.default, {
+    userLikedVideos: userLikedVideos
+  }), document.getElementById('home'));
+}
+
+if (document.getElementById('videos')) {
+  var userLikedVideos = document.getElementById('videos').getAttribute('data-userLikedVideos');
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_VideosIndex_jsx__WEBPACK_IMPORTED_MODULE_3__.default, {
+    userLikedVideos: userLikedVideos
+  }), document.getElementById('videos'));
+}
+
+if (document.getElementById('videos-add')) {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_VideosAdd_jsx__WEBPACK_IMPORTED_MODULE_4__.default, null), document.getElementById('videos-add'));
+}
+
+if (document.getElementById('level')) {
+  var levelID = document.getElementById('level').getAttribute('data-levelID');
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_Level_jsx__WEBPACK_IMPORTED_MODULE_5__.default, {
+    levelID: levelID
+  }), document.getElementById('level'));
+}
+
+if (document.getElementById('topic')) {
+  var levelID = document.getElementById('topic').getAttribute('data-levelID');
+  var topicID = document.getElementById('topic').getAttribute('data-topicID');
+  var completed = document.getElementById('topic').getAttribute('data-completed');
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_Topic_jsx__WEBPACK_IMPORTED_MODULE_6__.default, {
+    levelID: levelID,
+    topicID: topicID,
+    completed: eval(completed)
+  }), document.getElementById('topic'));
+}
+
+if (document.getElementById('login')) {
+  var errors = document.getElementById('login').getAttribute('data-errors');
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_Login_jsx__WEBPACK_IMPORTED_MODULE_7__.default, {
+    errors: errors
+  }), document.getElementById('login'));
+}
+
+if (document.getElementById('register')) {
+  var errors = document.getElementById('register').getAttribute('data-errors');
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_Register_jsx__WEBPACK_IMPORTED_MODULE_8__.default, {
+    errors: errors
+  }), document.getElementById('register'));
+}
+
+if (document.getElementById('account-profile')) {
+  var user = document.getElementById('account-profile').getAttribute('data-user');
+  var authenticatedUser = document.getElementById('account-profile').getAttribute('data-authenticatedUser');
+  var isCurrentUser = document.getElementById('account-profile').getAttribute('data-isCurrentUser');
+  var pathResolver = document.getElementById('account-profile').getAttribute('data-pathResolver');
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_AccountProfile_jsx__WEBPACK_IMPORTED_MODULE_9__.default, {
+    user: user,
+    authenticatedUser: authenticatedUser,
+    isCurrentUser: eval(isCurrentUser),
+    pathResolver: pathResolver
+  }), document.getElementById('account-profile'));
+}
+
+/***/ }),
+
+/***/ "./js/components/VideoPlayer.tsx":
+/*!***************************************!*\
+  !*** ./js/components/VideoPlayer.tsx ***!
+  \***************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __extends = this && this.__extends || function () {
+  var extendStatics = function (d, b) {
+    extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    };
+
+    return extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function (resolve) {
+      resolve(value);
+    });
+  }
+
+  return new (P || (P = Promise))(function (resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function step(result) {
+      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+
+var __generator = this && this.__generator || function (thisArg, body) {
+  var _ = {
+    label: 0,
+    sent: function () {
+      if (t[0] & 1) throw t[1];
+      return t[1];
+    },
+    trys: [],
+    ops: []
+  },
+      f,
+      y,
+      t,
+      g;
+  return g = {
+    next: verb(0),
+    "throw": verb(1),
+    "return": verb(2)
+  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+    return this;
+  }), g;
+
+  function verb(n) {
+    return function (v) {
+      return step([n, v]);
+    };
+  }
+
+  function step(op) {
+    if (f) throw new TypeError("Generator is already executing.");
+
+    while (_) try {
+      if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+      if (y = 0, t) op = [op[0] & 2, t.value];
+
+      switch (op[0]) {
+        case 0:
+        case 1:
+          t = op;
+          break;
+
+        case 4:
+          _.label++;
+          return {
+            value: op[1],
+            done: false
+          };
+
+        case 5:
+          _.label++;
+          y = op[1];
+          op = [0];
+          continue;
+
+        case 7:
+          op = _.ops.pop();
+
+          _.trys.pop();
+
+          continue;
+
+        default:
+          if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+            _ = 0;
+            continue;
+          }
+
+          if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+            _.label = op[1];
+            break;
+          }
+
+          if (op[0] === 6 && _.label < t[1]) {
+            _.label = t[1];
+            t = op;
+            break;
+          }
+
+          if (t && _.label < t[2]) {
+            _.label = t[2];
+
+            _.ops.push(op);
+
+            break;
+          }
+
+          if (t[2]) _.ops.pop();
+
+          _.trys.pop();
+
+          continue;
+      }
+
+      op = body.call(thisArg, _);
+    } catch (e) {
+      op = [6, e];
+      y = 0;
+    } finally {
+      f = t = 0;
+    }
+
+    if (op[0] & 5) throw op[1];
+    return {
+      value: op[0] ? op[1] : void 0,
+      done: true
+    };
+  }
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var react_simple_readmore_1 = __webpack_require__(/*! @jamespotz/react-simple-readmore */ "./node_modules/@jamespotz/react-simple-readmore/dist/index.js");
+
+var react_fontawesome_1 = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+
+var free_solid_svg_icons_1 = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+
+var free_regular_svg_icons_1 = __webpack_require__(/*! @fortawesome/free-regular-svg-icons */ "./node_modules/@fortawesome/free-regular-svg-icons/index.es.js"); // let obj: VideoAttributes = {
+// 	likes: 'asd',
+// 	likedByCurrentUser: false
+// }
+
+
+var VideoPlayer =
+/** @class */
+function (_super) {
+  __extends(VideoPlayer, _super);
+
+  function VideoPlayer(props) {
+    var _this = _super.call(this, props) || this;
+
+    var state = {
+      likes: 0,
+      likedByCurrentUser: false
+    };
+    _this.state = state;
+    _this.toggleLike = _this.toggleLike.bind(_this);
+    return _this;
+  }
+
+  VideoPlayer.prototype.componentDidMount = function () {
+    var _a = this.props,
+        likes = _a.likes,
+        likedByCurrentUser = _a.likedByCurrentUser;
+    this.setState({
+      likes: likes,
+      likedByCurrentUser: likedByCurrentUser
+    });
+  };
+
+  VideoPlayer.prototype.componentDidUpdate = function (prevProps) {
+    if (this.props.likedByCurrentUser != prevProps.likedByCurrentUser) {
+      this.setState({
+        likedByCurrentUser: this.props.likedByCurrentUser
+      });
+    }
+  };
+
+  VideoPlayer.prototype.toggleLike = function (_id) {
+    return __awaiter(this, void 0, void 0, function () {
+      var apiURLSegment, likeIncrement;
+      return __generator(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            apiURLSegment = this.state.likedByCurrentUser ? 'removeLike' : 'sendLike';
+            likeIncrement = this.state.likedByCurrentUser ? -1 : 1;
+            return [4
+            /*yield*/
+            , fetch(document.location.origin + "/" + apiURLSegment + "/" + _id).then(function (res) {
+              return res.json();
+            }).catch(function (error) {
+              return console.log(error);
+            })];
+
+          case 1:
+            _a.sent();
+
+            this.setState(function (prevState) {
+              return {
+                likes: prevState.likes + likeIncrement,
+                likedByCurrentUser: !prevState.likedByCurrentUser
+              };
+            });
+            return [2
+            /*return*/
+            ];
+        }
+      });
+    });
+  };
+
+  VideoPlayer.prototype.render = function () {
+    var _this = this;
+
+    var _a = this.state,
+        likes = _a.likes,
+        likedByCurrentUser = _a.likedByCurrentUser;
+    var _b = this.props,
+        _id = _b._id,
+        title = _b.title,
+        src = _b.src,
+        thumbnailSrc = _b.thumbnailSrc,
+        uploadedBy = _b.uploadedBy;
+    return React.createElement("div", null, React.createElement("div", {
+      className: "flex x-center"
+    }, React.createElement("div", null, React.createElement("div", {
+      className: "flex x-space-between y-center"
+    }, React.createElement("div", {
+      style: {
+        maxWidth: '65%'
+      }
+    }, React.createElement(react_simple_readmore_1.default, {
+      fade: true,
+      minHeight: 58,
+      btnStyles: {
+        position: 'absolute',
+        bottom: '-15px',
+        border: 'none',
+        margin: 0,
+        padding: '5px',
+        zIndex: 1
+      }
+    }, React.createElement("h3", null, title))), uploadedBy._id ? React.createElement("div", null, React.createElement("p", null, "By: ", React.createElement("a", {
+      href: "/account-profile/" + uploadedBy._id,
+      "aria-label": uploadedBy.displayName + " profile"
+    }, uploadedBy.displayName))) : React.createElement("div", null, React.createElement("p", null, "By: ", uploadedBy.displayName))), React.createElement("video", {
+      type: "video/mp4",
+      className: "video-preview lozad",
+      height: "225",
+      width: "400",
+      poster: thumbnailSrc || "/images/videoPlaceholder.png",
+      controls: true
+    }, React.createElement("source", {
+      src: src
+    })))), React.createElement("div", {
+      className: "flex x-space-around y-center"
+    }, React.createElement("p", null, "Likes: ", likes || 0), React.createElement("button", {
+      onClick: function () {
+        return _this.toggleLike(_id);
+      }
+    }, likedByCurrentUser ? React.createElement("span", null, "Liked", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
+      icon: free_solid_svg_icons_1.faStar
+    })) : React.createElement("span", null, "Like", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
+      icon: free_regular_svg_icons_1.faStar
+    })))));
+  };
+
+  return VideoPlayer;
+}(React.Component);
+
+exports.default = VideoPlayer;
+
+/***/ }),
+
 /***/ "./node_modules/classnames/index.js":
 /*!******************************************!*\
   !*** ./node_modules/classnames/index.js ***!
   \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, exports) => {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
   Copyright (c) 2017 Jed Watson.
@@ -18731,52 +18818,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
 			return classNames;
 		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	} else {}
 }());
 
-
-/***/ }),
-
-/***/ "./node_modules/css-modal/build/modal.css":
-/*!************************************************!*\
-  !*** ./node_modules/css-modal/build/modal.css ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var api = __webpack_require__(/*! ../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !../../file-loader/dist/cjs.js??ref--6-1!../../sass-loader/dist/cjs.js!./modal.css */ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/css-modal/build/modal.css");
-
-            content = content.__esModule ? content.default : content;
-
-            if (typeof content === 'string') {
-              content = [[module.i, content, '']];
-            }
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = api(content, options);
-
-
-
-module.exports = content.locals || {};
-
-/***/ }),
-
-/***/ "./node_modules/css-modal/modal.js":
-/*!*****************************************!*\
-  !*** ./node_modules/css-modal/modal.js ***!
-  \*****************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "js/modal.js");
 
 /***/ }),
 
@@ -18784,8 +18829,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************************!*\
   !*** ./node_modules/enquire.js/src/MediaQuery.js ***!
   \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var QueryHandler = __webpack_require__(/*! ./QueryHandler */ "./node_modules/enquire.js/src/QueryHandler.js");
 var each = __webpack_require__(/*! ./Util */ "./node_modules/enquire.js/src/Util.js").each;
@@ -18888,8 +18932,7 @@ module.exports = MediaQuery;
 /*!***********************************************************!*\
   !*** ./node_modules/enquire.js/src/MediaQueryDispatch.js ***!
   \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var MediaQuery = __webpack_require__(/*! ./MediaQuery */ "./node_modules/enquire.js/src/MediaQuery.js");
 var Util = __webpack_require__(/*! ./Util */ "./node_modules/enquire.js/src/Util.js");
@@ -18984,8 +19027,7 @@ module.exports = MediaQueryDispatch;
 /*!*****************************************************!*\
   !*** ./node_modules/enquire.js/src/QueryHandler.js ***!
   \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ ((module) => {
 
 /**
  * Delegate to handle a media query being matched and unmatched.
@@ -19069,8 +19111,7 @@ module.exports = QueryHandler;
 /*!*********************************************!*\
   !*** ./node_modules/enquire.js/src/Util.js ***!
   \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ ((module) => {
 
 /**
  * Helper function for iterating over a collection
@@ -19124,8 +19165,7 @@ module.exports = {
 /*!**********************************************!*\
   !*** ./node_modules/enquire.js/src/index.js ***!
   \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var MediaQueryDispatch = __webpack_require__(/*! ./MediaQueryDispatch */ "./node_modules/enquire.js/src/MediaQueryDispatch.js");
 module.exports = new MediaQueryDispatch();
@@ -19133,81 +19173,108 @@ module.exports = new MediaQueryDispatch();
 
 /***/ }),
 
-/***/ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/css-modal/build/modal.css":
-/*!****************************************************************************************************************************************!*\
-  !*** ./node_modules/file-loader/dist/cjs.js??ref--6-1!./node_modules/sass-loader/dist/cjs.js!./node_modules/css-modal/build/modal.css ***!
-  \****************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./node_modules/css-modal/modal.js":
+/*!*****************************************!*\
+  !*** ./node_modules/css-modal/modal.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "css/modal.css");
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "js/modal.js");
 
 /***/ }),
 
-/***/ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/grids-responsive-min.css":
-/*!*****************************************************************************************************************************************************!*\
-  !*** ./node_modules/file-loader/dist/cjs.js??ref--6-1!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/grids-responsive-min.css ***!
-  \*****************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./node_modules/file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/css-modal/build/modal.css":
+/*!**********************************************************************************************************************************************************!*\
+  !*** ./node_modules/file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/css-modal/build/modal.css ***!
+  \**********************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "css/grids-responsive-min.css");
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "css/modal.css");
 
 /***/ }),
 
-/***/ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/pure-min.css":
-/*!*****************************************************************************************************************************************!*\
-  !*** ./node_modules/file-loader/dist/cjs.js??ref--6-1!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/pure-min.css ***!
-  \*****************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./node_modules/file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/grids-responsive-min.css":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/grids-responsive-min.css ***!
+  \***********************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "css/pure-min.css");
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "css/grids-responsive-min.css");
 
 /***/ }),
 
-/***/ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/slick-carousel/slick/slick-theme.css":
-/*!***************************************************************************************************************************************************!*\
-  !*** ./node_modules/file-loader/dist/cjs.js??ref--6-1!./node_modules/sass-loader/dist/cjs.js!./node_modules/slick-carousel/slick/slick-theme.css ***!
-  \***************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./node_modules/file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/pure-min.css":
+/*!***********************************************************************************************************************************************************!*\
+  !*** ./node_modules/file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/pure-min.css ***!
+  \***********************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "css/slick-theme.css");
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "css/pure-min.css");
 
 /***/ }),
 
-/***/ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/slick-carousel/slick/slick.css":
-/*!*********************************************************************************************************************************************!*\
-  !*** ./node_modules/file-loader/dist/cjs.js??ref--6-1!./node_modules/sass-loader/dist/cjs.js!./node_modules/slick-carousel/slick/slick.css ***!
-  \*********************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./node_modules/file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/slick-carousel/slick/slick-theme.css":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/slick-carousel/slick/slick-theme.css ***!
+  \*********************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "css/slick.css");
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "css/slick-theme.css");
 
 /***/ }),
 
-/***/ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./sass/custom.scss":
-/*!******************************************************************************************************************!*\
-  !*** ./node_modules/file-loader/dist/cjs.js??ref--6-1!./node_modules/sass-loader/dist/cjs.js!./sass/custom.scss ***!
-  \******************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./node_modules/file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/slick-carousel/slick/slick.css":
+/*!***************************************************************************************************************************************************************!*\
+  !*** ./node_modules/file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/slick-carousel/slick/slick.css ***!
+  \***************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "css/custom.css");
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "css/slick.css");
+
+/***/ }),
+
+/***/ "./node_modules/file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/sass-loader/dist/cjs.js!./sass/custom.scss":
+/*!************************************************************************************************************************************!*\
+  !*** ./node_modules/file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/sass-loader/dist/cjs.js!./sass/custom.scss ***!
+  \************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "css/custom.css");
 
 /***/ }),
 
@@ -19215,8 +19282,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************!*\
   !*** ./node_modules/json2mq/index.js ***!
   \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var camel2hyphen = __webpack_require__(/*! string-convert/camel2hyphen */ "./node_modules/string-convert/camel2hyphen.js");
 
@@ -19276,10 +19342,9 @@ module.exports = json2mq;
 /*!***********************************************!*\
   !*** ./node_modules/lodash.debounce/index.js ***!
   \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-/* WEBPACK VAR INJECTION */(function(global) {/**
+/**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
  * Copyright jQuery Foundation and other contributors <https://jquery.org/>
@@ -19313,7 +19378,7 @@ var reIsOctal = /^0o[0-7]+$/i;
 var freeParseInt = parseInt;
 
 /** Detect free variable `global` from Node.js. */
-var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
+var freeGlobal = typeof __webpack_require__.g == 'object' && __webpack_require__.g && __webpack_require__.g.Object === Object && __webpack_require__.g;
 
 /** Detect free variable `self`. */
 var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -19657,7 +19722,6 @@ function toNumber(value) {
 
 module.exports = debounce;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -19665,13 +19729,12 @@ module.exports = debounce;
 /*!**********************************************!*\
   !*** ./node_modules/lozad/dist/lozad.min.js ***!
   \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module) {
 
 /*! lozad.js - v1.16.0 - 2020-09-06
 * https://github.com/ApoorvSaxena/lozad.js
 * Copyright (c) 2020 Apoorv Saxena; Licensed MIT */
-!function(t,e){ true?module.exports=e():undefined}(this,function(){"use strict";
+!function(t,e){ true?module.exports=e():0}(this,function(){"use strict";
 /**
    * Detect IE browser
    * @const {boolean}
@@ -19686,8 +19749,7 @@ u=-1===u.indexOf("url(")?"url("+u+")":u,1===d.length?t.style.backgroundImage=u:t
 /*!*********************************************!*\
   !*** ./node_modules/object-assign/index.js ***!
   \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module) => {
 
 "use strict";
 /*
@@ -19784,207 +19846,11 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 /***/ }),
 
-/***/ "./node_modules/process/browser.js":
-/*!*****************************************!*\
-  !*** ./node_modules/process/browser.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-
-/***/ }),
-
 /***/ "./node_modules/prop-types/checkPropTypes.js":
 /*!***************************************************!*\
   !*** ./node_modules/prop-types/checkPropTypes.js ***!
   \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 /**
@@ -20097,8 +19963,7 @@ module.exports = checkPropTypes;
 /*!************************************************************!*\
   !*** ./node_modules/prop-types/factoryWithTypeCheckers.js ***!
   \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 /**
@@ -20465,7 +20330,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
   function createUnionTypeChecker(arrayOfTypeCheckers) {
     if (!Array.isArray(arrayOfTypeCheckers)) {
-       true ? printWarning('Invalid argument supplied to oneOfType, expected an instance of array.') : undefined;
+       true ? printWarning('Invalid argument supplied to oneOfType, expected an instance of array.') : 0;
       return emptyFunctionThatReturnsNull;
     }
 
@@ -20700,8 +20565,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 /*!******************************************!*\
   !*** ./node_modules/prop-types/index.js ***!
   \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -20726,8 +20590,7 @@ if (true) {
 /*!*************************************************************!*\
   !*** ./node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
   \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module) => {
 
 "use strict";
 /**
@@ -20746,70 +20609,11 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 
-/***/ "./node_modules/purecss/build/grids-responsive-min.css":
-/*!*************************************************************!*\
-  !*** ./node_modules/purecss/build/grids-responsive-min.css ***!
-  \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var api = __webpack_require__(/*! ../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !../../file-loader/dist/cjs.js??ref--6-1!../../sass-loader/dist/cjs.js!./grids-responsive-min.css */ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/grids-responsive-min.css");
-
-            content = content.__esModule ? content.default : content;
-
-            if (typeof content === 'string') {
-              content = [[module.i, content, '']];
-            }
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = api(content, options);
-
-
-
-module.exports = content.locals || {};
-
-/***/ }),
-
-/***/ "./node_modules/purecss/build/pure-min.css":
-/*!*************************************************!*\
-  !*** ./node_modules/purecss/build/pure-min.css ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var api = __webpack_require__(/*! ../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !../../file-loader/dist/cjs.js??ref--6-1!../../sass-loader/dist/cjs.js!./pure-min.css */ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/pure-min.css");
-
-            content = content.__esModule ? content.default : content;
-
-            if (typeof content === 'string') {
-              content = [[module.i, content, '']];
-            }
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = api(content, options);
-
-
-
-module.exports = content.locals || {};
-
-/***/ }),
-
 /***/ "./node_modules/react-dom/cjs/react-dom.development.js":
 /*!*************************************************************!*\
   !*** ./node_modules/react-dom/cjs/react-dom.development.js ***!
   \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 /** @license React v16.13.1
@@ -45832,8 +45636,7 @@ exports.version = ReactVersion;
 /*!*****************************************!*\
   !*** ./node_modules/react-dom/index.js ***!
   \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -45877,8 +45680,7 @@ if (false) {} else {
 /*!***********************************************************!*\
   !*** ./node_modules/react-is/cjs/react-is.development.js ***!
   \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 /** @license React v16.13.1
@@ -46070,8 +45872,7 @@ exports.typeOf = typeOf;
 /*!****************************************!*\
   !*** ./node_modules/react-is/index.js ***!
   \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -46087,15 +45888,14 @@ if (false) {} else {
 /*!************************************************!*\
   !*** ./node_modules/react-slick/lib/arrows.js ***!
   \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, "__esModule", ({
   value: true
-});
+}));
 exports.NextArrow = exports.PrevArrow = void 0;
 
 var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
@@ -46280,16 +46080,15 @@ exports.NextArrow = NextArrow;
 /*!*******************************************************!*\
   !*** ./node_modules/react-slick/lib/default-props.js ***!
   \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, "__esModule", ({
   value: true
-});
-exports["default"] = void 0;
+}));
+exports.default = void 0;
 
 var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
@@ -46356,7 +46155,7 @@ var defaultProps = {
   waitForAnimate: true
 };
 var _default = defaultProps;
-exports["default"] = _default;
+exports.default = _default;
 
 /***/ }),
 
@@ -46364,15 +46163,14 @@ exports["default"] = _default;
 /*!**********************************************!*\
   !*** ./node_modules/react-slick/lib/dots.js ***!
   \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, "__esModule", ({
   value: true
-});
+}));
 exports.Dots = void 0;
 
 var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
@@ -46510,23 +46308,22 @@ exports.Dots = Dots;
 /*!***********************************************!*\
   !*** ./node_modules/react-slick/lib/index.js ***!
   \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, "__esModule", ({
   value: true
-});
-exports["default"] = void 0;
+}));
+exports.default = void 0;
 
 var _slider = _interopRequireDefault(__webpack_require__(/*! ./slider */ "./node_modules/react-slick/lib/slider.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var _default = _slider["default"];
-exports["default"] = _default;
+exports.default = _default;
 
 /***/ }),
 
@@ -46534,16 +46331,15 @@ exports["default"] = _default;
 /*!*******************************************************!*\
   !*** ./node_modules/react-slick/lib/initial-state.js ***!
   \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, "__esModule", ({
   value: true
-});
-exports["default"] = void 0;
+}));
+exports.default = void 0;
 var initialState = {
   animating: false,
   autoplaying: null,
@@ -46576,7 +46372,7 @@ var initialState = {
   targetSlide: 0
 };
 var _default = initialState;
-exports["default"] = _default;
+exports.default = _default;
 
 /***/ }),
 
@@ -46584,15 +46380,14 @@ exports["default"] = _default;
 /*!******************************************************!*\
   !*** ./node_modules/react-slick/lib/inner-slider.js ***!
   \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, "__esModule", ({
   value: true
-});
+}));
 exports.InnerSlider = void 0;
 
 var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
@@ -47469,16 +47264,15 @@ exports.InnerSlider = InnerSlider;
 /*!************************************************!*\
   !*** ./node_modules/react-slick/lib/slider.js ***!
   \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, "__esModule", ({
   value: true
-});
-exports["default"] = void 0;
+}));
+exports.default = void 0;
 
 var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
@@ -47761,7 +47555,7 @@ var Slider = /*#__PURE__*/function (_React$Component) {
   return Slider;
 }(_react["default"].Component);
 
-exports["default"] = Slider;
+exports.default = Slider;
 
 /***/ }),
 
@@ -47769,15 +47563,14 @@ exports["default"] = Slider;
 /*!***********************************************!*\
   !*** ./node_modules/react-slick/lib/track.js ***!
   \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, "__esModule", ({
   value: true
-});
+}));
 exports.Track = void 0;
 
 var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
@@ -48068,15 +47861,14 @@ exports.Track = Track;
 /*!****************************************************************!*\
   !*** ./node_modules/react-slick/lib/utils/innerSliderUtils.js ***!
   \****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, "__esModule", ({
   value: true
-});
+}));
 exports.clamp = clamp;
 exports.canUseDOM = exports.slidesOnLeft = exports.slidesOnRight = exports.siblingDirection = exports.getTotalSlides = exports.getPostClones = exports.getPreClones = exports.getTrackLeft = exports.getTrackAnimateCSS = exports.getTrackCSS = exports.checkSpecKeys = exports.getSlideCount = exports.checkNavigable = exports.getNavigableIndexes = exports.swipeEnd = exports.swipeMove = exports.swipeStart = exports.keyHandler = exports.changeSlide = exports.slideHandler = exports.initializedState = exports.extractObject = exports.canGoNext = exports.getSwipeDirection = exports.getHeight = exports.getWidth = exports.lazySlidesOnRight = exports.lazySlidesOnLeft = exports.lazyEndIndex = exports.lazyStartIndex = exports.getRequiredLazySlides = exports.getOnDemandLazySlides = exports.safePreventDefault = void 0;
 
@@ -49032,8 +48824,7 @@ exports.canUseDOM = canUseDOM;
 /*!*****************************************************!*\
   !*** ./node_modules/react/cjs/react.development.js ***!
   \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 /** @license React v16.13.1
@@ -50956,8 +50747,7 @@ exports.version = ReactVersion;
 /*!*************************************!*\
   !*** ./node_modules/react/index.js ***!
   \*************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -50973,12 +50763,14 @@ if (false) {} else {
 /*!*************************************************************************!*\
   !*** ./node_modules/resize-observer-polyfill/dist/ResizeObserver.es.js ***!
   \*************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(global) {/**
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
  * A collection of shims that provide minimal functionality of the ES6 collections.
  *
  * These implementations are not meant to be used outside of the ResizeObserver
@@ -51091,8 +50883,8 @@ var isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined'
 
 // Returns global object of a current environment.
 var global$1 = (function () {
-    if (typeof global !== 'undefined' && global.Math === Math) {
-        return global;
+    if (typeof __webpack_require__.g !== 'undefined' && __webpack_require__.g.Math === Math) {
+        return __webpack_require__.g;
     }
     if (typeof self !== 'undefined' && self.Math === Math) {
         return self;
@@ -51905,9 +51697,8 @@ var index = (function () {
     return ResizeObserver;
 })();
 
-/* harmony default export */ __webpack_exports__["default"] = (index);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (index);
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -51915,8 +51706,7 @@ var index = (function () {
 /*!*********************************************************************!*\
   !*** ./node_modules/scheduler/cjs/scheduler-tracing.development.js ***!
   \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 /** @license React v0.19.1
@@ -52276,8 +52066,7 @@ exports.unstable_wrap = unstable_wrap;
 /*!*************************************************************!*\
   !*** ./node_modules/scheduler/cjs/scheduler.development.js ***!
   \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 /** @license React v0.19.1
@@ -53146,8 +52935,7 @@ exports.unstable_wrapCallback = unstable_wrapCallback;
 /*!*****************************************!*\
   !*** ./node_modules/scheduler/index.js ***!
   \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -53163,8 +52951,7 @@ if (false) {} else {
 /*!*******************************************!*\
   !*** ./node_modules/scheduler/tracing.js ***!
   \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -53176,201 +52963,105 @@ if (false) {} else {
 
 /***/ }),
 
-/***/ "./node_modules/setimmediate/setImmediate.js":
-/*!***************************************************!*\
-  !*** ./node_modules/setimmediate/setImmediate.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./node_modules/string-convert/camel2hyphen.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/string-convert/camel2hyphen.js ***!
+  \*****************************************************/
+/***/ ((module) => {
 
-/* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
-    "use strict";
+var camel2hyphen = function (str) {
+  return str
+          .replace(/[A-Z]/g, function (match) {
+            return '-' + match.toLowerCase();
+          })
+          .toLowerCase();
+};
 
-    if (global.setImmediate) {
-        return;
-    }
+module.exports = camel2hyphen;
 
-    var nextHandle = 1; // Spec says greater than zero
-    var tasksByHandle = {};
-    var currentlyRunningATask = false;
-    var doc = global.document;
-    var registerImmediate;
+/***/ }),
 
-    function setImmediate(callback) {
-      // Callback can either be a function or a string
-      if (typeof callback !== "function") {
-        callback = new Function("" + callback);
-      }
-      // Copy function arguments
-      var args = new Array(arguments.length - 1);
-      for (var i = 0; i < args.length; i++) {
-          args[i] = arguments[i + 1];
-      }
-      // Store and register the task
-      var task = { callback: callback, args: args };
-      tasksByHandle[nextHandle] = task;
-      registerImmediate(nextHandle);
-      return nextHandle++;
-    }
+/***/ "./node_modules/css-modal/build/modal.css":
+/*!************************************************!*\
+  !*** ./node_modules/css-modal/build/modal.css ***!
+  \************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-    function clearImmediate(handle) {
-        delete tasksByHandle[handle];
-    }
+var api = __webpack_require__(/*! !../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+            var content = __webpack_require__(/*! !!../../file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!../../sass-loader/dist/cjs.js!./modal.css */ "./node_modules/file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/css-modal/build/modal.css");
 
-    function run(task) {
-        var callback = task.callback;
-        var args = task.args;
-        switch (args.length) {
-        case 0:
-            callback();
-            break;
-        case 1:
-            callback(args[0]);
-            break;
-        case 2:
-            callback(args[0], args[1]);
-            break;
-        case 3:
-            callback(args[0], args[1], args[2]);
-            break;
-        default:
-            callback.apply(undefined, args);
-            break;
-        }
-    }
+            content = content.__esModule ? content.default : content;
 
-    function runIfPresent(handle) {
-        // From the spec: "Wait until any invocations of this algorithm started before this one have completed."
-        // So if we're currently running a task, we'll need to delay this invocation.
-        if (currentlyRunningATask) {
-            // Delay by doing a setTimeout. setImmediate was tried instead, but in Firefox 7 it generated a
-            // "too much recursion" error.
-            setTimeout(runIfPresent, 0, handle);
-        } else {
-            var task = tasksByHandle[handle];
-            if (task) {
-                currentlyRunningATask = true;
-                try {
-                    run(task);
-                } finally {
-                    clearImmediate(handle);
-                    currentlyRunningATask = false;
-                }
+            if (typeof content === 'string') {
+              content = [[module.id, content, '']];
             }
-        }
-    }
 
-    function installNextTickImplementation() {
-        registerImmediate = function(handle) {
-            process.nextTick(function () { runIfPresent(handle); });
-        };
-    }
+var options = {};
 
-    function canUsePostMessage() {
-        // The test against `importScripts` prevents this implementation from being installed inside a web worker,
-        // where `global.postMessage` means something completely different and can't be used for this purpose.
-        if (global.postMessage && !global.importScripts) {
-            var postMessageIsAsynchronous = true;
-            var oldOnMessage = global.onmessage;
-            global.onmessage = function() {
-                postMessageIsAsynchronous = false;
-            };
-            global.postMessage("", "*");
-            global.onmessage = oldOnMessage;
-            return postMessageIsAsynchronous;
-        }
-    }
+options.insert = "head";
+options.singleton = false;
 
-    function installPostMessageImplementation() {
-        // Installs an event handler on `global` for the `message` event: see
-        // * https://developer.mozilla.org/en/DOM/window.postMessage
-        // * http://www.whatwg.org/specs/web-apps/current-work/multipage/comms.html#crossDocumentMessages
+var update = api(content, options);
 
-        var messagePrefix = "setImmediate$" + Math.random() + "$";
-        var onGlobalMessage = function(event) {
-            if (event.source === global &&
-                typeof event.data === "string" &&
-                event.data.indexOf(messagePrefix) === 0) {
-                runIfPresent(+event.data.slice(messagePrefix.length));
+
+
+module.exports = content.locals || {};
+
+/***/ }),
+
+/***/ "./node_modules/purecss/build/grids-responsive-min.css":
+/*!*************************************************************!*\
+  !*** ./node_modules/purecss/build/grids-responsive-min.css ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var api = __webpack_require__(/*! !../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+            var content = __webpack_require__(/*! !!../../file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!../../sass-loader/dist/cjs.js!./grids-responsive-min.css */ "./node_modules/file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/grids-responsive-min.css");
+
+            content = content.__esModule ? content.default : content;
+
+            if (typeof content === 'string') {
+              content = [[module.id, content, '']];
             }
-        };
 
-        if (global.addEventListener) {
-            global.addEventListener("message", onGlobalMessage, false);
-        } else {
-            global.attachEvent("onmessage", onGlobalMessage);
-        }
+var options = {};
 
-        registerImmediate = function(handle) {
-            global.postMessage(messagePrefix + handle, "*");
-        };
-    }
+options.insert = "head";
+options.singleton = false;
 
-    function installMessageChannelImplementation() {
-        var channel = new MessageChannel();
-        channel.port1.onmessage = function(event) {
-            var handle = event.data;
-            runIfPresent(handle);
-        };
+var update = api(content, options);
 
-        registerImmediate = function(handle) {
-            channel.port2.postMessage(handle);
-        };
-    }
 
-    function installReadyStateChangeImplementation() {
-        var html = doc.documentElement;
-        registerImmediate = function(handle) {
-            // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
-            // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
-            var script = doc.createElement("script");
-            script.onreadystatechange = function () {
-                runIfPresent(handle);
-                script.onreadystatechange = null;
-                html.removeChild(script);
-                script = null;
-            };
-            html.appendChild(script);
-        };
-    }
 
-    function installSetTimeoutImplementation() {
-        registerImmediate = function(handle) {
-            setTimeout(runIfPresent, 0, handle);
-        };
-    }
+module.exports = content.locals || {};
 
-    // If supported, we should attach to the prototype of global, since that is where setTimeout et al. live.
-    var attachTo = Object.getPrototypeOf && Object.getPrototypeOf(global);
-    attachTo = attachTo && attachTo.setTimeout ? attachTo : global;
+/***/ }),
 
-    // Don't get fooled by e.g. browserify environments.
-    if ({}.toString.call(global.process) === "[object process]") {
-        // For Node.js before 0.9
-        installNextTickImplementation();
+/***/ "./node_modules/purecss/build/pure-min.css":
+/*!*************************************************!*\
+  !*** ./node_modules/purecss/build/pure-min.css ***!
+  \*************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-    } else if (canUsePostMessage()) {
-        // For non-IE10 modern browsers
-        installPostMessageImplementation();
+var api = __webpack_require__(/*! !../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+            var content = __webpack_require__(/*! !!../../file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!../../sass-loader/dist/cjs.js!./pure-min.css */ "./node_modules/file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/purecss/build/pure-min.css");
 
-    } else if (global.MessageChannel) {
-        // For web workers, where supported
-        installMessageChannelImplementation();
+            content = content.__esModule ? content.default : content;
 
-    } else if (doc && "onreadystatechange" in doc.createElement("script")) {
-        // For IE 6–8
-        installReadyStateChangeImplementation();
+            if (typeof content === 'string') {
+              content = [[module.id, content, '']];
+            }
 
-    } else {
-        // For older browsers
-        installSetTimeoutImplementation();
-    }
+var options = {};
 
-    attachTo.setImmediate = setImmediate;
-    attachTo.clearImmediate = clearImmediate;
-}(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
+options.insert = "head";
+options.singleton = false;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../process/browser.js */ "./node_modules/process/browser.js")))
+var update = api(content, options);
+
+
+
+module.exports = content.locals || {};
 
 /***/ }),
 
@@ -53378,16 +53069,15 @@ if (false) {} else {
 /*!***********************************************************!*\
   !*** ./node_modules/slick-carousel/slick/slick-theme.css ***!
   \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var api = __webpack_require__(/*! ../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !../../file-loader/dist/cjs.js??ref--6-1!../../sass-loader/dist/cjs.js!./slick-theme.css */ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/slick-carousel/slick/slick-theme.css");
+var api = __webpack_require__(/*! !../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+            var content = __webpack_require__(/*! !!../../file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!../../sass-loader/dist/cjs.js!./slick-theme.css */ "./node_modules/file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/slick-carousel/slick/slick-theme.css");
 
             content = content.__esModule ? content.default : content;
 
             if (typeof content === 'string') {
-              content = [[module.i, content, '']];
+              content = [[module.id, content, '']];
             }
 
 var options = {};
@@ -53407,16 +53097,15 @@ module.exports = content.locals || {};
 /*!*****************************************************!*\
   !*** ./node_modules/slick-carousel/slick/slick.css ***!
   \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var api = __webpack_require__(/*! ../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !../../file-loader/dist/cjs.js??ref--6-1!../../sass-loader/dist/cjs.js!./slick.css */ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./node_modules/slick-carousel/slick/slick.css");
+var api = __webpack_require__(/*! !../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+            var content = __webpack_require__(/*! !!../../file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!../../sass-loader/dist/cjs.js!./slick.css */ "./node_modules/file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/slick-carousel/slick/slick.css");
 
             content = content.__esModule ? content.default : content;
 
             if (typeof content === 'string') {
-              content = [[module.i, content, '']];
+              content = [[module.id, content, '']];
             }
 
 var options = {};
@@ -53432,22 +53121,31 @@ module.exports = content.locals || {};
 
 /***/ }),
 
-/***/ "./node_modules/string-convert/camel2hyphen.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/string-convert/camel2hyphen.js ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ "./sass/custom.scss":
+/*!**************************!*\
+  !*** ./sass/custom.scss ***!
+  \**************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var camel2hyphen = function (str) {
-  return str
-          .replace(/[A-Z]/g, function (match) {
-            return '-' + match.toLowerCase();
-          })
-          .toLowerCase();
-};
+var api = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+            var content = __webpack_require__(/*! !!../node_modules/file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!../node_modules/sass-loader/dist/cjs.js!./custom.scss */ "./node_modules/file-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/sass-loader/dist/cjs.js!./sass/custom.scss");
 
-module.exports = camel2hyphen;
+            content = content.__esModule ? content.default : content;
+
+            if (typeof content === 'string') {
+              content = [[module.id, content, '']];
+            }
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = api(content, options);
+
+
+
+module.exports = content.locals || {};
 
 /***/ }),
 
@@ -53455,8 +53153,7 @@ module.exports = camel2hyphen;
 /*!****************************************************************************!*\
   !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
   \****************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -53555,7 +53252,7 @@ function insertStyleElement(options) {
   var attributes = options.attributes || {};
 
   if (typeof attributes.nonce === 'undefined') {
-    var nonce =  true ? __webpack_require__.nc : undefined;
+    var nonce =  true ? __webpack_require__.nc : 0;
 
     if (nonce) {
       attributes.nonce = nonce;
@@ -53729,158 +53426,118 @@ module.exports = function (list, options) {
   };
 };
 
-/***/ }),
-
-/***/ "./node_modules/timers-browserify/main.js":
-/*!************************************************!*\
-  !*** ./node_modules/timers-browserify/main.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
-            (typeof self !== "undefined" && self) ||
-            window;
-var apply = Function.prototype.apply;
-
-// DOM APIs, for completeness
-
-exports.setTimeout = function() {
-  return new Timeout(apply.call(setTimeout, scope, arguments), clearTimeout);
-};
-exports.setInterval = function() {
-  return new Timeout(apply.call(setInterval, scope, arguments), clearInterval);
-};
-exports.clearTimeout =
-exports.clearInterval = function(timeout) {
-  if (timeout) {
-    timeout.close();
-  }
-};
-
-function Timeout(id, clearFn) {
-  this._id = id;
-  this._clearFn = clearFn;
-}
-Timeout.prototype.unref = Timeout.prototype.ref = function() {};
-Timeout.prototype.close = function() {
-  this._clearFn.call(scope, this._id);
-};
-
-// Does not start the time, just sets up the members needed.
-exports.enroll = function(item, msecs) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = msecs;
-};
-
-exports.unenroll = function(item) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = -1;
-};
-
-exports._unrefActive = exports.active = function(item) {
-  clearTimeout(item._idleTimeoutId);
-
-  var msecs = item._idleTimeout;
-  if (msecs >= 0) {
-    item._idleTimeoutId = setTimeout(function onTimeout() {
-      if (item._onTimeout)
-        item._onTimeout();
-    }, msecs);
-  }
-};
-
-// setimmediate attaches itself to the global object
-__webpack_require__(/*! setimmediate */ "./node_modules/setimmediate/setImmediate.js");
-// On some exotic environments, it's not clear which object `setimmediate` was
-// able to install onto.  Search each possibility in the same order as the
-// `setimmediate` library.
-exports.setImmediate = (typeof self !== "undefined" && self.setImmediate) ||
-                       (typeof global !== "undefined" && global.setImmediate) ||
-                       (this && this.setImmediate);
-exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
-                         (typeof global !== "undefined" && global.clearImmediate) ||
-                         (this && this.clearImmediate);
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
-
-/***/ }),
-
-/***/ "./node_modules/webpack/buildin/global.js":
-/*!***********************************!*\
-  !*** (webpack)/buildin/global.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-
-/***/ "./sass/custom.scss":
-/*!**************************!*\
-  !*** ./sass/custom.scss ***!
-  \**************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var api = __webpack_require__(/*! ../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !../node_modules/file-loader/dist/cjs.js??ref--6-1!../node_modules/sass-loader/dist/cjs.js!./custom.scss */ "./node_modules/file-loader/dist/cjs.js?!./node_modules/sass-loader/dist/cjs.js!./sass/custom.scss");
-
-            content = content.__esModule ? content.default : content;
-
-            if (typeof content === 'string') {
-              content = [[module.i, content, '']];
-            }
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = api(content, options);
-
-
-
-module.exports = content.locals || {};
-
-/***/ }),
-
-/***/ 0:
-/*!********************************************************************************************************************************************************************************!*\
-  !*** multi ./js/main.jsx ./node_modules/css-modal/modal.js ./node_modules/purecss/build/pure-min.css ./node_modules/purecss/build/grids-responsive-min.css ./sass/custom.scss ***!
-  \********************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(/*! C:\Users\tille\Desktop\nodeApps\mern-app\js\main.jsx */"./js/main.jsx");
-__webpack_require__(/*! C:\Users\tille\Desktop\nodeApps\mern-app\node_modules\css-modal\modal.js */"./node_modules/css-modal/modal.js");
-__webpack_require__(/*! C:\Users\tille\Desktop\nodeApps\mern-app\node_modules\purecss\build\pure-min.css */"./node_modules/purecss/build/pure-min.css");
-__webpack_require__(/*! C:\Users\tille\Desktop\nodeApps\mern-app\node_modules\purecss\build\grids-responsive-min.css */"./node_modules/purecss/build/grids-responsive-min.css");
-module.exports = __webpack_require__(/*! C:\Users\tille\Desktop\nodeApps\mern-app\sass\custom.scss */"./sass/custom.scss");
-
-
 /***/ })
 
-/******/ });
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			id: moduleId,
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl && document) {
+/******/ 			if (document.currentScript)
+/******/ 				scriptUrl = document.currentScript.src
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				if(scripts.length) scriptUrl = scripts[scripts.length - 1].src
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
+/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
+/******/ 		__webpack_require__.p = scriptUrl + "../";
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	__webpack_require__("./js/main.jsx");
+/******/ 	__webpack_require__("./node_modules/css-modal/modal.js");
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	__webpack_require__("./node_modules/purecss/build/pure-min.css");
+/******/ 	__webpack_require__("./node_modules/purecss/build/grids-responsive-min.css");
+/******/ 	var __webpack_exports__ = __webpack_require__("./sass/custom.scss");
+/******/ 	
+/******/ })()
+;
 //# sourceMappingURL=main.js.map
