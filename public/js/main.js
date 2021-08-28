@@ -18627,11 +18627,7 @@ var react_fontawesome_1 = __webpack_require__(/*! @fortawesome/react-fontawesome
 
 var free_solid_svg_icons_1 = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
 
-var free_regular_svg_icons_1 = __webpack_require__(/*! @fortawesome/free-regular-svg-icons */ "./node_modules/@fortawesome/free-regular-svg-icons/index.es.js"); // let obj: VideoAttributes = {
-// 	likes: 'asd',
-// 	likedByCurrentUser: false
-// }
-
+var free_regular_svg_icons_1 = __webpack_require__(/*! @fortawesome/free-regular-svg-icons */ "./node_modules/@fortawesome/free-regular-svg-icons/index.es.js");
 
 var VideoPlayer =
 /** @class */
@@ -18736,13 +18732,13 @@ function (_super) {
       href: "/account-profile/" + uploadedBy._id,
       "aria-label": uploadedBy.displayName + " profile"
     }, uploadedBy.displayName))) : React.createElement("div", null, React.createElement("p", null, "By: ", uploadedBy.displayName))), React.createElement("video", {
-      type: "video/mp4",
       className: "video-preview lozad",
       height: "225",
       width: "400",
       poster: thumbnailSrc || "/images/videoPlaceholder.png",
       controls: true
     }, React.createElement("source", {
+      type: "video/mp4",
       src: src
     })))), React.createElement("div", {
       className: "flex x-space-around y-center"

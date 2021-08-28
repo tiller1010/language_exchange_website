@@ -4,40 +4,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 
-interface VideoAttributes {
+interface User {
+	_id: string;
+	displayName: string
+}
+
+interface VideoPlayerState {
 	likes: number;
 	likedByCurrentUser: boolean;
 }
-
-// type VideoPlayerProps = {
-// 	_id: string,
-// 	title: string,
-// 	src: string,
-// 	thumbnailSrc: string,
-// 	uploadedBy: object,
-// 	likes: number,
-// 	likedByCurrentUser: boolean
-// }
 
 interface VideoPlayerProps {
 	_id: string;
 	title: string;
 	src: string;
 	thumbnailSrc: string;
-	uploadedBy: object;
+	uploadedBy: User;
 	likes: number;
 	likedByCurrentUser: boolean;
 }
 
-// let obj: VideoAttributes = {
-// 	likes: 'asd',
-// 	likedByCurrentUser: false
-// }
-
-export default class VideoPlayer extends React.Component<VideoPlayerProps> {
+export default class VideoPlayer extends React.Component<VideoPlayerProps, VideoPlayerState> {
 	constructor(props: VideoPlayerProps){
 		super(props);
-		let state: VideoAttributes = {
+		let state: VideoPlayerState = {
 			likes: 0,
 			likedByCurrentUser: false
 		}
@@ -109,10 +99,10 @@ export default class VideoPlayer extends React.Component<VideoPlayerProps> {
 								</div>
 							}
 						</div>
-						<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
+						<video className="video-preview lozad" height="225" width="400" poster={
 							thumbnailSrc || "/images/videoPlaceholder.png"
 						} controls>
-							<source src={src}></source>
+							<source type="video/mp4" src={src}></source>
 						</video>
 					</div>
 				</div>
