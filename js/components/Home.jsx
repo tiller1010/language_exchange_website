@@ -6,6 +6,7 @@ import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSlidersH, faStar }
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import Slider from 'react-slick';
 import Navigation from './Navigation.jsx';
+import VideoSearchForm from './VideoSearchForm.tsx';
 import ReadMore from '@jamespotz/react-simple-readmore';
 import VideoPlayer from './VideoPlayer.tsx';
 
@@ -17,12 +18,9 @@ class Home extends React.Component {
 	constructor(){
 		super();
 		this.state = {
-			sortControlStatus: '',
 			recentVideos: [],
 			userLikedVideos: []
 		}
-		this.toggleSortControls = this.toggleSortControls.bind(this);
-		this.handleSortChange = this.handleSortChange.bind(this);
 		this.sendLike = this.sendLike.bind(this);
 		this.removeLike = this.removeLike.bind(this);
 		this.currentUserHasLikedVideo = this.currentUserHasLikedVideo.bind(this);
@@ -62,21 +60,6 @@ class Home extends React.Component {
 					levels: res.data
 				});
 			});
-	}
-
-	toggleSortControls(){
-		let newStatus = this.state.sortControlStatus ? '' : 'open';
-		this.setState({
-			sortControlStatus: newStatus
-		});
-	}
-
-	handleSortChange(event){
-		this.setState({
-			sort: event.target.value
-		});
-		// This approach triggers the onSubmit handler
-		event.target.form.querySelector('input[type="submit"]').click();
 	}
 
 	async sendLike(video){
@@ -163,49 +146,19 @@ class Home extends React.Component {
 	}
 
 	render(){
+
 		var { strapiTestImage } = this.state || 'notfound';
+
 		return (
 			<div className="frame">
 				<Navigation/>
 				<div className="page-form">
 					<p>Let's enjoy your</p>
 					<h1>User Submissions</h1>
-					<form action="/videos" method="GET">
-						<div className="flex">
-							<div className="search-input">
-								<input type="text" name="keywords" placeholder="Search video submissions"/>
-						        <FontAwesomeIcon icon={faSearch}/>
-								<input type="submit" value="Search"/>
-							</div>
-							<div className="sort-controls flex">
-								<div className="control-icon pure-u-1" onClick={this.toggleSortControls}>
-									<FontAwesomeIcon icon={faSlidersH}/>
-								</div>
-								<div className={`sort-options flex pure-u-1 ${this.state.sortControlStatus}`}>
-									<div>
-										<label htmlFor="sort-all">All</label>
-										<input type="radio" name="sort" value="" id="sort-all" checked={this.state.sort === '' ? true : false} onChange={this.handleSortChange}/>
-									</div>
-									<div>
-										<label htmlFor="sort-oldest">Oldest</label>
-										<input type="radio" name="sort" value="Oldest" id="sort-oldest" checked={this.state.sort === 'Oldest' ? true : false} onChange={this.handleSortChange}/>
-									</div>
-									<div>
-										<label htmlFor="sort-recent">Recent</label>
-										<input type="radio" name="sort" value="Recent" id="sort-recent" checked={this.state.sort === 'Recent' ? true : false} onChange={this.handleSortChange}/>
-									</div>
-									<div>
-										<label htmlFor="sort-AZ">A-Z</label>
-										<input type="radio" name="sort" value="A-Z" id="sort-AZ" checked={this.state.sort === 'A-Z' ? true : false} onChange={this.handleSortChange}/>
-									</div>
-									<div>
-										<label htmlFor="sort-ZA">Z-A</label>
-										<input type="radio" name="sort" value="Z-A" id="sort-ZA" checked={this.state.sort === 'Z-A' ? true : false} onChange={this.handleSortChange}/>
-									</div>
-								</div>
-							</div>
-						</div>
-					</form>
+					<VideoSearchForm
+						keywords=""
+						sort=""
+					/>
 				</div>
 
 			    {this.state.recentVideos.length ?

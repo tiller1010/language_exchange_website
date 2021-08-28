@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome, faSlidersH, faBan, faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import Navigation from './Navigation.jsx';
+import VideoSearchForm from './VideoSearchForm.tsx';
 import Slider from 'react-slick';
 import ReadMore from '@jamespotz/react-simple-readmore';
 
@@ -30,15 +31,10 @@ class VideosIndex extends React.Component {
 			videos: [],
 			pages: [],
 			currentPage: 1,
-			keywords: '',
-			sort: '',
 			userLikedVideos: []
 		}
 		this.refreshVideos = this.refreshVideos.bind(this);
 		this.pagination = this.pagination.bind(this);
-		this.handleKeywordsChange = this.handleKeywordsChange.bind(this);
-		this.toggleSortControls = this.toggleSortControls.bind(this);
-		this.handleSortChange = this.handleSortChange.bind(this);
 		this.handleChangePage = this.handleChangePage.bind(this);
 		this.handleSearch = this.handleSearch.bind(this);
 		this.sendLike = this.sendLike.bind(this);
@@ -56,8 +52,6 @@ class VideosIndex extends React.Component {
 	async refreshVideos(){
 		var urlParams = new URLSearchParams(window.location.search);
 		var page = urlParams.get('page') || 1;
-		var keywords = urlParams.get('keywords');
-		var sort = urlParams.get('sort');
 
 		var newVideos = await getVideos();
 		if(newVideos){
@@ -69,32 +63,9 @@ class VideosIndex extends React.Component {
 			this.setState({
 				videos: newVideos.videos,
 				pages: this.pagination(newVideos.pages),
-				currentPage: page,
-				keywords: keywords || '',
-				sort: sort || ''
+				currentPage: page
 			});
 		}
-	}
-
-	handleKeywordsChange(event){
-		this.setState({
-			keywords: event.target.value
-		});
-	}
-
-	toggleSortControls(){
-		let newStatus = this.state.sortControlStatus ? '' : 'open';
-		this.setState({
-			sortControlStatus: newStatus
-		});
-	}
-
-	handleSortChange(event){
-		this.setState({
-			sort: event.target.value
-		});
-		// This approach triggers the onSubmit handler
-		event.target.form.querySelector('input[type="submit"]').click();
 	}
 
 	handleChangePage(event){
@@ -179,7 +150,8 @@ class VideosIndex extends React.Component {
 	render(){
 
 		var urlParams = new URLSearchParams(window.location.search);
-		var keywords = urlParams.get('keywords') || null;
+		var keywords = urlParams.get('keywords') || '';
+		var sort = urlParams.get('sort') || '';
 		var context = this;
 
 		// When using back or forward buttons in browser
@@ -194,42 +166,10 @@ class VideosIndex extends React.Component {
 				<Navigation/>
 				<div className="page-form">
 					<h1>Videos</h1>
-					<form action="/videos" method="GET">
-						<div className="flex">
-							<div className="search-input">
-								<input type="text" name="keywords" value={this.state.keywords} onChange={this.handleKeywordsChange}  placeholder="Search video submissions"/>
-						        <FontAwesomeIcon icon={faSearch}/>
-								<input type="submit" value="Search"/>
-							</div>
-							<div className="sort-controls flex">
-								<div className="control-icon pure-u-1" onClick={this.toggleSortControls}>
-									<FontAwesomeIcon icon={faSlidersH}/>
-								</div>
-								<div className={`sort-options flex pure-u-1 ${this.state.sortControlStatus}`}>
-									<div>
-										<label htmlFor="sort-all">All</label>
-										<input type="radio" name="sort" value="" id="sort-all" checked={this.state.sort === '' ? true : false} onChange={this.handleSortChange}/>
-									</div>
-									<div>
-										<label htmlFor="sort-oldest">Oldest</label>
-										<input type="radio" name="sort" value="Oldest" id="sort-oldest" checked={this.state.sort === 'Oldest' ? true : false} onChange={this.handleSortChange}/>
-									</div>
-									<div>
-										<label htmlFor="sort-recent">Recent</label>
-										<input type="radio" name="sort" value="Recent" id="sort-recent" checked={this.state.sort === 'Recent' ? true : false} onChange={this.handleSortChange}/>
-									</div>
-									<div>
-										<label htmlFor="sort-AZ">A-Z</label>
-										<input type="radio" name="sort" value="A-Z" id="sort-AZ" checked={this.state.sort === 'A-Z' ? true : false} onChange={this.handleSortChange}/>
-									</div>
-									<div>
-										<label htmlFor="sort-ZA">Z-A</label>
-										<input type="radio" name="sort" value="Z-A" id="sort-ZA" checked={this.state.sort === 'Z-A' ? true : false} onChange={this.handleSortChange}/>
-									</div>
-								</div>
-							</div>
-						</div>
-					</form>
+					<VideoSearchForm
+						keywords={keywords}
+						sort={sort}
+					/>
 				    <div className="flex">
 					    <div>
 							<button onClick={this.refreshVideos}>

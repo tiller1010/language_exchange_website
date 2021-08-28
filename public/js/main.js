@@ -16815,12 +16815,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lozad__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lozad */ "./node_modules/lozad/dist/lozad.min.js");
 /* harmony import */ var lozad__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lozad__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
 /* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-slick */ "./node_modules/react-slick/lib/index.js");
 /* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
-/* harmony import */ var _jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @jamespotz/react-simple-readmore */ "./node_modules/@jamespotz/react-simple-readmore/dist/index.js");
-/* harmony import */ var _VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./VideoPlayer.tsx */ "./js/components/VideoPlayer.tsx");
-/* harmony import */ var _VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _VideoSearchForm_tsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./VideoSearchForm.tsx */ "./js/components/VideoSearchForm.tsx");
+/* harmony import */ var _VideoSearchForm_tsx__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_VideoSearchForm_tsx__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @jamespotz/react-simple-readmore */ "./node_modules/@jamespotz/react-simple-readmore/dist/index.js");
+/* harmony import */ var _VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./VideoPlayer.tsx */ "./js/components/VideoPlayer.tsx");
+/* harmony import */ var _VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_8__);
+
 
 
 
@@ -16839,12 +16842,9 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
   constructor() {
     super();
     this.state = {
-      sortControlStatus: '',
       recentVideos: [],
       userLikedVideos: []
     };
-    this.toggleSortControls = this.toggleSortControls.bind(this);
-    this.handleSortChange = this.handleSortChange.bind(this);
     this.sendLike = this.sendLike.bind(this);
     this.removeLike = this.removeLike.bind(this);
     this.currentUserHasLikedVideo = this.currentUserHasLikedVideo.bind(this);
@@ -16882,21 +16882,6 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
         levels: res.data
       });
     });
-  }
-
-  toggleSortControls() {
-    let newStatus = this.state.sortControlStatus ? '' : 'open';
-    this.setState({
-      sortControlStatus: newStatus
-    });
-  }
-
-  handleSortChange(event) {
-    this.setState({
-      sort: event.target.value
-    }); // This approach triggers the onSubmit handler
-
-    event.target.form.querySelector('input[type="submit"]').click();
   }
 
   async sendLike(video) {
@@ -16989,77 +16974,10 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       className: "frame"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_5__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "page-form"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Let's enjoy your"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "User Submissions"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
-      action: "/videos",
-      method: "GET"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "flex"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "search-input"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-      type: "text",
-      name: "keywords",
-      placeholder: "Search video submissions"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_8__.faSearch
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-      type: "submit",
-      value: "Search"
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "sort-controls flex"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "control-icon pure-u-1",
-      onClick: this.toggleSortControls
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_8__.faSlidersH
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: `sort-options flex pure-u-1 ${this.state.sortControlStatus}`
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
-      htmlFor: "sort-all"
-    }, "All"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-      type: "radio",
-      name: "sort",
-      value: "",
-      id: "sort-all",
-      checked: this.state.sort === '' ? true : false,
-      onChange: this.handleSortChange
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
-      htmlFor: "sort-oldest"
-    }, "Oldest"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-      type: "radio",
-      name: "sort",
-      value: "Oldest",
-      id: "sort-oldest",
-      checked: this.state.sort === 'Oldest' ? true : false,
-      onChange: this.handleSortChange
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
-      htmlFor: "sort-recent"
-    }, "Recent"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-      type: "radio",
-      name: "sort",
-      value: "Recent",
-      id: "sort-recent",
-      checked: this.state.sort === 'Recent' ? true : false,
-      onChange: this.handleSortChange
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
-      htmlFor: "sort-AZ"
-    }, "A-Z"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-      type: "radio",
-      name: "sort",
-      value: "A-Z",
-      id: "sort-AZ",
-      checked: this.state.sort === 'A-Z' ? true : false,
-      onChange: this.handleSortChange
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
-      htmlFor: "sort-ZA"
-    }, "Z-A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-      type: "radio",
-      name: "sort",
-      value: "Z-A",
-      id: "sort-ZA",
-      checked: this.state.sort === 'Z-A' ? true : false,
-      onChange: this.handleSortChange
-    }))))))), this.state.recentVideos.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Let's enjoy your"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "User Submissions"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_VideoSearchForm_tsx__WEBPACK_IMPORTED_MODULE_6___default()), {
+      keywords: "",
+      sort: ""
+    })), this.state.recentVideos.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "pad no-x"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Recent Submissions"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_slick__WEBPACK_IMPORTED_MODULE_4__.default, {
       dots: false,
@@ -17075,7 +16993,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       }]
     }, this.state.recentVideos.map(video => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       key: video._id
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_7___default()), {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_8___default()), {
       _id: video._id,
       title: video.title,
       src: video.src,
@@ -17095,7 +17013,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
         alignSelf: 'center'
       }
     }, "View Level", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_8__.faLongArrowAltRight
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_9__.faLongArrowAltRight
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "pure-u-1"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", null)), level.topics ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -17113,7 +17031,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       href: `/level/${level.id}/topic/${topic.id}`,
       className: "button"
     }, "View Topic", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_8__.faLongArrowAltRight
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_9__.faLongArrowAltRight
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
       href: `/level/${level.id}/topic/${topic.id}`
     }, this.renderMedia(topic)))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "No topics"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "No levels"));
@@ -17950,11 +17868,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lozad__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lozad */ "./node_modules/lozad/dist/lozad.min.js");
 /* harmony import */ var lozad__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lozad__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @fortawesome/free-regular-svg-icons */ "./node_modules/@fortawesome/free-regular-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @fortawesome/free-regular-svg-icons */ "./node_modules/@fortawesome/free-regular-svg-icons/index.es.js");
 /* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
-/* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-slick */ "./node_modules/react-slick/lib/index.js");
-/* harmony import */ var _jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @jamespotz/react-simple-readmore */ "./node_modules/@jamespotz/react-simple-readmore/dist/index.js");
+/* harmony import */ var _VideoSearchForm_tsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./VideoSearchForm.tsx */ "./js/components/VideoSearchForm.tsx");
+/* harmony import */ var _VideoSearchForm_tsx__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_VideoSearchForm_tsx__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-slick */ "./node_modules/react-slick/lib/index.js");
+/* harmony import */ var _jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @jamespotz/react-simple-readmore */ "./node_modules/@jamespotz/react-simple-readmore/dist/index.js");
+
 
 
 
@@ -17987,15 +17908,10 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       videos: [],
       pages: [],
       currentPage: 1,
-      keywords: '',
-      sort: '',
       userLikedVideos: []
     };
     this.refreshVideos = this.refreshVideos.bind(this);
     this.pagination = this.pagination.bind(this);
-    this.handleKeywordsChange = this.handleKeywordsChange.bind(this);
-    this.toggleSortControls = this.toggleSortControls.bind(this);
-    this.handleSortChange = this.handleSortChange.bind(this);
     this.handleChangePage = this.handleChangePage.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.sendLike = this.sendLike.bind(this);
@@ -18013,8 +17929,6 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
   async refreshVideos() {
     var urlParams = new URLSearchParams(window.location.search);
     var page = urlParams.get('page') || 1;
-    var keywords = urlParams.get('keywords');
-    var sort = urlParams.get('sort');
     var newVideos = await getVideos();
 
     if (newVideos) {
@@ -18025,32 +17939,9 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       this.setState({
         videos: newVideos.videos,
         pages: this.pagination(newVideos.pages),
-        currentPage: page,
-        keywords: keywords || '',
-        sort: sort || ''
+        currentPage: page
       });
     }
-  }
-
-  handleKeywordsChange(event) {
-    this.setState({
-      keywords: event.target.value
-    });
-  }
-
-  toggleSortControls() {
-    let newStatus = this.state.sortControlStatus ? '' : 'open';
-    this.setState({
-      sortControlStatus: newStatus
-    });
-  }
-
-  handleSortChange(event) {
-    this.setState({
-      sort: event.target.value
-    }); // This approach triggers the onSubmit handler
-
-    event.target.form.querySelector('input[type="submit"]').click();
   }
 
   handleChangePage(event) {
@@ -18136,7 +18027,8 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
 
   render() {
     var urlParams = new URLSearchParams(window.location.search);
-    var keywords = urlParams.get('keywords') || null;
+    var keywords = urlParams.get('keywords') || '';
+    var sort = urlParams.get('sort') || '';
     var context = this; // When using back or forward buttons in browser
 
     window.addEventListener('popstate', function (event) {
@@ -18148,90 +18040,21 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       className: "frame"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_3__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "page-form"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "Videos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
-      action: "/videos",
-      method: "GET"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "flex"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "search-input"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-      type: "text",
-      name: "keywords",
-      value: this.state.keywords,
-      onChange: this.handleKeywordsChange,
-      placeholder: "Search video submissions"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faSearch
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-      type: "submit",
-      value: "Search"
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "sort-controls flex"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "control-icon pure-u-1",
-      onClick: this.toggleSortControls
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faSlidersH
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: `sort-options flex pure-u-1 ${this.state.sortControlStatus}`
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
-      htmlFor: "sort-all"
-    }, "All"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-      type: "radio",
-      name: "sort",
-      value: "",
-      id: "sort-all",
-      checked: this.state.sort === '' ? true : false,
-      onChange: this.handleSortChange
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
-      htmlFor: "sort-oldest"
-    }, "Oldest"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-      type: "radio",
-      name: "sort",
-      value: "Oldest",
-      id: "sort-oldest",
-      checked: this.state.sort === 'Oldest' ? true : false,
-      onChange: this.handleSortChange
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
-      htmlFor: "sort-recent"
-    }, "Recent"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-      type: "radio",
-      name: "sort",
-      value: "Recent",
-      id: "sort-recent",
-      checked: this.state.sort === 'Recent' ? true : false,
-      onChange: this.handleSortChange
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
-      htmlFor: "sort-AZ"
-    }, "A-Z"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-      type: "radio",
-      name: "sort",
-      value: "A-Z",
-      id: "sort-AZ",
-      checked: this.state.sort === 'A-Z' ? true : false,
-      onChange: this.handleSortChange
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
-      htmlFor: "sort-ZA"
-    }, "Z-A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-      type: "radio",
-      name: "sort",
-      value: "Z-A",
-      id: "sort-ZA",
-      checked: this.state.sort === 'Z-A' ? true : false,
-      onChange: this.handleSortChange
-    })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "Videos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_VideoSearchForm_tsx__WEBPACK_IMPORTED_MODULE_4___default()), {
+      keywords: keywords,
+      sort: sort
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "flex"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
       onClick: this.refreshVideos
     }, "Refresh", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faSync
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__.faSync
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "\xA0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
       onClick: this.handleChangePage,
       href: "/videos",
       className: "button"
     }, "Clear filters", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faBan
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__.faBan
     }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, this.state.pages.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
       className: "pagination flex"
     }, this.state.currentPage > 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
@@ -18241,7 +18064,7 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       className: "button icon-left",
       "aria-label": "previous"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faLongArrowAltLeft
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__.faLongArrowAltLeft
     }), "Prev")) : '', this.state.pages.map(page => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
       key: this.state.pages.indexOf(page)
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
@@ -18256,7 +18079,7 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
 											${this.state.sort ? '&sort=' + this.state.sort : ''}`,
       className: "button"
     }, "Next", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faLongArrowAltRight
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__.faLongArrowAltRight
     }))) : '') : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null), this.state.videos.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "flex"
     }, this.state.videos.map(video => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -18270,7 +18093,7 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       style: {
         maxWidth: '65%'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_5__.default, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_6__.default, {
       fade: true,
       minHeight: 58,
       btnStyles: {
@@ -18298,11 +18121,11 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Likes: ", video.likes || 0), video.likedByCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
       onClick: () => this.removeLike(video)
     }, "Liked", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faStar
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__.faStar
     })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
       onClick: () => this.sendLike(video)
     }, "Like", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_7__.faStar
+      icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_8__.faStar
     })))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "No videos"), this.state.pages.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
       className: "pagination flex"
     }, this.state.currentPage > 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
@@ -18312,7 +18135,7 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       className: "button icon-left",
       "aria-label": "previous"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faLongArrowAltLeft
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__.faLongArrowAltLeft
     }), "Prev")) : '', this.state.pages.map(page => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
       key: this.state.pages.indexOf(page)
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
@@ -18327,7 +18150,7 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
 											${this.state.sort ? '&sort=' + this.state.sort : ''}`,
       className: "button"
     }, "Next", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faLongArrowAltRight
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__.faLongArrowAltRight
     }))) : '') : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null)));
   }
 
@@ -18757,6 +18580,208 @@ function (_super) {
 }(React.Component);
 
 exports.default = VideoPlayer;
+
+/***/ }),
+
+/***/ "./js/components/VideoSearchForm.tsx":
+/*!*******************************************!*\
+  !*** ./js/components/VideoSearchForm.tsx ***!
+  \*******************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __extends = this && this.__extends || function () {
+  var extendStatics = function (d, b) {
+    extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    };
+
+    return extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var react_fontawesome_1 = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+
+var free_solid_svg_icons_1 = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+
+var SortControlStatus;
+
+(function (SortControlStatus) {
+  SortControlStatus["open"] = "open";
+  SortControlStatus["closed"] = "closed";
+})(SortControlStatus || (SortControlStatus = {}));
+
+var VideoSearchForm =
+/** @class */
+function (_super) {
+  __extends(VideoSearchForm, _super);
+
+  function VideoSearchForm(props) {
+    var _this = _super.call(this, props) || this;
+
+    var state = {
+      keywords: '',
+      sortControlStatus: SortControlStatus.closed,
+      sort: ''
+    };
+    _this.state = state;
+    _this.toggleSortControls = _this.toggleSortControls.bind(_this);
+    _this.handleKeywordsChange = _this.handleKeywordsChange.bind(_this);
+    _this.handleSortChange = _this.handleSortChange.bind(_this);
+    return _this;
+  }
+
+  VideoSearchForm.prototype.componentDidMount = function () {
+    var _a = this.props,
+        keywords = _a.keywords,
+        sort = _a.sort;
+    this.setState({
+      keywords: keywords,
+      sort: sort
+    });
+  };
+
+  VideoSearchForm.prototype.componentDidUpdate = function (prevProps) {
+    if (this.props != prevProps) {
+      var _a = this.props,
+          keywords = _a.keywords,
+          sort = _a.sort;
+      this.setState({
+        keywords: keywords,
+        sort: sort
+      });
+    }
+  };
+
+  VideoSearchForm.prototype.toggleSortControls = function () {
+    var sortControlStatus = this.state.sortControlStatus;
+    var newStatus = sortControlStatus === SortControlStatus.open ? SortControlStatus.closed : SortControlStatus.open;
+    this.setState({
+      sortControlStatus: newStatus
+    });
+  };
+
+  VideoSearchForm.prototype.handleKeywordsChange = function (event) {
+    this.setState({
+      keywords: event.target.value
+    });
+  };
+
+  VideoSearchForm.prototype.handleSortChange = function (event) {
+    this.setState({
+      sort: event.target.value
+    }); // This approach triggers the onSubmit handler
+
+    event.target.form.querySelector('input[type="submit"]').click();
+  };
+
+  VideoSearchForm.prototype.render = function () {
+    var _a = this.state,
+        keywords = _a.keywords,
+        sortControlStatus = _a.sortControlStatus,
+        sort = _a.sort;
+    return React.createElement("form", {
+      action: "/videos",
+      method: "GET"
+    }, React.createElement("div", {
+      className: "flex"
+    }, React.createElement("div", {
+      className: "search-input"
+    }, React.createElement("input", {
+      type: "text",
+      name: "keywords",
+      value: keywords,
+      onChange: this.handleKeywordsChange,
+      placeholder: "Search video submissions"
+    }), React.createElement(react_fontawesome_1.FontAwesomeIcon, {
+      icon: free_solid_svg_icons_1.faSearch
+    }), React.createElement("input", {
+      type: "submit",
+      value: "Search"
+    })), React.createElement("div", {
+      className: "sort-controls flex"
+    }, React.createElement("div", {
+      className: "control-icon pure-u-1",
+      onClick: this.toggleSortControls
+    }, React.createElement(react_fontawesome_1.FontAwesomeIcon, {
+      icon: free_solid_svg_icons_1.faSlidersH
+    })), React.createElement("div", {
+      className: "sort-options flex pure-u-1 " + sortControlStatus
+    }, React.createElement("div", null, React.createElement("label", {
+      htmlFor: "sort-all"
+    }, "All"), React.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "",
+      id: "sort-all",
+      checked: sort === '' ? true : false,
+      onChange: this.handleSortChange
+    })), React.createElement("div", null, React.createElement("label", {
+      htmlFor: "sort-oldest"
+    }, "Oldest"), React.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "Oldest",
+      id: "sort-oldest",
+      checked: sort === 'Oldest' ? true : false,
+      onChange: this.handleSortChange
+    })), React.createElement("div", null, React.createElement("label", {
+      htmlFor: "sort-recent"
+    }, "Recent"), React.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "Recent",
+      id: "sort-recent",
+      checked: sort === 'Recent' ? true : false,
+      onChange: this.handleSortChange
+    })), React.createElement("div", null, React.createElement("label", {
+      htmlFor: "sort-AZ"
+    }, "A-Z"), React.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "A-Z",
+      id: "sort-AZ",
+      checked: sort === 'A-Z' ? true : false,
+      onChange: this.handleSortChange
+    })), React.createElement("div", null, React.createElement("label", {
+      htmlFor: "sort-ZA"
+    }, "Z-A"), React.createElement("input", {
+      type: "radio",
+      name: "sort",
+      value: "Z-A",
+      id: "sort-ZA",
+      checked: sort === 'Z-A' ? true : false,
+      onChange: this.handleSortChange
+    }))))));
+  };
+
+  return VideoSearchForm;
+}(React.Component);
+
+exports.default = VideoSearchForm;
 
 /***/ }),
 
