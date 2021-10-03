@@ -1,7 +1,7 @@
 const { getDB } = require('./db.js');
 const mongo = require('mongodb');
 
-async function addLike(userID, videoID){
+async function addLike(_, { userID, videoID }){
 	const db = getDB();
 
 	let user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
@@ -29,7 +29,7 @@ async function addLike(userID, videoID){
 	return false;
 }
 
-async function removeLike(userID, videoID){
+async function removeLike(_, { userID, videoID }){
 	const db = getDB();
 
 	let user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });

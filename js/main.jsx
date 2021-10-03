@@ -14,11 +14,13 @@ import 'css-modal/build/modal.css';
 
 if(document.getElementById('home')){
 	var userLikedVideos = document.getElementById('home').getAttribute('data-userLikedVideos');
-	ReactDOM.render(<Home userLikedVideos={userLikedVideos}/>, document.getElementById('home'));
+	var userID = document.getElementById('home').getAttribute('data-userID');
+	ReactDOM.render(<Home userLikedVideos={userLikedVideos} userID={userID}/>, document.getElementById('home'));
 }
 if(document.getElementById('videos')){
 	var userLikedVideos = document.getElementById('videos').getAttribute('data-userLikedVideos');
-	ReactDOM.render(<VideosIndex userLikedVideos={userLikedVideos}/>, document.getElementById('videos'));
+	var userID = document.getElementById('videos').getAttribute('data-userID');
+	ReactDOM.render(<VideosIndex userLikedVideos={userLikedVideos} userID={userID}/>, document.getElementById('videos'));
 }
 if(document.getElementById('videos-add')){
 	ReactDOM.render(<VideosAdd/>, document.getElementById('videos-add'));

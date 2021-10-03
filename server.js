@@ -15,6 +15,7 @@ var flash = require('connect-flash');
 var { addUser, findAndSyncUser, findUserByID, addCompletedTopic, removeCompletedTopic } = require('./users.js');
 var { getTopic, getTopicChallenges } = require('./topics.js');
 var { addLike, removeLike } = require('./likes.js');
+const { installHandler } = require('./api_handler.js');
 
 var app = express();
 app.set('views', __dirname + '/views');
@@ -34,6 +35,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json());
+
+// Install GraphQL API Handler
+installHandler(app);
 
 function randomFilename() {
   var text = "";
@@ -87,10 +91,12 @@ var upload = multer({ storage });
 		// Home route
 		app.get('/', (req, res) => {
 			let userLikedVideos = [];
+			let userID = null;
 			if(req.user){
 				userLikedVideos = req.user.likedVideos || [];
+				userID = req.user._id;
 			}
-			res.render('home', { userLikedVideos });
+			res.render('home', { userLikedVideos, userID });
 		});
 
 		// Recent videos API
@@ -193,23 +199,15 @@ var upload = multer({ storage });
 			}
 
 			let userLikedVideos = [];
+			let userID = null;
 			if(req.user){
 				userLikedVideos = req.user.likedVideos || [];
+				userID = req.user._id;
 			}
 
-			res.render('videos', { userLikedVideos });
+			res.render('videos', { userLikedVideos, userID });
 		});
 
-		// Send like API
-		app.get('/sendLike/:videoID', async (req, res) => {
-			// Only can send a like if logged in
-			if(!req.user){
-				return res.send({ message: 'Must be signed in to send like.' });
-			} else {
-				const updatedVideo = await addLike(req.user._id, req.params.videoID);
-				return res.send(updatedVideo);
-			}
-		});
 		// React Native Send like API
 		app.post('/sendLike/:videoID', async (req, res) => {
 			// Only can send a like if logged in
@@ -221,16 +219,6 @@ var upload = multer({ storage });
 			}
 		});
 
-		// Remove like API
-		app.get('/removeLike/:videoID', async (req, res) => {
-			// Only can remove a like if logged in
-			if(!req.user){
-				return res.send({ message: 'Must be signed in to remove like.' }); // This cannot occur in most cases. Need to be signed in to send likes.
-			} else {
-				const updatedVideo = await removeLike(req.user._id, req.params.videoID);
-				return res.send(updatedVideo);
-			}
-		});
 		// React Native Remove like API
 		app.post('/removeLike/:videoID', async (req, res) => {
 			// Only can remove a like if logged in

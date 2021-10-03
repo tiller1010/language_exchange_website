@@ -5,6 +5,7 @@ import { faSignOutAlt, faStar, faTrash, faTimes, faLongArrowAltRight } from '@fo
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import Slider from 'react-slick';
 import ReadMore from '@jamespotz/react-simple-readmore';
+import graphQLFetch from './graphQLFetch.js';
 
 class AccountProfile extends React.Component {
 	constructor(props){
@@ -51,13 +52,33 @@ class AccountProfile extends React.Component {
 	}
 
 	async sendLike(video, videoList, videoListType){
-		const newLikedVideo = await fetch(`${document.location.origin}/sendLike/${video._id}`)
-			.then(res => res.json())
-			.catch(error => console.log(error));
-		if(newLikedVideo.message){
-			// Display error message if included in response
-			alert(newLikedVideo.message);
-		} else if(newLikedVideo) {
+		if(!this.state.user._id){
+			alert('Must be signed in to send like.');
+			return;
+		}
+		const query = `mutation addLike($userID: ID!, $videoID: ID!){
+			addLike(userID: $userID, videoID: $videoID){
+				_id
+				title
+				src
+				originalName
+				thumbnailSrc
+				originalThumbnailName
+				created
+				likes
+				uploadedBy {
+					_id
+					displayName
+				}
+			}
+		}`;
+		const data = await graphQLFetch(query, {
+			userID: this.state.user._id,
+			videoID: video._id
+		});
+		const newLikedVideo = data.addLike;
+
+		if(newLikedVideo) {
 			// Update the video state to be liked by the current user.
 			newLikedVideo.likedByCurrentUser = true;
 			let updatedUser = this.state.user;
@@ -91,9 +112,28 @@ class AccountProfile extends React.Component {
 	}
 
 	async removeLike(video, videoList, videoListType){
-		const newUnlikedVideo = await fetch(`${document.location.origin}/removeLike/${video._id}`)
-			.then(res => res.json())
-			.catch(error => console.log(error));
+		const query = `mutation removeLike($userID: ID!, $videoID: ID!){
+			removeLike(userID: $userID, videoID: $videoID){
+				_id
+				title
+				src
+				originalName
+				thumbnailSrc
+				originalThumbnailName
+				created
+				likes
+				uploadedBy {
+					_id
+					displayName
+				}
+			}
+		}`;
+		const data = await graphQLFetch(query, {
+			userID: this.state.user._id,
+			videoID: video._id
+		});
+		const newUnlikedVideo = data.removeLike;
+
 		if(newUnlikedVideo.message){
 			// Display error message if included in response
 			alert(newUnlikedVideo.message);

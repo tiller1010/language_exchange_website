@@ -1,0 +1,31 @@
+type Video {
+	_id: ID!
+	title: String!
+	src: String!
+	originalName: String!
+	thumbnailSrc: String!
+	originalThumbnailName: String!
+	created: String!
+	likes: Int!
+	uploadedBy: User!
+}
+
+type User {
+	_id: ID!
+	displayName: String!
+	firstName: String!
+	lastName: String!
+	passwordHash: String!
+	completedTopics: String!
+	uploadedVideos: String!
+	likedVideos: [Video!]!
+}
+
+type Query {
+	indexVideos: [Video]
+}
+
+type Mutation {
+	addLike(userID: ID!, videoID: ID!): Video
+	removeLike(userID: ID!, videoID: ID!): Video
+}

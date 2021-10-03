@@ -7,6 +7,7 @@ import Navigation from './Navigation.jsx';
 import VideoSearchForm from './VideoSearchForm.tsx';
 import Slider from 'react-slick';
 import ReadMore from '@jamespotz/react-simple-readmore';
+import graphQLFetch from './graphQLFetch.js';
 
 async function getVideos(){
 	var urlParams = new URLSearchParams(window.location.search);
@@ -90,9 +91,28 @@ class VideosIndex extends React.Component {
 	}
 
 	async sendLike(video){
-		const newLikedVideo = await fetch(`${document.location.origin}/sendLike/${video._id}`)
-			.then(res => res.json())
-			.catch(error => console.log(error));
+		const query = `mutation addLike($userID: ID!, $videoID: ID!){
+			addLike(userID: $userID, videoID: $videoID){
+				_id
+				title
+				src
+				originalName
+				thumbnailSrc
+				originalThumbnailName
+				created
+				likes
+				uploadedBy {
+					_id
+					displayName
+				}
+			}
+		}`;
+		const data = await graphQLFetch(query, {
+			userID: this.props.userID,
+			videoID: video._id
+		});
+		const newLikedVideo = data.addLike;
+
 		if(newLikedVideo.message){
 			// Display error message if included in response
 			alert(newLikedVideo.message);
@@ -112,13 +132,33 @@ class VideosIndex extends React.Component {
 	}
 
 	async removeLike(video){
-		const newUnlikedVideo = await fetch(`${document.location.origin}/removeLike/${video._id}`)
-			.then(res => res.json())
-			.catch(error => console.log(error));
-		if(newUnlikedVideo.message){
-			// Display error message if included in response
-			alert(newUnlikedVideo.message);
-		} else if(newUnlikedVideo) {
+		if(!this.props.userID){
+			alert('Must be signed in to send like.');
+			return;
+		}
+		const query = `mutation removeLike($userID: ID!, $videoID: ID!){
+			removeLike(userID: $userID, videoID: $videoID){
+				_id
+				title
+				src
+				originalName
+				thumbnailSrc
+				originalThumbnailName
+				created
+				likes
+				uploadedBy {
+					_id
+					displayName
+				}
+			}
+		}`;
+		const data = await graphQLFetch(query, {
+			userID: this.props.userID,
+			videoID: video._id
+		});
+		const newUnlikedVideo = data.removeLike;
+
+		if(newUnlikedVideo) {
 			// Update the video state to remove like from the current user. Used immediately after unliking.
 			newUnlikedVideo.likedByCurrentUser = false;
 			let newVideos = this.state.videos;
