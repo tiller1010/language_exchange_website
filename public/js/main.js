@@ -16434,11 +16434,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
 /* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
 /* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @fortawesome/free-regular-svg-icons */ "./node_modules/@fortawesome/free-regular-svg-icons/index.es.js");
 /* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-slick */ "./node_modules/react-slick/lib/index.js");
-/* harmony import */ var _jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @jamespotz/react-simple-readmore */ "./node_modules/@jamespotz/react-simple-readmore/dist/index.js");
-/* harmony import */ var _graphQLFetch_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./graphQLFetch.js */ "./js/components/graphQLFetch.js");
-
+/* harmony import */ var _graphQLFetch_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./graphQLFetch.js */ "./js/components/graphQLFetch.js");
+/* harmony import */ var _VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./VideoPlayer.tsx */ "./js/components/VideoPlayer.tsx");
+/* harmony import */ var _VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_5__);
 
 
 
@@ -16459,8 +16458,7 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       openRemovalForm: false
     };
     this.findAndSyncUser = this.findAndSyncUser.bind(this);
-    this.sendLike = this.sendLike.bind(this);
-    this.removeLike = this.removeLike.bind(this);
+    this.afterToggleLike = this.afterToggleLike.bind(this);
     this.currentUserHasLikedVideo = this.currentUserHasLikedVideo.bind(this);
     this.handleDeleteVideo = this.handleDeleteVideo.bind(this);
   }
@@ -16496,126 +16494,46 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
     });
   }
 
-  async sendLike(video, videoList, videoListType) {
-    if (!this.state.user._id) {
-      alert('Must be signed in to send like.');
-      return;
-    }
+  afterToggleLike(newVideo, likedByCurrentUser) {
+    newVideo.likedByCurrentUser = likedByCurrentUser;
+    let videoAlreadyLiked = false;
+    let updatedUser = this.state.user;
+    updatedUser.likedVideos.forEach(userLikedVideo => {
+      if (String(newVideo._id) == String(userLikedVideo._id)) {
+        videoAlreadyLiked = true; // Restore like to liked video
 
-    const query = `mutation addLike($userID: ID!, $videoID: ID!){
-			addLike(userID: $userID, videoID: $videoID){
-				_id
-				title
-				src
-				originalName
-				thumbnailSrc
-				originalThumbnailName
-				created
-				likes
-				uploadedBy {
-					_id
-					displayName
-				}
-			}
-		}`;
-    const data = await (0,_graphQLFetch_js__WEBPACK_IMPORTED_MODULE_5__["default"])(query, {
-      userID: this.state.user._id,
-      videoID: video._id
+        updatedUser.likedVideos[updatedUser.likedVideos.indexOf(userLikedVideo)] = newVideo;
+      }
     });
-    const newLikedVideo = data.addLike;
 
-    if (newLikedVideo) {
-      // Update the video state to be liked by the current user.
-      newLikedVideo.likedByCurrentUser = true;
-      let updatedUser = this.state.user;
-      videoList[videoList.indexOf(video)] = newLikedVideo;
-      updatedUser[videoListType] = videoList; // Check if re-sending like from liked videos so duplicate does not show
-
-      let videoAlreadyLiked = false;
-      updatedUser.likedVideos.forEach(userLikedVideo => {
-        if (String(video._id) == String(userLikedVideo._id)) {
-          videoAlreadyLiked = true; // Restore like to liked video
-
-          updatedUser.likedVideos[updatedUser.likedVideos.indexOf(userLikedVideo)] = newLikedVideo;
-        }
-      });
-
-      if (!videoAlreadyLiked && this.props.isCurrentUser) {
-        // If user likes their own video, add to liked videos
-        updatedUser.likedVideos.push(newLikedVideo);
-      } // Update uploaded video likes if restoring like from one in liked videos
+    if (!videoAlreadyLiked && this.props.isCurrentUser) {
+      // If user likes their own video, add to liked videos
+      updatedUser.likedVideos.push(newVideo);
+    } // Update uploaded video likes if restoring like from one in liked videos
 
 
-      updatedUser.uploadedVideos.forEach(userLikedVideo => {
-        if (String(video._id) == String(userLikedVideo._id)) {
-          videoAlreadyLiked = true; // Restore like to liked video
-
-          updatedUser.uploadedVideos[updatedUser.uploadedVideos.indexOf(userLikedVideo)] = newLikedVideo;
-        }
-      });
-      this.setState({
-        user: updatedUser
-      });
-    }
-  }
-
-  async removeLike(video, videoList, videoListType) {
-    const query = `mutation removeLike($userID: ID!, $videoID: ID!){
-			removeLike(userID: $userID, videoID: $videoID){
-				_id
-				title
-				src
-				originalName
-				thumbnailSrc
-				originalThumbnailName
-				created
-				likes
-				uploadedBy {
-					_id
-					displayName
-				}
-			}
-		}`;
-    const data = await (0,_graphQLFetch_js__WEBPACK_IMPORTED_MODULE_5__["default"])(query, {
-      userID: this.state.user._id,
-      videoID: video._id
+    updatedUser.uploadedVideos.forEach(userUploadedVideo => {
+      if (String(newVideo._id) == String(userUploadedVideo._id)) {
+        // Restore like to liked video
+        updatedUser.uploadedVideos[updatedUser.uploadedVideos.indexOf(userUploadedVideo)] = newVideo;
+      }
     });
-    const newUnlikedVideo = data.removeLike;
-
-    if (newUnlikedVideo.message) {
-      // Display error message if included in response
-      alert(newUnlikedVideo.message);
-    } else if (newUnlikedVideo) {
-      // Update the video state to remove like from the current user. Used immediately after unliking.
-      newUnlikedVideo.likedByCurrentUser = false;
-      let updatedUser = this.state.user;
-      videoList[videoList.indexOf(video)] = newUnlikedVideo;
-      updatedUser[videoListType] = videoList; // Update uploaded video likes if removing like from one in liked videos
-
-      updatedUser.uploadedVideos.forEach(userUploadedVideo => {
-        if (String(video._id) == String(userUploadedVideo._id)) {
-          updatedUser.uploadedVideos[updatedUser.uploadedVideos.indexOf(userUploadedVideo)] = newUnlikedVideo;
-        }
-      }); // Update liked video likes if removing like from one in uploaded videos
-
-      updatedUser.likedVideos.forEach(userLikedVideo => {
-        if (String(video._id) == String(userLikedVideo._id)) {
-          updatedUser.likedVideos[updatedUser.likedVideos.indexOf(userLikedVideo)] = newUnlikedVideo;
-        }
-      });
-      this.setState({
-        user: updatedUser
-      });
-    }
+    this.setState({
+      user: updatedUser
+    });
   }
 
   currentUserHasLikedVideo(video, user) {
     let liked = false;
-    user.likedVideos.forEach(userLikedVideo => {
-      if (userLikedVideo._id === video._id) {
-        liked = true;
-      }
-    });
+
+    if (user.likedVideos) {
+      user.likedVideos.forEach(userLikedVideo => {
+        if (userLikedVideo._id === video._id) {
+          liked = true;
+        }
+      });
+    }
+
     return liked;
   }
 
@@ -16646,6 +16564,7 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
   }
 
   render() {
+    const authenticatedUser = JSON.parse(this.props.authenticatedUser);
     document.addEventListener('cssmodal:hide', () => {
       this.setState({
         openRemovalForm: false
@@ -16744,58 +16663,18 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
     }, this.state.user.uploadedVideos.map(video => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       key: video._id,
       className: "pure-u-1 pure-u-lg-1-3"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "flex x-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "pure-u-1 flex x-space-between y-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      style: {
-        maxWidth: '65%'
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      fade: true,
-      minHeight: 58,
-      btnStyles: {
-        position: 'absolute',
-        bottom: '-15px',
-        border: 'none',
-        margin: 0,
-        padding: '5px',
-        zIndex: 1
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, video.title))), this.props.isCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
-      action: "/videos/remove",
-      method: "POST"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-      type: "hidden",
-      name: "videoID",
-      value: video._id
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
-      className: "button",
-      href: "#remove-video",
-      onClick: this.handleDeleteVideo
-    }, "Remove Video", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faTrash
-    }))) : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("video", {
-      type: "video/mp4",
-      className: "video-preview lozad",
-      height: "225",
-      width: "400",
-      poster: `${this.props.pathResolver}${video.thumbnailSrc}` || "/images/videoPlaceholder.png",
-      controls: true
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("source", {
-      src: `${this.props.pathResolver}${video.src}`
-    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "flex x-space-around y-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Likes: ", video.likes || 0), video.likedByCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-      onClick: () => this.removeLike(video, this.state.user.uploadedVideos, 'uploadedVideos')
-    }, "Liked", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faStar
-    })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-      onClick: () => this.sendLike(video, this.state.user.uploadedVideos, 'uploadedVideos')
-    }, "Like", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_7__.faStar
-    }))))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_5___default()), {
+      _id: video._id,
+      title: video.title,
+      src: `${this.props.pathResolver}${video.src}`,
+      thumbnailSrc: `${this.props.pathResolver}${video.thumbnailSrc}`,
+      uploadedBy: video.uploadedBy,
+      likes: video.likes,
+      likedByCurrentUser: video.likedByCurrentUser,
+      authenticatedUserID: authenticatedUser ? authenticatedUser._id : null,
+      handleDeleteVideo: this.handleDeleteVideo,
+      afterToggleLike: this.afterToggleLike
+    }))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
       className: "text-center"
     }, "No Uploaded Videos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", null)), this.state.user.likedVideos.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
       className: "text-center"
@@ -16814,48 +16693,17 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
     }, this.state.user.likedVideos.map(video => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       key: video._id,
       className: "pure-u-1 pure-u-lg-1-3"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "flex x-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "flex x-space-between y-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      style: {
-        maxWidth: '65%'
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      fade: true,
-      minHeight: 58,
-      btnStyles: {
-        position: 'absolute',
-        bottom: '-15px',
-        border: 'none',
-        margin: 0,
-        padding: '5px',
-        zIndex: 1
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, video.title))), video.uploadedBy._id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "By: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
-      href: `/account-profile/${video.uploadedBy._id}`,
-      "aria-label": `${video.uploadedBy.displayName} profile`
-    }, video.uploadedBy.displayName))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "By: ", video.uploadedBy.displayName))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("video", {
-      type: "video/mp4",
-      className: "video-preview lozad",
-      height: "225",
-      width: "400",
-      poster: `${this.props.pathResolver}${video.thumbnailSrc}` || "/images/videoPlaceholder.png",
-      controls: true
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("source", {
-      src: `${this.props.pathResolver}${video.src}`
-    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "flex x-space-around y-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Likes: ", video.likes || 0), video.likedByCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-      onClick: () => this.removeLike(video, this.state.user.likedVideos, 'likedVideos')
-    }, "Liked", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faStar
-    })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-      onClick: () => this.sendLike(video, this.state.user.likedVideos, 'likedVideos')
-    }, "Like", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_7__.faStar
-    }))))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_5___default()), {
+      _id: video._id,
+      title: video.title,
+      src: `${this.props.pathResolver}${video.src}`,
+      thumbnailSrc: `${this.props.pathResolver}${video.thumbnailSrc}`,
+      uploadedBy: video.uploadedBy,
+      likes: video.likes,
+      likedByCurrentUser: video.likedByCurrentUser,
+      authenticatedUserID: authenticatedUser ? authenticatedUser._id : null,
+      afterToggleLike: this.afterToggleLike
+    }))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
       className: "text-center"
     }, "No Liked Videos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", null)));
   }
@@ -16883,16 +16731,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lozad__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lozad */ "./node_modules/lozad/dist/lozad.min.js");
 /* harmony import */ var lozad__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lozad__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
 /* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-slick */ "./node_modules/react-slick/lib/index.js");
 /* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
 /* harmony import */ var _VideoSearchForm_tsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./VideoSearchForm.tsx */ "./js/components/VideoSearchForm.tsx");
 /* harmony import */ var _VideoSearchForm_tsx__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_VideoSearchForm_tsx__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @jamespotz/react-simple-readmore */ "./node_modules/@jamespotz/react-simple-readmore/dist/index.js");
-/* harmony import */ var _VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./VideoPlayer.tsx */ "./js/components/VideoPlayer.tsx");
-/* harmony import */ var _VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _graphQLFetch_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./graphQLFetch.js */ "./js/components/graphQLFetch.js");
-
+/* harmony import */ var _VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./VideoPlayer.tsx */ "./js/components/VideoPlayer.tsx");
+/* harmony import */ var _VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _graphQLFetch_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./graphQLFetch.js */ "./js/components/graphQLFetch.js");
 
 
 
@@ -16915,8 +16761,6 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       recentVideos: [],
       userLikedVideos: []
     };
-    this.sendLike = this.sendLike.bind(this);
-    this.removeLike = this.removeLike.bind(this);
     this.currentUserHasLikedVideo = this.currentUserHasLikedVideo.bind(this);
   }
 
@@ -16952,94 +16796,6 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
         levels: res.data
       });
     });
-  }
-
-  async sendLike(video) {
-    if (!this.props.userID) {
-      alert('Must be signed in to send like.');
-      return;
-    }
-
-    const query = `mutation addLike($userID: ID!, $videoID: ID!){
-			addLike(userID: $userID, videoID: $videoID){
-				_id
-				title
-				src
-				originalName
-				thumbnailSrc
-				originalThumbnailName
-				created
-				likes
-				uploadedBy {
-					_id
-					displayName
-				}
-			}
-		}`;
-    const data = await (0,_graphQLFetch_js__WEBPACK_IMPORTED_MODULE_9__["default"])(query, {
-      userID: this.props.userID,
-      videoID: video._id
-    });
-    const newLikedVideo = data.addLike;
-
-    if (newLikedVideo) {
-      // Update the video state to be liked by the current user. Used immediately after liking.
-      newLikedVideo.likedByCurrentUser = true;
-      let newVideos = this.state.recentVideos;
-      newVideos[newVideos.indexOf(video)] = newLikedVideo; // Add video to user's liked videos. Used when a re-render occurs.
-
-      let newUserLikedVideos = this.state.userLikedVideos;
-      newUserLikedVideos.push(video);
-      this.setState({
-        recentVideos: newVideos,
-        userLikedVideos: newUserLikedVideos
-      });
-    }
-  }
-
-  async removeLike(video) {
-    const query = `mutation removeLike($userID: ID!, $videoID: ID!){
-			removeLike(userID: $userID, videoID: $videoID){
-				_id
-				title
-				src
-				originalName
-				thumbnailSrc
-				originalThumbnailName
-				created
-				likes
-				uploadedBy {
-					_id
-					displayName
-				}
-			}
-		}`;
-    const data = await (0,_graphQLFetch_js__WEBPACK_IMPORTED_MODULE_9__["default"])(query, {
-      userID: this.props.userID,
-      videoID: video._id
-    });
-    const newUnlikedVideo = data.removeLike;
-
-    if (newUnlikedVideo.message) {
-      // Display error message if included in response
-      alert(newUnlikedVideo.message);
-    } else if (newUnlikedVideo) {
-      // Update the video state to remove like from the current user. Used immediately after unliking.
-      newUnlikedVideo.likedByCurrentUser = false;
-      let newVideos = this.state.recentVideos;
-      newVideos[newVideos.indexOf(video)] = newUnlikedVideo; // Remove video from user's liked videos. Used when a re-render occurs.
-
-      let newUserLikedVideos = [];
-      this.state.userLikedVideos.forEach(userLikedVideo => {
-        if (userLikedVideo._id != video._id) {
-          newUserLikedVideos.push(userLikedVideo);
-        }
-      });
-      this.setState({
-        recentVideos: newVideos,
-        userLikedVideos: newUserLikedVideos
-      });
-    }
   }
 
   currentUserHasLikedVideo(video) {
@@ -17105,14 +16861,15 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       }]
     }, this.state.recentVideos.map(video => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       key: video._id
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_8___default()), {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_7___default()), {
       _id: video._id,
       title: video.title,
       src: video.src,
       thumbnailSrc: video.thumbnailSrc,
       uploadedBy: video.uploadedBy,
       likes: video.likes,
-      likedByCurrentUser: this.currentUserHasLikedVideo(video)
+      likedByCurrentUser: this.currentUserHasLikedVideo(video),
+      authenticatedUserID: this.props.userID
     }))))) : '', this.state.levels ? this.state.levels.map(level => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       key: level.id,
       className: "flex x-center"
@@ -17125,7 +16882,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
         alignSelf: 'center'
       }
     }, "View Level", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_10__.faLongArrowAltRight
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_9__.faLongArrowAltRight
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "pure-u-1"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", null)), level.topics ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -17143,7 +16900,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       href: `/level/${level.id}/topic/${topic.id}`,
       className: "button"
     }, "View Topic", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_10__.faLongArrowAltRight
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_9__.faLongArrowAltRight
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
       href: `/level/${level.id}/topic/${topic.id}`
     }, this.renderMedia(topic)))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "No topics"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "No levels"));
@@ -17981,14 +17738,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lozad__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lozad__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
 /* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @fortawesome/free-regular-svg-icons */ "./node_modules/@fortawesome/free-regular-svg-icons/index.es.js");
 /* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
 /* harmony import */ var _VideoSearchForm_tsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./VideoSearchForm.tsx */ "./js/components/VideoSearchForm.tsx");
 /* harmony import */ var _VideoSearchForm_tsx__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_VideoSearchForm_tsx__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-slick */ "./node_modules/react-slick/lib/index.js");
-/* harmony import */ var _jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @jamespotz/react-simple-readmore */ "./node_modules/@jamespotz/react-simple-readmore/dist/index.js");
-/* harmony import */ var _graphQLFetch_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./graphQLFetch.js */ "./js/components/graphQLFetch.js");
-
+/* harmony import */ var _graphQLFetch_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./graphQLFetch.js */ "./js/components/graphQLFetch.js");
+/* harmony import */ var _VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./VideoPlayer.tsx */ "./js/components/VideoPlayer.tsx");
+/* harmony import */ var _VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_7__);
 
 
 
@@ -18100,7 +17856,7 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
 				}
 			}
 		}`;
-    const data = await (0,_graphQLFetch_js__WEBPACK_IMPORTED_MODULE_7__["default"])(query, {
+    const data = await (0,_graphQLFetch_js__WEBPACK_IMPORTED_MODULE_6__["default"])(query, {
       userID: this.props.userID,
       videoID: video._id
     });
@@ -18146,7 +17902,7 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
 				}
 			}
 		}`;
-    const data = await (0,_graphQLFetch_js__WEBPACK_IMPORTED_MODULE_7__["default"])(query, {
+    const data = await (0,_graphQLFetch_js__WEBPACK_IMPORTED_MODULE_6__["default"])(query, {
       userID: this.props.userID,
       videoID: video._id
     });
@@ -18241,48 +17997,16 @@ class VideosIndex extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
     }, this.state.videos.map(video => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       key: video._id,
       className: "pure-u-1 pure-u-lg-1-3"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "flex x-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "flex x-space-between y-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      style: {
-        maxWidth: '65%'
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_jamespotz_react_simple_readmore__WEBPACK_IMPORTED_MODULE_6__["default"], {
-      fade: true,
-      minHeight: 58,
-      btnStyles: {
-        position: 'absolute',
-        bottom: '-15px',
-        border: 'none',
-        margin: 0,
-        padding: '5px',
-        zIndex: 1
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, video.title))), video.uploadedBy._id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "By: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
-      href: `/account-profile/${video.uploadedBy._id}`,
-      "aria-label": `${video.uploadedBy.displayName} profile`
-    }, video.uploadedBy.displayName))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "By: ", video.uploadedBy.displayName))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("video", {
-      type: "video/mp4",
-      className: "video-preview lozad",
-      height: "225",
-      width: "400",
-      poster: video.thumbnailSrc || "/images/videoPlaceholder.png",
-      controls: true
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("source", {
-      src: video.src
-    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "flex x-space-around y-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Likes: ", video.likes || 0), video.likedByCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-      onClick: () => this.removeLike(video)
-    }, "Liked", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_8__.faStar
-    })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-      onClick: () => this.sendLike(video)
-    }, "Like", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_9__.faStar
-    })))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "No videos"), this.state.pages.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_7___default()), {
+      _id: video._id,
+      title: video.title,
+      src: video.src,
+      thumbnailSrc: video.thumbnailSrc,
+      uploadedBy: video.uploadedBy,
+      likes: video.likes,
+      likedByCurrentUser: this.currentUserHasLikedVideo(video),
+      authenticatedUserID: this.props.userID
+    })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "No videos"), this.state.pages.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
       className: "pagination flex"
     }, this.state.currentPage > 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
       onClick: this.handleChangePage,
@@ -18612,6 +18336,8 @@ var free_solid_svg_icons_1 = __webpack_require__(/*! @fortawesome/free-solid-svg
 
 var free_regular_svg_icons_1 = __webpack_require__(/*! @fortawesome/free-regular-svg-icons */ "./node_modules/@fortawesome/free-regular-svg-icons/index.es.js");
 
+var graphQLFetch_js_1 = __webpack_require__(/*! ./graphQLFetch.js */ "./js/components/graphQLFetch.js");
+
 var VideoPlayer =
 /** @class */
 function (_super) {
@@ -18645,33 +18371,56 @@ function (_super) {
         likedByCurrentUser: this.props.likedByCurrentUser
       });
     }
+
+    if (this.props.likes != prevProps.likes) {
+      this.setState({
+        likes: this.props.likes
+      });
+    }
   };
 
-  VideoPlayer.prototype.toggleLike = function (_id) {
+  VideoPlayer.prototype.toggleLike = function (videoID) {
     return __awaiter(this, void 0, void 0, function () {
-      var apiURLSegment, likeIncrement;
+      var apiSegment, query, data, newVideo;
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            apiURLSegment = this.state.likedByCurrentUser ? 'removeLike' : 'sendLike';
-            likeIncrement = this.state.likedByCurrentUser ? -1 : 1;
+            if (!this.props.authenticatedUserID) {
+              alert('Must be signed in to send like.');
+              return [2
+              /*return*/
+              ];
+            }
+
+            apiSegment = this.state.likedByCurrentUser ? 'removeLike' : 'addLike';
+            query = "mutation addLike($userID: ID!, $videoID: ID!){\n\t\t\t" + apiSegment + "(userID: $userID, videoID: $videoID){\n\t\t\t\t_id\n\t\t\t\ttitle\n\t\t\t\tsrc\n\t\t\t\toriginalName\n\t\t\t\tthumbnailSrc\n\t\t\t\toriginalThumbnailName\n\t\t\t\tcreated\n\t\t\t\tlikes\n\t\t\t\tuploadedBy {\n\t\t\t\t\t_id\n\t\t\t\t\tdisplayName\n\t\t\t\t}\n\t\t\t}\n\t\t}";
             return [4
             /*yield*/
-            , fetch(document.location.origin + "/" + apiURLSegment + "/" + _id).then(function (res) {
-              return res.json();
-            }).catch(function (error) {
-              return console.log(error);
+            , (0, graphQLFetch_js_1.default)(query, {
+              userID: this.props.authenticatedUserID,
+              videoID: videoID
             })];
 
           case 1:
-            _a.sent();
+            data = _a.sent();
+            newVideo = data[apiSegment];
+
+            if (newVideo.message) {
+              // Display error message if included in response
+              alert(newVideo.message);
+            }
 
             this.setState(function (prevState) {
               return {
-                likes: prevState.likes + likeIncrement,
+                likes: newVideo.likes,
                 likedByCurrentUser: !prevState.likedByCurrentUser
               };
             });
+
+            if (this.props.afterToggleLike) {
+              this.props.afterToggleLike(newVideo, this.state.likedByCurrentUser);
+            }
+
             return [2
             /*return*/
             ];
@@ -18711,7 +18460,22 @@ function (_super) {
         padding: '5px',
         zIndex: 1
       }
-    }, React.createElement("h3", null, title))), uploadedBy._id ? React.createElement("div", null, React.createElement("p", null, "By: ", React.createElement("a", {
+    }, React.createElement("h3", null, title))), this.props.handleDeleteVideo ? React.createElement("form", {
+      action: "/videos/remove",
+      method: "POST"
+    }, React.createElement("input", {
+      type: "hidden",
+      name: "videoID",
+      value: this.props._id
+    }), React.createElement("a", {
+      className: "button",
+      href: "#remove-video",
+      onClick: function (event) {
+        return _this.props.handleDeleteVideo(event);
+      }
+    }, "Remove Video", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
+      icon: free_solid_svg_icons_1.faTrash
+    }))) : '', uploadedBy._id ? React.createElement("div", null, React.createElement("p", null, "By: ", React.createElement("a", {
       href: "/account-profile/" + uploadedBy._id,
       "aria-label": uploadedBy.displayName + " profile"
     }, uploadedBy.displayName))) : React.createElement("div", null, React.createElement("p", null, "By: ", uploadedBy.displayName))), React.createElement("video", {

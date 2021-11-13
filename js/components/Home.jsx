@@ -7,7 +7,6 @@ import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import Slider from 'react-slick';
 import Navigation from './Navigation.jsx';
 import VideoSearchForm from './VideoSearchForm.tsx';
-import ReadMore from '@jamespotz/react-simple-readmore';
 import VideoPlayer from './VideoPlayer.tsx';
 import graphQLFetch from './graphQLFetch.js';
 
@@ -22,8 +21,6 @@ class Home extends React.Component {
 			recentVideos: [],
 			userLikedVideos: []
 		}
-		this.sendLike = this.sendLike.bind(this);
-		this.removeLike = this.removeLike.bind(this);
 		this.currentUserHasLikedVideo = this.currentUserHasLikedVideo.bind(this);
 	}
 
@@ -61,93 +58,6 @@ class Home extends React.Component {
 					levels: res.data
 				});
 			});
-	}
-
-	async sendLike(video){
-		if(!this.props.userID){
-			alert('Must be signed in to send like.');
-			return;
-		}
-		const query = `mutation addLike($userID: ID!, $videoID: ID!){
-			addLike(userID: $userID, videoID: $videoID){
-				_id
-				title
-				src
-				originalName
-				thumbnailSrc
-				originalThumbnailName
-				created
-				likes
-				uploadedBy {
-					_id
-					displayName
-				}
-			}
-		}`;
-		const data = await graphQLFetch(query, {
-			userID: this.props.userID,
-			videoID: video._id
-		});
-		const newLikedVideo = data.addLike;
-
-		if(newLikedVideo) {
-			// Update the video state to be liked by the current user. Used immediately after liking.
-			newLikedVideo.likedByCurrentUser = true;
-			let newVideos = this.state.recentVideos;
-			newVideos[newVideos.indexOf(video)] = newLikedVideo;
-			// Add video to user's liked videos. Used when a re-render occurs.
-			let newUserLikedVideos = this.state.userLikedVideos;
-			newUserLikedVideos.push(video);
-			this.setState({
-				recentVideos: newVideos,
-				userLikedVideos: newUserLikedVideos
-			});
-		}
-	}
-
-	async removeLike(video){
-		const query = `mutation removeLike($userID: ID!, $videoID: ID!){
-			removeLike(userID: $userID, videoID: $videoID){
-				_id
-				title
-				src
-				originalName
-				thumbnailSrc
-				originalThumbnailName
-				created
-				likes
-				uploadedBy {
-					_id
-					displayName
-				}
-			}
-		}`;
-		const data = await graphQLFetch(query, {
-			userID: this.props.userID,
-			videoID: video._id
-		});
-		const newUnlikedVideo = data.removeLike;
-
-		if(newUnlikedVideo.message){
-			// Display error message if included in response
-			alert(newUnlikedVideo.message);
-		} else if(newUnlikedVideo) {
-			// Update the video state to remove like from the current user. Used immediately after unliking.
-			newUnlikedVideo.likedByCurrentUser = false;
-			let newVideos = this.state.recentVideos;
-			newVideos[newVideos.indexOf(video)] = newUnlikedVideo;
-			// Remove video from user's liked videos. Used when a re-render occurs.
-			let newUserLikedVideos = [];
-			this.state.userLikedVideos.forEach((userLikedVideo) => {
-				if(userLikedVideo._id != video._id){
-					newUserLikedVideos.push(userLikedVideo);
-				}
-			});
-			this.setState({
-				recentVideos: newVideos,
-				userLikedVideos: newUserLikedVideos
-			});
-		}
 	}
 
 	currentUserHasLikedVideo(video){
@@ -229,6 +139,7 @@ class Home extends React.Component {
 										uploadedBy={video.uploadedBy}
 										likes={video.likes}
 										likedByCurrentUser={this.currentUserHasLikedVideo(video)}
+										authenticatedUserID={this.props.userID}
 						    		/>
 								</div>
 				    		)}

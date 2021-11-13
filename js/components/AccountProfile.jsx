@@ -1,11 +1,10 @@
 import React from 'react';
 import Navigation from './Navigation.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt, faStar, faTrash, faTimes, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
-import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
+import { faSignOutAlt, faTrash, faTimes, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
 import Slider from 'react-slick';
-import ReadMore from '@jamespotz/react-simple-readmore';
 import graphQLFetch from './graphQLFetch.js';
+import VideoPlayer from './VideoPlayer.tsx';
 
 class AccountProfile extends React.Component {
 	constructor(props){
@@ -19,8 +18,7 @@ class AccountProfile extends React.Component {
 			openRemovalForm: false
 		}
 		this.findAndSyncUser = this.findAndSyncUser.bind(this);
-		this.sendLike = this.sendLike.bind(this);
-		this.removeLike = this.removeLike.bind(this);
+		this.afterToggleLike = this.afterToggleLike.bind(this);
 		this.currentUserHasLikedVideo = this.currentUserHasLikedVideo.bind(this);
 		this.handleDeleteVideo = this.handleDeleteVideo.bind(this);
 	}
@@ -51,123 +49,42 @@ class AccountProfile extends React.Component {
 		this.setState({ user: userProfile });
 	}
 
-	async sendLike(video, videoList, videoListType){
-		if(!this.state.user._id){
-			alert('Must be signed in to send like.');
-			return;
-		}
-		const query = `mutation addLike($userID: ID!, $videoID: ID!){
-			addLike(userID: $userID, videoID: $videoID){
-				_id
-				title
-				src
-				originalName
-				thumbnailSrc
-				originalThumbnailName
-				created
-				likes
-				uploadedBy {
-					_id
-					displayName
-				}
+	afterToggleLike(newVideo, likedByCurrentUser){
+		newVideo.likedByCurrentUser = likedByCurrentUser;
+		let videoAlreadyLiked = false;
+		let updatedUser = this.state.user;
+		updatedUser.likedVideos.forEach((userLikedVideo) => {
+			if(String(newVideo._id) == String(userLikedVideo._id)){
+				videoAlreadyLiked = true;
+				// Restore like to liked video
+				updatedUser.likedVideos[updatedUser.likedVideos.indexOf(userLikedVideo)] = newVideo;
 			}
-		}`;
-		const data = await graphQLFetch(query, {
-			userID: this.state.user._id,
-			videoID: video._id
 		});
-		const newLikedVideo = data.addLike;
-
-		if(newLikedVideo) {
-			// Update the video state to be liked by the current user.
-			newLikedVideo.likedByCurrentUser = true;
-			let updatedUser = this.state.user;
-			videoList[videoList.indexOf(video)] = newLikedVideo;
-			updatedUser[videoListType] = videoList;
-			// Check if re-sending like from liked videos so duplicate does not show
-			let videoAlreadyLiked = false;
-			updatedUser.likedVideos.forEach((userLikedVideo) => {
-				if(String(video._id) == String(userLikedVideo._id)){
-					videoAlreadyLiked = true;
-					// Restore like to liked video
-					updatedUser.likedVideos[updatedUser.likedVideos.indexOf(userLikedVideo)] = newLikedVideo;
-				}
-			});
-			if(!videoAlreadyLiked && this.props.isCurrentUser){
-				// If user likes their own video, add to liked videos
-				updatedUser.likedVideos.push(newLikedVideo);
-			}
-			// Update uploaded video likes if restoring like from one in liked videos
-			updatedUser.uploadedVideos.forEach((userLikedVideo) => {
-				if(String(video._id) == String(userLikedVideo._id)){
-					videoAlreadyLiked = true;
-					// Restore like to liked video
-					updatedUser.uploadedVideos[updatedUser.uploadedVideos.indexOf(userLikedVideo)] = newLikedVideo;
-				}
-			});
-			this.setState({
-				user: updatedUser
-			});
+		if(!videoAlreadyLiked && this.props.isCurrentUser){
+			// If user likes their own video, add to liked videos
+			updatedUser.likedVideos.push(newVideo);
 		}
-	}
-
-	async removeLike(video, videoList, videoListType){
-		const query = `mutation removeLike($userID: ID!, $videoID: ID!){
-			removeLike(userID: $userID, videoID: $videoID){
-				_id
-				title
-				src
-				originalName
-				thumbnailSrc
-				originalThumbnailName
-				created
-				likes
-				uploadedBy {
-					_id
-					displayName
-				}
+		// Update uploaded video likes if restoring like from one in liked videos
+		updatedUser.uploadedVideos.forEach((userUploadedVideo) => {
+			if(String(newVideo._id) == String(userUploadedVideo._id)){
+				// Restore like to liked video
+				updatedUser.uploadedVideos[updatedUser.uploadedVideos.indexOf(userUploadedVideo)] = newVideo;
 			}
-		}`;
-		const data = await graphQLFetch(query, {
-			userID: this.state.user._id,
-			videoID: video._id
 		});
-		const newUnlikedVideo = data.removeLike;
-
-		if(newUnlikedVideo.message){
-			// Display error message if included in response
-			alert(newUnlikedVideo.message);
-		} else if(newUnlikedVideo) {
-			// Update the video state to remove like from the current user. Used immediately after unliking.
-			newUnlikedVideo.likedByCurrentUser = false;
-			let updatedUser = this.state.user;
-			videoList[videoList.indexOf(video)] = newUnlikedVideo;
-			updatedUser[videoListType] = videoList;
-			// Update uploaded video likes if removing like from one in liked videos
-			updatedUser.uploadedVideos.forEach((userUploadedVideo) => {
-				if(String(video._id) == String(userUploadedVideo._id)){
-					updatedUser.uploadedVideos[updatedUser.uploadedVideos.indexOf(userUploadedVideo)] = newUnlikedVideo;
-				}
-			});
-			// Update liked video likes if removing like from one in uploaded videos
-			updatedUser.likedVideos.forEach((userLikedVideo) => {
-				if(String(video._id) == String(userLikedVideo._id)){
-					updatedUser.likedVideos[updatedUser.likedVideos.indexOf(userLikedVideo)] = newUnlikedVideo;
-				}
-			});
-			this.setState({
-				user: updatedUser
-			});
-		}
+		this.setState({
+			user: updatedUser
+		});
 	}
 
 	currentUserHasLikedVideo(video, user){
 		let liked = false;
-		user.likedVideos.forEach((userLikedVideo) => {
-			if(userLikedVideo._id === video._id){
-				liked = true;
-			}
-		});
+		if(user.likedVideos){
+			user.likedVideos.forEach((userLikedVideo) => {
+				if(userLikedVideo._id === video._id){
+					liked = true;
+				}
+			});
+		}
 		return liked;
 	}
 
@@ -196,6 +113,8 @@ class AccountProfile extends React.Component {
 	}
 
 	render(){
+
+		const authenticatedUser = JSON.parse(this.props.authenticatedUser);
 
 		document.addEventListener('cssmodal:hide', () => {
 			this.setState({
@@ -306,58 +225,18 @@ class AccountProfile extends React.Component {
 			    		}}>
 							{this.state.user.uploadedVideos.map((video) => 
 								<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
-									<div className="flex x-center">
-										<div>
-											<div className="pure-u-1 flex x-space-between y-center">
-												<div style={{ maxWidth: '65%' }}>
-													<ReadMore
-											            fade
-											            minHeight={58}
-											            btnStyles={{
-											            	position: 'absolute',
-											            	bottom: '-15px',
-											            	border: 'none',
-											            	margin: 0,
-											            	padding: '5px',
-											            	zIndex: 1
-											            }}
-										            >
-														<h3>{video.title}</h3>
-													</ReadMore>
-												</div>
-												{this.props.isCurrentUser ?
-													<form action="/videos/remove" method="POST">
-														<input type="hidden" name="videoID" value={video._id}/>
-														<a className="button" href="#remove-video" onClick={this.handleDeleteVideo}>
-															Remove Video
-															<FontAwesomeIcon icon={faTrash}/>
-														</a>
-													</form>
-													:
-													''
-												}
-											</div>
-											<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
-												`${this.props.pathResolver}${video.thumbnailSrc}` || "/images/videoPlaceholder.png"
-											} controls>
-												<source src={`${this.props.pathResolver}${video.src}`}></source>
-											</video>
-										</div>
-									</div>
-									<div className="flex x-space-around y-center">
-										<p>Likes: {video.likes || 0}</p>
-										{video.likedByCurrentUser ?
-											<button onClick={() => this.removeLike(video, this.state.user.uploadedVideos, 'uploadedVideos')}>
-												Liked
-												<FontAwesomeIcon icon={faStar}/>
-											</button>
-											:
-											<button onClick={() => this.sendLike(video, this.state.user.uploadedVideos, 'uploadedVideos')}>
-												Like
-												<FontAwesomeIcon icon={farStar}/>
-											</button>
-										}
-									</div>
+						    		<VideoPlayer
+										_id={video._id}
+										title={video.title}
+										src={`${this.props.pathResolver}${video.src}`}
+										thumbnailSrc={`${this.props.pathResolver}${video.thumbnailSrc}`}
+										uploadedBy={video.uploadedBy}
+										likes={video.likes}
+										likedByCurrentUser={video.likedByCurrentUser}
+										authenticatedUserID={authenticatedUser ? authenticatedUser._id : null}
+										handleDeleteVideo={this.handleDeleteVideo}
+										afterToggleLike={this.afterToggleLike}
+						    		/>
 								</div>
 							)}
 						</Slider>
@@ -389,56 +268,17 @@ class AccountProfile extends React.Component {
 			    		}}>
 							{this.state.user.likedVideos.map((video) => 
 								<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
-									<div className="flex x-center">
-										<div>
-											<div className="flex x-space-between y-center">
-												<div style={{ maxWidth: '65%' }}>
-													<ReadMore
-											            fade
-											            minHeight={58}
-											            btnStyles={{
-											            	position: 'absolute',
-											            	bottom: '-15px',
-											            	border: 'none',
-											            	margin: 0,
-											            	padding: '5px',
-											            	zIndex: 1
-											            }}
-										            >
-														<h3>{video.title}</h3>
-													</ReadMore>
-												</div>
-												{video.uploadedBy._id ?
-													<div>
-														<p>By: <a href={`/account-profile/${video.uploadedBy._id}`} aria-label={`${video.uploadedBy.displayName} profile`}>{video.uploadedBy.displayName}</a></p>
-													</div>
-													:
-													<div>
-														<p>By: {video.uploadedBy.displayName}</p>
-													</div>
-												}
-											</div>
-											<video type="video/mp4" className="video-preview lozad" height="225" width="400" poster={
-												`${this.props.pathResolver}${video.thumbnailSrc}` || "/images/videoPlaceholder.png"
-											} controls>
-												<source src={`${this.props.pathResolver}${video.src}`}></source>
-											</video>
-										</div>
-									</div>
-									<div className="flex x-space-around y-center">
-										<p>Likes: {video.likes || 0}</p>
-										{video.likedByCurrentUser ?
-											<button onClick={() => this.removeLike(video, this.state.user.likedVideos, 'likedVideos')}>
-												Liked
-												<FontAwesomeIcon icon={faStar}/>
-											</button>
-											:
-											<button onClick={() => this.sendLike(video, this.state.user.likedVideos, 'likedVideos')}>
-												Like
-												<FontAwesomeIcon icon={farStar}/>
-											</button>
-										}
-									</div>
+						    		<VideoPlayer
+										_id={video._id}
+										title={video.title}
+										src={`${this.props.pathResolver}${video.src}`}
+										thumbnailSrc={`${this.props.pathResolver}${video.thumbnailSrc}`}
+										uploadedBy={video.uploadedBy}
+										likes={video.likes}
+										likedByCurrentUser={video.likedByCurrentUser}
+										authenticatedUserID={authenticatedUser ? authenticatedUser._id : null}
+										afterToggleLike={this.afterToggleLike}
+						    		/>
 								</div>
 							)}
 						</Slider>

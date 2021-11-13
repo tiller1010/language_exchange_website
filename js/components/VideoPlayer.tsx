@@ -1,8 +1,9 @@
 import * as React from 'react';
 import ReadMore from '@jamespotz/react-simple-readmore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
+import graphQLFetch from './graphQLFetch.js';
 
 interface User {
 	_id: string;
@@ -22,6 +23,9 @@ interface VideoPlayerProps {
 	uploadedBy: User;
 	likes: number;
 	likedByCurrentUser: boolean;
+	authenticatedUserID: string;
+	handleDeleteVideo: Function;
+	afterToggleLike: Function;
 }
 
 export default class VideoPlayer extends React.Component<VideoPlayerProps, VideoPlayerState> {
@@ -49,18 +53,54 @@ export default class VideoPlayer extends React.Component<VideoPlayerProps, Video
 				likedByCurrentUser: this.props.likedByCurrentUser
 			});
 		}
+		if(this.props.likes != prevProps.likes){
+			this.setState({
+				likes: this.props.likes
+			});
+		}
 	}
 
-	async toggleLike(_id){
-		const apiURLSegment = this.state.likedByCurrentUser ? 'removeLike' : 'sendLike';
-		const likeIncrement = this.state.likedByCurrentUser ? -1 : 1;
-		await fetch(`${document.location.origin}/${apiURLSegment}/${_id}`)
-			.then(res => res.json())
-			.catch(error => console.log(error));
+	async toggleLike(videoID){
+		if(!this.props.authenticatedUserID){
+			alert('Must be signed in to send like.');
+			return;
+		}
+		const apiSegment = this.state.likedByCurrentUser ? 'removeLike' : 'addLike';
+		const query = `mutation addLike($userID: ID!, $videoID: ID!){
+			${apiSegment}(userID: $userID, videoID: $videoID){
+				_id
+				title
+				src
+				originalName
+				thumbnailSrc
+				originalThumbnailName
+				created
+				likes
+				uploadedBy {
+					_id
+					displayName
+				}
+			}
+		}`;
+		const data = await graphQLFetch(query, {
+			userID: this.props.authenticatedUserID,
+			videoID: videoID
+		});
+		const newVideo = data[apiSegment];
+
+		if(newVideo.message){
+			// Display error message if included in response
+			alert(newVideo.message);
+		}
+
 		this.setState(prevState => ({
-			likes: prevState.likes + likeIncrement,
+			likes: newVideo.likes,
 			likedByCurrentUser: !prevState.likedByCurrentUser
 		}));
+
+		if(this.props.afterToggleLike){
+			this.props.afterToggleLike(newVideo, this.state.likedByCurrentUser);
+		}
 	}
 
 	render(){
@@ -89,6 +129,17 @@ export default class VideoPlayer extends React.Component<VideoPlayerProps, Video
 									<h3>{title}</h3>
 								</ReadMore>
 							</div>
+							{this.props.handleDeleteVideo ?
+								<form action="/videos/remove" method="POST">
+									<input type="hidden" name="videoID" value={this.props._id}/>
+									<a className="button" href="#remove-video" onClick={(event) => this.props.handleDeleteVideo(event)}>
+										Remove Video
+										<FontAwesomeIcon icon={faTrash}/>
+									</a>
+								</form>
+								:
+								''
+							}
 							{uploadedBy._id ?
 								<div>
 									<p>By: <a href={`/account-profile/${uploadedBy._id}`} aria-label={`${uploadedBy.displayName} profile`}>{uploadedBy.displayName}</a></p>

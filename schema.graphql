@@ -11,8 +11,8 @@ type Video {
 }
 
 type User {
-	_id: ID!
-	displayName: String!
+	_id: ID
+	displayName: String
 	firstName: String!
 	lastName: String!
 	passwordHash: String!
