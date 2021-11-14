@@ -16453,11 +16453,13 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       user: {
         completedTopics: [],
         uploadedVideos: [],
-        likedVideos: []
+        likedVideos: [],
+        verified: false
       },
       openRemovalForm: false
     };
     this.findAndSyncUser = this.findAndSyncUser.bind(this);
+    this.verifyUser = this.verifyUser.bind(this);
     this.afterToggleLike = this.afterToggleLike.bind(this);
     this.currentUserHasLikedVideo = this.currentUserHasLikedVideo.bind(this);
     this.handleDeleteVideo = this.handleDeleteVideo.bind(this);
@@ -16492,6 +16494,25 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
     this.setState({
       user: userProfile
     });
+  }
+
+  async verifyUser(verificationStatus) {
+    if (this.props.user) {
+      const query = `mutation verifyUser($userID: ID!, $verificationStatus: Boolean!){
+				verifyUser(userID: $userID, verificationStatus: $verificationStatus){
+					verified
+				}
+			}`;
+      const data = await (0,_graphQLFetch_js__WEBPACK_IMPORTED_MODULE_4__["default"])(query, {
+        userID: this.state.user._id,
+        verificationStatus: verificationStatus
+      });
+      let updatedUser = this.state.user;
+      updatedUser.verified = data.verifyUser.verified;
+      this.setState({
+        user: updatedUser
+      });
+    }
   }
 
   afterToggleLike(newVideo, likedByCurrentUser) {
@@ -16565,6 +16586,7 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
 
   render() {
     const authenticatedUser = JSON.parse(this.props.authenticatedUser);
+    const authenticatedUserIsAdmin = authenticatedUser ? authenticatedUser.isAdmin : false;
     document.addEventListener('cssmodal:hide', () => {
       this.setState({
         openRemovalForm: false
@@ -16580,7 +16602,20 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       }
     }, "Logout", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
       icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faSignOutAlt
-    }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, this.state.user.firstName), this.state.user.completedTopics.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, this.state.user.firstName), authenticatedUserIsAdmin ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", null, this.state.user.verified ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+      htmlFor: "verifyUser"
+    }, "Remove verification for this user?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "checkbox",
+      name: "verifyUser",
+      checked: "checked",
+      onChange: event => this.verifyUser(!this.state.user.verified)
+    })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+      htmlFor: "verifyUser"
+    }, "Verify this user?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "checkbox",
+      name: "verifyUser",
+      onChange: event => this.verifyUser(!this.state.user.verified)
+    }))) : '', this.state.user.completedTopics.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "topics"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
       className: "text-center"

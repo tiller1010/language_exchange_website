@@ -1,7 +1,9 @@
 const fs = require('fs');
 const { ApolloServer } = require('apollo-server-express');
-const videos = require('./videos.js')
-const likes = require('./likes.js')
+const videos = require('./videos.js');
+const likes = require('./likes.js');
+const users = require('./users.js');
+const premiumVideoChatListings = require('./premium-video-chat-listings.js');
 
 const resolvers = {
 	Query: {
@@ -9,7 +11,10 @@ const resolvers = {
 	},
 	Mutation: {
 		addLike: likes.addLike,
-		removeLike: likes.removeLike
+		removeLike: likes.removeLike,
+		verifyUser: users.verifyUser,
+		addPremiumVideoChatListing: premiumVideoChatListings.addPremiumVideoChatListing,
+		removePremiumVideoChatListing: premiumVideoChatListings.removePremiumVideoChatListing
 	}
 }
 

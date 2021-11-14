@@ -88,5 +88,12 @@ async function removeCompletedTopic(userID, topicID){
 	await db.collection('users').updateOne({ _id: new mongo.ObjectID(user._id) }, { $set: { completedTopics: newCompletedTopics } });
 }
 
+async function verifyUser(_, {userID, verificationStatus}){
+	const db = getDB();
+	await db.collection('users').updateOne({ _id: new mongo.ObjectID(userID) }, { $set: { verified: verificationStatus } });
+	const user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
+	return user;
+}
 
-module.exports = { addUser, findAndSyncUser, findUserByID, addCompletedTopic, removeCompletedTopic };
+
+module.exports = { addUser, findAndSyncUser, findUserByID, addCompletedTopic, removeCompletedTopic, verifyUser };

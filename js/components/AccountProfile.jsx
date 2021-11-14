@@ -13,11 +13,13 @@ class AccountProfile extends React.Component {
 			user: {
 				completedTopics: [],
 				uploadedVideos: [],
-				likedVideos: []
+				likedVideos: [],
+				verified: false
 			},
 			openRemovalForm: false
 		}
 		this.findAndSyncUser = this.findAndSyncUser.bind(this);
+		this.verifyUser = this.verifyUser.bind(this);
 		this.afterToggleLike = this.afterToggleLike.bind(this);
 		this.currentUserHasLikedVideo = this.currentUserHasLikedVideo.bind(this);
 		this.handleDeleteVideo = this.handleDeleteVideo.bind(this);
@@ -47,6 +49,25 @@ class AccountProfile extends React.Component {
 			}
 		}
 		this.setState({ user: userProfile });
+	}
+
+	async verifyUser(verificationStatus){
+		if(this.props.user){
+			const query = `mutation verifyUser($userID: ID!, $verificationStatus: Boolean!){
+				verifyUser(userID: $userID, verificationStatus: $verificationStatus){
+					verified
+				}
+			}`;
+			const data = await graphQLFetch(query, {
+				userID: this.state.user._id,
+				verificationStatus: verificationStatus
+			});
+			let updatedUser = this.state.user;
+			updatedUser.verified = data.verifyUser.verified;
+			this.setState({
+				user: updatedUser
+			});
+		}
 	}
 
 	afterToggleLike(newVideo, likedByCurrentUser){
@@ -115,6 +136,7 @@ class AccountProfile extends React.Component {
 	render(){
 
 		const authenticatedUser = JSON.parse(this.props.authenticatedUser);
+		const authenticatedUserIsAdmin = authenticatedUser ? authenticatedUser.isAdmin : false;
 
 		document.addEventListener('cssmodal:hide', () => {
 			this.setState({
@@ -135,6 +157,23 @@ class AccountProfile extends React.Component {
 					</div>
 					:
 					<h1>{this.state.user.firstName}</h1>
+				}
+				{authenticatedUserIsAdmin ?
+					<form>
+						{this.state.user.verified ?
+							<div>
+								<label htmlFor="verifyUser">Remove verification for this user?</label>
+								<input type="checkbox" name="verifyUser" checked="checked" onChange={(event) => this.verifyUser(!this.state.user.verified)}/>
+							</div>
+							:
+							<div>
+								<label htmlFor="verifyUser">Verify this user?</label>
+								<input type="checkbox" name="verifyUser" onChange={(event) => this.verifyUser(!this.state.user.verified)}/>
+							</div>
+						}
+					</form>
+					:
+					''
 				}
 				{this.state.user.completedTopics.length ?
 					<div className="topics">

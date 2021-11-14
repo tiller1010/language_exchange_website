@@ -18,7 +18,18 @@ type User {
 	passwordHash: String!
 	completedTopics: String!
 	uploadedVideos: String!
+	verified: Boolean
+	isAdmin: Boolean!
 	likedVideos: [Video!]!
+	premiumVideoChatListing: PremiumVideoChatListing
+}
+
+type PremiumVideoChatListing {
+	_id: ID
+	topic: String
+	language: String
+	thumbnailSrc: String
+	user: User
 }
 
 type Query {
@@ -28,4 +39,7 @@ type Query {
 type Mutation {
 	addLike(userID: ID!, videoID: ID!): Video
 	removeLike(userID: ID!, videoID: ID!): Video
+	verifyUser(userID: ID!, verificationStatus: Boolean!): User
+	addPremiumVideoChatListing(userID: ID!): PremiumVideoChatListing
+	removePremiumVideoChatListing(userID: ID!): Boolean
 }
