@@ -1,23 +1,29 @@
+// Server
 require('dotenv').config();
 const express = require('express');
-const multer  = require('multer');
-var upload = multer({ dest: 'public/assets/' });
 const path = require('path');
 const appPort = process.env.APP_PORT || 3000;
-const { connectToDB, getDB } = require('./db.js');
-const { indexVideos, addVideo, removeVideo, getRecent, addVideoToUsersUploads } = require('./videos.js');
-const feathers = require('@feathersjs/feathers');
-const service = require('feathers-mongodb');
-const search = require('feathers-mongodb-fuzzy-search');
-const { passport } = require('./passport.js');
-var session = require('express-session');
-var flash = require('connect-flash');
-var { addUser, findAndSyncUser, findUserByID, addCompletedTopic, removeCompletedTopic } = require('./users.js');
-var { getTopic, getTopicChallenges } = require('./topics.js');
-var { addLike, removeLike } = require('./likes.js');
-const { installHandler } = require('./api_handler.js');
+const session = require('express-session');
+const flash = require('connect-flash');
 
-var app = express();
+// Database Methods
+const { addLike, removeLike } = require('./database/methods/likes.js');
+const { addUser, findAndSyncUser, findUserByID, addCompletedTopic, removeCompletedTopic } = require('./database/methods/users.js');
+const { indexVideos, addVideo, removeVideo, getRecent, addVideoToUsersUploads } = require('./database/methods/videos.js');
+
+// Strapi Methods
+const { getTopic, getTopicChallenges } = require('./strapi/topics.js');
+
+// App Services
+const { passport } = require('./app/passport.js');
+const createVideoSearchService = require('./app/search.js');
+const upload = require('./app/upload.js')();
+
+// GraphQL
+const { installHandler } = require('./graphql/api_handler.js');
+
+// Configure Server
+const app = express();
 app.set('views', __dirname + '/views');
 app.set('view engine', '.jsx');
 app.engine('jsx', require('express-react-views').createEngine());
@@ -39,54 +45,10 @@ app.use(express.json());
 // Install GraphQL API Handler
 installHandler(app);
 
-function randomFilename() {
-  var text = "";
-  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-  for(var i = 0; i < 40; i++){
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-
-  return text;
-}
-
-var storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, __dirname + '/public/assets');
-	},
-	filename: function(req, file, cb){
-		let fileExtension = file.mimetype.split('').splice(file.mimetype.indexOf('/') + 1, file.mimetype.length).join('');
-		if(fileExtension == 'quicktime'){
-			fileExtension = 'mov';
-		}
-		cb(null, randomFilename() + '.' + fileExtension);
-	}
-})
- 
-var upload = multer({ storage });
-
 (async function start(){
 	try{
-		await connectToDB();
-		const db = await getDB();
 
-		// Create search service
-		const feathersService = feathers();
-		// Use videos for search
-		feathersService.use('/videos', service({
-			Model: db.collection('videos'),
-			whitelist: ['$text', '$search']
-		}));
-		// Create video search service
-		const VideoService = feathersService.service('videos');
-		// Create videos index
-		VideoService.Model.createIndex({ title: 'text' })
-		// Add search hooks
-		VideoService.hooks({
-			before: {
-			  find: search()
-			}
-		})
+		const VideoSearchService = await createVideoSearchService();
 
 		// Home route
 		app.get('/', (req, res) => {
@@ -170,7 +132,7 @@ var upload = multer({ storage });
 			// If using search keywords
 			if(keywords){
 				const searchPageLength = 3;
-				videos = await VideoService.find({
+				videos = await VideoSearchService.find({
 					query: {
 						$search: keywords,
 						$sort: sortObject,
@@ -178,7 +140,7 @@ var upload = multer({ storage });
 						$skip: (page - 1) * searchPageLength
 					}
 				});
-				const allVideoResults = await VideoService.find({ query: { $search: keywords } });
+				const allVideoResults = await VideoSearchService.find({ query: { $search: keywords } });
 				const pages = Math.ceil(allVideoResults.length / searchPageLength);
 
 			    videos = {

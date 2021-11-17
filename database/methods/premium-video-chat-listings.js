@@ -1,4 +1,4 @@
-const { getDB } = require('./db.js');
+const { getDB } = require('../db.js');
 const mongo = require('mongodb');
 
 async function addPremiumVideoChatListing(_, { userID, premiumVideoChatListing }){
@@ -8,6 +8,8 @@ async function addPremiumVideoChatListing(_, { userID, premiumVideoChatListing }
 
 	if(!user.premiumVideoChatListing){
 		await db.collection('users').updateOne({ _id: new mongo.ObjectID(userID) }, { $set: { premiumVideoChatListing } });
+		user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
+		await db.collection('premium_video_chat_listings').insertOne({ user, ...premiumVideoChatListing });
 		return premiumVideoChatListing;
 	}
 

@@ -1,8 +1,8 @@
-var passport = require('passport');
-var LocalStrategy = require('passport-local');
-var GoogleStrategy = require('passport-google-oauth20').Strategy;
-var { addUser, findAndSyncUser } = require('./users.js');
-var bcrypt = require('bcrypt');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const { addUser, findAndSyncUser } = require('../database/methods/users.js');
+const bcrypt = require('bcrypt');
 
 passport.use('local-login', new LocalStrategy({
 		usernameField: 'displayName',

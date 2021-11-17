@@ -5,6 +5,7 @@ import { faSignOutAlt, faTrash, faTimes, faLongArrowAltRight } from '@fortawesom
 import Slider from 'react-slick';
 import graphQLFetch from './graphQLFetch.js';
 import VideoPlayer from './VideoPlayer.tsx';
+import PremiumVideoChatListingForm from './PremiumVideoChatListingForm.tsx';
 
 class AccountProfile extends React.Component {
 	constructor(props){
@@ -137,6 +138,7 @@ class AccountProfile extends React.Component {
 
 		const authenticatedUser = JSON.parse(this.props.authenticatedUser);
 		const authenticatedUserIsAdmin = authenticatedUser ? authenticatedUser.isAdmin : false;
+		const authenticatedUserIsVerified = authenticatedUser ? authenticatedUser.verified : false;
 
 		document.addEventListener('cssmodal:hide', () => {
 			this.setState({
@@ -172,6 +174,20 @@ class AccountProfile extends React.Component {
 							</div>
 						}
 					</form>
+					:
+					''
+				}
+				{authenticatedUserIsVerified && this.props.isCurrentUser ?
+					<PremiumVideoChatListingForm user={this.props.user}/>
+					:
+					''
+				}
+				{authenticatedUser.premiumVideoChatListing ?
+					<div>
+						<p>{authenticatedUser.premiumVideoChatListing.topic}</p>
+						<p>{authenticatedUser.premiumVideoChatListing.language}</p>
+						<img src={authenticatedUser.premiumVideoChatListing.thumbnailSrc} alt={authenticatedUser.premiumVideoChatListing.thumbnailSrc}/>
+					</div>
 					:
 					''
 				}

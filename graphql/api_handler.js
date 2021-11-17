@@ -1,9 +1,10 @@
 const fs = require('fs');
+const path = require('path');
 const { ApolloServer } = require('apollo-server-express');
-const videos = require('./videos.js');
-const likes = require('./likes.js');
-const users = require('./users.js');
-const premiumVideoChatListings = require('./premium-video-chat-listings.js');
+const videos = require('../database/methods/videos.js');
+const likes = require('../database/methods/likes.js');
+const users = require('../database/methods/users.js');
+const premiumVideoChatListings = require('../database/methods/premium-video-chat-listings.js');
 
 const resolvers = {
 	Query: {
@@ -19,7 +20,7 @@ const resolvers = {
 }
 
 const server = new ApolloServer({
-	typeDefs: fs.readFileSync('./schema.graphql', 'utf-8'),
+	typeDefs: fs.readFileSync(path.join(__dirname, 'schema.graphql'), 'utf-8'),
 	resolvers
 });
 

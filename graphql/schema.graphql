@@ -32,6 +32,12 @@ type PremiumVideoChatListing {
 	user: User
 }
 
+input PremiumVideoChatListingInputs {
+	topic: String
+	language: String
+	thumbnailSrc: String
+}
+
 type Query {
 	indexVideos: [Video]
 }
@@ -40,6 +46,6 @@ type Mutation {
 	addLike(userID: ID!, videoID: ID!): Video
 	removeLike(userID: ID!, videoID: ID!): Video
 	verifyUser(userID: ID!, verificationStatus: Boolean!): User
-	addPremiumVideoChatListing(userID: ID!): PremiumVideoChatListing
+	addPremiumVideoChatListing(userID: ID!, premiumVideoChatListing: PremiumVideoChatListingInputs): PremiumVideoChatListing
 	removePremiumVideoChatListing(userID: ID!): Boolean
 }

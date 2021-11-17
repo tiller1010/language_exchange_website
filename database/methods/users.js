@@ -1,4 +1,4 @@
-const { getDB } = require('./db.js');
+const { getDB } = require('../db.js');
 const mongo = require('mongodb');
 
 async function addUser(user){

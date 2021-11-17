@@ -31,6 +31,7 @@
     "feathers-mongodb": "^6.2.0",
     "feathers-mongodb-fuzzy-search": "^2.0.1",
     "graphql": "^15.6.0",
+    "language-list": "0.0.3",
     "lozad": "^1.16.0",
     "mongodb": "^3.5.9",
     "multer": "^1.4.2",

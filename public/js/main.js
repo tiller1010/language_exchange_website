@@ -16433,11 +16433,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
 /* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
 /* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-slick */ "./node_modules/react-slick/lib/index.js");
 /* harmony import */ var _graphQLFetch_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./graphQLFetch.js */ "./js/components/graphQLFetch.js");
 /* harmony import */ var _VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./VideoPlayer.tsx */ "./js/components/VideoPlayer.tsx");
 /* harmony import */ var _VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _PremiumVideoChatListingForm_tsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./PremiumVideoChatListingForm.tsx */ "./js/components/PremiumVideoChatListingForm.tsx");
+/* harmony import */ var _PremiumVideoChatListingForm_tsx__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_PremiumVideoChatListingForm_tsx__WEBPACK_IMPORTED_MODULE_6__);
+
 
 
 
@@ -16587,6 +16590,7 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
   render() {
     const authenticatedUser = JSON.parse(this.props.authenticatedUser);
     const authenticatedUserIsAdmin = authenticatedUser ? authenticatedUser.isAdmin : false;
+    const authenticatedUserIsVerified = authenticatedUser ? authenticatedUser.verified : false;
     document.addEventListener('cssmodal:hide', () => {
       this.setState({
         openRemovalForm: false
@@ -16601,7 +16605,7 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
         width: 'max-content'
       }
     }, "Logout", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faSignOutAlt
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__.faSignOutAlt
     }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, this.state.user.firstName), authenticatedUserIsAdmin ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", null, this.state.user.verified ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
       htmlFor: "verifyUser"
     }, "Remove verification for this user?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
@@ -16615,7 +16619,12 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       type: "checkbox",
       name: "verifyUser",
       onChange: event => this.verifyUser(!this.state.user.verified)
-    }))) : '', this.state.user.completedTopics.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }))) : '', authenticatedUserIsVerified && this.props.isCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_PremiumVideoChatListingForm_tsx__WEBPACK_IMPORTED_MODULE_6___default()), {
+      user: this.props.user
+    }) : '', authenticatedUser.premiumVideoChatListing ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, authenticatedUser.premiumVideoChatListing.topic), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, authenticatedUser.premiumVideoChatListing.language), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+      src: authenticatedUser.premiumVideoChatListing.thumbnailSrc,
+      alt: authenticatedUser.premiumVideoChatListing.thumbnailSrc
+    })) : '', this.state.user.completedTopics.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "topics"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
       className: "text-center"
@@ -16644,7 +16653,7 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       href: `${this.props.pathResolver}level/${topic.levelID}/topic/${topic.topicID}`,
       className: "button"
     }, "View Topic", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faLongArrowAltRight
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__.faLongArrowAltRight
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
       href: `level/${topic.levelID}/topic/${topic.topicID}`
     }, this.renderMedia(topic))))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
@@ -16669,12 +16678,12 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       href: "#remove-video",
       onClick: this.handleDeleteVideo
     }, "Remove Video", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faTrash
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__.faTrash
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
       href: "#!",
       className: "button"
     }, "Close", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faTimes
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__.faTimes
     })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
       href: "#!",
       className: "modal-close",
@@ -18182,6 +18191,353 @@ if (document.getElementById('account-profile')) {
 
 /***/ }),
 
+/***/ "./js/components/PremiumVideoChatListingForm.tsx":
+/*!*******************************************************!*\
+  !*** ./js/components/PremiumVideoChatListingForm.tsx ***!
+  \*******************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __extends = this && this.__extends || function () {
+  var extendStatics = function (d, b) {
+    extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    };
+
+    return extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function (resolve) {
+      resolve(value);
+    });
+  }
+
+  return new (P || (P = Promise))(function (resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function step(result) {
+      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+
+var __generator = this && this.__generator || function (thisArg, body) {
+  var _ = {
+    label: 0,
+    sent: function () {
+      if (t[0] & 1) throw t[1];
+      return t[1];
+    },
+    trys: [],
+    ops: []
+  },
+      f,
+      y,
+      t,
+      g;
+  return g = {
+    next: verb(0),
+    "throw": verb(1),
+    "return": verb(2)
+  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+    return this;
+  }), g;
+
+  function verb(n) {
+    return function (v) {
+      return step([n, v]);
+    };
+  }
+
+  function step(op) {
+    if (f) throw new TypeError("Generator is already executing.");
+
+    while (_) try {
+      if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+      if (y = 0, t) op = [op[0] & 2, t.value];
+
+      switch (op[0]) {
+        case 0:
+        case 1:
+          t = op;
+          break;
+
+        case 4:
+          _.label++;
+          return {
+            value: op[1],
+            done: false
+          };
+
+        case 5:
+          _.label++;
+          y = op[1];
+          op = [0];
+          continue;
+
+        case 7:
+          op = _.ops.pop();
+
+          _.trys.pop();
+
+          continue;
+
+        default:
+          if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+            _ = 0;
+            continue;
+          }
+
+          if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+            _.label = op[1];
+            break;
+          }
+
+          if (op[0] === 6 && _.label < t[1]) {
+            _.label = t[1];
+            t = op;
+            break;
+          }
+
+          if (t && _.label < t[2]) {
+            _.label = t[2];
+
+            _.ops.push(op);
+
+            break;
+          }
+
+          if (t[2]) _.ops.pop();
+
+          _.trys.pop();
+
+          continue;
+      }
+
+      op = body.call(thisArg, _);
+    } catch (e) {
+      op = [6, e];
+      y = 0;
+    } finally {
+      f = t = 0;
+    }
+
+    if (op[0] & 5) throw op[1];
+    return {
+      value: op[0] ? op[1] : void 0,
+      done: true
+    };
+  }
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var react_fontawesome_1 = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+
+var free_solid_svg_icons_1 = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+
+var languages = __webpack_require__(/*! language-list */ "./node_modules/language-list/language-list.js")();
+
+var graphQLFetch_js_1 = __webpack_require__(/*! ./graphQLFetch.js */ "./js/components/graphQLFetch.js");
+
+var PremiumVideoChatListingForm =
+/** @class */
+function (_super) {
+  __extends(PremiumVideoChatListingForm, _super);
+
+  function PremiumVideoChatListingForm(props) {
+    var _this = _super.call(this, props) || this;
+
+    var state = {
+      topic: '',
+      language: '',
+      thumbnailSrc: ''
+    };
+    _this.state = state;
+    _this.handleThumbnailChange = _this.handleThumbnailChange.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
+  }
+
+  PremiumVideoChatListingForm.prototype.handleThumbnailChange = function (event) {
+    var key = event.target.name;
+    var image = event.target.files[0];
+
+    if (image) {
+      this.setState({
+        thumbnailSrc: image.name
+      }); // Set preview
+
+      var reader_1 = new FileReader();
+      var frame_1 = document.querySelector("." + key + "-preview");
+      reader_1.addEventListener('load', function () {
+        if (/jpeg|jpg|png/.test(reader_1.result.substr(0, 20))) {
+          frame_1.style.background = "url(" + reader_1.result + ") no-repeat center center/cover";
+        } else {
+          alert('Invalid thumbnail format.');
+        }
+      }, false);
+      reader_1.readAsDataURL(image);
+    }
+  };
+
+  PremiumVideoChatListingForm.prototype.handleSubmit = function (event) {
+    return __awaiter(this, void 0, void 0, function () {
+      var _a, topic, language, thumbnailSrc, user, query, data;
+
+      return __generator(this, function (_b) {
+        switch (_b.label) {
+          case 0:
+            event.preventDefault();
+            _a = this.state, topic = _a.topic, language = _a.language, thumbnailSrc = _a.thumbnailSrc;
+            user = this.props.user;
+            if (!(user && topic && language && thumbnailSrc)) return [3
+            /*break*/
+            , 2];
+            query = "mutation addPremiumVideoChatListing($userID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs){\n\t\t\t\taddPremiumVideoChatListing(userID: $userID, premiumVideoChatListing: $premiumVideoChatListing){\n\t\t\t\t\t_id\n\t\t\t\t\ttopic\n\t\t\t\t\tlanguage\n\t\t\t\t\tthumbnailSrc\n\t\t\t\t\tuser {\n\t\t\t\t\t\t_id\n\t\t\t\t\t\tdisplayName\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}";
+            return [4
+            /*yield*/
+            , (0, graphQLFetch_js_1.default)(query, {
+              userID: user._id,
+              premiumVideoChatListing: {
+                topic: topic,
+                language: language,
+                thumbnailSrc: thumbnailSrc
+              }
+            })];
+
+          case 1:
+            data = _b.sent();
+            _b.label = 2;
+
+          case 2:
+            return [2
+            /*return*/
+            ];
+        }
+      });
+    });
+  };
+
+  PremiumVideoChatListingForm.prototype.render = function () {
+    var _this = this;
+
+    var _a = this.state,
+        topic = _a.topic,
+        language = _a.language,
+        thumbnailSrc = _a.thumbnailSrc;
+    return React.createElement("form", null, React.createElement("div", null, React.createElement("label", {
+      htmlFor: "topic"
+    }, "Topic"), React.createElement("input", {
+      type: "text",
+      name: "topic",
+      value: topic,
+      onChange: function (event) {
+        return _this.setState({
+          topic: event.target.value
+        });
+      }
+    })), React.createElement("div", null, React.createElement("label", {
+      htmlFor: "language"
+    }, "Language"), React.createElement("select", {
+      name: "language",
+      onChange: function (event) {
+        return _this.setState({
+          language: event.target.value
+        });
+      }
+    }, React.createElement("option", {
+      value: ""
+    }, "Select a language"), React.createElement("option", {
+      selected: language == 'ASL'
+    }, "ASL"), languages.getLanguageCodes().map(function (langCode) {
+      return React.createElement("option", {
+        key: langCode,
+        selected: language == languages.getLanguageName(langCode)
+      }, languages.getLanguageName(langCode));
+    }))), React.createElement("div", {
+      className: "upload-container"
+    }, React.createElement("input", {
+      type: "file",
+      name: "thumbnail",
+      onChange: this.handleThumbnailChange
+    }), React.createElement("label", {
+      htmlFor: "thumbnail"
+    }, "Thumbnail", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
+      icon: free_solid_svg_icons_1.faUpload
+    }))), React.createElement("div", {
+      className: "pure-u-l pure-u-md-1-2",
+      style: {
+        maxWidth: '100%',
+        height: '300px'
+      }
+    }, React.createElement("div", {
+      className: "pad",
+      style: {
+        height: '100%',
+        width: '100%',
+        boxSizing: 'border-box'
+      }
+    }, React.createElement("div", {
+      className: "thumbnail-preview img-container",
+      style: {
+        height: '100%',
+        width: '100%'
+      }
+    }))), React.createElement("div", null, React.createElement("button", {
+      onClick: this.handleSubmit
+    }, "Submit", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
+      icon: free_solid_svg_icons_1.faLongArrowAltRight
+    }))));
+  };
+
+  return PremiumVideoChatListingForm;
+}(React.Component);
+
+exports["default"] = PremiumVideoChatListingForm;
+
+/***/ }),
+
 /***/ "./js/components/VideoPlayer.tsx":
 /*!***************************************!*\
   !*** ./js/components/VideoPlayer.tsx ***!
@@ -19315,6 +19671,59 @@ var json2mq = function (query) {
 };
 
 module.exports = json2mq;
+
+/***/ }),
+
+/***/ "./node_modules/language-list/language-list.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/language-list/language-list.js ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var data = __webpack_require__(/*! ./data.json */ "./node_modules/language-list/data.json");
+
+/**
+ * Precompute measure and code lookups.
+ */
+var languageNameMap = {};
+var languageCodeMap = {};
+data.forEach(function(language) {
+  languageNameMap[language.language.toLowerCase()] = language.code;
+  languageCodeMap[language.code.toLowerCase()] = language.language;
+});
+
+module.exports = LanguageList;
+function LanguageList() {
+  if (!(this instanceof LanguageList)) return new LanguageList();
+};
+
+LanguageList.prototype.getLanguageCode = function getLanguageCode(name) {
+  return languageNameMap[name.toLowerCase()];
+};
+
+LanguageList.prototype.getLanguageName = function getLanguageNames(code) {
+  return languageCodeMap[code.toLowerCase()];
+};
+
+LanguageList.prototype.getLanguageNames = function getLanguageNames() {
+  return data.map(function(language) {
+    return language.name;
+  });
+};
+
+LanguageList.prototype.getLanguageCodes = function getLanguageCodes() {
+  return data.map(function(language) {
+    return language.code;
+  });
+};
+
+LanguageList.prototype.getData = function getData() {
+  return data;
+};
+
 
 /***/ }),
 
@@ -53405,6 +53814,17 @@ module.exports = function (list, options) {
     lastIdentifiers = newLastIdentifiers;
   };
 };
+
+/***/ }),
+
+/***/ "./node_modules/language-list/data.json":
+/*!**********************************************!*\
+  !*** ./node_modules/language-list/data.json ***!
+  \**********************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = JSON.parse('[{"language":"Afar","code":"aa"},{"language":"Abkhazian","code":"ab"},{"language":"Afrikaans","code":"af"},{"language":"Akan","code":"ak"},{"language":"Amharic","code":"am"},{"language":"Aragonese","code":"an"},{"language":"Arabic","code":"ar"},{"language":"Assamese","code":"as"},{"language":"Avar","code":"av"},{"language":"Aymara","code":"ay"},{"language":"Azerbaijani","code":"az"},{"language":"Bashkir","code":"ba"},{"language":"Belarusian","code":"be"},{"language":"Bulgarian","code":"bg"},{"language":"Bihari","code":"bh"},{"language":"Bislama","code":"bi"},{"language":"Bambara","code":"bm"},{"language":"Bengali","code":"bn"},{"language":"Tibetan","code":"bo"},{"language":"Breton","code":"br"},{"language":"Bosnian","code":"bs"},{"language":"Catalan","code":"ca"},{"language":"Chechen","code":"ce"},{"language":"Chamorro","code":"ch"},{"language":"Corsican","code":"co"},{"language":"Cree","code":"cr"},{"language":"Czech","code":"cs"},{"language":"Old Church Slavonic / Old Bulgarian","code":"cu"},{"language":"Chuvash","code":"cv"},{"language":"Welsh","code":"cy"},{"language":"Danish","code":"da"},{"language":"German","code":"de"},{"language":"Divehi","code":"dv"},{"language":"Dzongkha","code":"dz"},{"language":"Ewe","code":"ee"},{"language":"Greek","code":"el"},{"language":"English","code":"en"},{"language":"Esperanto","code":"eo"},{"language":"Spanish","code":"es"},{"language":"Estonian","code":"et"},{"language":"Basque","code":"eu"},{"language":"Persian","code":"fa"},{"language":"Peul","code":"ff"},{"language":"Finnish","code":"fi"},{"language":"Fijian","code":"fj"},{"language":"Faroese","code":"fo"},{"language":"French","code":"fr"},{"language":"West Frisian","code":"fy"},{"language":"Irish","code":"ga"},{"language":"Scottish Gaelic","code":"gd"},{"language":"Galician","code":"gl"},{"language":"Guarani","code":"gn"},{"language":"Gujarati","code":"gu"},{"language":"Manx","code":"gv"},{"language":"Hausa","code":"ha"},{"language":"Hebrew","code":"he"},{"language":"Hindi","code":"hi"},{"language":"Hiri Motu","code":"ho"},{"language":"Croatian","code":"hr"},{"language":"Haitian","code":"ht"},{"language":"Hungarian","code":"hu"},{"language":"Armenian","code":"hy"},{"language":"Herero","code":"hz"},{"language":"Interlingua","code":"ia"},{"language":"Indonesian","code":"id"},{"language":"Interlingue","code":"ie"},{"language":"Igbo","code":"ig"},{"language":"Sichuan Yi","code":"ii"},{"language":"Inupiak","code":"ik"},{"language":"Ido","code":"io"},{"language":"Icelandic","code":"is"},{"language":"Italian","code":"it"},{"language":"Inuktitut","code":"iu"},{"language":"Japanese","code":"ja"},{"language":"Javanese","code":"jv"},{"language":"Kongo","code":"kg"},{"language":"Kikuyu","code":"ki"},{"language":"Kuanyama","code":"kj"},{"language":"Kazakh","code":"kk"},{"language":"Greenlandic","code":"kl"},{"language":"Cambodian","code":"km"},{"language":"Kannada","code":"kn"},{"language":"Korean","code":"ko"},{"language":"Kanuri","code":"kr"},{"language":"Kashmiri","code":"ks"},{"language":"Kurdish","code":"ku"},{"language":"Komi","code":"kv"},{"language":"Cornish","code":"kw"},{"language":"Kirghiz","code":"ky"},{"language":"Latin","code":"la"},{"language":"Luxembourgish","code":"lb"},{"language":"Ganda","code":"lg"},{"language":"Limburgian","code":"li"},{"language":"Lingala","code":"ln"},{"language":"Laotian","code":"lo"},{"language":"Lithuanian","code":"lt"},{"language":"Latvian","code":"lv"},{"language":"Malagasy","code":"mg"},{"language":"Marshallese","code":"mh"},{"language":"Maori","code":"mi"},{"language":"Macedonian","code":"mk"},{"language":"Malayalam","code":"ml"},{"language":"Mongolian","code":"mn"},{"language":"Moldovan","code":"mo"},{"language":"Marathi","code":"mr"},{"language":"Malay","code":"ms"},{"language":"Maltese","code":"mt"},{"language":"Burmese","code":"my"},{"language":"Nauruan","code":"na"},{"language":"North Ndebele","code":"nd"},{"language":"Nepali","code":"ne"},{"language":"Ndonga","code":"ng"},{"language":"Dutch","code":"nl"},{"language":"Norwegian Nynorsk","code":"nn"},{"language":"Norwegian","code":"no"},{"language":"South Ndebele","code":"nr"},{"language":"Navajo","code":"nv"},{"language":"Chichewa","code":"ny"},{"language":"Occitan","code":"oc"},{"language":"Ojibwa","code":"oj"},{"language":"Oromo","code":"om"},{"language":"Oriya","code":"or"},{"language":"Ossetian","code":"os"},{"language":"Punjabi","code":"pa"},{"language":"Pali","code":"pi"},{"language":"Polish","code":"pl"},{"language":"Pashto","code":"ps"},{"language":"Portuguese","code":"pt"},{"language":"Quechua","code":"qu"},{"language":"Raeto Romance","code":"rm"},{"language":"Kirundi","code":"rn"},{"language":"Romanian","code":"ro"},{"language":"Russian","code":"ru"},{"language":"Rwandi","code":"rw"},{"language":"Sanskrit","code":"sa"},{"language":"Sardinian","code":"sc"},{"language":"Sindhi","code":"sd"},{"language":"Sango","code":"sg"},{"language":"Serbo-Croatian","code":"sh"},{"language":"Sinhalese","code":"si"},{"language":"Slovak","code":"sk"},{"language":"Slovenian","code":"sl"},{"language":"Samoan","code":"sm"},{"language":"Shona","code":"sn"},{"language":"Somalia","code":"so"},{"language":"Albanian","code":"sq"},{"language":"Serbian","code":"sr"},{"language":"Swati","code":"ss"},{"language":"Southern Sotho","code":"st"},{"language":"Sundanese","code":"su"},{"language":"Swedish","code":"sv"},{"language":"Swahili","code":"sw"},{"language":"Tamil","code":"ta"},{"language":"Telugu","code":"te"},{"language":"Tajik","code":"tg"},{"language":"Thai","code":"th"},{"language":"Tigrinya","code":"ti"},{"language":"Turkmen","code":"tk"},{"language":"Tagalog","code":"tl"},{"language":"Tswana","code":"tn"},{"language":"Tonga","code":"to"},{"language":"Turkish","code":"tr"},{"language":"Tsonga","code":"ts"},{"language":"Tatar","code":"tt"},{"language":"Twi","code":"tw"},{"language":"Tahitian","code":"ty"},{"language":"Uyghur","code":"ug"},{"language":"Urdu","code":"ur"},{"language":"Venda","code":"ve"},{"language":"Vietnamese","code":"vi"},{"language":"Volapük","code":"vo"},{"language":"Walloon","code":"wa"},{"language":"Wolof","code":"wo"},{"language":"Xhosa","code":"xh"},{"language":"Yiddish","code":"yi"},{"language":"Yoruba","code":"yo"},{"language":"Zhuang","code":"za"},{"language":"Chinese","code":"zh"},{"language":"Zulu","code":"zu"}]');
 
 /***/ })
 
