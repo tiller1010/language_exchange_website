@@ -12,14 +12,47 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ graphQLFetch)
 /* harmony export */ });
-async function graphQLFetch(query, variables = {}){
-	const response = await fetch('/graphql', {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ query, variables })
-	});
-	const body = await response.text();
-	const result = JSON.parse(body);
+async function graphQLFetch(query, variables = {}, multipart = false){
+	let request;
+	if(multipart){
+		const data = {
+			operations: JSON.stringify({
+				query,
+				variables: {
+					...variables,
+					file: null
+				}
+			}),
+			map: JSON.stringify({
+				'0': [
+					'variables.file'
+				]
+			})
+		};
+		const requestBody = new FormData();
+		for(const name in data) {
+			requestBody.append(name, data[name]);
+		}
+		requestBody.append('0', variables.file);
+		request = {
+			method: 'POST',
+			body: requestBody
+		}
+	} else {
+		request = {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ query, variables })
+		}
+	}
+	const response = await fetch('/graphql', request);
+	const responseBody = await response.text();
+	let result;
+	if(multipart){
+		result = responseBody;
+	} else {
+		result = JSON.parse(responseBody);
+	}
 	return result.data;
 }
 
@@ -16433,13 +16466,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
 /* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
 /* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-slick */ "./node_modules/react-slick/lib/index.js");
 /* harmony import */ var _graphQLFetch_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./graphQLFetch.js */ "./js/components/graphQLFetch.js");
 /* harmony import */ var _VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./VideoPlayer.tsx */ "./js/components/VideoPlayer.tsx");
 /* harmony import */ var _VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _PremiumVideoChatListingForm_tsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./PremiumVideoChatListingForm.tsx */ "./js/components/PremiumVideoChatListingForm.tsx");
 /* harmony import */ var _PremiumVideoChatListingForm_tsx__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_PremiumVideoChatListingForm_tsx__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _PremiumVideoChatListing_tsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./PremiumVideoChatListing.tsx */ "./js/components/PremiumVideoChatListing.tsx");
+/* harmony import */ var _PremiumVideoChatListing_tsx__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_PremiumVideoChatListing_tsx__WEBPACK_IMPORTED_MODULE_7__);
+
 
 
 
@@ -16605,7 +16641,7 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
         width: 'max-content'
       }
     }, "Logout", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__.faSignOutAlt
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_8__.faSignOutAlt
     }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, this.state.user.firstName), authenticatedUserIsAdmin ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", null, this.state.user.verified ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
       htmlFor: "verifyUser"
     }, "Remove verification for this user?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
@@ -16620,11 +16656,10 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       name: "verifyUser",
       onChange: event => this.verifyUser(!this.state.user.verified)
     }))) : '', authenticatedUserIsVerified && this.props.isCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_PremiumVideoChatListingForm_tsx__WEBPACK_IMPORTED_MODULE_6___default()), {
-      user: this.props.user
-    }) : '', authenticatedUser.premiumVideoChatListing ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, authenticatedUser.premiumVideoChatListing.topic), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, authenticatedUser.premiumVideoChatListing.language), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-      src: authenticatedUser.premiumVideoChatListing.thumbnailSrc,
-      alt: authenticatedUser.premiumVideoChatListing.thumbnailSrc
-    })) : '', this.state.user.completedTopics.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      user: authenticatedUser
+    }) : '', authenticatedUser.premiumVideoChatListing ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_PremiumVideoChatListing_tsx__WEBPACK_IMPORTED_MODULE_7___default()), {
+      premiumVideoChatListing: authenticatedUser.premiumVideoChatListing
+    }) : '', this.state.user.completedTopics.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "topics"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
       className: "text-center"
@@ -16653,7 +16688,7 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       href: `${this.props.pathResolver}level/${topic.levelID}/topic/${topic.topicID}`,
       className: "button"
     }, "View Topic", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__.faLongArrowAltRight
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_8__.faLongArrowAltRight
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
       href: `level/${topic.levelID}/topic/${topic.topicID}`
     }, this.renderMedia(topic))))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
@@ -16678,12 +16713,12 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       href: "#remove-video",
       onClick: this.handleDeleteVideo
     }, "Remove Video", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__.faTrash
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_8__.faTrash
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
       href: "#!",
       className: "button"
     }, "Close", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__.faTimes
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_8__.faTimes
     })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
       href: "#!",
       className: "modal-close",
@@ -18191,6 +18226,77 @@ if (document.getElementById('account-profile')) {
 
 /***/ }),
 
+/***/ "./js/components/PremiumVideoChatListing.tsx":
+/*!***************************************************!*\
+  !*** ./js/components/PremiumVideoChatListing.tsx ***!
+  \***************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __extends = this && this.__extends || function () {
+  var extendStatics = function (d, b) {
+    extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    };
+
+    return extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var PremiumVideoChatListing =
+/** @class */
+function (_super) {
+  __extends(PremiumVideoChatListing, _super);
+
+  function PremiumVideoChatListing(props) {
+    var _this = _super.call(this, props) || this;
+
+    var state = {};
+    _this.state = state;
+    return _this;
+  }
+
+  PremiumVideoChatListing.prototype.render = function () {
+    var _a = this.props.premiumVideoChatListing,
+        topic = _a.topic,
+        language = _a.language,
+        thumbnailSrc = _a.thumbnailSrc;
+    return React.createElement("div", null, React.createElement("p", null, topic), React.createElement("p", null, language), React.createElement("img", {
+      src: thumbnailSrc,
+      alt: thumbnailSrc
+    }));
+  };
+
+  return PremiumVideoChatListing;
+}(React.Component);
+
+exports["default"] = PremiumVideoChatListing;
+
+/***/ }),
+
 /***/ "./js/components/PremiumVideoChatListingForm.tsx":
 /*!*******************************************************!*\
   !*** ./js/components/PremiumVideoChatListingForm.tsx ***!
@@ -18390,8 +18496,7 @@ function (_super) {
 
     var state = {
       topic: '',
-      language: '',
-      thumbnailSrc: ''
+      language: ''
     };
     _this.state = state;
     _this.handleThumbnailChange = _this.handleThumbnailChange.bind(_this);
@@ -18400,16 +18505,16 @@ function (_super) {
   }
 
   PremiumVideoChatListingForm.prototype.handleThumbnailChange = function (event) {
-    var key = event.target.name;
+    var context = this;
     var image = event.target.files[0];
+    context.setState({
+      thumbnailFile: image
+    });
 
     if (image) {
-      this.setState({
-        thumbnailSrc: image.name
-      }); // Set preview
-
+      // Set preview
       var reader_1 = new FileReader();
-      var frame_1 = document.querySelector("." + key + "-preview");
+      var frame_1 = document.querySelector(".thumbnail-preview");
       reader_1.addEventListener('load', function () {
         if (/jpeg|jpg|png/.test(reader_1.result.substr(0, 20))) {
           frame_1.style.background = "url(" + reader_1.result + ") no-repeat center center/cover";
@@ -18423,28 +18528,28 @@ function (_super) {
 
   PremiumVideoChatListingForm.prototype.handleSubmit = function (event) {
     return __awaiter(this, void 0, void 0, function () {
-      var _a, topic, language, thumbnailSrc, user, query, data;
+      var _a, topic, language, thumbnailFile, user, query, data;
 
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
             event.preventDefault();
-            _a = this.state, topic = _a.topic, language = _a.language, thumbnailSrc = _a.thumbnailSrc;
+            _a = this.state, topic = _a.topic, language = _a.language, thumbnailFile = _a.thumbnailFile;
             user = this.props.user;
-            if (!(user && topic && language && thumbnailSrc)) return [3
+            if (!(user && topic && language && thumbnailFile)) return [3
             /*break*/
             , 2];
-            query = "mutation addPremiumVideoChatListing($userID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs){\n\t\t\t\taddPremiumVideoChatListing(userID: $userID, premiumVideoChatListing: $premiumVideoChatListing){\n\t\t\t\t\t_id\n\t\t\t\t\ttopic\n\t\t\t\t\tlanguage\n\t\t\t\t\tthumbnailSrc\n\t\t\t\t\tuser {\n\t\t\t\t\t\t_id\n\t\t\t\t\t\tdisplayName\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}";
+            query = "mutation addPremiumVideoChatListing($userID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){\n\t\t\t\taddPremiumVideoChatListing(userID: $userID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){\n\t\t\t\t\t_id\n\t\t\t\t\ttopic\n\t\t\t\t\tlanguage\n\t\t\t\t\tthumbnailSrc\n\t\t\t\t\tuser {\n\t\t\t\t\t\t_id\n\t\t\t\t\t\tdisplayName\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}";
             return [4
             /*yield*/
             , (0, graphQLFetch_js_1.default)(query, {
               userID: user._id,
               premiumVideoChatListing: {
                 topic: topic,
-                language: language,
-                thumbnailSrc: thumbnailSrc
-              }
-            })];
+                language: language
+              },
+              file: thumbnailFile
+            }, true)];
 
           case 1:
             data = _b.sent();
@@ -18464,8 +18569,7 @@ function (_super) {
 
     var _a = this.state,
         topic = _a.topic,
-        language = _a.language,
-        thumbnailSrc = _a.thumbnailSrc;
+        language = _a.language;
     return React.createElement("form", null, React.createElement("div", null, React.createElement("label", {
       htmlFor: "topic"
     }, "Topic"), React.createElement("input", {

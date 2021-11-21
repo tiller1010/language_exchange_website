@@ -21,6 +21,7 @@ const upload = require('./app/upload.js')();
 
 // GraphQL
 const { installHandler } = require('./graphql/api_handler.js');
+const { graphqlUploadExpress } = require('graphql-upload');
 
 // Configure Server
 const app = express();
@@ -42,11 +43,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json());
 
-// Install GraphQL API Handler
-installHandler(app);
 
 (async function start(){
 	try{
+
+		// Install GraphQL API Handler
+		app.use(graphqlUploadExpress());
+		await installHandler(app);
 
 		const VideoSearchService = await createVideoSearchService();
 

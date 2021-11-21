@@ -1,3 +1,5 @@
+scalar Upload
+
 type Video {
 	_id: ID!
 	title: String!
@@ -35,7 +37,6 @@ type PremiumVideoChatListing {
 input PremiumVideoChatListingInputs {
 	topic: String
 	language: String
-	thumbnailSrc: String
 }
 
 type Query {
@@ -46,6 +47,7 @@ type Mutation {
 	addLike(userID: ID!, videoID: ID!): Video
 	removeLike(userID: ID!, videoID: ID!): Video
 	verifyUser(userID: ID!, verificationStatus: Boolean!): User
-	addPremiumVideoChatListing(userID: ID!, premiumVideoChatListing: PremiumVideoChatListingInputs): PremiumVideoChatListing
+	addPremiumVideoChatListing(userID: ID!, premiumVideoChatListing: PremiumVideoChatListingInputs, thumbnailFile: Upload): PremiumVideoChatListing
+	addPremiumVideoChatListingThumbnailTest(thumbnailFile: Upload): PremiumVideoChatListing
 	removePremiumVideoChatListing(userID: ID!): Boolean
 }

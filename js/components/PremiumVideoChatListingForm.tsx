@@ -12,7 +12,7 @@ interface User {
 interface PremiumVideoChatListingFormState {
 	topic: string;
 	language: string
-	thumbnailSrc: string
+	thumbnailFile?: File
 }
 
 interface PremiumVideoChatListingFormProps {
@@ -24,8 +24,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 		super(props);
 		let state: PremiumVideoChatListingFormState = {
 			topic: '',
-			language: '',
-			thumbnailSrc: '',
+			language: ''
 		}
 		this.state = state;
 		this.handleThumbnailChange = this.handleThumbnailChange.bind(this);
@@ -34,16 +33,15 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 
 
 	handleThumbnailChange(event){
-		let key = event.target.name;
-	    let image = event.target.files[0];
+		const context = this;
+	    const image = event.target.files[0];
+				    context.setState({
+					    thumbnailFile: image
+				    });
 	    if(image){
-			this.setState({
-				thumbnailSrc: image.name
-			});
-
 	    	// Set preview
-	    	let reader = new FileReader();
-	    	let frame = document.querySelector(`.${key}-preview`);
+	  		const reader = new FileReader();
+	  		const frame = document.querySelector(`.thumbnail-preview`);
 			reader.addEventListener('load', function () {
 				if(/jpeg|jpg|png/.test(reader.result.substr(0, 20))){
 				  frame.style.background = `url(${ reader.result }) no-repeat center center/cover`;
@@ -52,7 +50,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 				}
 
 			}, false);
-	    	reader.readAsDataURL(image);
+			reader.readAsDataURL(image);
 	    }
 	}
 
@@ -63,14 +61,14 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 		let {
 			topic,
 			language,
-			thumbnailSrc,
+			thumbnailFile,
 		} = this.state;
 
 		let { user } = this.props;
 
-		if(user && topic && language && thumbnailSrc){
-			const query = `mutation addPremiumVideoChatListing($userID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs){
-				addPremiumVideoChatListing(userID: $userID, premiumVideoChatListing: $premiumVideoChatListing){
+		if(user && topic && language && thumbnailFile){
+			const query = `mutation addPremiumVideoChatListing($userID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){
+				addPremiumVideoChatListing(userID: $userID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){
 					_id
 					topic
 					language
@@ -86,10 +84,20 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 				premiumVideoChatListing: {
 					topic,
 					language,
-					thumbnailSrc,
-				}
-			});
+				},
+				file: thumbnailFile
+			}, true);
 		}
+
+		// DEBUG UPLOAD
+		// const query = `mutation addPremiumVideoChatListingThumbnailTest($file: Upload){
+		// 	addPremiumVideoChatListingThumbnailTest(thumbnailFile: $file){
+		// 		thumbnailSrc
+		// 	}
+		// }`;
+		// const data = await graphQLFetch(query, {
+		// 	file: thumbnailFile
+		// }, true);
 	}
 
 	render(){
@@ -97,7 +105,6 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 		let {
 			topic,
 			language,
-			thumbnailSrc,
 		} = this.state;
 
 		return(
