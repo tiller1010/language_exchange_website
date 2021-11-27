@@ -30,9 +30,8 @@ async function addPremiumVideoChatListing(_, { userID, premiumVideoChatListing, 
 
 	if(!user.premiumVideoChatListing){
 		premiumVideoChatListing.thumbnailSrc = thumbnailSrc;
+		premiumVideoChatListing = await db.collection('premium_video_chat_listings').insertOne({ userID, ...premiumVideoChatListing }).then(({ ops }) => ops[0]);
 		await db.collection('users').updateOne({ _id: new mongo.ObjectID(userID) }, { $set: { premiumVideoChatListing } });
-		user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
-		await db.collection('premium_video_chat_listings').insertOne({ user, ...premiumVideoChatListing });
 		return premiumVideoChatListing;
 	}
 
@@ -51,6 +50,33 @@ async function addPremiumVideoChatListingThumbnailTest(_, { variables, thumbnail
 	return { thumbnailSrc };
 }
 
+async function updatePremiumVideoChatListing(_, { listingID, premiumVideoChatListing, thumbnailFile }){
+	// Create file from upload
+	if(thumbnailFile){
+		var { createReadStream, filename, mimetype, encoding } = await thumbnailFile;
+		var stream = createReadStream();
+		var fileExtension = mimetype.split('').splice(mimetype.indexOf('/') + 1, mimetype.length).join('');
+		var thumbnailSrc = 'assets/' + randomFilename() + '.' + fileExtension;
+		var out = fs.createWriteStream(path.join(__dirname, '/../../public/') + thumbnailSrc);
+		stream.pipe(out);
+		premiumVideoChatListing.thumbnailSrc = thumbnailSrc;
+	}
+
+	// Write to database
+	const db = getDB();
+
+	premiumVideoChatListing = await db.collection('premium_video_chat_listings').findOneAndUpdate(
+		{ _id: new mongo.ObjectID(listingID) },
+		{ $set: { ...premiumVideoChatListing } },
+		{returnOriginal: false}
+	);
+	premiumVideoChatListing = premiumVideoChatListing.value;
+	await db.collection('users').updateOne({ _id: new mongo.ObjectID(premiumVideoChatListing.userID) }, { $set: { premiumVideoChatListing } });
+	return premiumVideoChatListing;
+
+	return false;
+}
+
 async function removePremiumVideoChatListing(_, { userID }){
 	const db = getDB();
 
@@ -64,4 +90,9 @@ async function removePremiumVideoChatListing(_, { userID }){
 	return false;
 }
 
-module.exports = { addPremiumVideoChatListing, addPremiumVideoChatListingThumbnailTest, removePremiumVideoChatListing };
+module.exports = {
+	addPremiumVideoChatListing,
+	addPremiumVideoChatListingThumbnailTest,
+	updatePremiumVideoChatListing,
+	removePremiumVideoChatListing
+};

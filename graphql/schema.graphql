@@ -28,10 +28,10 @@ type User {
 
 type PremiumVideoChatListing {
 	_id: ID
+	userID: ID
 	topic: String
 	language: String
 	thumbnailSrc: String
-	user: User
 }
 
 input PremiumVideoChatListingInputs {
@@ -49,5 +49,6 @@ type Mutation {
 	verifyUser(userID: ID!, verificationStatus: Boolean!): User
 	addPremiumVideoChatListing(userID: ID!, premiumVideoChatListing: PremiumVideoChatListingInputs, thumbnailFile: Upload): PremiumVideoChatListing
 	addPremiumVideoChatListingThumbnailTest(thumbnailFile: Upload): PremiumVideoChatListing
+	updatePremiumVideoChatListing(listingID: ID!, premiumVideoChatListing: PremiumVideoChatListingInputs, thumbnailFile: Upload): PremiumVideoChatListing
 	removePremiumVideoChatListing(userID: ID!): Boolean
 }

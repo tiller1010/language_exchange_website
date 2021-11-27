@@ -6,7 +6,6 @@ import Slider from 'react-slick';
 import graphQLFetch from './graphQLFetch.js';
 import VideoPlayer from './VideoPlayer.tsx';
 import PremiumVideoChatListingForm from './PremiumVideoChatListingForm.tsx';
-import PremiumVideoChatListing from './PremiumVideoChatListing.tsx';
 
 class AccountProfile extends React.Component {
 	constructor(props){
@@ -180,11 +179,6 @@ class AccountProfile extends React.Component {
 				}
 				{authenticatedUserIsVerified && this.props.isCurrentUser ?
 					<PremiumVideoChatListingForm user={authenticatedUser}/>
-					:
-					''
-				}
-				{authenticatedUser.premiumVideoChatListing ?
-					<PremiumVideoChatListing premiumVideoChatListing={authenticatedUser.premiumVideoChatListing}/>
 					:
 					''
 				}

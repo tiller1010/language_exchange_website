@@ -33,11 +33,6 @@ export default async function graphQLFetch(query, variables = {}, multipart = fa
 	}
 	const response = await fetch('/graphql', request);
 	const responseBody = await response.text();
-	let result;
-	if(multipart){
-		result = responseBody;
-	} else {
-		result = JSON.parse(responseBody);
-	}
+	const result = JSON.parse(responseBody);
 	return result.data;
 }

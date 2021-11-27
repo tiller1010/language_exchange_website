@@ -18,6 +18,7 @@ const resolvers = {
 		verifyUser: users.verifyUser,
 		addPremiumVideoChatListing: premiumVideoChatListings.addPremiumVideoChatListing,
 		addPremiumVideoChatListingThumbnailTest: premiumVideoChatListings.addPremiumVideoChatListingThumbnailTest,
+		updatePremiumVideoChatListing: premiumVideoChatListings.updatePremiumVideoChatListing,
 		removePremiumVideoChatListing: premiumVideoChatListings.removePremiumVideoChatListing
 	}
 }

@@ -9,7 +9,7 @@ interface PremiumVideoChatListingObject {
 	topic: string;
 	language: string
 	thumbnailSrc: string
-	user: User
+	userID: string
 }
 
 interface PremiumVideoChatListingState {
@@ -39,7 +39,9 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 			<div>
 				<p>{topic}</p>
 				<p>{language}</p>
-				<img src={thumbnailSrc} alt={thumbnailSrc}/>
+				<div className="thumbnail-preview img-container">
+					<img style={{ height: '100%', width: '100%', objectFit: 'cover' }} src={thumbnailSrc} alt={thumbnailSrc}/>
+				</div>
 			</div>
 		);
 	}
