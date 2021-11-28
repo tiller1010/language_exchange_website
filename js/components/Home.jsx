@@ -8,7 +8,6 @@ import Slider from 'react-slick';
 import Navigation from './Navigation.jsx';
 import VideoSearchForm from './VideoSearchForm.tsx';
 import VideoPlayer from './VideoPlayer.tsx';
-import graphQLFetch from './graphQLFetch.js';
 
 // Enable lazy loading
 const lozadObserver = lozad();

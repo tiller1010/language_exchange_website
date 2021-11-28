@@ -1,11 +1,12 @@
 import React from 'react';
 import Navigation from './Navigation.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt, faTrash, faTimes, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
 import Slider from 'react-slick';
-import graphQLFetch from './graphQLFetch.js';
+import graphQLFetch from '../graphQLFetch.js';
 import VideoPlayer from './VideoPlayer.tsx';
 import PremiumVideoChatListingForm from './PremiumVideoChatListingForm.tsx';
+import RemoveConfirmationModal from './RemoveConfirmationModal.tsx';
 
 class AccountProfile extends React.Component {
 	constructor(props){
@@ -226,27 +227,13 @@ class AccountProfile extends React.Component {
 					</div>
 				}
 				{this.props.isCurrentUser ?
-					<section className="modal--show" id="remove-video" tabIndex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
-						<div className="modal-inner">
-							<header id="modal-label">
-								<h2>Remove Video</h2>
-							</header>
-							<div className="modal-content">
-								Are you sure you want to remove this video?
-							</div>
-							<footer className="flex x-space-around">
-								<a className="button" href="#remove-video" onClick={this.handleDeleteVideo}>
-									Remove Video
-									<FontAwesomeIcon icon={faTrash}/>
-								</a>
-								<a href="#!" className="button">
-									Close
-									<FontAwesomeIcon icon={faTimes}/>
-								</a>
-							</footer>
-						</div>
-						<a href="#!" className="modal-close" title="Close this modal" data-close="Close" data-dismiss="modal">?</a>
-					</section>
+					<RemoveConfirmationModal
+						buttonText="Remove Video"
+						buttonAnchor="remove-video"
+						modalTitle="Remove Video"
+						modalContent="Are you sure you want to remove this video?"
+						handleDelete={this.handleDeleteVideo}
+					/>
 					:
 					''
 				}

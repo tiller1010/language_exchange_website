@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUpload, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
+import { faUpload, faLongArrowAltRight, faTrash } from '@fortawesome/free-solid-svg-icons';
 const languages = require('language-list')();
-import graphQLFetch from './graphQLFetch.js';
+import graphQLFetch from '../graphQLFetch.js';
 import PremiumVideoChatListing from './PremiumVideoChatListing.tsx';
+import RemoveConfirmationModal from './RemoveConfirmationModal.tsx';
 
 interface User {
 	_id: string;
@@ -42,6 +43,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 		this.state = state;
 		this.handleThumbnailChange = this.handleThumbnailChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleDeleteListing = this.handleDeleteListing.bind(this);
 	}
 
 	componentDidMount(){
@@ -149,6 +151,29 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 		// }, true);
 	}
 
+	async handleDeleteListing(){
+
+		const { user } = this.props;
+
+		// If adding new
+		const query = `mutation removePremiumVideoChatListing($userID: ID!){
+			removePremiumVideoChatListing(userID: $userID)
+		}`;
+		const variables = {
+			userID: user._id
+		};
+		const data = await graphQLFetch(query, variables);
+		const emptyListingObject = {
+			topic: '',
+			language: '',
+			thumbnailSrc: ''
+		}
+		this.setState({
+			...emptyListingObject,
+			savedPremiumVideoChatListing: null
+		});
+	}
+
 	render(){
 
 		let {
@@ -198,7 +223,22 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 				</form>
 				<div className="pure-u-1 pure-u-md-1-2">
 					{savedPremiumVideoChatListing ?
-						<PremiumVideoChatListing premiumVideoChatListing={savedPremiumVideoChatListing}/>
+						<div>
+							<PremiumVideoChatListing premiumVideoChatListing={savedPremiumVideoChatListing}/>
+							<form>
+								<a className="button" href="#remove-listing" style={{ width: 'max-content' }}>
+									Remove Listing
+									<FontAwesomeIcon icon={faTrash}/>
+								</a>
+							</form>
+							<RemoveConfirmationModal
+								buttonText="Remove Listing"
+								buttonAnchor="remove-listing"
+								modalTitle="Remove Listing"
+								modalContent="Are you sure you want to remove this listing?"
+								handleDelete={this.handleDeleteListing}
+							/>
+						</div>
 						:
 						''
 					}

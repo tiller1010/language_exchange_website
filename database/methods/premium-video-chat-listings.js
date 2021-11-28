@@ -80,10 +80,12 @@ async function updatePremiumVideoChatListing(_, { listingID, premiumVideoChatLis
 async function removePremiumVideoChatListing(_, { userID }){
 	const db = getDB();
 
-	let user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
+	let originalUser = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
 
-	if(user.premiumVideoChatListing){
-		await db.collection('users').updateOne({ _id: new mongo.ObjectID(userID) }, { $unset: 'premiumVideoChatListing' });
+	if(originalUser.premiumVideoChatListing){
+		originalUser = await db.collection('users').findOneAndUpdate({ _id: new mongo.ObjectID(userID) }, { $unset: { premiumVideoChatListing: '' } });
+		originalUser = originalUser.value;
+		await db.collection('premium_video_chat_listings').deleteOne({ _id: new mongo.ObjectID(originalUser.premiumVideoChatListing._id) });
 		return true;
 	}
 	

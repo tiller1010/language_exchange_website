@@ -5,7 +5,6 @@ import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHo
 import Navigation from './Navigation.jsx';
 import VideoSearchForm from './VideoSearchForm.tsx';
 import Slider from 'react-slick';
-import graphQLFetch from './graphQLFetch.js';
 import VideoPlayer from './VideoPlayer.tsx';
 
 async function getVideos(){
@@ -37,8 +36,6 @@ class VideosIndex extends React.Component {
 		this.pagination = this.pagination.bind(this);
 		this.handleChangePage = this.handleChangePage.bind(this);
 		this.handleSearch = this.handleSearch.bind(this);
-		this.sendLike = this.sendLike.bind(this);
-		this.removeLike = this.removeLike.bind(this);
 		this.currentUserHasLikedVideo = this.currentUserHasLikedVideo.bind(this);
 	}
 
@@ -87,93 +84,6 @@ class VideosIndex extends React.Component {
 			pageLinks.push({pageNumber: i});
 		}
 		return pageLinks;
-	}
-
-	async sendLike(video){
-		const query = `mutation addLike($userID: ID!, $videoID: ID!){
-			addLike(userID: $userID, videoID: $videoID){
-				_id
-				title
-				src
-				originalName
-				thumbnailSrc
-				originalThumbnailName
-				created
-				likes
-				uploadedBy {
-					_id
-					displayName
-				}
-			}
-		}`;
-		const data = await graphQLFetch(query, {
-			userID: this.props.userID,
-			videoID: video._id
-		});
-		const newLikedVideo = data.addLike;
-
-		if(newLikedVideo.message){
-			// Display error message if included in response
-			alert(newLikedVideo.message);
-		} else if(newLikedVideo) {
-			// Update the video state to be liked by the current user. Used immediately after liking.
-			newLikedVideo.likedByCurrentUser = true;
-			let newVideos = this.state.videos;
-			newVideos[newVideos.indexOf(video)] = newLikedVideo;
-			// Add video to user's liked videos. Used when a re-render occurs.
-			let newUserLikedVideos = this.state.userLikedVideos;
-			newUserLikedVideos.push(video);
-			this.setState({
-				videos: newVideos,
-				userLikedVideos: newUserLikedVideos
-			});
-		}
-	}
-
-	async removeLike(video){
-		if(!this.props.userID){
-			alert('Must be signed in to send like.');
-			return;
-		}
-		const query = `mutation removeLike($userID: ID!, $videoID: ID!){
-			removeLike(userID: $userID, videoID: $videoID){
-				_id
-				title
-				src
-				originalName
-				thumbnailSrc
-				originalThumbnailName
-				created
-				likes
-				uploadedBy {
-					_id
-					displayName
-				}
-			}
-		}`;
-		const data = await graphQLFetch(query, {
-			userID: this.props.userID,
-			videoID: video._id
-		});
-		const newUnlikedVideo = data.removeLike;
-
-		if(newUnlikedVideo) {
-			// Update the video state to remove like from the current user. Used immediately after unliking.
-			newUnlikedVideo.likedByCurrentUser = false;
-			let newVideos = this.state.videos;
-			newVideos[newVideos.indexOf(video)] = newUnlikedVideo;
-			// Remove video from user's liked videos. Used when a re-render occurs.
-			let newUserLikedVideos = [];
-			this.state.userLikedVideos.forEach((userLikedVideo) => {
-				if(userLikedVideo._id != video._id){
-					newUserLikedVideos.push(userLikedVideo);
-				}
-			});
-			this.setState({
-				videos: newVideos,
-				userLikedVideos: newUserLikedVideos
-			});
-		}
 	}
 
 	currentUserHasLikedVideo(video){
