@@ -16489,7 +16489,7 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
         likedVideos: [],
         verified: false
       },
-      openRemovalForm: false
+      openVideoRemovalForm: false
     };
     this.findAndSyncUser = this.findAndSyncUser.bind(this);
     this.verifyUser = this.verifyUser.bind(this);
@@ -16512,14 +16512,22 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       // Check if user has liked their own video
       if (userProfile.uploadedVideos && authenticatedUser.likedVideos) {
         userProfile.uploadedVideos.forEach(video => {
-          video.likedByCurrentUser = this.currentUserHasLikedVideo(video, authenticatedUser);
+          if (video) {
+            video.likedByCurrentUser = this.currentUserHasLikedVideo(video, authenticatedUser);
+          } else {
+            delete userProfile.uploadedVideos[userProfile.uploadedVideos.indexOf(video)];
+          }
         });
       } // Check if user has liked their own video
 
 
       if (userProfile.likedVideos && authenticatedUser.likedVideos) {
         userProfile.likedVideos.forEach(video => {
-          video.likedByCurrentUser = this.currentUserHasLikedVideo(video, authenticatedUser);
+          if (video) {
+            video.likedByCurrentUser = this.currentUserHasLikedVideo(video, authenticatedUser);
+          } else {
+            delete userProfile.likedVideos[userProfile.likedVideos.indexOf(video)];
+          }
         });
       }
     }
@@ -16592,12 +16600,12 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
   }
 
   handleDeleteVideo(event) {
-    if (this.state.openRemovalForm) {
-      this.state.openRemovalForm.submit();
+    if (this.state.openVideoRemovalForm) {
+      this.state.openVideoRemovalForm.submit();
     }
 
     this.setState({
-      openRemovalForm: event.target.parentElement
+      openVideoRemovalForm: event.target.parentElement
     });
   }
 
@@ -16623,7 +16631,7 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
     const authenticatedUserIsVerified = authenticatedUser ? authenticatedUser.verified : false;
     document.addEventListener('cssmodal:hide', () => {
       this.setState({
-        openRemovalForm: false
+        openVideoRemovalForm: false
       });
     });
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -18569,15 +18577,13 @@ function (_super) {
           language: event.target.value
         });
       },
-      className: "pure-input-rounded"
+      className: "pure-input-rounded",
+      defaultValue: language
     }, React.createElement("option", {
       value: ""
-    }, "Select a language"), React.createElement("option", {
-      selected: language == 'ASL'
-    }, "ASL"), languages.getLanguageCodes().map(function (langCode) {
+    }, "Select a language"), React.createElement("option", null, "ASL"), languages.getLanguageCodes().map(function (langCode) {
       return React.createElement("option", {
-        key: langCode,
-        selected: language == languages.getLanguageName(langCode)
+        key: langCode
       }, languages.getLanguageName(langCode));
     }))), React.createElement("div", {
       className: "upload-container"
@@ -18669,7 +18675,7 @@ var RemoveConfirmationModal = function (props) {
   return React.createElement("section", {
     className: "modal--show",
     id: buttonAnchor,
-    tabIndex: "-1",
+    tabIndex: -1,
     role: "dialog",
     "aria-labelledby": "modal-label",
     "aria-hidden": "true"
@@ -18683,7 +18689,7 @@ var RemoveConfirmationModal = function (props) {
     className: "flex x-space-around"
   }, React.createElement("a", {
     className: "button",
-    href: "#" + buttonAnchor,
+    href: "#!",
     onClick: handleDelete
   }, buttonText, React.createElement(react_fontawesome_1.FontAwesomeIcon, {
     icon: free_solid_svg_icons_1.faTrash

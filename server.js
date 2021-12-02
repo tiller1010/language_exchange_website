@@ -48,7 +48,7 @@ app.use(express.json());
 	try{
 
 		// Install GraphQL API Handler
-		app.use(graphqlUploadExpress());
+		app.route('/graphql').post(graphqlUploadExpress());
 		await installHandler(app);
 
 		const VideoSearchService = await createVideoSearchService();

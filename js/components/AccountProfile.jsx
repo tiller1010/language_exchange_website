@@ -18,7 +18,7 @@ class AccountProfile extends React.Component {
 				likedVideos: [],
 				verified: false
 			},
-			openRemovalForm: false
+			openVideoRemovalForm: false
 		}
 		this.findAndSyncUser = this.findAndSyncUser.bind(this);
 		this.verifyUser = this.verifyUser.bind(this);
@@ -40,13 +40,21 @@ class AccountProfile extends React.Component {
 			// Check if user has liked their own video
 			if(userProfile.uploadedVideos && authenticatedUser.likedVideos){
 				userProfile.uploadedVideos.forEach((video) => {
-					video.likedByCurrentUser = this.currentUserHasLikedVideo(video, authenticatedUser);
+					if(video){
+						video.likedByCurrentUser = this.currentUserHasLikedVideo(video, authenticatedUser);
+					} else {
+						delete userProfile.uploadedVideos[userProfile.uploadedVideos.indexOf(video)];
+					}
 				});
 			}
 			// Check if user has liked their own video
 			if(userProfile.likedVideos && authenticatedUser.likedVideos){
 				userProfile.likedVideos.forEach((video) => {
-					video.likedByCurrentUser = this.currentUserHasLikedVideo(video, authenticatedUser);
+					if(video){
+						video.likedByCurrentUser = this.currentUserHasLikedVideo(video, authenticatedUser);
+					} else {
+						delete userProfile.likedVideos[userProfile.likedVideos.indexOf(video)];
+					}
 				});
 			}
 		}
@@ -112,11 +120,11 @@ class AccountProfile extends React.Component {
 	}
 
 	handleDeleteVideo(event){
-		if(this.state.openRemovalForm){
-			this.state.openRemovalForm.submit();
+		if(this.state.openVideoRemovalForm){
+			this.state.openVideoRemovalForm.submit();
 		}
 		this.setState({
-			openRemovalForm: event.target.parentElement
+			openVideoRemovalForm: event.target.parentElement
 		})
 	}
 
@@ -143,7 +151,7 @@ class AccountProfile extends React.Component {
 
 		document.addEventListener('cssmodal:hide', () => {
 			this.setState({
-				openRemovalForm: false
+				openVideoRemovalForm: false
 			});
 		});
 

@@ -194,11 +194,11 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 					</div>
 					<div>
 						<label htmlFor="language">Language</label>
-						<select name="language" onChange={(event) => this.setState({language: event.target.value})} className="pure-input-rounded">
+						<select name="language" onChange={(event) => this.setState({language: event.target.value})} className="pure-input-rounded" defaultValue={language}>
 							<option value="">Select a language</option>
-							<option selected={language == 'ASL'}>ASL</option>
+							<option>ASL</option>
 							{languages.getLanguageCodes().map((langCode) => 
-								<option key={langCode} selected={language == languages.getLanguageName(langCode)}>{languages.getLanguageName(langCode)}</option>
+								<option key={langCode}>{languages.getLanguageName(langCode)}</option>
 							)}
 						</select>
 					</div>

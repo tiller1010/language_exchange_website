@@ -13,7 +13,7 @@ const RemoveConfirmationModal = (props) => {
 	} = props;
 
 	return (
-		<section className="modal--show" id={buttonAnchor} tabIndex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+		<section className="modal--show" id={buttonAnchor} tabIndex={-1} role="dialog" aria-labelledby="modal-label" aria-hidden="true">
 			<div className="modal-inner">
 				<header id="modal-label">
 					<h2>{ modalTitle }</h2>
@@ -22,7 +22,7 @@ const RemoveConfirmationModal = (props) => {
 					{ modalContent }
 				</div>
 				<footer className="flex x-space-around">
-					<a className="button" href={`#${buttonAnchor}`} onClick={handleDelete}>
+					<a className="button" href="#!" onClick={handleDelete}>
 						{ buttonText }
 						<FontAwesomeIcon icon={faTrash}/>
 					</a>
