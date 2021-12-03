@@ -3,7 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faLongArrowAltRight, faTrash } from '@fortawesome/free-solid-svg-icons';
 const languages = require('language-list')();
 import graphQLFetch from '../graphQLFetch.js';
+// @ts-ignore
 import PremiumVideoChatListing from './PremiumVideoChatListing.tsx';
+// @ts-ignore
 import RemoveConfirmationModal from './RemoveConfirmationModal.tsx';
 
 interface User {
@@ -64,10 +66,14 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 	    	// Set preview
 	  		const reader = new FileReader();
 			reader.addEventListener('load', function () {
-				if(/jpeg|jpg|png/.test(reader.result.substr(0, 20))){
-					context.setState({thumbnailSrc: reader.result});
+				if(typeof reader.result === 'string'){
+					if(/jpeg|jpg|png/.test(reader.result.substr(0, 20))){
+						context.setState({thumbnailSrc: reader.result});
+					} else {
+						alert('Invalid thumbnail format.');
+					}
 				} else {
-					alert('Invalid thumbnail format.');
+					alert('Invalid upload.');
 				}
 
 			}, false);

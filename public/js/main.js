@@ -18385,9 +18385,11 @@ var free_solid_svg_icons_1 = __webpack_require__(/*! @fortawesome/free-solid-svg
 
 var languages = __webpack_require__(/*! language-list */ "./node_modules/language-list/language-list.js")();
 
-var graphQLFetch_js_1 = __webpack_require__(/*! ../graphQLFetch.js */ "./js/graphQLFetch.js");
+var graphQLFetch_js_1 = __webpack_require__(/*! ../graphQLFetch.js */ "./js/graphQLFetch.js"); // @ts-ignore
 
-var PremiumVideoChatListing_tsx_1 = __webpack_require__(/*! ./PremiumVideoChatListing.tsx */ "./js/components/PremiumVideoChatListing.tsx");
+
+var PremiumVideoChatListing_tsx_1 = __webpack_require__(/*! ./PremiumVideoChatListing.tsx */ "./js/components/PremiumVideoChatListing.tsx"); // @ts-ignore
+
 
 var RemoveConfirmationModal_tsx_1 = __webpack_require__(/*! ./RemoveConfirmationModal.tsx */ "./js/components/RemoveConfirmationModal.tsx");
 
@@ -18431,12 +18433,16 @@ function (_super) {
       // Set preview
       var reader_1 = new FileReader();
       reader_1.addEventListener('load', function () {
-        if (/jpeg|jpg|png/.test(reader_1.result.substr(0, 20))) {
-          context.setState({
-            thumbnailSrc: reader_1.result
-          });
+        if (typeof reader_1.result === 'string') {
+          if (/jpeg|jpg|png/.test(reader_1.result.substr(0, 20))) {
+            context.setState({
+              thumbnailSrc: reader_1.result
+            });
+          } else {
+            alert('Invalid thumbnail format.');
+          }
         } else {
-          alert('Invalid thumbnail format.');
+          alert('Invalid upload.');
         }
       }, false);
       reader_1.readAsDataURL(image);
