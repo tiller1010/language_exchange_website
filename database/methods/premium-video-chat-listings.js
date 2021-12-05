@@ -14,6 +14,12 @@ function randomFilename() {
   return text;
 }
 
+async function getRecentPremiumVideoChatListings(_){
+	const db = getDB();
+	const premiumVideoChatListings = await db.collection('premium_video_chat_listings').find({}).sort({created: -1}).limit(5).toArray();
+	return { listings: premiumVideoChatListings };
+}
+
 async function addPremiumVideoChatListing(_, { userID, premiumVideoChatListing, thumbnailFile }){
 	// Create file from upload
 	const { createReadStream, filename, mimetype, encoding } = await thumbnailFile;
@@ -93,6 +99,7 @@ async function removePremiumVideoChatListing(_, { userID }){
 }
 
 module.exports = {
+	getRecentPremiumVideoChatListings,
 	addPremiumVideoChatListing,
 	addPremiumVideoChatListingThumbnailTest,
 	updatePremiumVideoChatListing,

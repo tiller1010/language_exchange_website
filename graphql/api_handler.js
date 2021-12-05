@@ -10,12 +10,18 @@ const premiumVideoChatListings = require('../database/methods/premium-video-chat
 const resolvers = {
 	Upload: GraphQLUpload,
 	Query: {
-		indexVideos: videos.indexVideos
+		// Videos
+		indexVideos: videos.indexVideos,
+		// Premium Video Chat Listings
+		getRecentPremiumVideoChatListings: premiumVideoChatListings.getRecentPremiumVideoChatListings,
 	},
 	Mutation: {
+		// Likes
 		addLike: likes.addLike,
 		removeLike: likes.removeLike,
+		// Users
 		verifyUser: users.verifyUser,
+		// Premium Video Chat Listings
 		addPremiumVideoChatListing: premiumVideoChatListings.addPremiumVideoChatListing,
 		addPremiumVideoChatListingThumbnailTest: premiumVideoChatListings.addPremiumVideoChatListingThumbnailTest,
 		updatePremiumVideoChatListing: premiumVideoChatListings.updatePremiumVideoChatListing,

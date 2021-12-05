@@ -1,10 +1,5 @@
 import * as React from 'react';
 
-interface User {
-	_id: string;
-	displayName: string
-}
-
 interface PremiumVideoChatListingObject {
 	topic: string;
 	language: string

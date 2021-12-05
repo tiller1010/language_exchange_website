@@ -8,6 +8,7 @@ import Slider from 'react-slick';
 import Navigation from './Navigation.jsx';
 import VideoSearchForm from './VideoSearchForm.tsx';
 import VideoPlayer from './VideoPlayer.tsx';
+import PremiumVideoChatListingFeed from './PremiumVideoChatListingFeed.tsx';
 
 // Enable lazy loading
 const lozadObserver = lozad();
@@ -101,6 +102,7 @@ class Home extends React.Component {
 		return (
 			<div className="frame">
 				<Navigation/>
+				<PremiumVideoChatListingFeed/>
 				<div className="page-form">
 					<p>Let's enjoy your</p>
 					<h1>User Submissions</h1>

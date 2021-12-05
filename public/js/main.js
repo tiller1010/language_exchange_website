@@ -16784,13 +16784,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lozad__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lozad */ "./node_modules/lozad/dist/lozad.min.js");
 /* harmony import */ var lozad__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lozad__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
 /* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-slick */ "./node_modules/react-slick/lib/index.js");
 /* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
 /* harmony import */ var _VideoSearchForm_tsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./VideoSearchForm.tsx */ "./js/components/VideoSearchForm.tsx");
 /* harmony import */ var _VideoSearchForm_tsx__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_VideoSearchForm_tsx__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./VideoPlayer.tsx */ "./js/components/VideoPlayer.tsx");
 /* harmony import */ var _VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _PremiumVideoChatListingFeed_tsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./PremiumVideoChatListingFeed.tsx */ "./js/components/PremiumVideoChatListingFeed.tsx");
+/* harmony import */ var _PremiumVideoChatListingFeed_tsx__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_PremiumVideoChatListingFeed_tsx__WEBPACK_IMPORTED_MODULE_8__);
+
 
 
 
@@ -16891,7 +16894,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
     } = this.state || 'notfound';
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "frame"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_PremiumVideoChatListingFeed_tsx__WEBPACK_IMPORTED_MODULE_8___default()), null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "page-form"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Let's enjoy your"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "User Submissions"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_VideoSearchForm_tsx__WEBPACK_IMPORTED_MODULE_6___default()), {
       keywords: "",
@@ -16933,7 +16936,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
         alignSelf: 'center'
       }
     }, "View Level", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_8__.faLongArrowAltRight
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_9__.faLongArrowAltRight
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "pure-u-1"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", null)), level.topics ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -16951,7 +16954,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       href: `/level/${level.id}/topic/${topic.id}`,
       className: "button"
     }, "View Topic", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_8__.faLongArrowAltRight
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_9__.faLongArrowAltRight
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
       href: `/level/${level.id}/topic/${topic.id}`
     }, this.renderMedia(topic)))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "No topics"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "No levels"));
@@ -18181,6 +18184,283 @@ function (_super) {
 }(React.Component);
 
 exports["default"] = PremiumVideoChatListing;
+
+/***/ }),
+
+/***/ "./js/components/PremiumVideoChatListingFeed.tsx":
+/*!*******************************************************!*\
+  !*** ./js/components/PremiumVideoChatListingFeed.tsx ***!
+  \*******************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __extends = this && this.__extends || function () {
+  var extendStatics = function (d, b) {
+    extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    };
+
+    return extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var __assign = this && this.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function (resolve) {
+      resolve(value);
+    });
+  }
+
+  return new (P || (P = Promise))(function (resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function step(result) {
+      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+
+var __generator = this && this.__generator || function (thisArg, body) {
+  var _ = {
+    label: 0,
+    sent: function () {
+      if (t[0] & 1) throw t[1];
+      return t[1];
+    },
+    trys: [],
+    ops: []
+  },
+      f,
+      y,
+      t,
+      g;
+  return g = {
+    next: verb(0),
+    "throw": verb(1),
+    "return": verb(2)
+  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+    return this;
+  }), g;
+
+  function verb(n) {
+    return function (v) {
+      return step([n, v]);
+    };
+  }
+
+  function step(op) {
+    if (f) throw new TypeError("Generator is already executing.");
+
+    while (_) try {
+      if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+      if (y = 0, t) op = [op[0] & 2, t.value];
+
+      switch (op[0]) {
+        case 0:
+        case 1:
+          t = op;
+          break;
+
+        case 4:
+          _.label++;
+          return {
+            value: op[1],
+            done: false
+          };
+
+        case 5:
+          _.label++;
+          y = op[1];
+          op = [0];
+          continue;
+
+        case 7:
+          op = _.ops.pop();
+
+          _.trys.pop();
+
+          continue;
+
+        default:
+          if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+            _ = 0;
+            continue;
+          }
+
+          if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+            _.label = op[1];
+            break;
+          }
+
+          if (op[0] === 6 && _.label < t[1]) {
+            _.label = t[1];
+            t = op;
+            break;
+          }
+
+          if (t && _.label < t[2]) {
+            _.label = t[2];
+
+            _.ops.push(op);
+
+            break;
+          }
+
+          if (t[2]) _.ops.pop();
+
+          _.trys.pop();
+
+          continue;
+      }
+
+      op = body.call(thisArg, _);
+    } catch (e) {
+      op = [6, e];
+      y = 0;
+    } finally {
+      f = t = 0;
+    }
+
+    if (op[0] & 5) throw op[1];
+    return {
+      value: op[0] ? op[1] : void 0,
+      done: true
+    };
+  }
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js"); // @ts-ignore
+
+
+var PremiumVideoChatListing_tsx_1 = __webpack_require__(/*! ./PremiumVideoChatListing.tsx */ "./js/components/PremiumVideoChatListing.tsx");
+
+var graphQLFetch_js_1 = __webpack_require__(/*! ../graphQLFetch.js */ "./js/graphQLFetch.js");
+
+var react_slick_1 = __webpack_require__(/*! react-slick */ "./node_modules/react-slick/lib/index.js");
+
+var PremiumVideoChatListingFeed =
+/** @class */
+function (_super) {
+  __extends(PremiumVideoChatListingFeed, _super);
+
+  function PremiumVideoChatListingFeed(props) {
+    var _this = _super.call(this, props) || this;
+
+    var state = {
+      premiumVideoChatListings: []
+    };
+    _this.state = state;
+    return _this;
+  }
+
+  PremiumVideoChatListingFeed.prototype.componentDidMount = function () {
+    return __awaiter(this, void 0, void 0, function () {
+      var query, data;
+      return __generator(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            query = "query getRecentPremiumVideoChatListings{\n\t\t\tgetRecentPremiumVideoChatListings{\n\t\t\t\tlistings {\n\t\t\t\t\ttopic\n\t\t\t\t\tlanguage\n\t\t\t\t\tthumbnailSrc\n\t\t\t\t\tuserID\n\t\t\t\t}\n\t\t\t}\n\t\t}";
+            return [4
+            /*yield*/
+            , (0, graphQLFetch_js_1.default)(query)];
+
+          case 1:
+            data = _a.sent();
+
+            if (data.getRecentPremiumVideoChatListings) {
+              if (data.getRecentPremiumVideoChatListings.listings) {
+                this.setState({
+                  premiumVideoChatListings: data.getRecentPremiumVideoChatListings.listings
+                });
+              }
+            }
+
+            return [2
+            /*return*/
+            ];
+        }
+      });
+    });
+  };
+
+  PremiumVideoChatListingFeed.prototype.render = function () {
+    var premiumVideoChatListings = this.state.premiumVideoChatListings;
+    return React.createElement("div", null, React.createElement("h2", null, "Premium video chats"), premiumVideoChatListings ? React.createElement(react_slick_1.default, __assign({}, {
+      dots: false,
+      infinite: false,
+      speed: 500,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      responsive: [{
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 1.5
+        }
+      }]
+    }), premiumVideoChatListings.map(function (listing) {
+      return React.createElement("div", {
+        key: premiumVideoChatListings.indexOf(listing)
+      }, React.createElement(PremiumVideoChatListing_tsx_1.default, {
+        premiumVideoChatListing: listing
+      }));
+    })) : '');
+  };
+
+  return PremiumVideoChatListingFeed;
+}(React.Component);
+
+exports["default"] = PremiumVideoChatListingFeed;
 
 /***/ }),
 
