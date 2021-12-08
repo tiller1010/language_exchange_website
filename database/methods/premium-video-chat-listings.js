@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { getDB } = require('../db.js');
 const mongo = require('mongodb');
+const createSearchService = require('../../app/search.js');
 
 function randomFilename() {
   var text = "";
@@ -18,6 +19,20 @@ async function getRecentPremiumVideoChatListings(_){
 	const db = getDB();
 	const premiumVideoChatListings = await db.collection('premium_video_chat_listings').find({}).sort({created: -1}).limit(5).toArray();
 	return { listings: premiumVideoChatListings };
+}
+
+async function searchPremiumVideoChatListings(_, { topic, language }){
+	const db = getDB();
+	const ListingSearchService = await createSearchService('premium_video_chat_listings', ['topic', 'language']);
+	let query = {};
+	if(topic){
+		query.topic = { $search: topic };
+	}
+	if(language){
+		query.language = { $search: language };
+	}
+	const listings = await ListingSearchService.find({ query });
+	return { listings };
 }
 
 async function addPremiumVideoChatListing(_, { userID, premiumVideoChatListing, thumbnailFile }){
@@ -100,6 +115,7 @@ async function removePremiumVideoChatListing(_, { userID }){
 
 module.exports = {
 	getRecentPremiumVideoChatListings,
+	searchPremiumVideoChatListings,
 	addPremiumVideoChatListing,
 	addPremiumVideoChatListingThumbnailTest,
 	updatePremiumVideoChatListing,

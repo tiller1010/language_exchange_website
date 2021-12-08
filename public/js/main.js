@@ -18385,9 +18385,15 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js"); /
 
 var PremiumVideoChatListing_tsx_1 = __webpack_require__(/*! ./PremiumVideoChatListing.tsx */ "./js/components/PremiumVideoChatListing.tsx");
 
+var react_fontawesome_1 = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+
+var free_solid_svg_icons_1 = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+
 var graphQLFetch_js_1 = __webpack_require__(/*! ../graphQLFetch.js */ "./js/graphQLFetch.js");
 
 var react_slick_1 = __webpack_require__(/*! react-slick */ "./node_modules/react-slick/lib/index.js");
+
+var languages = __webpack_require__(/*! language-list */ "./node_modules/language-list/language-list.js")();
 
 var PremiumVideoChatListingFeed =
 /** @class */
@@ -18398,9 +18404,12 @@ function (_super) {
     var _this = _super.call(this, props) || this;
 
     var state = {
+      topic: '',
+      language: '',
       premiumVideoChatListings: []
     };
     _this.state = state;
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
     return _this;
   }
 
@@ -18434,9 +18443,85 @@ function (_super) {
     });
   };
 
+  PremiumVideoChatListingFeed.prototype.handleSubmit = function (event) {
+    return __awaiter(this, void 0, void 0, function () {
+      var _a, topic, language, query, data;
+
+      return __generator(this, function (_b) {
+        switch (_b.label) {
+          case 0:
+            event.preventDefault();
+            _a = this.state, topic = _a.topic, language = _a.language;
+            query = "query searchPremiumVideoChatListings($topic: String, $language: String){\n\t\t\tsearchPremiumVideoChatListings(topic: $topic, language: $language){\n\t\t\t\tlistings {\n\t\t\t\t\ttopic\n\t\t\t\t\tlanguage\n\t\t\t\t\tthumbnailSrc\n\t\t\t\t\tuserID\n\t\t\t\t}\n\t\t\t}\n\t\t}";
+            return [4
+            /*yield*/
+            , (0, graphQLFetch_js_1.default)(query, {
+              topic: topic,
+              language: language
+            })];
+
+          case 1:
+            data = _b.sent();
+
+            if (data.searchPremiumVideoChatListings) {
+              if (data.searchPremiumVideoChatListings.listings) {
+                this.setState({
+                  premiumVideoChatListings: data.searchPremiumVideoChatListings.listings
+                });
+              }
+            }
+
+            return [2
+            /*return*/
+            ];
+        }
+      });
+    });
+  };
+
   PremiumVideoChatListingFeed.prototype.render = function () {
-    var premiumVideoChatListings = this.state.premiumVideoChatListings;
-    return React.createElement("div", null, React.createElement("h2", null, "Premium video chats"), premiumVideoChatListings ? React.createElement(react_slick_1.default, __assign({}, {
+    var _this = this;
+
+    var _a = this.state,
+        premiumVideoChatListings = _a.premiumVideoChatListings,
+        topic = _a.topic,
+        language = _a.language;
+    return React.createElement("div", null, React.createElement("form", {
+      className: "pure-u-1 pure-u-md-1-2 pure-form pure-form-stacked"
+    }, React.createElement("div", null, React.createElement("label", {
+      htmlFor: "topic"
+    }, "Topic"), React.createElement("input", {
+      type: "text",
+      name: "topic",
+      value: topic,
+      onChange: function (event) {
+        return _this.setState({
+          topic: event.target.value
+        });
+      },
+      className: "pure-input-rounded"
+    })), React.createElement("div", null, React.createElement("label", {
+      htmlFor: "language"
+    }, "Language"), React.createElement("select", {
+      name: "language",
+      onChange: function (event) {
+        return _this.setState({
+          language: event.target.value
+        });
+      },
+      className: "pure-input-rounded",
+      defaultValue: language
+    }, React.createElement("option", {
+      value: ""
+    }, "Select a language"), React.createElement("option", null, "ASL"), languages.getLanguageCodes().map(function (langCode) {
+      return React.createElement("option", {
+        key: langCode
+      }, languages.getLanguageName(langCode));
+    }))), React.createElement("div", null, React.createElement("button", {
+      onClick: this.handleSubmit
+    }, "Submit", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
+      icon: free_solid_svg_icons_1.faLongArrowAltRight
+    })))), React.createElement("h2", null, "Premium video chats"), premiumVideoChatListings ? React.createElement(react_slick_1.default, __assign({}, {
       dots: false,
       infinite: false,
       speed: 500,
@@ -18864,7 +18949,7 @@ function (_super) {
         });
       },
       className: "pure-input-rounded",
-      defaultValue: language
+      value: language
     }, React.createElement("option", {
       value: ""
     }, "Select a language"), React.createElement("option", null, "ASL"), languages.getLanguageCodes().map(function (langCode) {

@@ -3,34 +3,37 @@ const service = require('feathers-mongodb');
 const search = require('feathers-mongodb-fuzzy-search');
 const { connectToDB, getDB } = require('../database/db.js');
 
-async function createVideoSearchService(){
+async function createSearchService(collection = '', searchIndexes = []){
 	try{
 		await connectToDB();
 		const db = await getDB();
 
 		// Create search service
 		const feathersService = feathers();
-		// Use videos for search
-		feathersService.use('/videos', service({
-			Model: db.collection('videos'),
-			whitelist: ['$text', '$search']
+		feathersService.use('/' + collection, service({
+			Model: db.collection(collection),
+			whitelist: ['$text', '$search', '$regex']
 		}));
-		// Create video search service
-		const VideoSearchService = feathersService.service('videos');
-		// Create videos index
-		VideoSearchService.Model.createIndex({ title: 'text' })
+		// Create search service
+		const SearchService = feathersService.service(collection);
+		// Create searchIndexes
+		searchIndexes.forEach((searchIndex) => {
+			let index = {};
+			index[searchIndex] = 'text';
+			SearchService.Model.createIndex(index)
+		})
 		// Add search hooks
-		VideoSearchService.hooks({
+		SearchService.hooks({
 			before: {
-			  find: search()
+			  find: search({ fields: searchIndexes })
 			}
 		})
 
-		return VideoSearchService;
+		return SearchService;
 
 	} catch(err){
 		console.log(`Error: ${err}`);
 	}
 }
 
-module.exports = createVideoSearchService;
+module.exports = createSearchService;

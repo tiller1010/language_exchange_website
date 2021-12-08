@@ -16,7 +16,7 @@ const { getTopic, getTopicChallenges } = require('./strapi/topics.js');
 
 // App Services
 const { passport } = require('./app/passport.js');
-const createVideoSearchService = require('./app/search.js');
+const createSearchService = require('./app/search.js');
 const upload = require('./app/upload.js')();
 
 // GraphQL
@@ -51,7 +51,7 @@ app.use(express.json());
 		app.route('/graphql').post(graphqlUploadExpress());
 		await installHandler(app);
 
-		const VideoSearchService = await createVideoSearchService();
+		const VideoSearchService = await createSearchService('videos', ['title']);
 
 		// Home route
 		app.get('/', (req, res) => {
@@ -137,13 +137,13 @@ app.use(express.json());
 				const searchPageLength = 3;
 				videos = await VideoSearchService.find({
 					query: {
-						$search: keywords,
+						title: { $search: keywords },
 						$sort: sortObject,
 						$limit: searchPageLength,
 						$skip: (page - 1) * searchPageLength
 					}
 				});
-				const allVideoResults = await VideoSearchService.find({ query: { $search: keywords } });
+				const allVideoResults = await VideoSearchService.find({ query: { title: { $search: keywords } } });
 				const pages = Math.ceil(allVideoResults.length / searchPageLength);
 
 			    videos = {

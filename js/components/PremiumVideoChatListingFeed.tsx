@@ -1,8 +1,11 @@
 import * as React from 'react';
 // @ts-ignore
 import PremiumVideoChatListing from './PremiumVideoChatListing.tsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
 import graphQLFetch from '../graphQLFetch.js';
 import Slider from 'react-slick';
+const languages = require('language-list')();
 
 interface PremiumVideoChatListingObject {
 	topic: string;
@@ -12,6 +15,8 @@ interface PremiumVideoChatListingObject {
 }
 
 interface PremiumVideoChatListingFeedState {
+	topic: string;
+	language: string
 	premiumVideoChatListings?: [PremiumVideoChatListingObject?]
 }
 
@@ -23,9 +28,12 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 	constructor(props: PremiumVideoChatListingFeedProps){
 		super(props);
 		let state: PremiumVideoChatListingFeedState = {
+			topic: '',
+			language: '',
 			premiumVideoChatListings: []
 		}
 		this.state = state;
+		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	async componentDidMount(){
@@ -49,12 +57,70 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 		}
 	}
 
+	async handleSubmit(event){
+
+		event.preventDefault();
+
+		const {
+			topic,
+			language
+		} = this.state;
+
+		const query = `query searchPremiumVideoChatListings($topic: String, $language: String){
+			searchPremiumVideoChatListings(topic: $topic, language: $language){
+				listings {
+					topic
+					language
+					thumbnailSrc
+					userID
+				}
+			}
+		}`;
+		const data = await graphQLFetch(query, {
+			topic,
+			language,
+		});
+		if(data.searchPremiumVideoChatListings){
+			if(data.searchPremiumVideoChatListings.listings){
+				this.setState({
+					premiumVideoChatListings: data.searchPremiumVideoChatListings.listings
+				});
+			}
+		}
+	}
+
 	render(){
 
-		let { premiumVideoChatListings } = this.state;
+		let {
+			premiumVideoChatListings,
+			topic,
+			language
+		} = this.state;
 
 		return(
 			<div>
+				<form className="pure-u-1 pure-u-md-1-2 pure-form pure-form-stacked">
+					<div>
+						<label htmlFor="topic">Topic</label>
+						<input type="text" name="topic" value={topic} onChange={(event) => this.setState({topic: event.target.value})} className="pure-input-rounded"/>
+					</div>
+					<div>
+						<label htmlFor="language">Language</label>
+						<select name="language" onChange={(event) => this.setState({language: event.target.value})} className="pure-input-rounded" defaultValue={language}>
+							<option value="">Select a language</option>
+							<option>ASL</option>
+							{languages.getLanguageCodes().map((langCode) => 
+								<option key={langCode}>{languages.getLanguageName(langCode)}</option>
+							)}
+						</select>
+					</div>
+					<div>
+						<button onClick={this.handleSubmit}>
+							Submit
+							<FontAwesomeIcon icon={faLongArrowAltRight}/>
+						</button>
+					</div>
+				</form>
 				<h2>Premium video chats</h2>
 				{premiumVideoChatListings ?
 		    		<Slider {...{

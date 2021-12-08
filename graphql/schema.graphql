@@ -46,6 +46,7 @@ type PremiumVideoChatListingFeed {
 type Query {
 	indexVideos: [Video]
 	getRecentPremiumVideoChatListings: PremiumVideoChatListingFeed
+	searchPremiumVideoChatListings(topic: String, language: String): PremiumVideoChatListingFeed
 }
 
 type Mutation {

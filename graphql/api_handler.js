@@ -14,6 +14,7 @@ const resolvers = {
 		indexVideos: videos.indexVideos,
 		// Premium Video Chat Listings
 		getRecentPremiumVideoChatListings: premiumVideoChatListings.getRecentPremiumVideoChatListings,
+		searchPremiumVideoChatListings: premiumVideoChatListings.searchPremiumVideoChatListings,
 	},
 	Mutation: {
 		// Likes
