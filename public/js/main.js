@@ -16894,9 +16894,15 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
     } = this.state || 'notfound';
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "frame"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_PremiumVideoChatListingFeed_tsx__WEBPACK_IMPORTED_MODULE_8___default()), null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Navigation_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "pure-u-g"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "pure-u-l pure-u-md-1-2"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_PremiumVideoChatListingFeed_tsx__WEBPACK_IMPORTED_MODULE_8___default()), null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "pure-u-l pure-u-md-1-2"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "page-form"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Let's enjoy your"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "User Submissions"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_VideoSearchForm_tsx__WEBPACK_IMPORTED_MODULE_6___default()), {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "User Submitted Videos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_VideoSearchForm_tsx__WEBPACK_IMPORTED_MODULE_6___default()), {
       keywords: "",
       sort: ""
     })), this.state.recentVideos.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -16924,7 +16930,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       likes: video.likes,
       likedByCurrentUser: this.currentUserHasLikedVideo(video),
       authenticatedUserID: this.props.userID
-    }))))) : '', this.state.levels ? this.state.levels.map(level => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }))))) : '')), this.state.levels ? this.state.levels.map(level => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       key: level.id,
       className: "flex x-center"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
@@ -18488,7 +18494,7 @@ function (_super) {
         language = _a.language;
     return React.createElement("div", null, React.createElement("form", {
       className: "pure-u-1 pure-u-md-1-2 pure-form pure-form-stacked"
-    }, React.createElement("div", null, React.createElement("label", {
+    }, React.createElement("h2", null, "Premium video chats"), React.createElement("div", null, React.createElement("label", {
       htmlFor: "topic"
     }, "Topic"), React.createElement("input", {
       type: "text",
@@ -18521,7 +18527,7 @@ function (_super) {
       onClick: this.handleSubmit
     }, "Submit", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
       icon: free_solid_svg_icons_1.faLongArrowAltRight
-    })))), React.createElement("h2", null, "Premium video chats"), premiumVideoChatListings ? React.createElement(react_slick_1.default, __assign({}, {
+    })))), premiumVideoChatListings ? React.createElement(react_slick_1.default, __assign({}, {
       dots: false,
       infinite: false,
       speed: 500,
@@ -18925,7 +18931,9 @@ function (_super) {
     var user = this.props.user;
     return React.createElement("div", {
       className: "pure-g"
-    }, React.createElement("form", {
+    }, React.createElement("h2", {
+      className: "pure-u-1"
+    }, "Premium video chat listing"), React.createElement("form", {
       className: "pure-u-1 pure-u-md-1-2 pure-form pure-form-stacked"
     }, React.createElement("div", null, React.createElement("label", {
       htmlFor: "topic"

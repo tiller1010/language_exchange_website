@@ -193,6 +193,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 
 		return(
 			<div className="pure-g">
+				<h2 className="pure-u-1">Premium video chat listing</h2>
 				<form className="pure-u-1 pure-u-md-1-2 pure-form pure-form-stacked">
 					<div>
 						<label htmlFor="topic">Topic</label>

@@ -100,6 +100,7 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 		return(
 			<div>
 				<form className="pure-u-1 pure-u-md-1-2 pure-form pure-form-stacked">
+					<h2>Premium video chats</h2>
 					<div>
 						<label htmlFor="topic">Topic</label>
 						<input type="text" name="topic" value={topic} onChange={(event) => this.setState({topic: event.target.value})} className="pure-input-rounded"/>
@@ -121,7 +122,6 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 						</button>
 					</div>
 				</form>
-				<h2>Premium video chats</h2>
 				{premiumVideoChatListings ?
 		    		<Slider {...{
 						dots: false,

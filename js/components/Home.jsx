@@ -102,53 +102,62 @@ class Home extends React.Component {
 		return (
 			<div className="frame">
 				<Navigation/>
-				<PremiumVideoChatListingFeed/>
-				<div className="page-form">
-					<p>Let's enjoy your</p>
-					<h1>User Submissions</h1>
-					<VideoSearchForm
-						keywords=""
-						sort=""
-					/>
-				</div>
+				<div className="pure-u-g">
 
-			    {this.state.recentVideos.length ?
-			    	<div className="pad no-x">
-			    		<h2>Recent Submissions</h2>
-			    		<Slider {...{
-							dots: false,
-							infinite: false,
-							speed: 500,
-							slidesToShow: 3,
-							slidesToScroll: 1,
-							responsive: [
-								{
-									breakpoint: 1024,
-									settings: {
-										slidesToShow: 1.5
-									}
-								}
-							]
-			    		}}>
-					    	{this.state.recentVideos.map((video) => 
-					    		<div key={video._id}>
-						    		<VideoPlayer
-										_id={video._id}
-										title={video.title}
-										src={video.src}
-										thumbnailSrc={video.thumbnailSrc}
-										uploadedBy={video.uploadedBy}
-										likes={video.likes}
-										likedByCurrentUser={this.currentUserHasLikedVideo(video)}
-										authenticatedUserID={this.props.userID}
-						    		/>
-								</div>
-				    		)}
-			    		</Slider>
-			    	</div>
-			    	:
-			    	''
-			    }
+					<div className="pure-u-l pure-u-md-1-2">
+						<PremiumVideoChatListingFeed/>
+					</div>
+
+
+					<div className="pure-u-l pure-u-md-1-2">
+						<div className="page-form">
+							<h2>User Submitted Videos</h2>
+							<VideoSearchForm
+								keywords=""
+								sort=""
+							/>
+						</div>
+
+					    {this.state.recentVideos.length ?
+					    	<div className="pad no-x">
+					    		<h2>Recent Submissions</h2>
+					    		<Slider {...{
+									dots: false,
+									infinite: false,
+									speed: 500,
+									slidesToShow: 3,
+									slidesToScroll: 1,
+									responsive: [
+										{
+											breakpoint: 1024,
+											settings: {
+												slidesToShow: 1.5
+											}
+										}
+									]
+					    		}}>
+							    	{this.state.recentVideos.map((video) => 
+							    		<div key={video._id}>
+								    		<VideoPlayer
+												_id={video._id}
+												title={video.title}
+												src={video.src}
+												thumbnailSrc={video.thumbnailSrc}
+												uploadedBy={video.uploadedBy}
+												likes={video.likes}
+												likedByCurrentUser={this.currentUserHasLikedVideo(video)}
+												authenticatedUserID={this.props.userID}
+								    		/>
+										</div>
+						    		)}
+					    		</Slider>
+					    	</div>
+					    	:
+					    	''
+					    }
+				    </div>
+
+			    </div>
 
 			    {this.state.levels ?
 			    	this.state.levels.map((level) => 
