@@ -14640,6 +14640,150 @@ exports["default"] = _default;
 
 /***/ }),
 
+/***/ "./node_modules/@stripe/stripe-js/dist/stripe.esm.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/@stripe/stripe-js/dist/stripe.esm.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "loadStripe": () => (/* binding */ loadStripe)
+/* harmony export */ });
+var V3_URL = 'https://js.stripe.com/v3';
+var V3_URL_REGEX = /^https:\/\/js\.stripe\.com\/v3\/?(\?.*)?$/;
+var EXISTING_SCRIPT_MESSAGE = 'loadStripe.setLoadParameters was called but an existing Stripe.js script already exists in the document; existing script parameters will be used';
+var findScript = function findScript() {
+  var scripts = document.querySelectorAll("script[src^=\"".concat(V3_URL, "\"]"));
+
+  for (var i = 0; i < scripts.length; i++) {
+    var script = scripts[i];
+
+    if (!V3_URL_REGEX.test(script.src)) {
+      continue;
+    }
+
+    return script;
+  }
+
+  return null;
+};
+
+var injectScript = function injectScript(params) {
+  var queryString = params && !params.advancedFraudSignals ? '?advancedFraudSignals=false' : '';
+  var script = document.createElement('script');
+  script.src = "".concat(V3_URL).concat(queryString);
+  var headOrBody = document.head || document.body;
+
+  if (!headOrBody) {
+    throw new Error('Expected document.body not to be null. Stripe.js requires a <body> element.');
+  }
+
+  headOrBody.appendChild(script);
+  return script;
+};
+
+var registerWrapper = function registerWrapper(stripe, startTime) {
+  if (!stripe || !stripe._registerWrapper) {
+    return;
+  }
+
+  stripe._registerWrapper({
+    name: 'stripe-js',
+    version: "1.22.0",
+    startTime: startTime
+  });
+};
+
+var stripePromise = null;
+var loadScript = function loadScript(params) {
+  // Ensure that we only attempt to load Stripe.js at most once
+  if (stripePromise !== null) {
+    return stripePromise;
+  }
+
+  stripePromise = new Promise(function (resolve, reject) {
+    if (typeof window === 'undefined') {
+      // Resolve to null when imported server side. This makes the module
+      // safe to import in an isomorphic code base.
+      resolve(null);
+      return;
+    }
+
+    if (window.Stripe && params) {
+      console.warn(EXISTING_SCRIPT_MESSAGE);
+    }
+
+    if (window.Stripe) {
+      resolve(window.Stripe);
+      return;
+    }
+
+    try {
+      var script = findScript();
+
+      if (script && params) {
+        console.warn(EXISTING_SCRIPT_MESSAGE);
+      } else if (!script) {
+        script = injectScript(params);
+      }
+
+      script.addEventListener('load', function () {
+        if (window.Stripe) {
+          resolve(window.Stripe);
+        } else {
+          reject(new Error('Stripe.js not available'));
+        }
+      });
+      script.addEventListener('error', function () {
+        reject(new Error('Failed to load Stripe.js'));
+      });
+    } catch (error) {
+      reject(error);
+      return;
+    }
+  });
+  return stripePromise;
+};
+var initStripe = function initStripe(maybeStripe, args, startTime) {
+  if (maybeStripe === null) {
+    return null;
+  }
+
+  var stripe = maybeStripe.apply(undefined, args);
+  registerWrapper(stripe, startTime);
+  return stripe;
+};
+
+// own script injection.
+
+var stripePromise$1 = Promise.resolve().then(function () {
+  return loadScript(null);
+});
+var loadCalled = false;
+stripePromise$1["catch"](function (err) {
+  if (!loadCalled) {
+    console.warn(err);
+  }
+});
+var loadStripe = function loadStripe() {
+  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  loadCalled = true;
+  var startTime = Date.now();
+  return stripePromise$1.then(function (maybeStripe) {
+    return initStripe(maybeStripe, args, startTime);
+  });
+};
+
+
+
+
+/***/ }),
+
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -16461,14 +16605,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _Navigation_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
 /* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
 /* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-slick */ "./node_modules/react-slick/lib/index.js");
 /* harmony import */ var _graphQLFetch_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../graphQLFetch.js */ "./js/graphQLFetch.js");
 /* harmony import */ var _VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./VideoPlayer.tsx */ "./js/components/VideoPlayer.tsx");
 /* harmony import */ var _VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_VideoPlayer_tsx__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _PremiumVideoChatListingForm_tsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./PremiumVideoChatListingForm.tsx */ "./js/components/PremiumVideoChatListingForm.tsx");
-/* harmony import */ var _PremiumVideoChatListingForm_tsx__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_PremiumVideoChatListingForm_tsx__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _RemoveConfirmationModal_tsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./RemoveConfirmationModal.tsx */ "./js/components/RemoveConfirmationModal.tsx");
+/* harmony import */ var _Product_tsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Product.tsx */ "./js/components/Product.tsx");
+/* harmony import */ var _Product_tsx__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Product_tsx__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _PremiumVideoChatListingForm_tsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./PremiumVideoChatListingForm.tsx */ "./js/components/PremiumVideoChatListingForm.tsx");
+/* harmony import */ var _PremiumVideoChatListingForm_tsx__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_PremiumVideoChatListingForm_tsx__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _RemoveConfirmationModal_tsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./RemoveConfirmationModal.tsx */ "./js/components/RemoveConfirmationModal.tsx");
+
 
 
 
@@ -16486,6 +16633,7 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       user: {
         completedTopics: [],
         uploadedVideos: [],
+        products: [],
         likedVideos: [],
         verified: false
       },
@@ -16629,6 +16777,7 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
     const authenticatedUser = JSON.parse(this.props.authenticatedUser);
     const authenticatedUserIsAdmin = authenticatedUser ? authenticatedUser.isAdmin : false;
     const authenticatedUserIsVerified = authenticatedUser ? authenticatedUser.verified : false;
+    const products = this.state.user.products || [];
     document.addEventListener('cssmodal:hide', () => {
       this.setState({
         openVideoRemovalForm: false
@@ -16643,7 +16792,7 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
         width: 'max-content'
       }
     }, "Logout", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_8__.faSignOutAlt
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_9__.faSignOutAlt
     }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, this.state.user.firstName), authenticatedUserIsAdmin ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", null, this.state.user.verified ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
       htmlFor: "verifyUser"
     }, "Remove verification for this user?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
@@ -16657,7 +16806,7 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       type: "checkbox",
       name: "verifyUser",
       onChange: event => this.verifyUser(!this.state.user.verified)
-    }))) : '', authenticatedUserIsVerified && this.props.isCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_PremiumVideoChatListingForm_tsx__WEBPACK_IMPORTED_MODULE_6___default()), {
+    }))) : '', authenticatedUserIsVerified && this.props.isCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_PremiumVideoChatListingForm_tsx__WEBPACK_IMPORTED_MODULE_7___default()), {
       user: authenticatedUser
     }) : '', this.state.user.completedTopics.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "topics"
@@ -16688,18 +16837,39 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       href: `${this.props.pathResolver}level/${topic.levelID}/topic/${topic.topicID}`,
       className: "button"
     }, "View Topic", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_8__.faLongArrowAltRight
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_9__.faLongArrowAltRight
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
       href: `level/${topic.levelID}/topic/${topic.topicID}`
     }, this.renderMedia(topic))))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
       className: "text-center"
-    }, "No Completed Topics"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", null)), this.props.isCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_RemoveConfirmationModal_tsx__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    }, "No Completed Topics"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", null)), this.props.isCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_RemoveConfirmationModal_tsx__WEBPACK_IMPORTED_MODULE_8__["default"], {
       buttonText: "Remove Video",
       buttonAnchor: "remove-video",
       modalTitle: "Remove Video",
       modalContent: "Are you sure you want to remove this video?",
       handleDelete: this.handleDeleteVideo
-    }) : '', this.state.user.uploadedVideos.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
+    }) : '', products.length && this.props.isCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
+      className: "text-center"
+    }, "Products"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_slick__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      dots: false,
+      infinite: false,
+      speed: 500,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      responsive: [{
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 1.5
+        }
+      }]
+    }, this.state.user.products.map(product => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      key: product._id,
+      className: "pure-u-1 pure-u-lg-1-3"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_Product_tsx__WEBPACK_IMPORTED_MODULE_6___default()), {
+      product: product
+    }))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
+      className: "text-center"
+    }, "No Uploaded Videos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", null)), this.state.user.uploadedVideos.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
       className: "text-center"
     }, "Uploaded Videos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_slick__WEBPACK_IMPORTED_MODULE_3__["default"], {
       dots: false,
@@ -16898,7 +17068,9 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       className: "pure-u-g"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "pure-u-l pure-u-md-1-2"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_PremiumVideoChatListingFeed_tsx__WEBPACK_IMPORTED_MODULE_8___default()), null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_PremiumVideoChatListingFeed_tsx__WEBPACK_IMPORTED_MODULE_8___default()), {
+      authenticatedUserID: this.props.userID
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "pure-u-l pure-u-md-1-2"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "page-form"
@@ -18172,8 +18344,10 @@ function (_super) {
     var _a = this.props.premiumVideoChatListing,
         topic = _a.topic,
         language = _a.language,
+        price = _a.price,
+        currency = _a.currency,
         thumbnailSrc = _a.thumbnailSrc;
-    return React.createElement("div", null, React.createElement("p", null, topic), React.createElement("p", null, language), React.createElement("div", {
+    return React.createElement("div", null, React.createElement("p", null, topic), React.createElement("p", null, language), React.createElement("p", null, price), React.createElement("p", null, currency), React.createElement("div", {
       className: "thumbnail-preview img-container"
     }, React.createElement("img", {
       style: {
@@ -18401,6 +18575,8 @@ var react_slick_1 = __webpack_require__(/*! react-slick */ "./node_modules/react
 
 var languages = __webpack_require__(/*! language-list */ "./node_modules/language-list/language-list.js")();
 
+var stripe_js_1 = __webpack_require__(/*! @stripe/stripe-js */ "./node_modules/@stripe/stripe-js/dist/stripe.esm.js");
+
 var PremiumVideoChatListingFeed =
 /** @class */
 function (_super) {
@@ -18415,7 +18591,8 @@ function (_super) {
       premiumVideoChatListings: []
     };
     _this.state = state;
-    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.handleSearchSubmit = _this.handleSearchSubmit.bind(_this);
+    _this.handleBuyNow = _this.handleBuyNow.bind(_this);
     return _this;
   }
 
@@ -18425,7 +18602,7 @@ function (_super) {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            query = "query getRecentPremiumVideoChatListings{\n\t\t\tgetRecentPremiumVideoChatListings{\n\t\t\t\tlistings {\n\t\t\t\t\ttopic\n\t\t\t\t\tlanguage\n\t\t\t\t\tthumbnailSrc\n\t\t\t\t\tuserID\n\t\t\t\t}\n\t\t\t}\n\t\t}";
+            query = "query getRecentPremiumVideoChatListings{\n\t\t\tgetRecentPremiumVideoChatListings{\n\t\t\t\tlistings {\n\t\t\t\t\t_id\n\t\t\t\t\ttopic\n\t\t\t\t\tlanguage\n\t\t\t\t\tprice\n\t\t\t\t\tcurrency\n\t\t\t\t\tthumbnailSrc\n\t\t\t\t\tuserID\n\t\t\t\t}\n\t\t\t}\n\t\t}";
             return [4
             /*yield*/
             , (0, graphQLFetch_js_1.default)(query)];
@@ -18449,7 +18626,7 @@ function (_super) {
     });
   };
 
-  PremiumVideoChatListingFeed.prototype.handleSubmit = function (event) {
+  PremiumVideoChatListingFeed.prototype.handleSearchSubmit = function (event) {
     return __awaiter(this, void 0, void 0, function () {
       var _a, topic, language, query, data;
 
@@ -18458,7 +18635,7 @@ function (_super) {
           case 0:
             event.preventDefault();
             _a = this.state, topic = _a.topic, language = _a.language;
-            query = "query searchPremiumVideoChatListings($topic: String, $language: String){\n\t\t\tsearchPremiumVideoChatListings(topic: $topic, language: $language){\n\t\t\t\tlistings {\n\t\t\t\t\ttopic\n\t\t\t\t\tlanguage\n\t\t\t\t\tthumbnailSrc\n\t\t\t\t\tuserID\n\t\t\t\t}\n\t\t\t}\n\t\t}";
+            query = "query searchPremiumVideoChatListings($topic: String, $language: String){\n\t\t\tsearchPremiumVideoChatListings(topic: $topic, language: $language){\n\t\t\t\tlistings {\n\t\t\t\t\t_id\n\t\t\t\t\ttopic\n\t\t\t\t\tlanguage\n\t\t\t\t\tprice\n\t\t\t\t\tcurrency\n\t\t\t\t\tthumbnailSrc\n\t\t\t\t\tuserID\n\t\t\t\t}\n\t\t\t}\n\t\t}";
             return [4
             /*yield*/
             , (0, graphQLFetch_js_1.default)(query, {
@@ -18477,6 +18654,82 @@ function (_super) {
               }
             }
 
+            return [2
+            /*return*/
+            ];
+        }
+      });
+    });
+  };
+
+  PremiumVideoChatListingFeed.prototype.handleBuyNow = function (listing) {
+    return __awaiter(this, void 0, void 0, function () {
+      var authenticatedUserID, query, data, stripe_1;
+      return __generator(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            authenticatedUserID = this.props.authenticatedUserID;
+            if (!authenticatedUserID) return [3
+            /*break*/
+            , 4];
+            query = "mutation createProduct($productObjectCollection: String!, $productDescription: String!, $productObjectID: ID!, $userID: ID!){\n\t\t\t\tcreateProduct(productObjectCollection: $productObjectCollection, productDescription: $productDescription, productObjectID: $productObjectID, userID: $userID){\n\t\t\t\t\tuserID\n\t\t\t\t\tcost\n\t\t\t\t\tcurrency\n\t\t\t\t\torderedOn\n\t\t\t\t\tproductObject {\n\t\t\t\t\t\t... on PremiumVideoChatListing{\n\t\t\t\t\t\t\t_id\n\t\t\t\t\t\t\tuserID\n\t\t\t\t\t\t\ttopic\n\t\t\t\t\t\t\tlanguage\n\t\t\t\t\t\t\tthumbnailSrc\n\t\t\t\t\t\t\tprice\n\t\t\t\t\t\t\tcurrency\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\tpriceID\n\t\t\t\t}\n\t\t\t}";
+            return [4
+            /*yield*/
+            , (0, graphQLFetch_js_1.default)(query, {
+              productObjectCollection: 'premium_video_chat_listings',
+              productDescription: 'Premium Video Chat',
+              productObjectID: listing._id,
+              userID: authenticatedUserID
+            })];
+
+          case 1:
+            data = _a.sent();
+            if (!data.createProduct) return [3
+            /*break*/
+            , 3];
+            if (!data.createProduct.priceID) return [3
+            /*break*/
+            , 3];
+            return [4
+            /*yield*/
+            , (0, stripe_js_1.loadStripe)("pk_test_51K5VhTKFlSir9ysi41Tl8YwRjRHsClf5ehSCkavclj789g8CpNRBTDk8iGvpro09CZxMDDiBCmzAKL2sKHAoRdaJ00YRnkKrkm" || 0)];
+
+          case 2:
+            stripe_1 = _a.sent();
+            fetch('/create-checkout-session', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                priceID: data.createProduct.priceID
+              })
+            }).then(function (response) {
+              return response.json();
+            }).then(function (session) {
+              return stripe_1.redirectToCheckout({
+                sessionId: session.id
+              });
+            }).then(function (result) {
+              // If `redirectToCheckout` fails due to a browser or network
+              // error, you should display the localized error message to your
+              // customer using `error.message`.
+              if (result.error) {
+                alert(result.error.message);
+              }
+            });
+            _a.label = 3;
+
+          case 3:
+            return [3
+            /*break*/
+            , 5];
+
+          case 4:
+            alert('Must be signed in to buy.');
+            _a.label = 5;
+
+          case 5:
             return [2
             /*return*/
             ];
@@ -18524,7 +18777,7 @@ function (_super) {
         key: langCode
       }, languages.getLanguageName(langCode));
     }))), React.createElement("div", null, React.createElement("button", {
-      onClick: this.handleSubmit
+      onClick: this.handleSearchSubmit
     }, "Submit", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
       icon: free_solid_svg_icons_1.faLongArrowAltRight
     })))), premiumVideoChatListings ? React.createElement(react_slick_1.default, __assign({}, {
@@ -18544,7 +18797,13 @@ function (_super) {
         key: premiumVideoChatListings.indexOf(listing)
       }, React.createElement(PremiumVideoChatListing_tsx_1.default, {
         premiumVideoChatListing: listing
-      }));
+      }), React.createElement("button", {
+        onClick: function () {
+          return _this.handleBuyNow(listing);
+        }
+      }, "Buy Now", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
+        icon: free_solid_svg_icons_1.faPlus
+      })));
     })) : '');
   };
 
@@ -18775,6 +19034,8 @@ function (_super) {
     var state = {
       topic: '',
       language: '',
+      price: 0,
+      currency: 'usd',
       thumbnailSrc: ''
     };
     _this.state = state;
@@ -18822,13 +19083,13 @@ function (_super) {
 
   PremiumVideoChatListingForm.prototype.handleSubmit = function (event) {
     return __awaiter(this, void 0, void 0, function () {
-      var _a, topic, language, thumbnailSrc, thumbnailFile, savedPremiumVideoChatListing, user, query, variables, mutationName, data;
+      var _a, topic, language, price, currency, thumbnailSrc, thumbnailFile, savedPremiumVideoChatListing, user, query, variables, mutationName, data;
 
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
             event.preventDefault();
-            _a = this.state, topic = _a.topic, language = _a.language, thumbnailSrc = _a.thumbnailSrc, thumbnailFile = _a.thumbnailFile, savedPremiumVideoChatListing = _a.savedPremiumVideoChatListing;
+            _a = this.state, topic = _a.topic, language = _a.language, price = _a.price, currency = _a.currency, thumbnailSrc = _a.thumbnailSrc, thumbnailFile = _a.thumbnailFile, savedPremiumVideoChatListing = _a.savedPremiumVideoChatListing;
             user = this.props.user;
             if (!(user && topic && language && thumbnailSrc)) return [3
             /*break*/
@@ -18839,12 +19100,14 @@ function (_super) {
 
             if (savedPremiumVideoChatListing) {
               // If updating existing
-              query = "mutation updatePremiumVideoChatListing($listingID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){\n\t\t\t\t\tupdatePremiumVideoChatListing(listingID: $listingID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){\n\t\t\t\t\t\t_id\n\t\t\t\t\t\ttopic\n\t\t\t\t\t\tlanguage\n\t\t\t\t\t\tthumbnailSrc\n\t\t\t\t\t\tuserID\n\t\t\t\t\t}\n\t\t\t\t}";
+              query = "mutation updatePremiumVideoChatListing($listingID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){\n\t\t\t\t\tupdatePremiumVideoChatListing(listingID: $listingID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){\n\t\t\t\t\t\t_id\n\t\t\t\t\t\ttopic\n\t\t\t\t\t\tlanguage\n\t\t\t\t\t\tprice\n\t\t\t\t\t\tcurrency\n\t\t\t\t\t\tthumbnailSrc\n\t\t\t\t\t\tuserID\n\t\t\t\t\t}\n\t\t\t\t}";
               variables = {
                 listingID: savedPremiumVideoChatListing._id,
                 premiumVideoChatListing: {
                   topic: topic,
-                  language: language
+                  language: language,
+                  price: price,
+                  currency: currency
                 }
               };
 
@@ -18855,12 +19118,14 @@ function (_super) {
               mutationName = 'updatePremiumVideoChatListing';
             } else {
               // If adding new
-              query = "mutation addPremiumVideoChatListing($userID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){\n\t\t\t\t\taddPremiumVideoChatListing(userID: $userID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){\n\t\t\t\t\t\t_id\n\t\t\t\t\t\ttopic\n\t\t\t\t\t\tlanguage\n\t\t\t\t\t\tthumbnailSrc\n\t\t\t\t\t\tuserID\n\t\t\t\t\t}\n\t\t\t\t}";
+              query = "mutation addPremiumVideoChatListing($userID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){\n\t\t\t\t\taddPremiumVideoChatListing(userID: $userID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){\n\t\t\t\t\t\t_id\n\t\t\t\t\t\ttopic\n\t\t\t\t\t\tlanguage\n\t\t\t\t\t\tprice\n\t\t\t\t\t\tcurrency\n\t\t\t\t\t\tthumbnailSrc\n\t\t\t\t\t\tuserID\n\t\t\t\t\t}\n\t\t\t\t}";
               variables = {
                 userID: user._id,
                 premiumVideoChatListing: {
                   topic: topic,
-                  language: language
+                  language: language,
+                  price: price,
+                  currency: currency
                 },
                 file: thumbnailFile
               };
@@ -18926,6 +19191,8 @@ function (_super) {
     var _a = this.state,
         topic = _a.topic,
         language = _a.language,
+        price = _a.price,
+        currency = _a.currency,
         thumbnailSrc = _a.thumbnailSrc,
         savedPremiumVideoChatListing = _a.savedPremiumVideoChatListing;
     var user = this.props.user;
@@ -18964,7 +19231,33 @@ function (_super) {
       return React.createElement("option", {
         key: langCode
       }, languages.getLanguageName(langCode));
-    }))), React.createElement("div", {
+    }))), React.createElement("div", null, React.createElement("label", {
+      htmlFor: "price"
+    }, "Price"), React.createElement("input", {
+      type: "number",
+      min: "0",
+      step: "0.01",
+      name: "price",
+      value: price,
+      onChange: function (event) {
+        return _this.setState({
+          price: Number(event.target.value)
+        });
+      },
+      className: "pure-input-rounded"
+    })), React.createElement("div", null, React.createElement("label", {
+      htmlFor: "currency"
+    }, "Currency"), React.createElement("input", {
+      type: "text",
+      name: "currency",
+      value: currency,
+      onChange: function (event) {
+        return _this.setState({
+          currency: event.target.value
+        });
+      },
+      className: "pure-input-rounded"
+    })), React.createElement("div", {
       className: "upload-container"
     }, React.createElement("input", {
       type: "file",
@@ -19023,6 +19316,91 @@ function (_super) {
 }(React.Component);
 
 exports["default"] = PremiumVideoChatListingForm;
+
+/***/ }),
+
+/***/ "./js/components/Product.tsx":
+/*!***********************************!*\
+  !*** ./js/components/Product.tsx ***!
+  \***********************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __extends = this && this.__extends || function () {
+  var extendStatics = function (d, b) {
+    extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    };
+
+    return extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var Product =
+/** @class */
+function (_super) {
+  __extends(Product, _super);
+
+  function Product(props) {
+    var _this = _super.call(this, props) || this;
+
+    var state = {};
+    _this.state = state;
+    _this.renderProduct = _this.renderProduct.bind(_this);
+    return _this;
+  }
+
+  Product.prototype.renderProduct = function (product) {
+    var productObject = product.productObject;
+
+    switch (product.productObjectCollection) {
+      case 'premium_video_chat_listings':
+        return React.createElement(React.Fragment, null, React.createElement("div", {
+          className: "thumbnail-preview img-container"
+        }, React.createElement("img", {
+          style: {
+            height: '100%',
+            width: '100%',
+            objectFit: 'cover'
+          },
+          src: productObject.thumbnailSrc,
+          alt: productObject.thumbnailSrc
+        })), React.createElement("p", null, "Topic: ", productObject.topic), React.createElement("p", null, "Language: ", productObject.language));
+    }
+  };
+
+  Product.prototype.render = function () {
+    var product = this.props.product;
+    return React.createElement("div", null, this.renderProduct(product), React.createElement("p", null, "Cost: ", product.cost, " ", product.currency), React.createElement("p", null, "Ordered on: ", product.orderedOn), React.createElement("p", null, "Status: ", product.status));
+  };
+
+  return Product;
+}(React.Component);
+
+exports["default"] = Product;
 
 /***/ }),
 

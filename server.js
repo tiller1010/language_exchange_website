@@ -10,6 +10,7 @@ const flash = require('connect-flash');
 const { addLike, removeLike } = require('./database/methods/likes.js');
 const { addUser, findAndSyncUser, findUserByID, addCompletedTopic, removeCompletedTopic } = require('./database/methods/users.js');
 const { indexVideos, addVideo, removeVideo, getRecent, addVideoToUsersUploads } = require('./database/methods/videos.js');
+const { completeOrder } = require('./database/methods/products.js');
 
 // Strapi Methods
 const { getTopic, getTopicChallenges } = require('./strapi/topics.js');
@@ -18,6 +19,7 @@ const { getTopic, getTopicChallenges } = require('./strapi/topics.js');
 const { passport } = require('./app/passport.js');
 const createSearchService = require('./app/search.js');
 const upload = require('./app/upload.js')();
+const stripe = require('stripe')(process.env.STRIPE_SECRET || '');
 
 // GraphQL
 const { installHandler } = require('./graphql/api_handler.js');
@@ -334,6 +336,40 @@ app.use(express.json());
 			if(req.params.id){
 				let user = await findUserByID(req.params.id);
 				res.status(200).json(user);
+			}
+		});
+
+		// Stripe checkout
+		app.post('/create-checkout-session', async (req, res) => {
+			try {
+				const priceID = req.body.priceID;
+				const price = await stripe.prices.retrieve(priceID);
+
+				let success_url = process.env.SECURED_DOMAIN_WITH_PROTOCOL ? process.env.SECURED_DOMAIN_WITH_PROTOCOL : `http://localhost:${appPort}`;
+				success_url += `/complete-order/${priceID}`;
+
+				let cancel_url = process.env.SECURED_DOMAIN_WITH_PROTOCOL ? process.env.SECURED_DOMAIN_WITH_PROTOCOL : `http://localhost:${appPort}`;
+
+				const session = await stripe.checkout.sessions.create({
+					success_url,
+					cancel_url,
+					line_items: [
+						{
+							price: priceID,
+							quantity: 1,
+						},
+					],
+					mode: 'payment',
+				});
+				return res.send(JSON.stringify(session));
+			} catch(e) {
+				console.log(e);
+			}
+		});
+		app.get('/complete-order/:priceID', async (req, res) => {
+			if(req.user && req.params.priceID){
+				await completeOrder(req.user._id, req.params.priceID);
+				return res.redirect('/account-profile');
 			}
 		});
 

@@ -5,6 +5,7 @@ import { faSignOutAlt, faLongArrowAltRight } from '@fortawesome/free-solid-svg-i
 import Slider from 'react-slick';
 import graphQLFetch from '../graphQLFetch.js';
 import VideoPlayer from './VideoPlayer.tsx';
+import Product from './Product.tsx';
 import PremiumVideoChatListingForm from './PremiumVideoChatListingForm.tsx';
 import RemoveConfirmationModal from './RemoveConfirmationModal.tsx';
 
@@ -15,6 +16,7 @@ class AccountProfile extends React.Component {
 			user: {
 				completedTopics: [],
 				uploadedVideos: [],
+				products: [],
 				likedVideos: [],
 				verified: false
 			},
@@ -148,6 +150,7 @@ class AccountProfile extends React.Component {
 		const authenticatedUser = JSON.parse(this.props.authenticatedUser);
 		const authenticatedUserIsAdmin = authenticatedUser ? authenticatedUser.isAdmin : false;
 		const authenticatedUserIsVerified = authenticatedUser ? authenticatedUser.verified : false;
+		const products = this.state.user.products || [];
 
 		document.addEventListener('cssmodal:hide', () => {
 			this.setState({
@@ -244,6 +247,38 @@ class AccountProfile extends React.Component {
 					/>
 					:
 					''
+				}
+				{products.length && this.props.isCurrentUser ?
+					<div>
+						<h2 className="text-center">Products</h2>
+						<hr/>
+			    		<Slider {...{
+							dots: false,
+							infinite: false,
+							speed: 500,
+							slidesToShow: 3,
+							slidesToScroll: 1,
+							responsive: [
+								{
+									breakpoint: 1024,
+									settings: {
+										slidesToShow: 1.5
+									}
+								}
+							]
+			    		}}>
+							{this.state.user.products.map((product) => 
+								<div key={product._id} className="pure-u-1 pure-u-lg-1-3">
+									<Product product={product}/>
+								</div>
+							)}
+						</Slider>
+					</div>
+					:
+					<div>
+						<h2 className="text-center">No Uploaded Videos</h2>
+						<hr/>
+					</div>
 				}
 				{this.state.user.uploadedVideos.length ?
 					<div>

@@ -89,7 +89,7 @@ async function updatePremiumVideoChatListing(_, { listingID, premiumVideoChatLis
 	premiumVideoChatListing = await db.collection('premium_video_chat_listings').findOneAndUpdate(
 		{ _id: new mongo.ObjectID(listingID) },
 		{ $set: { ...premiumVideoChatListing } },
-		{returnOriginal: false}
+		{ returnOriginal: false }
 	);
 	premiumVideoChatListing = premiumVideoChatListing.value;
 	await db.collection('users').updateOne({ _id: new mongo.ObjectID(premiumVideoChatListing.userID) }, { $set: { premiumVideoChatListing } });

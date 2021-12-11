@@ -105,7 +105,7 @@ class Home extends React.Component {
 				<div className="pure-u-g">
 
 					<div className="pure-u-l pure-u-md-1-2">
-						<PremiumVideoChatListingFeed/>
+						<PremiumVideoChatListingFeed authenticatedUserID={this.props.userID}/>
 					</div>
 
 

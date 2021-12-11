@@ -6,6 +6,7 @@ const videos = require('../database/methods/videos.js');
 const likes = require('../database/methods/likes.js');
 const users = require('../database/methods/users.js');
 const premiumVideoChatListings = require('../database/methods/premium-video-chat-listings.js');
+const products = require('../database/methods/products.js');
 
 const resolvers = {
 	Upload: GraphQLUpload,
@@ -26,7 +27,9 @@ const resolvers = {
 		addPremiumVideoChatListing: premiumVideoChatListings.addPremiumVideoChatListing,
 		addPremiumVideoChatListingThumbnailTest: premiumVideoChatListings.addPremiumVideoChatListingThumbnailTest,
 		updatePremiumVideoChatListing: premiumVideoChatListings.updatePremiumVideoChatListing,
-		removePremiumVideoChatListing: premiumVideoChatListings.removePremiumVideoChatListing
+		removePremiumVideoChatListing: premiumVideoChatListings.removePremiumVideoChatListing,
+		// Products
+		createProduct: products.createProduct,
 	}
 }
 

@@ -18,6 +18,8 @@ interface PremiumVideoChatListingObject {
 	_id: string;
 	topic: string;
 	language: string
+	price: number
+	currency: string
 	thumbnailSrc: string
 	userID: string
 }
@@ -25,6 +27,8 @@ interface PremiumVideoChatListingObject {
 interface PremiumVideoChatListingFormState {
 	topic: string;
 	language: string
+	price: number
+	currency: string
 	thumbnailSrc: string
 	thumbnailFile?: File
 	savedPremiumVideoChatListing?: PremiumVideoChatListingObject
@@ -40,6 +44,8 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 		let state: PremiumVideoChatListingFormState = {
 			topic: '',
 			language: '',
+			price: 0,
+			currency: 'usd',
 			thumbnailSrc: '',
 		}
 		this.state = state;
@@ -88,6 +94,8 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 		let {
 			topic,
 			language,
+			price,
+			currency,
 			thumbnailSrc,
 			thumbnailFile,
 			savedPremiumVideoChatListing
@@ -106,6 +114,8 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 						_id
 						topic
 						language
+						price
+						currency
 						thumbnailSrc
 						userID
 					}
@@ -115,6 +125,8 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 					premiumVideoChatListing: {
 						topic,
 						language,
+						price,
+						currency,
 					}
 				};
 				if(thumbnailFile){
@@ -128,6 +140,8 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 						_id
 						topic
 						language
+						price
+						currency
 						thumbnailSrc
 						userID
 					}
@@ -137,6 +151,8 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 					premiumVideoChatListing: {
 						topic,
 						language,
+						price,
+						currency,
 					},
 					file: thumbnailFile
 				};
@@ -185,6 +201,8 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 		let {
 			topic,
 			language,
+			price,
+			currency,
 			thumbnailSrc,
 			savedPremiumVideoChatListing
 		} = this.state;
@@ -208,6 +226,14 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 								<option key={langCode}>{languages.getLanguageName(langCode)}</option>
 							)}
 						</select>
+					</div>
+					<div>
+						<label htmlFor="price">Price</label>
+						<input type="number" min="0" step="0.01" name="price" value={price} onChange={(event) => this.setState({price: Number(event.target.value)})} className="pure-input-rounded"/>
+					</div>
+					<div>
+						<label htmlFor="currency">Currency</label>
+						<input type="text" name="currency" value={currency} onChange={(event) => this.setState({currency: event.target.value})} className="pure-input-rounded"/>
 					</div>
 					<div className="upload-container">
 						<input type="file" name="thumbnail" onChange={this.handleThumbnailChange}/>

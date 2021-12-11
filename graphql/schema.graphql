@@ -26,17 +26,41 @@ type User {
 	premiumVideoChatListing: PremiumVideoChatListing
 }
 
+type Products {
+	_id: ID
+	userID: ID
+	products: [Product]
+}
+
+# union PossibleProduct = PremiumVideoChatListing | OtherProduct
+union PossibleProduct = PremiumVideoChatListing
+
+type Product {
+	userID: ID
+	cost: Float
+	currency: String
+	orderedOn: String
+	productObject: PossibleProduct
+	productObjectCollection: String
+	priceID: String
+	status: String
+}
+
 type PremiumVideoChatListing {
 	_id: ID
 	userID: ID
 	topic: String
 	language: String
 	thumbnailSrc: String
+	price: Float
+	currency: String
 }
 
 input PremiumVideoChatListingInputs {
 	topic: String
 	language: String
+	price: Float
+	currency: String
 }
 
 type PremiumVideoChatListingFeed {
@@ -57,4 +81,5 @@ type Mutation {
 	addPremiumVideoChatListingThumbnailTest(thumbnailFile: Upload): PremiumVideoChatListing
 	updatePremiumVideoChatListing(listingID: ID!, premiumVideoChatListing: PremiumVideoChatListingInputs, thumbnailFile: Upload): PremiumVideoChatListing
 	removePremiumVideoChatListing(userID: ID!): Boolean
+	createProduct(productObjectCollection: String!, productDescription: String!, productObjectID: ID!, userID: ID!): Product
 }
