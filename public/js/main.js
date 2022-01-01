@@ -16647,14 +16647,18 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
   }
 
   async componentDidMount() {
-    if (this.props.user) {
+    if (this.props.userID) {
       this.findAndSyncUser();
     }
   }
 
   async findAndSyncUser() {
-    const userProfile = JSON.parse(this.props.user);
-    const authenticatedUser = JSON.parse(this.props.authenticatedUser);
+    let userProfile = await fetch(`/user/${this.props.userID}`).then(response => response.json());
+    let authenticatedUser;
+
+    if (this.props.authenticatedUserID) {
+      authenticatedUser = await fetch(`/user/${this.props.authenticatedUserID}`).then(response => response.json());
+    }
 
     if (userProfile && authenticatedUser) {
       // Check if user has liked their own video
@@ -16681,12 +16685,13 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
     }
 
     this.setState({
-      user: userProfile
+      user: userProfile,
+      authenticatedUser
     });
   }
 
   async verifyUser(verificationStatus) {
-    if (this.props.user) {
+    if (this.props.userID) {
       const query = `mutation verifyUser($userID: ID!, $verificationStatus: Boolean!){
 				verifyUser(userID: $userID, verificationStatus: $verificationStatus){
 					verified
@@ -16774,7 +16779,7 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
   }
 
   render() {
-    const authenticatedUser = JSON.parse(this.props.authenticatedUser);
+    const authenticatedUser = this.state.authenticatedUser;
     const authenticatedUserIsAdmin = authenticatedUser ? authenticatedUser.isAdmin : false;
     const authenticatedUserIsVerified = authenticatedUser ? authenticatedUser.verified : false;
     const products = this.state.user.products || [];
@@ -16895,7 +16900,7 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       likes: video.likes,
       likedByCurrentUser: video.likedByCurrentUser,
       authenticatedUserID: authenticatedUser ? authenticatedUser._id : null,
-      handleDeleteVideo: this.handleDeleteVideo,
+      handleDeleteVideo: this.props.isCurrentUser ? this.handleDeleteVideo : null,
       afterToggleLike: this.afterToggleLike
     }))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
       className: "text-center"
@@ -18219,8 +18224,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 if (document.getElementById('home')) {
-  var userLikedVideos = document.getElementById('home').getAttribute('data-userLikedVideos');
-  var userID = document.getElementById('home').getAttribute('data-userID');
+  var userLikedVideos = document.getElementById('home').getAttribute('userlikedvideos');
+  var userID = document.getElementById('home').getAttribute('userid');
   react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_Home_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
     userLikedVideos: userLikedVideos,
     userID: userID
@@ -18228,8 +18233,8 @@ if (document.getElementById('home')) {
 }
 
 if (document.getElementById('videos')) {
-  var userLikedVideos = document.getElementById('videos').getAttribute('data-userLikedVideos');
-  var userID = document.getElementById('videos').getAttribute('data-userID');
+  var userLikedVideos = document.getElementById('videos').getAttribute('userlikedvideos');
+  var userID = document.getElementById('videos').getAttribute('userid');
   react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_VideosIndex_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], {
     userLikedVideos: userLikedVideos,
     userID: userID
@@ -18241,16 +18246,16 @@ if (document.getElementById('videos-add')) {
 }
 
 if (document.getElementById('level')) {
-  var levelID = document.getElementById('level').getAttribute('data-levelID');
+  var levelID = document.getElementById('level').getAttribute('levelid');
   react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_Level_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], {
     levelID: levelID
   }), document.getElementById('level'));
 }
 
 if (document.getElementById('topic')) {
-  var levelID = document.getElementById('topic').getAttribute('data-levelID');
-  var topicID = document.getElementById('topic').getAttribute('data-topicID');
-  var completed = document.getElementById('topic').getAttribute('data-completed');
+  var levelID = document.getElementById('topic').getAttribute('levelid');
+  var topicID = document.getElementById('topic').getAttribute('topicid');
+  var completed = document.getElementById('topic').getAttribute('completed');
   react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_Topic_jsx__WEBPACK_IMPORTED_MODULE_6__["default"], {
     levelID: levelID,
     topicID: topicID,
@@ -18259,27 +18264,27 @@ if (document.getElementById('topic')) {
 }
 
 if (document.getElementById('login')) {
-  var errors = document.getElementById('login').getAttribute('data-errors');
+  var errors = document.getElementById('login').getAttribute('errors');
   react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_Login_jsx__WEBPACK_IMPORTED_MODULE_7__["default"], {
     errors: errors
   }), document.getElementById('login'));
 }
 
 if (document.getElementById('register')) {
-  var errors = document.getElementById('register').getAttribute('data-errors');
+  var errors = document.getElementById('register').getAttribute('errors');
   react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_Register_jsx__WEBPACK_IMPORTED_MODULE_8__["default"], {
     errors: errors
   }), document.getElementById('register'));
 }
 
 if (document.getElementById('account-profile')) {
-  var user = document.getElementById('account-profile').getAttribute('data-user');
-  var authenticatedUser = document.getElementById('account-profile').getAttribute('data-authenticatedUser');
-  var isCurrentUser = document.getElementById('account-profile').getAttribute('data-isCurrentUser');
-  var pathResolver = document.getElementById('account-profile').getAttribute('data-pathResolver');
+  var userID = document.getElementById('account-profile').getAttribute('userid');
+  var authenticatedUserID = document.getElementById('account-profile').getAttribute('authenticateduserid');
+  var isCurrentUser = document.getElementById('account-profile').getAttribute('iscurrentuser');
+  var pathResolver = document.getElementById('account-profile').getAttribute('pathresolver');
   react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_AccountProfile_jsx__WEBPACK_IMPORTED_MODULE_9__["default"], {
-    user: user,
-    authenticatedUser: authenticatedUser,
+    userID: userID,
+    authenticatedUserID: authenticatedUserID,
     isCurrentUser: eval(isCurrentUser),
     pathResolver: pathResolver
   }), document.getElementById('account-profile'));

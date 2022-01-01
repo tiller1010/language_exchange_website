@@ -13,40 +13,40 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'css-modal/build/modal.css';
 
 if(document.getElementById('home')){
-	var userLikedVideos = document.getElementById('home').getAttribute('data-userLikedVideos');
-	var userID = document.getElementById('home').getAttribute('data-userID');
+	var userLikedVideos = document.getElementById('home').getAttribute('userlikedvideos');
+	var userID = document.getElementById('home').getAttribute('userid');
 	ReactDOM.render(<Home userLikedVideos={userLikedVideos} userID={userID}/>, document.getElementById('home'));
 }
 if(document.getElementById('videos')){
-	var userLikedVideos = document.getElementById('videos').getAttribute('data-userLikedVideos');
-	var userID = document.getElementById('videos').getAttribute('data-userID');
+	var userLikedVideos = document.getElementById('videos').getAttribute('userlikedvideos');
+	var userID = document.getElementById('videos').getAttribute('userid');
 	ReactDOM.render(<VideosIndex userLikedVideos={userLikedVideos} userID={userID}/>, document.getElementById('videos'));
 }
 if(document.getElementById('videos-add')){
 	ReactDOM.render(<VideosAdd/>, document.getElementById('videos-add'));
 }
 if(document.getElementById('level')){
-	var levelID = document.getElementById('level').getAttribute('data-levelID');
+	var levelID = document.getElementById('level').getAttribute('levelid');
 	ReactDOM.render(<Level levelID={levelID}/>, document.getElementById('level'));
 }
 if(document.getElementById('topic')){
-	var levelID = document.getElementById('topic').getAttribute('data-levelID');
-	var topicID = document.getElementById('topic').getAttribute('data-topicID');
-	var completed = document.getElementById('topic').getAttribute('data-completed');
+	var levelID = document.getElementById('topic').getAttribute('levelid');
+	var topicID = document.getElementById('topic').getAttribute('topicid');
+	var completed = document.getElementById('topic').getAttribute('completed');
 	ReactDOM.render(<Topic levelID={levelID} topicID={topicID} completed={eval(completed)}/>, document.getElementById('topic'));
 }
 if(document.getElementById('login')){
-	var errors = document.getElementById('login').getAttribute('data-errors');
+	var errors = document.getElementById('login').getAttribute('errors');
 	ReactDOM.render(<Login errors={errors}/>, document.getElementById('login'));
 }
 if(document.getElementById('register')){
-	var errors = document.getElementById('register').getAttribute('data-errors');
+	var errors = document.getElementById('register').getAttribute('errors');
 	ReactDOM.render(<Register errors={errors}/>, document.getElementById('register'));
 }
 if(document.getElementById('account-profile')){
-	var user = document.getElementById('account-profile').getAttribute('data-user');
-	var authenticatedUser = document.getElementById('account-profile').getAttribute('data-authenticatedUser');
-	var isCurrentUser = document.getElementById('account-profile').getAttribute('data-isCurrentUser');
-	var pathResolver = document.getElementById('account-profile').getAttribute('data-pathResolver');
-	ReactDOM.render(<AccountProfile user={user} authenticatedUser={authenticatedUser} isCurrentUser={eval(isCurrentUser)} pathResolver={pathResolver}/>, document.getElementById('account-profile'));
+	var userID = document.getElementById('account-profile').getAttribute('userid');
+	var authenticatedUserID = document.getElementById('account-profile').getAttribute('authenticateduserid');
+	var isCurrentUser = document.getElementById('account-profile').getAttribute('iscurrentuser');
+	var pathResolver = document.getElementById('account-profile').getAttribute('pathresolver');
+	ReactDOM.render(<AccountProfile userID={userID} authenticatedUserID={authenticatedUserID} isCurrentUser={eval(isCurrentUser)} pathResolver={pathResolver}/>, document.getElementById('account-profile'));
 }

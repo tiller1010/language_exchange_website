@@ -30,14 +30,19 @@ class AccountProfile extends React.Component {
 	}
 
 	async componentDidMount(){
-		if(this.props.user){
+		if(this.props.userID){
 			this.findAndSyncUser();
 		}
 	}
 
 	async findAndSyncUser(){
-		const userProfile = JSON.parse(this.props.user);
-		const authenticatedUser = JSON.parse(this.props.authenticatedUser);
+		let userProfile = await fetch(`/user/${this.props.userID}`)
+			.then((response) => response.json());
+		let authenticatedUser;
+		if(this.props.authenticatedUserID){
+			authenticatedUser = await fetch(`/user/${this.props.authenticatedUserID}`)
+				.then((response) => response.json());
+		}
 		if(userProfile && authenticatedUser){
 			// Check if user has liked their own video
 			if(userProfile.uploadedVideos && authenticatedUser.likedVideos){
@@ -60,11 +65,14 @@ class AccountProfile extends React.Component {
 				});
 			}
 		}
-		this.setState({ user: userProfile });
+		this.setState({
+			user: userProfile,
+			authenticatedUser,
+		});
 	}
 
 	async verifyUser(verificationStatus){
-		if(this.props.user){
+		if(this.props.userID){
 			const query = `mutation verifyUser($userID: ID!, $verificationStatus: Boolean!){
 				verifyUser(userID: $userID, verificationStatus: $verificationStatus){
 					verified
@@ -147,7 +155,7 @@ class AccountProfile extends React.Component {
 
 	render(){
 
-		const authenticatedUser = JSON.parse(this.props.authenticatedUser);
+		const authenticatedUser = this.state.authenticatedUser;
 		const authenticatedUserIsAdmin = authenticatedUser ? authenticatedUser.isAdmin : false;
 		const authenticatedUserIsVerified = authenticatedUser ? authenticatedUser.verified : false;
 		const products = this.state.user.products || [];
@@ -310,7 +318,7 @@ class AccountProfile extends React.Component {
 										likes={video.likes}
 										likedByCurrentUser={video.likedByCurrentUser}
 										authenticatedUserID={authenticatedUser ? authenticatedUser._id : null}
-										handleDeleteVideo={this.handleDeleteVideo}
+										handleDeleteVideo={this.props.isCurrentUser ? this.handleDeleteVideo : null}
 										afterToggleLike={this.afterToggleLike}
 						    		/>
 								</div>

@@ -19,17 +19,12 @@ type User {
 	lastName: String!
 	passwordHash: String!
 	completedTopics: String!
-	uploadedVideos: String!
 	verified: Boolean
 	isAdmin: Boolean!
-	likedVideos: [Video!]!
+	uploadedVideos: [Video!]
+	likedVideos: [Video!]
+	products: [Product!]
 	premiumVideoChatListing: PremiumVideoChatListing
-}
-
-type Products {
-	_id: ID
-	userID: ID
-	products: [Product]
 }
 
 # union PossibleProduct = PremiumVideoChatListing | OtherProduct
@@ -71,6 +66,7 @@ type Query {
 	indexVideos: [Video]
 	getRecentPremiumVideoChatListings: PremiumVideoChatListingFeed
 	searchPremiumVideoChatListings(topic: String, language: String): PremiumVideoChatListingFeed
+	findUserByID(userID: String!): User
 }
 
 type Mutation {

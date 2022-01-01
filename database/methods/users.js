@@ -57,6 +57,12 @@ async function findUserByID(id){
 	return user;
 }
 
+async function graphql_findUserByID(_, { userID }){
+	const db = getDB();
+	let user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
+	return user;
+}
+
 async function addCompletedTopic(userID, topic){
 	const db = getDB();
 	let user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
@@ -96,4 +102,4 @@ async function verifyUser(_, {userID, verificationStatus}){
 }
 
 
-module.exports = { addUser, findAndSyncUser, findUserByID, addCompletedTopic, removeCompletedTopic, verifyUser };
+module.exports = { addUser, findAndSyncUser, findUserByID, graphql_findUserByID, addCompletedTopic, removeCompletedTopic, verifyUser };

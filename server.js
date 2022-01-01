@@ -240,18 +240,19 @@ app.use(express.json());
 			async (req, res) => {
 				if(req.params.viewOtherUserID){
 					let user = await findAndSyncUser(req.params.viewOtherUserID, 'id');
+					let isCurrentUser = req.user ? String(req.user._id) == String(user._id) : false;
 					return res.render('account-profile', {
-						user,
-						authenticatedUser: req.user || null,
-						isCurrentUser: false,
-						pathResolver: '../'
+						userID: user._id,
+						authenticatedUserID: req.user ? req.user._id : null,
+						isCurrentUser,
+						pathResolver: '../',
 					});
 				}else if(req.user){
 					let user = req.user;
 					return res.render('account-profile', {
-						user,
-						authenticatedUser: req.user || null,
-						isCurrentUser: true
+						userID: user._id,
+						authenticatedUserID: req.user._id,
+						isCurrentUser: true,
 					});
 				} else {
 					return res.redirect('/login');

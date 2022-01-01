@@ -7,7 +7,7 @@ const Level = (props) => {
 		<div className="pad">
 			<h1>Level {props.levelID}</h1>
 		</div>
-		<div id="level" data-levelID={props.levelID}></div>
+		<div id="level" levelid={props.levelID}></div>
 	</DefaultLayout>
   );
 }
