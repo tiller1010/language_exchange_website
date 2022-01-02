@@ -6,7 +6,7 @@ async function createProduct(_, { productObjectCollection, productDescription, p
 	const db = getDB();
 	let user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
 	let productObject = await db.collection(productObjectCollection).findOne({ _id: new mongo.ObjectID(productObjectID) });
-	const stripePrice = await createOrder('test@email.com', productDescription, productObject.price * 100, productObject.currency);
+	const stripePrice = await createOrder('test@email.com', productDescription, Math.floor(productObject.price * 100), productObject.currency);
 	let products = user.products || [];
 	const product = {
 		userID,

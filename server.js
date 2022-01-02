@@ -2,9 +2,11 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
-const appPort = process.env.APP_PORT || 3000;
 const session = require('express-session');
 const flash = require('connect-flash');
+const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
+const appPort = process.env.APP_PORT || 3000;
 
 // Database Methods
 const { addLike, removeLike } = require('./database/methods/likes.js');
@@ -38,6 +40,7 @@ app.use(session({
 	saveUninitialized: true
 }));
 app.use(flash());
+app.use(cookieParser());
 
 app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -213,13 +216,15 @@ app.use(express.json());
 				created: new Date(),
 				uploadedBy: req.user ? { _id: req.user._id, displayName: req.user.displayName } : { displayName: 'Guest' }
 			});
+			let redirectTo = '/videos';
 			if(req.user){
+				redirectTo = '/account-profile';
 				await addVideoToUsersUploads(newVideo, req.user._id);
 			}
 			if(req.body.nativeFlag){
 				res.status(200).send('Successful upload');
 			} else {
-				res.redirect('/videos');
+				res.redirect(redirectTo);
 			}
 		});
 
@@ -269,16 +274,43 @@ app.use(express.json());
 			res.render('login', { errors });
 		});
 		// Submit login form
-		app.post('/login', passport.authenticate('local-login', {
-			successRedirect: '/account-profile',
-			failureRedirect: '/login',
-			failureFlash: true 
-		}));
+		app.post('/login', async (req, res) => {
+			// Set JWT cookie to stay signed in
+			const { displayName, password } = req.body;
+			if((displayName && password) && !req.cookies.jwt){
+			// if(displayName && password){
+				const user = await findAndSyncUser(displayName, 'local');
+				if(user){
+					const { JWT_SECRET } = process.env;
+					const credentials = {
+						displayName,
+						strategy: 'local',
+					};
+					const token = jwt.sign(credentials, JWT_SECRET);
+					const domain = process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL || 'localhost';
+
+					if(domain){
+						res.cookie('jwt', token, { httpOnly: true, domain });
+					} else {
+						res.cookie('jwt', token, { httpOnly: true });
+					}
+				}
+			}
+			passport.authenticate('local-login', {
+				successRedirect: '/account-profile',
+				failureRedirect: '/login',
+				failureFlash: true 
+			})(req, res);
+		});
 		// Submit login form from react native
 		app.post('/react-native-login', passport.authenticate('local-login'), async (req, res) => {
 			if(req.body.nativeFlag && req.user){
 				res.status(200).json(req.user);
 			}
+		});
+		// Check if should perform JWT login
+		app.get('/do-jwt-login', (req, res) => {
+			return res.status(200).json(req.cookies.jwt && (!req.user));
 		});
 
 		// Google login
@@ -328,8 +360,9 @@ app.use(express.json());
 
 		// Account logout
 		app.get('/logout', (req, res) => {
+			res.clearCookie('jwt');
 			req.logout();
-			res.redirect('/');
+			res.redirect('/login');
 		});
 
 		// Find user api for react native

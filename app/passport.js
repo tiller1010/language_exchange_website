@@ -3,6 +3,9 @@ const LocalStrategy = require('passport-local');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const { addUser, findAndSyncUser } = require('../database/methods/users.js');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+let { JWT_SECRET } = process.env;
 
 passport.use('local-login', new LocalStrategy({
 		usernameField: 'displayName',
@@ -10,12 +13,25 @@ passport.use('local-login', new LocalStrategy({
 		passReqToCallback: true
 	}, async (req, displayName, password, done) => {
 		try {
+
+			// Login with JWT cookie if it exists
+			if(req.cookies && (!req.user)){
+				if(req.cookies.jwt){
+					const token = req.cookies.jwt;
+					const credentials = jwt.verify(token, JWT_SECRET);
+					const user = await findAndSyncUser(credentials.displayName, credentials.strategy);
+					return done(null, user);
+				}
+			}
+
 			let user = await findAndSyncUser(displayName, 'local');
 
 			if(user){
 				if(!bcrypt.compareSync(password, user.passwordHash)){
 					return done(null, false, { message: 'Incorrect password.' });
 				}
+
+				// Return logged in user
 				return done(null, user);
 			} else {
 				return done(null, false, { message: 'No user found with that name.' });

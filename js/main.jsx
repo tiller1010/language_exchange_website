@@ -12,6 +12,25 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'css-modal/build/modal.css';
 
+(async function(){
+	await fetch('/do-jwt-login')
+		.then((response) => response.json())
+		.then((data) => data)
+		.then(async (doJWTLogin) => {
+			if(doJWTLogin){
+				await fetch('/login', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						displayName: 'JWT_DISPLAYNAME',
+						password: 'JWT_PASSWORD',
+					})
+				})
+				.then((response) => document.location = response.url);
+			}
+		})
+})();
+
 if(document.getElementById('home')){
 	var userLikedVideos = document.getElementById('home').getAttribute('userlikedvideos');
 	var userID = document.getElementById('home').getAttribute('userid');
