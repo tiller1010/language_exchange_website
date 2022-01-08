@@ -19,7 +19,7 @@ passport.use('local-login', new LocalStrategy({
 				if(req.cookies.jwt){
 					const token = req.cookies.jwt;
 					const credentials = jwt.verify(token, JWT_SECRET);
-					const user = await findAndSyncUser(credentials.displayName, credentials.strategy);
+					const user = await findAndSyncUser(credentials.identifier, credentials.strategy); // Works for other strategies: (Google)
 					return done(null, user);
 				}
 			}

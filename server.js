@@ -278,12 +278,11 @@ app.use(express.json());
 			// Set JWT cookie to stay signed in
 			const { displayName, password } = req.body;
 			if((displayName && password) && !req.cookies.jwt){
-			// if(displayName && password){
 				const user = await findAndSyncUser(displayName, 'local');
 				if(user){
 					const { JWT_SECRET } = process.env;
 					const credentials = {
-						displayName,
+						identifier: displayName,
 						strategy: 'local',
 					};
 					const token = jwt.sign(credentials, JWT_SECRET);
@@ -322,6 +321,23 @@ app.use(express.json());
 			next();
 		}, passport.authenticate('google', { scope: 'https://www.googleapis.com/auth/plus.login' }));
 		app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
+
+			if((req.user) && !req.cookies.jwt){
+				const { JWT_SECRET } = process.env;
+				const credentials = {
+					identifier: req.user.googleID,
+					strategy: 'google',
+				};
+				const token = jwt.sign(credentials, JWT_SECRET);
+				const domain = process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL || 'localhost';
+
+				if(domain){
+					res.cookie('jwt', token, { httpOnly: true, domain });
+				} else {
+					res.cookie('jwt', token, { httpOnly: true });
+				}
+			}
+
 			if(googleNativeFlag && req.user){
 				googleNativeFlag = false;
 				res.redirect(process.env.REACT_NATIVE_APP_URL + '?userID=' + String(req.user._id));
