@@ -230,6 +230,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 					<div>
 						<label htmlFor="price">Price</label>
 						<input type="number" min="0.50" step="0.01" name="price" value={price} onChange={(event) => this.setState({price: Number(event.target.value)})} className="pure-input-rounded"/>
+						<p><i>Application fees will be applied</i></p>
 					</div>
 					<div>
 						<label htmlFor="currency">Currency</label>

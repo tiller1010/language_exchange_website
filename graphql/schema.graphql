@@ -25,6 +25,7 @@ type User {
 	likedVideos: [Video!]
 	products: [Product!]
 	premiumVideoChatListing: PremiumVideoChatListing
+	connectedStripeAccountID: String
 }
 
 # union PossibleProduct = PremiumVideoChatListing | OtherProduct

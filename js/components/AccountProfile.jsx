@@ -1,7 +1,7 @@
 import React from 'react';
 import Navigation from './Navigation.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faLongArrowAltRight, faUser } from '@fortawesome/free-solid-svg-icons';
 import Slider from 'react-slick';
 import graphQLFetch from '../graphQLFetch.js';
 import VideoPlayer from './VideoPlayer.tsx';
@@ -198,7 +198,20 @@ class AccountProfile extends React.Component {
 					''
 				}
 				{authenticatedUserIsVerified && this.props.isCurrentUser ?
-					<PremiumVideoChatListingForm user={authenticatedUser}/>
+					<>
+						<PremiumVideoChatListingForm user={authenticatedUser}/>
+						<p>
+							{authenticatedUser.connectedStripeAccountID ?
+								<p>Stripe Account ID: {authenticatedUser.connectedStripeAccountID}</p>
+								:
+								''
+							}
+							<a href={`/manage-stripe-account/${authenticatedUser.connectedStripeAccountID || ''}`} className="button">
+								Manage Stripe Account
+								<FontAwesomeIcon icon={faUser}/>
+							</a>
+						</p>
+					</>
 					:
 					''
 				}

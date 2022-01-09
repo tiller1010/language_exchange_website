@@ -10,7 +10,7 @@ const appPort = process.env.APP_PORT || 3000;
 
 // Database Methods
 const { addLike, removeLike } = require('./database/methods/likes.js');
-const { addUser, findAndSyncUser, findUserByID, addCompletedTopic, removeCompletedTopic } = require('./database/methods/users.js');
+const { addUser, findAndSyncUser, findUserByID, addCompletedTopic, removeCompletedTopic, addStripeAccountIDToUser } = require('./database/methods/users.js');
 const { indexVideos, addVideo, removeVideo, getRecent, addVideoToUsersUploads } = require('./database/methods/videos.js');
 const { completeOrder } = require('./database/methods/products.js');
 
@@ -19,6 +19,7 @@ const { getTopic, getTopicChallenges } = require('./strapi/topics.js');
 
 // App Services
 const { passport } = require('./app/passport.js');
+const bcrypt = require('bcrypt');
 const createSearchService = require('./app/search.js');
 const upload = require('./app/upload.js')();
 const stripe = require('stripe')(process.env.STRIPE_SECRET || '');
@@ -279,7 +280,7 @@ app.use(express.json());
 			const { displayName, password } = req.body;
 			if((displayName && password) && !req.cookies.jwt){
 				const user = await findAndSyncUser(displayName, 'local');
-				if(user){
+				if(user && bcrypt.compareSync(password, user.passwordHash)){
 					const { JWT_SECRET } = process.env;
 					const credentials = {
 						identifier: displayName,
@@ -322,7 +323,7 @@ app.use(express.json());
 		}, passport.authenticate('google', { scope: 'https://www.googleapis.com/auth/plus.login' }));
 		app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
 
-			if((req.user) && !req.cookies.jwt){
+			if(req.user && !req.cookies.jwt){
 				const { JWT_SECRET } = process.env;
 				const credentials = {
 					identifier: req.user.googleID,
@@ -389,11 +390,61 @@ app.use(express.json());
 			}
 		});
 
+		// Stripe account creation
+		app.get('/manage-stripe-account/:accountID?', async (req, res) => {
+			if(req.user){
+				let account;
+				if(req.params.accountID){
+					account = await stripe.accounts.retrieve(req.params.accountID);
+
+					// Redirect to Stripe login if already onboarded
+					if(account.charges_enabled && account.payouts_enabled){
+						return res.redirect('https://dashboard.stripe.com/login');
+					}
+				} else {
+					account = await stripe.accounts.create({
+						country: 'US',
+						type: 'express',
+						capabilities: {
+							card_payments: {
+								requested: true
+							},
+							transfers: {
+								requested: true
+							},
+						},
+						business_type: 'individual',
+					});
+
+					// Add connectedStripeAccountID to user
+					await addStripeAccountIDToUser(req.user._id, account.id);
+				}
+
+				let return_url = process.env.SECURED_DOMAIN_WITH_PROTOCOL ? process.env.SECURED_DOMAIN_WITH_PROTOCOL : `http://localhost:${appPort}`;
+				return_url += `/account-profile`;
+
+				let refresh_url = process.env.SECURED_DOMAIN_WITH_PROTOCOL ? process.env.SECURED_DOMAIN_WITH_PROTOCOL : `http://localhost:${appPort}`;
+				refresh_url += `/account-profile`;
+
+
+				const accountLink = await stripe.accountLinks.create({
+					account: account.id,
+					return_url,
+					refresh_url,
+					type: 'account_onboarding',
+				});
+
+				return res.redirect(accountLink.url);
+			}
+		});
+
 		// Stripe checkout
 		app.post('/create-checkout-session', async (req, res) => {
 			try {
 				const priceID = req.body.priceID;
 				const price = await stripe.prices.retrieve(priceID);
+
+				const connectedStripeAccountID = req.body.connectedStripeAccountID;
 
 				let success_url = process.env.SECURED_DOMAIN_WITH_PROTOCOL ? process.env.SECURED_DOMAIN_WITH_PROTOCOL : `http://localhost:${appPort}`;
 				success_url += `/complete-order/${priceID}`;
@@ -410,6 +461,12 @@ app.use(express.json());
 						},
 					],
 					mode: 'payment',
+					payment_intent_data: {
+						application_fee_amount: 123,
+						transfer_data: {
+							destination: connectedStripeAccountID,
+						},
+					},
 				});
 				return res.send(JSON.stringify(session));
 			} catch(e) {

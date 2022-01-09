@@ -16811,9 +16811,14 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       type: "checkbox",
       name: "verifyUser",
       onChange: event => this.verifyUser(!this.state.user.verified)
-    }))) : '', authenticatedUserIsVerified && this.props.isCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_PremiumVideoChatListingForm_tsx__WEBPACK_IMPORTED_MODULE_7___default()), {
+    }))) : '', authenticatedUserIsVerified && this.props.isCurrentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_PremiumVideoChatListingForm_tsx__WEBPACK_IMPORTED_MODULE_7___default()), {
       user: authenticatedUser
-    }) : '', this.state.user.completedTopics.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, authenticatedUser.connectedStripeAccountID ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Stripe Account ID: ", authenticatedUser.connectedStripeAccountID) : '', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: `/manage-stripe-account/${authenticatedUser.connectedStripeAccountID || ''}`,
+      className: "button"
+    }, "Manage Stripe Account", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_9__.faUser
+    })))) : '', this.state.user.completedTopics.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "topics"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
       className: "text-center"
@@ -18686,14 +18691,14 @@ function (_super) {
 
   PremiumVideoChatListingFeed.prototype.handleBuyNow = function (listing) {
     return __awaiter(this, void 0, void 0, function () {
-      var authenticatedUserID, query, data, stripe_1;
+      var authenticatedUserID, query, data, productUser, stripe_1;
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
             authenticatedUserID = this.props.authenticatedUserID;
             if (!authenticatedUserID) return [3
             /*break*/
-            , 4];
+            , 5];
             query = "mutation createProduct($productObjectCollection: String!, $productDescription: String!, $productObjectID: ID!, $userID: ID!){\n\t\t\t\tcreateProduct(productObjectCollection: $productObjectCollection, productDescription: $productDescription, productObjectID: $productObjectID, userID: $userID){\n\t\t\t\t\tuserID\n\t\t\t\t\tcost\n\t\t\t\t\tcurrency\n\t\t\t\t\torderedOn\n\t\t\t\t\tproductObject {\n\t\t\t\t\t\t... on PremiumVideoChatListing{\n\t\t\t\t\t\t\t_id\n\t\t\t\t\t\t\tuserID\n\t\t\t\t\t\t\ttopic\n\t\t\t\t\t\t\tlanguage\n\t\t\t\t\t\t\tthumbnailSrc\n\t\t\t\t\t\t\tprice\n\t\t\t\t\t\t\tcurrency\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\tpriceID\n\t\t\t\t}\n\t\t\t}";
             return [4
             /*yield*/
@@ -18708,15 +18713,26 @@ function (_super) {
             data = _a.sent();
             if (!data.createProduct) return [3
             /*break*/
-            , 3];
-            if (!data.createProduct.priceID) return [3
+            , 4];
+            if (!(data.createProduct.priceID && listing.userID)) return [3
             /*break*/
-            , 3];
+            , 4];
+            return [4
+            /*yield*/
+            , fetch("/user/" + listing.userID).then(function (response) {
+              return response.json();
+            })];
+
+          case 2:
+            productUser = _a.sent();
+            if (!productUser.connectedStripeAccountID) return [3
+            /*break*/
+            , 4];
             return [4
             /*yield*/
             , (0, stripe_js_1.loadStripe)("pk_test_51K5VhTKFlSir9ysi41Tl8YwRjRHsClf5ehSCkavclj789g8CpNRBTDk8iGvpro09CZxMDDiBCmzAKL2sKHAoRdaJ00YRnkKrkm" || 0)];
 
-          case 2:
+          case 3:
             stripe_1 = _a.sent();
             fetch('/create-checkout-session', {
               method: 'POST',
@@ -18724,7 +18740,8 @@ function (_super) {
                 'Content-Type': 'application/json'
               },
               body: JSON.stringify({
-                priceID: data.createProduct.priceID
+                priceID: data.createProduct.priceID,
+                connectedStripeAccountID: productUser.connectedStripeAccountID
               })
             }).then(function (response) {
               return response.json();
@@ -18740,18 +18757,18 @@ function (_super) {
                 alert(result.error.message);
               }
             });
-            _a.label = 3;
-
-          case 3:
-            return [3
-            /*break*/
-            , 5];
+            _a.label = 4;
 
           case 4:
-            alert('Must be signed in to buy.');
-            _a.label = 5;
+            return [3
+            /*break*/
+            , 6];
 
           case 5:
+            alert('Must be signed in to buy.');
+            _a.label = 6;
+
+          case 6:
             return [2
             /*return*/
             ];
@@ -19267,7 +19284,7 @@ function (_super) {
         });
       },
       className: "pure-input-rounded"
-    })), React.createElement("div", null, React.createElement("label", {
+    }), React.createElement("p", null, React.createElement("i", null, "Application fees will be applied"))), React.createElement("div", null, React.createElement("label", {
       htmlFor: "currency"
     }, "Currency"), React.createElement("input", {
       type: "text",

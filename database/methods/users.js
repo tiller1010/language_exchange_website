@@ -101,5 +101,12 @@ async function verifyUser(_, {userID, verificationStatus}){
 	return user;
 }
 
+async function addStripeAccountIDToUser(userID, connectedStripeAccountID){
+	const db = getDB();
+	await db.collection('users').updateOne({ _id: new mongo.ObjectID(userID) }, { $set: { connectedStripeAccountID } });
+	const user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
+	return user;
+}
 
-module.exports = { addUser, findAndSyncUser, findUserByID, graphql_findUserByID, addCompletedTopic, removeCompletedTopic, verifyUser };
+
+module.exports = { addUser, findAndSyncUser, findUserByID, graphql_findUserByID, addCompletedTopic, removeCompletedTopic, verifyUser, addStripeAccountIDToUser };

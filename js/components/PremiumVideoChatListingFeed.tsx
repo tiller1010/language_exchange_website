@@ -130,31 +130,39 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 				userID: authenticatedUserID,
 			});
 			if(data.createProduct){
-				if(data.createProduct.priceID){
+				if(data.createProduct.priceID && listing.userID){
 
-					const stripe = await loadStripe(process.env.STRIPE_PUBLIC_KEY || '');
+					// Get the user that made the product
+					const productUser = await fetch(`/user/${listing.userID}`)
+						.then((response) => response.json());
 
-					fetch('/create-checkout-session', {
-					    method: 'POST',
-					    headers: { 'Content-Type': 'application/json' },
-					    body: JSON.stringify({
-					      priceID: data.createProduct.priceID,
-					    })
-					  })
-					  .then(function(response) {
-					    return response.json();
-					  })
-					  .then(function(session) {
-					    return stripe.redirectToCheckout({ sessionId: session.id });
-					  })
-					  .then(function(result) {
-					    // If `redirectToCheckout` fails due to a browser or network
-					    // error, you should display the localized error message to your
-					    // customer using `error.message`.
-					    if (result.error) {
-					      alert(result.error.message);
-					    }
-					  });
+					if(productUser.connectedStripeAccountID){
+
+						const stripe = await loadStripe(process.env.STRIPE_PUBLIC_KEY || '');
+
+						fetch('/create-checkout-session', {
+						    method: 'POST',
+						    headers: { 'Content-Type': 'application/json' },
+						    body: JSON.stringify({
+						      priceID: data.createProduct.priceID,
+						      connectedStripeAccountID: productUser.connectedStripeAccountID,
+						    })
+						  })
+						  .then(function(response) {
+						    return response.json();
+						  })
+						  .then(function(session) {
+						    return stripe.redirectToCheckout({ sessionId: session.id });
+						  })
+						  .then(function(result) {
+						    // If `redirectToCheckout` fails due to a browser or network
+						    // error, you should display the localized error message to your
+						    // customer using `error.message`.
+						    if (result.error) {
+						      alert(result.error.message);
+						    }
+						  });
+					}
 
 				}
 			}
