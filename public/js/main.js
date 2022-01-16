@@ -18371,10 +18371,11 @@ function (_super) {
     var _a = this.props.premiumVideoChatListing,
         topic = _a.topic,
         language = _a.language,
+        duration = _a.duration,
         price = _a.price,
         currency = _a.currency,
         thumbnailSrc = _a.thumbnailSrc;
-    return React.createElement("div", null, React.createElement("p", null, topic), React.createElement("p", null, language), React.createElement("p", null, price), React.createElement("p", null, currency), React.createElement("div", {
+    return React.createElement("div", null, React.createElement("p", null, topic), React.createElement("p", null, language), React.createElement("p", null, duration), React.createElement("p", null, price), React.createElement("p", null, currency), React.createElement("div", {
       className: "thumbnail-preview img-container"
     }, React.createElement("img", {
       style: {
@@ -18629,7 +18630,7 @@ function (_super) {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            query = "query getRecentPremiumVideoChatListings{\n\t\t\tgetRecentPremiumVideoChatListings{\n\t\t\t\tlistings {\n\t\t\t\t\t_id\n\t\t\t\t\ttopic\n\t\t\t\t\tlanguage\n\t\t\t\t\tprice\n\t\t\t\t\tcurrency\n\t\t\t\t\tthumbnailSrc\n\t\t\t\t\tuserID\n\t\t\t\t}\n\t\t\t}\n\t\t}";
+            query = "query getRecentPremiumVideoChatListings{\n\t\t\tgetRecentPremiumVideoChatListings{\n\t\t\t\tlistings {\n\t\t\t\t\t_id\n\t\t\t\t\ttopic\n\t\t\t\t\tlanguage\n\t\t\t\t\tduration\n\t\t\t\t\tprice\n\t\t\t\t\tcurrency\n\t\t\t\t\tthumbnailSrc\n\t\t\t\t\tuserID\n\t\t\t\t}\n\t\t\t}\n\t\t}";
             return [4
             /*yield*/
             , (0, graphQLFetch_js_1.default)(query)];
@@ -18662,7 +18663,7 @@ function (_super) {
           case 0:
             event.preventDefault();
             _a = this.state, topic = _a.topic, language = _a.language;
-            query = "query searchPremiumVideoChatListings($topic: String, $language: String){\n\t\t\tsearchPremiumVideoChatListings(topic: $topic, language: $language){\n\t\t\t\tlistings {\n\t\t\t\t\t_id\n\t\t\t\t\ttopic\n\t\t\t\t\tlanguage\n\t\t\t\t\tprice\n\t\t\t\t\tcurrency\n\t\t\t\t\tthumbnailSrc\n\t\t\t\t\tuserID\n\t\t\t\t}\n\t\t\t}\n\t\t}";
+            query = "query searchPremiumVideoChatListings($topic: String, $language: String){\n\t\t\tsearchPremiumVideoChatListings(topic: $topic, language: $language){\n\t\t\t\tlistings {\n\t\t\t\t\t_id\n\t\t\t\t\ttopic\n\t\t\t\t\tlanguage\n\t\t\t\t\tduration\n\t\t\t\t\tprice\n\t\t\t\t\tcurrency\n\t\t\t\t\tthumbnailSrc\n\t\t\t\t\tuserID\n\t\t\t\t}\n\t\t\t}\n\t\t}";
             return [4
             /*yield*/
             , (0, graphQLFetch_js_1.default)(query, {
@@ -18699,7 +18700,7 @@ function (_super) {
             if (!authenticatedUserID) return [3
             /*break*/
             , 5];
-            query = "mutation createProduct($productObjectCollection: String!, $productDescription: String!, $productObjectID: ID!, $userID: ID!){\n\t\t\t\tcreateProduct(productObjectCollection: $productObjectCollection, productDescription: $productDescription, productObjectID: $productObjectID, userID: $userID){\n\t\t\t\t\tuserID\n\t\t\t\t\tcost\n\t\t\t\t\tcurrency\n\t\t\t\t\torderedOn\n\t\t\t\t\tproductObject {\n\t\t\t\t\t\t... on PremiumVideoChatListing{\n\t\t\t\t\t\t\t_id\n\t\t\t\t\t\t\tuserID\n\t\t\t\t\t\t\ttopic\n\t\t\t\t\t\t\tlanguage\n\t\t\t\t\t\t\tthumbnailSrc\n\t\t\t\t\t\t\tprice\n\t\t\t\t\t\t\tcurrency\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\tpriceID\n\t\t\t\t}\n\t\t\t}";
+            query = "mutation createProduct($productObjectCollection: String!, $productDescription: String!, $productObjectID: ID!, $userID: ID!){\n\t\t\t\tcreateProduct(productObjectCollection: $productObjectCollection, productDescription: $productDescription, productObjectID: $productObjectID, userID: $userID){\n\t\t\t\t\tuserID\n\t\t\t\t\tcost\n\t\t\t\t\tcurrency\n\t\t\t\t\torderedOn\n\t\t\t\t\tproductObject {\n\t\t\t\t\t\t... on PremiumVideoChatListing{\n\t\t\t\t\t\t\t_id\n\t\t\t\t\t\t\tuserID\n\t\t\t\t\t\t\ttopic\n\t\t\t\t\t\t\tlanguage\n\t\t\t\t\t\t\tduration\n\t\t\t\t\t\t\tthumbnailSrc\n\t\t\t\t\t\t\tprice\n\t\t\t\t\t\t\tcurrency\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\tpriceID\n\t\t\t\t}\n\t\t\t}";
             return [4
             /*yield*/
             , (0, graphQLFetch_js_1.default)(query, {
@@ -19073,6 +19074,7 @@ function (_super) {
     var state = {
       topic: '',
       language: '',
+      duration: '',
       price: 0,
       currency: 'usd',
       thumbnailSrc: ''
@@ -19122,15 +19124,15 @@ function (_super) {
 
   PremiumVideoChatListingForm.prototype.handleSubmit = function (event) {
     return __awaiter(this, void 0, void 0, function () {
-      var _a, topic, language, price, currency, thumbnailSrc, thumbnailFile, savedPremiumVideoChatListing, user, query, variables, mutationName, data;
+      var _a, topic, language, duration, price, currency, thumbnailSrc, thumbnailFile, savedPremiumVideoChatListing, user, query, variables, mutationName, data;
 
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
             event.preventDefault();
-            _a = this.state, topic = _a.topic, language = _a.language, price = _a.price, currency = _a.currency, thumbnailSrc = _a.thumbnailSrc, thumbnailFile = _a.thumbnailFile, savedPremiumVideoChatListing = _a.savedPremiumVideoChatListing;
+            _a = this.state, topic = _a.topic, language = _a.language, duration = _a.duration, price = _a.price, currency = _a.currency, thumbnailSrc = _a.thumbnailSrc, thumbnailFile = _a.thumbnailFile, savedPremiumVideoChatListing = _a.savedPremiumVideoChatListing;
             user = this.props.user;
-            if (!(user && topic && language && thumbnailSrc)) return [3
+            if (!(user && topic && language && duration && thumbnailSrc)) return [3
             /*break*/
             , 2];
             query = void 0;
@@ -19139,12 +19141,13 @@ function (_super) {
 
             if (savedPremiumVideoChatListing) {
               // If updating existing
-              query = "mutation updatePremiumVideoChatListing($listingID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){\n\t\t\t\t\tupdatePremiumVideoChatListing(listingID: $listingID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){\n\t\t\t\t\t\t_id\n\t\t\t\t\t\ttopic\n\t\t\t\t\t\tlanguage\n\t\t\t\t\t\tprice\n\t\t\t\t\t\tcurrency\n\t\t\t\t\t\tthumbnailSrc\n\t\t\t\t\t\tuserID\n\t\t\t\t\t}\n\t\t\t\t}";
+              query = "mutation updatePremiumVideoChatListing($listingID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){\n\t\t\t\t\tupdatePremiumVideoChatListing(listingID: $listingID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){\n\t\t\t\t\t\t_id\n\t\t\t\t\t\ttopic\n\t\t\t\t\t\tlanguage\n\t\t\t\t\t\tduration\n\t\t\t\t\t\tprice\n\t\t\t\t\t\tcurrency\n\t\t\t\t\t\tthumbnailSrc\n\t\t\t\t\t\tuserID\n\t\t\t\t\t}\n\t\t\t\t}";
               variables = {
                 listingID: savedPremiumVideoChatListing._id,
                 premiumVideoChatListing: {
                   topic: topic,
                   language: language,
+                  duration: duration,
                   price: price,
                   currency: currency
                 }
@@ -19157,12 +19160,13 @@ function (_super) {
               mutationName = 'updatePremiumVideoChatListing';
             } else {
               // If adding new
-              query = "mutation addPremiumVideoChatListing($userID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){\n\t\t\t\t\taddPremiumVideoChatListing(userID: $userID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){\n\t\t\t\t\t\t_id\n\t\t\t\t\t\ttopic\n\t\t\t\t\t\tlanguage\n\t\t\t\t\t\tprice\n\t\t\t\t\t\tcurrency\n\t\t\t\t\t\tthumbnailSrc\n\t\t\t\t\t\tuserID\n\t\t\t\t\t}\n\t\t\t\t}";
+              query = "mutation addPremiumVideoChatListing($userID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){\n\t\t\t\t\taddPremiumVideoChatListing(userID: $userID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){\n\t\t\t\t\t\t_id\n\t\t\t\t\t\ttopic\n\t\t\t\t\t\tlanguage\n\t\t\t\t\t\tduration\n\t\t\t\t\t\tprice\n\t\t\t\t\t\tcurrency\n\t\t\t\t\t\tthumbnailSrc\n\t\t\t\t\t\tuserID\n\t\t\t\t\t}\n\t\t\t\t}";
               variables = {
                 userID: user._id,
                 premiumVideoChatListing: {
                   topic: topic,
                   language: language,
+                  duration: duration,
                   price: price,
                   currency: currency
                 },
@@ -19211,6 +19215,7 @@ function (_super) {
             emptyListingObject = {
               topic: '',
               language: '',
+              duration: '',
               thumbnailSrc: ''
             };
             this.setState(__assign(__assign({}, emptyListingObject), {
@@ -19230,6 +19235,7 @@ function (_super) {
     var _a = this.state,
         topic = _a.topic,
         language = _a.language,
+        duration = _a.duration,
         price = _a.price,
         currency = _a.currency,
         thumbnailSrc = _a.thumbnailSrc,
@@ -19271,6 +19277,19 @@ function (_super) {
         key: langCode
       }, languages.getLanguageName(langCode));
     }))), React.createElement("div", null, React.createElement("label", {
+      htmlFor: "duration"
+    }, "Duration"), React.createElement("input", {
+      type: "text",
+      name: "duration",
+      placeholder: "5 minutes",
+      value: duration,
+      onChange: function (event) {
+        return _this.setState({
+          duration: event.target.value
+        });
+      },
+      className: "pure-input-rounded"
+    })), React.createElement("div", null, React.createElement("label", {
       htmlFor: "price"
     }, "Price"), React.createElement("input", {
       type: "number",

@@ -3,6 +3,7 @@ import * as React from 'react';
 interface PremiumVideoChatListingObject {
 	topic: string;
 	language: string
+	duration: string
 	price: number
 	currency: string
 	thumbnailSrc: string
@@ -29,6 +30,7 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 		let {
 			topic,
 			language,
+			duration,
 			price,
 			currency,
 			thumbnailSrc
@@ -38,6 +40,7 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 			<div>
 				<p>{topic}</p>
 				<p>{language}</p>
+				<p>{duration}</p>
 				<p>{price}</p>
 				<p>{currency}</p>
 				<div className="thumbnail-preview img-container">

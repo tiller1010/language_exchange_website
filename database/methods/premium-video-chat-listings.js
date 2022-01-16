@@ -3,6 +3,8 @@ const path = require('path');
 const { getDB } = require('../db.js');
 const mongo = require('mongodb');
 const createSearchService = require('../../app/search.js');
+const { findUserByID } = require('./users.js');
+const stripe = require('stripe')(process.env.STRIPE_SECRET || '');
 
 function randomFilename() {
   var text = "";
@@ -17,8 +19,21 @@ function randomFilename() {
 
 async function getRecentPremiumVideoChatListings(_){
 	const db = getDB();
-	const premiumVideoChatListings = await db.collection('premium_video_chat_listings').find({}).sort({created: -1}).limit(5).toArray();
-	return { listings: premiumVideoChatListings };
+	let premiumVideoChatListings = await db.collection('premium_video_chat_listings').find({}).sort({created: -1}).limit(5).toArray();
+
+	// Only show purchasable listings
+	let purchasablePremiumVideoChatListings = [];
+	for(listing of premiumVideoChatListings){
+		const user = await findUserByID(listing.userID);
+		if(user.connectedStripeAccountID){
+			const account = await stripe.accounts.retrieve(user.connectedStripeAccountID);
+			if(account.charges_enabled && account.payouts_enabled){
+				purchasablePremiumVideoChatListings.push(listing);
+			}
+		}
+	}
+
+	return { listings: purchasablePremiumVideoChatListings };
 }
 
 async function searchPremiumVideoChatListings(_, { topic, language }){
@@ -31,8 +46,21 @@ async function searchPremiumVideoChatListings(_, { topic, language }){
 	if(language){
 		query.language = { $search: language };
 	}
-	const listings = await ListingSearchService.find({ query });
-	return { listings };
+	let listings = await ListingSearchService.find({ query });
+
+	// Only show purchasable listings
+	let purchasablePremiumVideoChatListings = [];
+	for(listing of listings){
+		const user = await findUserByID(listing.userID);
+		if(user.connectedStripeAccountID){
+			const account = await stripe.accounts.retrieve(user.connectedStripeAccountID);
+			if(account.charges_enabled && account.payouts_enabled){
+				purchasablePremiumVideoChatListings.push(listing);
+			}
+		}
+	}
+
+	return { listings: purchasablePremiumVideoChatListings };
 }
 
 async function addPremiumVideoChatListing(_, { userID, premiumVideoChatListing, thumbnailFile }){

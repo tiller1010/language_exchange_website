@@ -18,6 +18,7 @@ interface PremiumVideoChatListingObject {
 	_id: string;
 	topic: string;
 	language: string
+	duration: string
 	price: number
 	currency: string
 	thumbnailSrc: string
@@ -27,6 +28,7 @@ interface PremiumVideoChatListingObject {
 interface PremiumVideoChatListingFormState {
 	topic: string;
 	language: string
+	duration: string
 	price: number
 	currency: string
 	thumbnailSrc: string
@@ -44,6 +46,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 		let state: PremiumVideoChatListingFormState = {
 			topic: '',
 			language: '',
+			duration: '',
 			price: 0,
 			currency: 'usd',
 			thumbnailSrc: '',
@@ -94,6 +97,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 		let {
 			topic,
 			language,
+			duration,
 			price,
 			currency,
 			thumbnailSrc,
@@ -103,7 +107,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 
 		let { user } = this.props;
 
-		if(user && topic && language && thumbnailSrc){
+		if(user && topic && language && duration && thumbnailSrc){
 			let query;
 			let variables;
 			let mutationName;
@@ -114,6 +118,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 						_id
 						topic
 						language
+						duration
 						price
 						currency
 						thumbnailSrc
@@ -125,6 +130,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 					premiumVideoChatListing: {
 						topic,
 						language,
+						duration,
 						price,
 						currency,
 					}
@@ -140,6 +146,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 						_id
 						topic
 						language
+						duration
 						price
 						currency
 						thumbnailSrc
@@ -151,6 +158,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 					premiumVideoChatListing: {
 						topic,
 						language,
+						duration,
 						price,
 						currency,
 					},
@@ -188,6 +196,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 		const emptyListingObject = {
 			topic: '',
 			language: '',
+			duration: '',
 			thumbnailSrc: ''
 		}
 		this.setState({
@@ -201,6 +210,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 		let {
 			topic,
 			language,
+			duration,
 			price,
 			currency,
 			thumbnailSrc,
@@ -226,6 +236,10 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 								<option key={langCode}>{languages.getLanguageName(langCode)}</option>
 							)}
 						</select>
+					</div>
+					<div>
+						<label htmlFor="duration">Duration</label>
+						<input type="text" name="duration" placeholder="5 minutes" value={duration} onChange={(event) => this.setState({duration: event.target.value})} className="pure-input-rounded"/>
 					</div>
 					<div>
 						<label htmlFor="price">Price</label>

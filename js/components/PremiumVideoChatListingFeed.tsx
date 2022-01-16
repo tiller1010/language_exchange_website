@@ -46,6 +46,7 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 					_id
 					topic
 					language
+					duration
 					price
 					currency
 					thumbnailSrc
@@ -78,6 +79,7 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 					_id
 					topic
 					language
+					duration
 					price
 					currency
 					thumbnailSrc
@@ -115,6 +117,7 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 							userID
 							topic
 							language
+							duration
 							thumbnailSrc
 							price
 							currency
