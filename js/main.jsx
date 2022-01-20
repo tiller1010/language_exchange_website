@@ -8,6 +8,7 @@ import Topic from './components/Topic.jsx';
 import Login from './components/Login.jsx';
 import Register from './components/Register.jsx';
 import AccountProfile from './components/AccountProfile.jsx';
+import loadWebRTC from './web-rtc.js';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'css-modal/build/modal.css';
@@ -29,6 +30,7 @@ import 'css-modal/build/modal.css';
 				.then((response) => document.location = response.url);
 			}
 		})
+		.catch((e) => console.log(e));
 })();
 
 if(document.getElementById('home')){
@@ -68,4 +70,17 @@ if(document.getElementById('account-profile')){
 	var isCurrentUser = document.getElementById('account-profile').getAttribute('iscurrentuser');
 	var pathResolver = document.getElementById('account-profile').getAttribute('pathresolver');
 	ReactDOM.render(<AccountProfile userID={userID} authenticatedUserID={authenticatedUserID} isCurrentUser={eval(isCurrentUser)} pathResolver={pathResolver}/>, document.getElementById('account-profile'));
+}
+if(document.getElementById('web-rtc')){
+	(async function(){
+		const firebaseConfig = await fetch('/web-rtc-tokens', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+			})
+		})
+		.then((response) => response.json())
+		.catch((e) => console.log(e));
+		loadWebRTC(firebaseConfig);
+	}());
 }

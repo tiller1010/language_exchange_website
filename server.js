@@ -1,6 +1,8 @@
 // Server
 require('dotenv').config();
 const express = require('express');
+const https = require('https')
+const fs = require('fs')
 const path = require('path');
 const session = require('express-session');
 const flash = require('connect-flash');
@@ -20,6 +22,7 @@ const { getTopic, getTopicChallenges } = require('./strapi/topics.js');
 // App Services
 const { passport } = require('./app/passport.js');
 const bcrypt = require('bcrypt');
+const firebase = require('./app/firebase');
 const createSearchService = require('./app/search.js');
 const upload = require('./app/upload.js')();
 const stripe = require('stripe')(process.env.STRIPE_SECRET || '');
@@ -480,10 +483,30 @@ app.use(express.json());
 			}
 		});
 
-		// Start app
-		app.listen(appPort, () => {
-			console.log(`App up on port ${appPort}`);
+		app.get('/web-rtc', async (req, res) => {
+			return res.render('web-rtc');
 		});
+		app.post('/web-rtc-tokens', async (req, res) => {
+			const firebaseConfig = {
+				projectId: process.env.FIREBASE_PROJECT_ID,
+				apiKey: process.env.FIREBASE_API_KEY,
+				authDomain: process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL || 'localhost',
+			};
+			return res.json(firebaseConfig);
+		});
+
+		// Start app
+		// app.listen(appPort, () => {
+		// 	console.log(`App up on port ${appPort}`);
+		// });
+		const httpsOptions = {
+			key: fs.readFileSync('./security/cert.key'),
+			cert: fs.readFileSync('./security/cert.pem')
+		}
+		const server = https.createServer(httpsOptions, app)
+			.listen(appPort, () => {
+				console.log(`App up on port ${appPort}`);
+			});
 	} catch(err){
 		console.log(`Error: ${err}`);
 	}
