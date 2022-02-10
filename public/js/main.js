@@ -53,178 +53,6 @@ async function graphQLFetch(query, variables = {}, multipart = false){
 
 /***/ }),
 
-/***/ "./js/web-rtc.js":
-/*!***********************!*\
-  !*** ./js/web-rtc.js ***!
-  \***********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ loadWebRTC)
-/* harmony export */ });
-const firebase = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/index.esm.js");
-const {
-  getFirestore,
-  collection,
-  doc,
-  getDoc,
-  addDoc,
-  setDoc,
-  updateDoc,
-  onSnapshot
-} = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/index.esm.js");
-
-function loadWebRTC(firebaseConfig){
-
-  let firebaseApp;
-  if (!firebase.apps) {
-    firebaseApp = firebase.initializeApp(firebaseConfig);
-  }
-  const firestore = getFirestore(firebaseApp);
-
-  const servers = {
-    iceServers: [
-      {
-        urls: ['stun:stun1.l.google.com:19302', 'stun:stun2.l.google.com:19302'],
-      },
-    ],
-    iceCandidatePoolSize: 10,
-  };
-
-  // Global State
-  const pc = new RTCPeerConnection(servers);
-  let localStream = null;
-  let remoteStream = null;
-
-  // HTML elements
-  const webcamButton = document.getElementById('webcamButton');
-  const webcamVideo = document.getElementById('webcamVideo');
-  const callButton = document.getElementById('callButton');
-  const callInput = document.getElementById('callInput');
-  const answerButton = document.getElementById('answerButton');
-  const remoteVideo = document.getElementById('remoteVideo');
-  const hangupButton = document.getElementById('hangupButton');
-
-  // 1. Setup media sources
-
-  webcamButton.onclick = async () => {
-    localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-    remoteStream = new MediaStream();
-
-    // Push tracks from local stream to peer connection
-    localStream.getTracks().forEach((track) => {
-      pc.addTrack(track, localStream);
-    });
-
-    // Pull tracks from remote stream, add to video stream
-    pc.ontrack = (event) => {
-      event.streams[0].getTracks().forEach((track) => {
-        remoteStream.addTrack(track);
-      });
-    };
-
-    webcamVideo.srcObject = localStream;
-    remoteVideo.srcObject = remoteStream;
-
-    callButton.disabled = false;
-    answerButton.disabled = false;
-    webcamButton.disabled = true;
-  };
-
-  // 2. Create an offer
-  callButton.onclick = async () => {
-    // Reference Firestore collections for signaling
-    const callDocs = collection(firestore, 'calls');
-    const callDoc = await addDoc(callDocs, {});
-    const offerCandidates = collection(callDoc, 'offerCandidates');
-    const answerCandidates = collection(callDoc, 'answerCandidates');
-
-    callInput.value = callDoc.id;
-
-    // Get candidates for caller, save to db
-    pc.onicecandidate = async (event) => {
-      if(event.candidate){
-        await addDoc(offerCandidates, event.candidate.toJSON());
-      }
-    };
-
-    // Create offer
-    const offerDescription = await pc.createOffer();
-    await pc.setLocalDescription(offerDescription);
-
-    const offer = {
-      sdp: offerDescription.sdp,
-      type: offerDescription.type,
-    };
-
-    await setDoc(callDoc, ({ offer }));
-
-    // Listen for remote answer
-    onSnapshot(callDoc, (snapshot) => {
-      const data = snapshot.data();
-      if (!pc.currentRemoteDescription && data?.answer) {
-        const answerDescription = new RTCSessionDescription(data.answer);
-        pc.setRemoteDescription(answerDescription);
-      }
-    });
-
-    // When answered, add candidate to peer connection
-    onSnapshot(answerCandidates, (snapshot) => {
-      snapshot.docChanges().forEach((change) => {
-        if (change.type === 'added') {
-          const candidate = new RTCIceCandidate(change.doc.data());
-          pc.addIceCandidate(candidate);
-        }
-      });
-    });
-
-    hangupButton.disabled = false;
-  };
-
-  // 3. Answer the call with the unique ID
-  answerButton.onclick = async () => {
-    const callId = callInput.value;
-    const callDocs = collection(firestore, 'calls');
-    const callDoc = await doc(callDocs, callId);
-    const offerCandidates = collection(callDoc, 'offerCandidates');
-    const answerCandidates = collection(callDoc, 'answerCandidates');
-
-    pc.onicecandidate = async (event) => {
-      if(event.candidate){
-        await addDoc(answerCandidates, event.candidate.toJSON());
-      }
-    };
-
-    const callData = (await getDoc(callDoc)).data();
-
-    const offerDescription = callData.offer;
-    await pc.setRemoteDescription(new RTCSessionDescription(offerDescription));
-
-    const answerDescription = await pc.createAnswer();
-    await pc.setLocalDescription(answerDescription);
-
-    const answer = {
-      type: answerDescription.type,
-      sdp: answerDescription.sdp,
-    };
-
-    await updateDoc(callDoc, { answer });
-
-    onSnapshot(offerCandidates, (snapshot) => {
-      snapshot.docChanges().forEach((change) => {
-        if (change.type === 'added') {
-          let data = change.doc.data();
-          pc.addIceCandidate(new RTCIceCandidate(data));
-        }
-      });
-    });
-  };
-};
-
-/***/ }),
-
 /***/ "./node_modules/@firebase/firestore/dist/index.esm2017.js":
 /*!****************************************************************!*\
   !*** ./node_modules/@firebase/firestore/dist/index.esm2017.js ***!
@@ -38431,7 +38259,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Login_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/Login.jsx */ "./js/components/Login.jsx");
 /* harmony import */ var _components_Register_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/Register.jsx */ "./js/components/Register.jsx");
 /* harmony import */ var _components_AccountProfile_jsx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/AccountProfile.jsx */ "./js/components/AccountProfile.jsx");
-/* harmony import */ var _web_rtc_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./web-rtc.js */ "./js/web-rtc.js");
+/* harmony import */ var _components_VideoChat_tsx__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/VideoChat.tsx */ "./js/components/VideoChat.tsx");
+/* harmony import */ var _components_VideoChat_tsx__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_components_VideoChat_tsx__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var slick_carousel_slick_slick_css__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! slick-carousel/slick/slick.css */ "./node_modules/slick-carousel/slick/slick.css");
 /* harmony import */ var slick_carousel_slick_slick_css__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(slick_carousel_slick_slick_css__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var slick_carousel_slick_slick_theme_css__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! slick-carousel/slick/slick-theme.css */ "./node_modules/slick-carousel/slick/slick-theme.css");
@@ -38538,16 +38367,7 @@ if (document.getElementById('account-profile')) {
 }
 
 if (document.getElementById('web-rtc')) {
-  (async function () {
-    const firebaseConfig = await fetch('/web-rtc-tokens', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({})
-    }).then(response => response.json()).catch(e => console.log(e));
-    (0,_web_rtc_js__WEBPACK_IMPORTED_MODULE_10__["default"])(firebaseConfig);
-  })();
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_components_VideoChat_tsx__WEBPACK_IMPORTED_MODULE_10___default()), null), document.getElementById('web-rtc'));
 }
 
 /***/ }),
@@ -39761,6 +39581,625 @@ var RemoveConfirmationModal = function (props) {
 };
 
 exports["default"] = RemoveConfirmationModal;
+
+/***/ }),
+
+/***/ "./js/components/VideoChat.tsx":
+/*!*************************************!*\
+  !*** ./js/components/VideoChat.tsx ***!
+  \*************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __extends = this && this.__extends || function () {
+  var extendStatics = function (d, b) {
+    extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    };
+
+    return extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function (resolve) {
+      resolve(value);
+    });
+  }
+
+  return new (P || (P = Promise))(function (resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function step(result) {
+      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+
+var __generator = this && this.__generator || function (thisArg, body) {
+  var _ = {
+    label: 0,
+    sent: function () {
+      if (t[0] & 1) throw t[1];
+      return t[1];
+    },
+    trys: [],
+    ops: []
+  },
+      f,
+      y,
+      t,
+      g;
+  return g = {
+    next: verb(0),
+    "throw": verb(1),
+    "return": verb(2)
+  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+    return this;
+  }), g;
+
+  function verb(n) {
+    return function (v) {
+      return step([n, v]);
+    };
+  }
+
+  function step(op) {
+    if (f) throw new TypeError("Generator is already executing.");
+
+    while (_) try {
+      if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+      if (y = 0, t) op = [op[0] & 2, t.value];
+
+      switch (op[0]) {
+        case 0:
+        case 1:
+          t = op;
+          break;
+
+        case 4:
+          _.label++;
+          return {
+            value: op[1],
+            done: false
+          };
+
+        case 5:
+          _.label++;
+          y = op[1];
+          op = [0];
+          continue;
+
+        case 7:
+          op = _.ops.pop();
+
+          _.trys.pop();
+
+          continue;
+
+        default:
+          if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+            _ = 0;
+            continue;
+          }
+
+          if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+            _.label = op[1];
+            break;
+          }
+
+          if (op[0] === 6 && _.label < t[1]) {
+            _.label = t[1];
+            t = op;
+            break;
+          }
+
+          if (t && _.label < t[2]) {
+            _.label = t[2];
+
+            _.ops.push(op);
+
+            break;
+          }
+
+          if (t[2]) _.ops.pop();
+
+          _.trys.pop();
+
+          continue;
+      }
+
+      op = body.call(thisArg, _);
+    } catch (e) {
+      op = [6, e];
+      y = 0;
+    } finally {
+      f = t = 0;
+    }
+
+    if (op[0] & 5) throw op[1];
+    return {
+      value: op[0] ? op[1] : void 0,
+      done: true
+    };
+  }
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var Navigation_jsx_1 = __webpack_require__(/*! ./Navigation.jsx */ "./js/components/Navigation.jsx");
+
+var react_fontawesome_1 = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+
+var free_solid_svg_icons_1 = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+
+var firebase = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/index.esm.js");
+
+var firestore_1 = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/index.esm.js");
+
+var VideoChat =
+/** @class */
+function (_super) {
+  __extends(VideoChat, _super);
+
+  function VideoChat(props) {
+    var _this = _super.call(this, props) || this;
+
+    var state = {
+      firestore: null,
+      peerConnection: null,
+      callID: '',
+      webcamButtonDisabled: false,
+      callButtonDisabled: true,
+      answerButtonDisabled: true,
+      hangupButtonDisabled: true
+    };
+    _this.state = state;
+    _this.startWebcam = _this.startWebcam.bind(_this);
+    _this.createCall = _this.createCall.bind(_this);
+    _this.answerCall = _this.answerCall.bind(_this);
+    _this.hangup = _this.hangup.bind(_this);
+    _this.webcamVideo = React.createRef();
+    _this.remoteVideo = React.createRef();
+    return _this;
+  }
+
+  VideoChat.prototype.componentDidMount = function () {
+    return __awaiter(this, void 0, void 0, function () {
+      var firebaseConfig, firebaseApp, firestore, servers, peerConnection;
+      return __generator(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            return [4
+            /*yield*/
+            , fetch('/video-chat-tokens', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({})
+            }).then(function (response) {
+              return response.json();
+            }).catch(function (e) {
+              return console.log(e);
+            })];
+
+          case 1:
+            firebaseConfig = _a.sent(); // @ts-ignore
+
+            if (!firebase.apps) {
+              firebaseApp = firebase.initializeApp(firebaseConfig);
+            }
+
+            firestore = (0, firestore_1.getFirestore)(firebaseApp);
+            servers = {
+              iceServers: [{
+                urls: ['stun:stun1.l.google.com:19302', 'stun:stun2.l.google.com:19302']
+              }],
+              iceCandidatePoolSize: 10
+            };
+            peerConnection = new RTCPeerConnection(servers);
+            this.setState({
+              peerConnection: peerConnection,
+              firestore: firestore
+            });
+            return [2
+            /*return*/
+            ];
+        }
+      });
+    });
+  };
+
+  VideoChat.prototype.startWebcam = function () {
+    return __awaiter(this, void 0, void 0, function () {
+      var peerConnection, localStream, remoteStream;
+      return __generator(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            peerConnection = this.state.peerConnection;
+            return [4
+            /*yield*/
+            , navigator.mediaDevices.getUserMedia({
+              video: true,
+              audio: true
+            })];
+
+          case 1:
+            localStream = _a.sent();
+            remoteStream = new MediaStream(); // Push tracks from local stream to peer connection
+
+            localStream.getTracks().forEach(function (track) {
+              peerConnection.addTrack(track, localStream);
+            }); // Pull tracks from remote stream, add to video stream
+
+            peerConnection.ontrack = function (event) {
+              event.streams[0].getTracks().forEach(function (track) {
+                remoteStream.addTrack(track);
+              });
+            };
+
+            this.webcamVideo.current.srcObject = localStream;
+            this.remoteVideo.current.srcObject = remoteStream;
+            this.setState({
+              callButtonDisabled: false,
+              answerButtonDisabled: false,
+              webcamButtonDisabled: true,
+              hangupButtonDisabled: false
+            });
+            return [2
+            /*return*/
+            ];
+        }
+      });
+    });
+  };
+
+  VideoChat.prototype.createCall = function () {
+    return __awaiter(this, void 0, void 0, function () {
+      var _a, peerConnection, firestore, callDocs, callDoc, offerCandidates, answerCandidates, offerDescription, offer;
+
+      var _this = this;
+
+      return __generator(this, function (_b) {
+        switch (_b.label) {
+          case 0:
+            _a = this.state, peerConnection = _a.peerConnection, firestore = _a.firestore;
+            callDocs = (0, firestore_1.collection)(firestore, 'calls');
+            return [4
+            /*yield*/
+            , (0, firestore_1.addDoc)(callDocs, {})];
+
+          case 1:
+            callDoc = _b.sent();
+            offerCandidates = (0, firestore_1.collection)(callDoc, 'offerCandidates');
+            answerCandidates = (0, firestore_1.collection)(callDoc, 'answerCandidates');
+            this.setState({
+              callID: callDoc.id
+            }); // Get candidates for caller, save to db
+
+            peerConnection.onicecandidate = function (event) {
+              return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                  switch (_a.label) {
+                    case 0:
+                      if (!event.candidate) return [3
+                      /*break*/
+                      , 2];
+                      return [4
+                      /*yield*/
+                      , (0, firestore_1.addDoc)(offerCandidates, event.candidate.toJSON())];
+
+                    case 1:
+                      _a.sent();
+
+                      _a.label = 2;
+
+                    case 2:
+                      return [2
+                      /*return*/
+                      ];
+                  }
+                });
+              });
+            };
+
+            return [4
+            /*yield*/
+            , peerConnection.createOffer()];
+
+          case 2:
+            offerDescription = _b.sent();
+            return [4
+            /*yield*/
+            , peerConnection.setLocalDescription(offerDescription)];
+
+          case 3:
+            _b.sent();
+
+            offer = {
+              sdp: offerDescription.sdp,
+              type: offerDescription.type
+            };
+            return [4
+            /*yield*/
+            , (0, firestore_1.setDoc)(callDoc, {
+              offer: offer
+            })];
+
+          case 4:
+            _b.sent(); // Listen for remote answer
+
+
+            (0, firestore_1.onSnapshot)(callDoc, function (snapshot) {
+              var data = snapshot.data();
+
+              if (!peerConnection.currentRemoteDescription && (data === null || data === void 0 ? void 0 : data.answer)) {
+                var answerDescription = new RTCSessionDescription(data.answer);
+                peerConnection.setRemoteDescription(answerDescription);
+              }
+            }); // When answered, add candidate to peer connection
+
+            (0, firestore_1.onSnapshot)(answerCandidates, function (snapshot) {
+              snapshot.docChanges().forEach(function (change) {
+                if (change.type === 'added') {
+                  var candidate = new RTCIceCandidate(change.doc.data());
+                  peerConnection.addIceCandidate(candidate);
+                }
+              });
+            });
+            this.setState({
+              hangupButtonDisabled: false
+            });
+            return [2
+            /*return*/
+            ];
+        }
+      });
+    });
+  };
+
+  VideoChat.prototype.answerCall = function () {
+    return __awaiter(this, void 0, void 0, function () {
+      var _a, peerConnection, firestore, callID, callDocs, callDoc, offerCandidates, answerCandidates, callData, offerDescription, answerDescription, answer;
+
+      var _this = this;
+
+      return __generator(this, function (_b) {
+        switch (_b.label) {
+          case 0:
+            _a = this.state, peerConnection = _a.peerConnection, firestore = _a.firestore;
+            callID = this.state.callID;
+            callDocs = (0, firestore_1.collection)(firestore, 'calls');
+            return [4
+            /*yield*/
+            , (0, firestore_1.doc)(callDocs, callID)];
+
+          case 1:
+            callDoc = _b.sent();
+            offerCandidates = (0, firestore_1.collection)(callDoc, 'offerCandidates');
+            answerCandidates = (0, firestore_1.collection)(callDoc, 'answerCandidates');
+
+            peerConnection.onicecandidate = function (event) {
+              return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                  switch (_a.label) {
+                    case 0:
+                      if (!event.candidate) return [3
+                      /*break*/
+                      , 2];
+                      return [4
+                      /*yield*/
+                      , (0, firestore_1.addDoc)(answerCandidates, event.candidate.toJSON())];
+
+                    case 1:
+                      _a.sent();
+
+                      _a.label = 2;
+
+                    case 2:
+                      return [2
+                      /*return*/
+                      ];
+                  }
+                });
+              });
+            };
+
+            return [4
+            /*yield*/
+            , (0, firestore_1.getDoc)(callDoc)];
+
+          case 2:
+            callData = _b.sent().data();
+            offerDescription = callData.offer;
+            return [4
+            /*yield*/
+            , peerConnection.setRemoteDescription(new RTCSessionDescription(offerDescription))];
+
+          case 3:
+            _b.sent();
+
+            return [4
+            /*yield*/
+            , peerConnection.createAnswer()];
+
+          case 4:
+            answerDescription = _b.sent();
+            return [4
+            /*yield*/
+            , peerConnection.setLocalDescription(answerDescription)];
+
+          case 5:
+            _b.sent();
+
+            answer = {
+              type: answerDescription.type,
+              sdp: answerDescription.sdp
+            };
+            return [4
+            /*yield*/
+            , (0, firestore_1.updateDoc)(callDoc, {
+              answer: answer
+            })];
+
+          case 6:
+            _b.sent();
+
+            (0, firestore_1.onSnapshot)(offerCandidates, function (snapshot) {
+              snapshot.docChanges().forEach(function (change) {
+                if (change.type === 'added') {
+                  var data = change.doc.data();
+                  peerConnection.addIceCandidate(new RTCIceCandidate(data));
+                }
+              });
+            });
+            return [2
+            /*return*/
+            ];
+        }
+      });
+    });
+  };
+
+  VideoChat.prototype.hangup = function () {
+    var peerConnection = this.state.peerConnection;
+    peerConnection.close();
+    this.webcamVideo.current.srcObject = null;
+    this.remoteVideo.current.srcObject = null;
+    this.setState({
+      callID: '',
+      webcamButtonDisabled: false,
+      callButtonDisabled: true,
+      answerButtonDisabled: true,
+      hangupButtonDisabled: true
+    });
+  };
+
+  VideoChat.prototype.render = function () {
+    var _this = this;
+
+    return React.createElement("div", {
+      className: "frame"
+    }, React.createElement(Navigation_jsx_1.default, null), React.createElement("div", {
+      className: "pure-u-g"
+    }, React.createElement("h2", null, "Start your Webcam"), React.createElement("div", {
+      className: "flex x-center"
+    }, React.createElement("div", {
+      className: "pure-u-1 pure-u-md-1-2"
+    }, React.createElement("div", {
+      className: "pad"
+    }, React.createElement("h3", null, "Local Stream"), React.createElement("video", {
+      id: "webcamVideo",
+      autoPlay: true,
+      playsInline: true,
+      muted: true,
+      ref: this.webcamVideo
+    }))), React.createElement("div", {
+      className: "pure-u-1 pure-u-md-1-2"
+    }, React.createElement("div", {
+      className: "pad"
+    }, React.createElement("h3", null, "Remote Stream"), React.createElement("video", {
+      id: "remoteVideo",
+      autoPlay: true,
+      playsInline: true,
+      ref: this.remoteVideo
+    })))), React.createElement("div", {
+      className: "flex x-center pure-u-1"
+    }, React.createElement("button", {
+      id: "webcamButton",
+      disabled: this.state.webcamButtonDisabled,
+      onClick: this.startWebcam
+    }, "Start webcam", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
+      icon: free_solid_svg_icons_1.faCamera
+    }))), React.createElement("div", {
+      className: "flex x-center y-center"
+    }, React.createElement("div", {
+      className: "pure-u-1 pure-u-md-1-2"
+    }, React.createElement("div", {
+      className: "pad"
+    }, React.createElement("h2", null, "Create a new Call"), React.createElement("button", {
+      id: "callButton",
+      disabled: this.state.callButtonDisabled,
+      onClick: this.createCall
+    }, "Create Call", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
+      icon: free_solid_svg_icons_1.faPhone
+    })))), React.createElement("div", {
+      className: "pure-u-1 pure-u-md-1-2"
+    }, React.createElement("div", {
+      className: "pad"
+    }, React.createElement("h2", null, "Join a Call"), React.createElement("p", null, "Answer the call from a different browser window or device"), React.createElement("div", {
+      className: "flex y-center"
+    }, React.createElement("input", {
+      id: "callInput",
+      type: "text",
+      defaultValue: this.state.callID,
+      onChange: function (e) {
+        return _this.setState({
+          callID: e.target.value
+        });
+      }
+    }), React.createElement("div", {
+      className: "pad no-y"
+    }, React.createElement("button", {
+      id: "answerButton",
+      disabled: this.state.answerButtonDisabled,
+      onClick: this.answerCall
+    }, "Answer", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
+      icon: free_solid_svg_icons_1.faPhone
+    }))))))), React.createElement("div", {
+      className: "flex x-center pure-u-1"
+    }, React.createElement("button", {
+      id: "hangupButton",
+      disabled: this.state.hangupButtonDisabled,
+      onClick: this.hangup
+    }, "Hangup", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
+      icon: free_solid_svg_icons_1.faPhone
+    })))));
+  };
+
+  return VideoChat;
+}(React.Component);
+
+exports["default"] = VideoChat;
 
 /***/ }),
 

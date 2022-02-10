@@ -22,7 +22,6 @@ const { getTopic, getTopicChallenges } = require('./strapi/topics.js');
 // App Services
 const { passport } = require('./app/passport.js');
 const bcrypt = require('bcrypt');
-const firebase = require('./app/firebase');
 const createSearchService = require('./app/search.js');
 const upload = require('./app/upload.js')();
 const stripe = require('stripe')(process.env.STRIPE_SECRET || '');
@@ -483,10 +482,10 @@ app.use(express.json());
 			}
 		});
 
-		app.get('/web-rtc', async (req, res) => {
-			return res.render('web-rtc');
+		app.get('/video-chat', async (req, res) => {
+			return res.render('video-chat');
 		});
-		app.post('/web-rtc-tokens', async (req, res) => {
+		app.post('/video-chat-tokens', async (req, res) => {
 			const firebaseConfig = {
 				projectId: process.env.FIREBASE_PROJECT_ID,
 				apiKey: process.env.FIREBASE_API_KEY,
@@ -495,18 +494,23 @@ app.use(express.json());
 			return res.json(firebaseConfig);
 		});
 
-		// Start app
-		// app.listen(appPort, () => {
-		// 	console.log(`App up on port ${appPort}`);
-		// });
 		const httpsOptions = {
 			key: fs.readFileSync('./security/cert.key'),
 			cert: fs.readFileSync('./security/cert.pem')
 		}
-		const server = https.createServer(httpsOptions, app)
-			.listen(appPort, () => {
+
+		// Start app
+		if(appPort == 443){
+			https.createServer(httpsOptions, app)
+				.listen(appPort, () => {
+					console.log(`App up on port ${appPort}`);
+				});
+		} else {
+			app.listen(appPort, () => {
 				console.log(`App up on port ${appPort}`);
 			});
+		}
+
 	} catch(err){
 		console.log(`Error: ${err}`);
 	}

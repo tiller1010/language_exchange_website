@@ -8,7 +8,7 @@ import Topic from './components/Topic.jsx';
 import Login from './components/Login.jsx';
 import Register from './components/Register.jsx';
 import AccountProfile from './components/AccountProfile.jsx';
-import loadWebRTC from './web-rtc.js';
+import VideoChat from './components/VideoChat.tsx';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'css-modal/build/modal.css';
@@ -72,15 +72,5 @@ if(document.getElementById('account-profile')){
 	ReactDOM.render(<AccountProfile userID={userID} authenticatedUserID={authenticatedUserID} isCurrentUser={eval(isCurrentUser)} pathResolver={pathResolver}/>, document.getElementById('account-profile'));
 }
 if(document.getElementById('web-rtc')){
-	(async function(){
-		const firebaseConfig = await fetch('/web-rtc-tokens', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-			})
-		})
-		.then((response) => response.json())
-		.catch((e) => console.log(e));
-		loadWebRTC(firebaseConfig);
-	}());
+	ReactDOM.render(<VideoChat/>, document.getElementById('web-rtc'));
 }
