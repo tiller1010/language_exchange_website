@@ -51,6 +51,21 @@ type PremiumVideoChatListing {
 	thumbnailSrc: String
 	price: Float
 	currency: String
+	timeSlots: [VideoChatTimeSlot]
+}
+
+type VideoChatTimeSlot {
+	customerUserID: ID
+	time: String
+	booked: Boolean
+	completed: Boolean
+}
+
+input VideoChatTimeSlotInputs {
+	customerUserID: ID
+	time: String
+	booked: Boolean
+	completed: Boolean
 }
 
 input PremiumVideoChatListingInputs {
@@ -59,6 +74,7 @@ input PremiumVideoChatListingInputs {
 	duration: String
 	price: Float
 	currency: String
+	timeSlots: [VideoChatTimeSlotInputs]
 }
 
 type PremiumVideoChatListingFeed {
@@ -80,5 +96,5 @@ type Mutation {
 	addPremiumVideoChatListingThumbnailTest(thumbnailFile: Upload): PremiumVideoChatListing
 	updatePremiumVideoChatListing(listingID: ID!, premiumVideoChatListing: PremiumVideoChatListingInputs, thumbnailFile: Upload): PremiumVideoChatListing
 	removePremiumVideoChatListing(userID: ID!): Boolean
-	createProduct(productObjectCollection: String!, productDescription: String!, productObjectID: ID!, userID: ID!): Product
+	createProduct(productObjectCollection: String!, productDescription: String!, productObjectID: ID!, userID: ID!, productObjectUpdateData: String!): Product
 }

@@ -422,12 +422,10 @@ app.use(express.json());
 					await addStripeAccountIDToUser(req.user._id, account.id);
 				}
 
-				let return_url = process.env.SECURED_DOMAIN_WITH_PROTOCOL ? process.env.SECURED_DOMAIN_WITH_PROTOCOL : `http://localhost:${appPort}`;
-				return_url += `/account-profile`;
+				const base_url = process.env.SECURED_DOMAIN_WITH_PROTOCOL ? process.env.SECURED_DOMAIN_WITH_PROTOCOL : `http${appPort == 443 ? 's' : ''}://localhost:${appPort}`;
 
-				let refresh_url = process.env.SECURED_DOMAIN_WITH_PROTOCOL ? process.env.SECURED_DOMAIN_WITH_PROTOCOL : `http://localhost:${appPort}`;
-				refresh_url += `/account-profile`;
-
+				const return_url = `${base_url}/account-profile`;
+				const refresh_url = `${base_url}/account-profile`;
 
 				const accountLink = await stripe.accountLinks.create({
 					account: account.id,
@@ -448,10 +446,10 @@ app.use(express.json());
 
 				const connectedStripeAccountID = req.body.connectedStripeAccountID;
 
-				let success_url = process.env.SECURED_DOMAIN_WITH_PROTOCOL ? process.env.SECURED_DOMAIN_WITH_PROTOCOL : `http://localhost:${appPort}`;
-				success_url += `/complete-order/${priceID}`;
+				const base_url = process.env.SECURED_DOMAIN_WITH_PROTOCOL ? process.env.SECURED_DOMAIN_WITH_PROTOCOL : `http${appPort == 443 ? 's' : ''}://localhost:${appPort}`;
 
-				let cancel_url = process.env.SECURED_DOMAIN_WITH_PROTOCOL ? process.env.SECURED_DOMAIN_WITH_PROTOCOL : `http://localhost:${appPort}`;
+				const success_url = `${base_url}/complete-order/${priceID}`;
+				const cancel_url = base_url;
 
 				const session = await stripe.checkout.sessions.create({
 					success_url,

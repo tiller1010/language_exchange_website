@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUpload, faLongArrowAltRight, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faUpload, faLongArrowAltRight, faTrash, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 const languages = require('language-list')();
 import graphQLFetch from '../graphQLFetch.js';
 // @ts-ignore
@@ -23,6 +23,14 @@ interface PremiumVideoChatListingObject {
 	currency: string
 	thumbnailSrc: string
 	userID: string
+	timeSlots: [VideoChatTimeSlot]
+}
+
+interface VideoChatTimeSlot {
+	customerUserID?: string
+	time: string
+	booked?: boolean
+	completed?: boolean
 }
 
 interface PremiumVideoChatListingFormState {
@@ -31,6 +39,7 @@ interface PremiumVideoChatListingFormState {
 	duration: string
 	price: number
 	currency: string
+	timeSlots?: [VideoChatTimeSlot]
 	thumbnailSrc: string
 	thumbnailFile?: File
 	savedPremiumVideoChatListing?: PremiumVideoChatListingObject
@@ -50,9 +59,19 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 			price: 0,
 			currency: 'usd',
 			thumbnailSrc: '',
+			timeSlots: [
+				{
+					time: '',
+					booked: false,
+					completed: false,
+				}
+			],
 		}
 		this.state = state;
 		this.handleThumbnailChange = this.handleThumbnailChange.bind(this);
+		this.handleTimeSlotChange = this.handleTimeSlotChange.bind(this);
+		this.handleRemoveTimeSlot = this.handleRemoveTimeSlot.bind(this);
+		this.handleAddTimeSlot = this.handleAddTimeSlot.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleDeleteListing = this.handleDeleteListing.bind(this);
 	}
@@ -90,6 +109,39 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 	    }
 	}
 
+	handleTimeSlotChange(time, timeSlotIndex){
+		let { timeSlots } = this.state;
+		let timeSlot = timeSlots[timeSlotIndex];
+		timeSlot.time = time;
+		timeSlots[timeSlotIndex] = timeSlot;
+		this.setState({
+			timeSlots
+		})
+	}
+
+	handleRemoveTimeSlot(e, timeSlotIndex){
+		e.preventDefault();
+		let { timeSlots } = this.state;
+		timeSlots.splice(timeSlotIndex, 1);
+		this.setState({
+			timeSlots
+		});
+	}
+
+	handleAddTimeSlot(e){
+		e.preventDefault();
+		this.setState({
+			timeSlots: [
+				...this.state.timeSlots,
+				{
+					time: '',
+					booked: false,
+					completed: false,
+				}
+			]
+		});
+	}
+
 	async handleSubmit(event){
 
 		event.preventDefault();
@@ -102,6 +154,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 			currency,
 			thumbnailSrc,
 			thumbnailFile,
+			timeSlots,
 			savedPremiumVideoChatListing
 		} = this.state;
 
@@ -123,6 +176,12 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 						currency
 						thumbnailSrc
 						userID
+						timeSlots {
+							time
+							customerUserID
+							completed
+							booked
+						}
 					}
 				}`;
 				variables = {
@@ -133,6 +192,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 						duration,
 						price,
 						currency,
+						timeSlots,
 					}
 				};
 				if(thumbnailFile){
@@ -151,6 +211,12 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 						currency
 						thumbnailSrc
 						userID
+						timeSlots {
+							time
+							customerUserID
+							completed
+							booked
+						}
 					}
 				}`;
 				variables = {
@@ -161,6 +227,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 						duration,
 						price,
 						currency,
+						timeSlots,
 					},
 					file: thumbnailFile
 				};
@@ -214,6 +281,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 			price,
 			currency,
 			thumbnailSrc,
+			timeSlots,
 			savedPremiumVideoChatListing
 		} = this.state;
 
@@ -250,6 +318,31 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 						<label htmlFor="currency">Currency</label>
 						<input type="text" name="currency" value={currency} onChange={(event) => this.setState({currency: event.target.value})} className="pure-input-rounded"/>
 					</div>
+					{timeSlots.length ?
+						<>
+							{timeSlots.map((timeSlot) => 
+								<div key={timeSlots.indexOf(timeSlot)}>
+									<input type="date" name={`time[${timeSlots.indexOf(timeSlot)}]`} value={timeSlot.time} onChange={(e) => this.handleTimeSlotChange(e.target.value, timeSlots.indexOf(timeSlot))}/>
+									<button onClick={(e) => this.handleRemoveTimeSlot(e, timeSlots.indexOf(timeSlot))}>
+										Remove Time
+										<FontAwesomeIcon icon={faTimes}/>
+									</button>
+								</div>
+							)}
+						</>
+						:
+						''
+					}
+					<button onClick={(e) => this.handleAddTimeSlot(e)}>
+						Add time slot
+						<FontAwesomeIcon icon={faPlus}/>
+					</button>
+
+					<div className="pure-u-l pure-u-md-1-2" style={{ maxWidth: '100%', height: '300px' }}>
+						<div className="pad" style={{ height: '100%', width: '100%', boxSizing: 'border-box' }}>
+							<div className="thumbnail-preview img-container" style={{ height: '100%', width: '100%', background: `url(${ thumbnailSrc }) no-repeat center center/cover` }}></div>
+						</div>
+					</div>
 					<div className="upload-container">
 						<input type="file" name="thumbnail" onChange={this.handleThumbnailChange}/>
 						<label htmlFor="thumbnail">
@@ -257,11 +350,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 							<FontAwesomeIcon icon={faUpload}/>
 						</label>
 					</div>
-					<div className="pure-u-l pure-u-md-1-2" style={{ maxWidth: '100%', height: '300px' }}>
-						<div className="pad" style={{ height: '100%', width: '100%', boxSizing: 'border-box' }}>
-							<div className="thumbnail-preview img-container" style={{ height: '100%', width: '100%', background: `url(${ thumbnailSrc }) no-repeat center center/cover` }}></div>
-						</div>
-					</div>
+
 					<div>
 						<button onClick={this.handleSubmit}>
 							Submit
@@ -272,7 +361,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 				<div className="pure-u-1 pure-u-md-1-2">
 					{savedPremiumVideoChatListing ?
 						<div>
-							<PremiumVideoChatListing premiumVideoChatListing={savedPremiumVideoChatListing}/>
+							<PremiumVideoChatListing premiumVideoChatListing={savedPremiumVideoChatListing} authenticatedUserID={user._id} view={user._id == savedPremiumVideoChatListing.userID ? 'owner' : 'customer'}/>
 							<form>
 								<a className="button" href="#remove-listing" style={{ width: 'max-content' }}>
 									Remove Listing

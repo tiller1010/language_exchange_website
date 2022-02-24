@@ -36923,7 +36923,7 @@ class AccountProfile extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
           slidesToShow: 1.5
         }
       }]
-    }, this.state.user.products.map(product => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, this.state.user.products.reverse().map(product => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       key: product._id,
       className: "pure-u-1 pure-u-lg-1-3"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_Product_tsx__WEBPACK_IMPORTED_MODULE_6___default()), {
@@ -38406,11 +38406,174 @@ var __extends = this && this.__extends || function () {
   };
 }();
 
+var __assign = this && this.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function (resolve) {
+      resolve(value);
+    });
+  }
+
+  return new (P || (P = Promise))(function (resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function step(result) {
+      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+
+var __generator = this && this.__generator || function (thisArg, body) {
+  var _ = {
+    label: 0,
+    sent: function () {
+      if (t[0] & 1) throw t[1];
+      return t[1];
+    },
+    trys: [],
+    ops: []
+  },
+      f,
+      y,
+      t,
+      g;
+  return g = {
+    next: verb(0),
+    "throw": verb(1),
+    "return": verb(2)
+  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+    return this;
+  }), g;
+
+  function verb(n) {
+    return function (v) {
+      return step([n, v]);
+    };
+  }
+
+  function step(op) {
+    if (f) throw new TypeError("Generator is already executing.");
+
+    while (_) try {
+      if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+      if (y = 0, t) op = [op[0] & 2, t.value];
+
+      switch (op[0]) {
+        case 0:
+        case 1:
+          t = op;
+          break;
+
+        case 4:
+          _.label++;
+          return {
+            value: op[1],
+            done: false
+          };
+
+        case 5:
+          _.label++;
+          y = op[1];
+          op = [0];
+          continue;
+
+        case 7:
+          op = _.ops.pop();
+
+          _.trys.pop();
+
+          continue;
+
+        default:
+          if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+            _ = 0;
+            continue;
+          }
+
+          if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+            _.label = op[1];
+            break;
+          }
+
+          if (op[0] === 6 && _.label < t[1]) {
+            _.label = t[1];
+            t = op;
+            break;
+          }
+
+          if (t && _.label < t[2]) {
+            _.label = t[2];
+
+            _.ops.push(op);
+
+            break;
+          }
+
+          if (t[2]) _.ops.pop();
+
+          _.trys.pop();
+
+          continue;
+      }
+
+      op = body.call(thisArg, _);
+    } catch (e) {
+      op = [6, e];
+      y = 0;
+    } finally {
+      f = t = 0;
+    }
+
+    if (op[0] & 5) throw op[1];
+    return {
+      value: op[0] ? op[1] : void 0,
+      done: true
+    };
+  }
+};
+
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var stripe_js_1 = __webpack_require__(/*! @stripe/stripe-js */ "./node_modules/@stripe/stripe-js/dist/stripe.esm.js");
+
+var react_fontawesome_1 = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+
+var free_solid_svg_icons_1 = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+
+var graphQLFetch_js_1 = __webpack_require__(/*! ../graphQLFetch.js */ "./js/graphQLFetch.js");
 
 var PremiumVideoChatListing =
 /** @class */
@@ -38420,12 +38583,337 @@ function (_super) {
   function PremiumVideoChatListing(props) {
     var _this = _super.call(this, props) || this;
 
-    var state = {};
+    var state = {
+      timeSlots: []
+    };
     _this.state = state;
+    _this.handleTimeSlotChange = _this.handleTimeSlotChange.bind(_this);
+    _this.getUserNameByID = _this.getUserNameByID.bind(_this);
+    _this.renderTimeSlots = _this.renderTimeSlots.bind(_this);
+    _this.handleBuyNow = _this.handleBuyNow.bind(_this);
     return _this;
   }
 
+  PremiumVideoChatListing.prototype.componentWillMount = function () {
+    return __awaiter(this, void 0, void 0, function () {
+      var propTimeSlots, newTimeSlots, _i, propTimeSlots_1, timeSlot, newTimeSlot, customerDisplayName;
+
+      return __generator(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            propTimeSlots = this.props.premiumVideoChatListing.timeSlots;
+            newTimeSlots = [];
+            _i = 0, propTimeSlots_1 = propTimeSlots;
+            _a.label = 1;
+
+          case 1:
+            if (!(_i < propTimeSlots_1.length)) return [3
+            /*break*/
+            , 5];
+            timeSlot = propTimeSlots_1[_i];
+            newTimeSlot = __assign({}, timeSlot);
+            customerDisplayName = '';
+            if (!timeSlot.customerUserID) return [3
+            /*break*/
+            , 3];
+            return [4
+            /*yield*/
+            , this.getUserNameByID(timeSlot.customerUserID)];
+
+          case 2:
+            customerDisplayName = _a.sent();
+            _a.label = 3;
+
+          case 3:
+            newTimeSlot.customerDisplayName = customerDisplayName;
+            newTimeSlots.push(newTimeSlot);
+            _a.label = 4;
+
+          case 4:
+            _i++;
+            return [3
+            /*break*/
+            , 1];
+
+          case 5:
+            this.setState({
+              timeSlots: newTimeSlots
+            });
+            return [2
+            /*return*/
+            ];
+        }
+      });
+    });
+  };
+
+  PremiumVideoChatListing.prototype.componentWillReceiveProps = function (nextProps) {
+    return __awaiter(this, void 0, void 0, function () {
+      var stateTimeSlots, propTimeSlots, newTimeSlots, _i, propTimeSlots_2, timeSlot, newTimeSlot, customerDisplayName;
+
+      return __generator(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            if (!(this.state.timeSlots != nextProps.premiumVideoChatListing.timeSlots)) return [3
+            /*break*/
+            , 7];
+            stateTimeSlots = this.state.timeSlots;
+            propTimeSlots = nextProps.premiumVideoChatListing.timeSlots;
+            newTimeSlots = [];
+            _i = 0, propTimeSlots_2 = propTimeSlots;
+            _a.label = 1;
+
+          case 1:
+            if (!(_i < propTimeSlots_2.length)) return [3
+            /*break*/
+            , 5];
+            timeSlot = propTimeSlots_2[_i];
+            newTimeSlot = __assign(__assign({}, timeSlot), {
+              booked: stateTimeSlots[propTimeSlots.indexOf(timeSlot)] ? stateTimeSlots[propTimeSlots.indexOf(timeSlot)].booked : timeSlot.booked,
+              completed: stateTimeSlots[propTimeSlots.indexOf(timeSlot)] ? stateTimeSlots[propTimeSlots.indexOf(timeSlot)].completed : timeSlot.completed
+            });
+            customerDisplayName = '';
+            if (!timeSlot.customerUserID) return [3
+            /*break*/
+            , 3];
+            return [4
+            /*yield*/
+            , this.getUserNameByID(timeSlot.customerUserID)];
+
+          case 2:
+            customerDisplayName = _a.sent();
+            _a.label = 3;
+
+          case 3:
+            newTimeSlot.customerDisplayName = customerDisplayName;
+            newTimeSlots.push(newTimeSlot);
+            _a.label = 4;
+
+          case 4:
+            _i++;
+            return [3
+            /*break*/
+            , 1];
+
+          case 5:
+            return [4
+            /*yield*/
+            , this.setState({
+              timeSlots: newTimeSlots
+            })];
+
+          case 6:
+            _a.sent();
+
+            _a.label = 7;
+
+          case 7:
+            return [2
+            /*return*/
+            ];
+        }
+      });
+    });
+  };
+
+  PremiumVideoChatListing.prototype.handleTimeSlotChange = function (checked, timeSlotIndex) {
+    var authenticatedUserID = this.props.authenticatedUserID;
+
+    if (authenticatedUserID) {
+      var timeSlots = this.state.timeSlots;
+      var timeSlot = timeSlots[timeSlotIndex];
+
+      if (this.props.view == 'owner') {
+        timeSlot.completed = checked;
+      } else {
+        timeSlot.booked = checked;
+        timeSlot.tempCustomerUserID = checked ? authenticatedUserID : null;
+      }
+
+      timeSlots[timeSlotIndex] = timeSlot;
+      this.setState({
+        timeSlots: timeSlots
+      });
+    } else {
+      alert('Must be signed in to buy.');
+    }
+  };
+
+  PremiumVideoChatListing.prototype.getUserNameByID = function (userID) {
+    return __awaiter(this, void 0, void 0, function () {
+      var user;
+      return __generator(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            return [4
+            /*yield*/
+            , fetch("/user/" + userID).then(function (response) {
+              return response.json();
+            })];
+
+          case 1:
+            user = _a.sent();
+            return [2
+            /*return*/
+            , user.displayName];
+        }
+      });
+    });
+  };
+
+  PremiumVideoChatListing.prototype.renderTimeSlots = function () {
+    var _this = this;
+
+    var timeSlots = this.state.timeSlots;
+
+    switch (this.props.view) {
+      case 'owner':
+        return timeSlots.map(function (timeSlot) {
+          return React.createElement("div", {
+            key: timeSlots.indexOf(timeSlot)
+          }, timeSlot.customerUserID ? React.createElement(React.Fragment, null, React.createElement("input", {
+            id: "timeSlot" + timeSlots.indexOf(timeSlot),
+            type: "checkbox",
+            checked: timeSlot.completed,
+            onClick: function (e) {
+              return _this.handleTimeSlotChange(e.target.checked, timeSlots.indexOf(timeSlot));
+            }
+          }), React.createElement("label", {
+            htmlFor: "timeSlot" + timeSlots.indexOf(timeSlot)
+          }, timeSlot.time, " with User: ", timeSlot.customerDisplayName), React.createElement("a", {
+            href: "/video-chat?userID=" + timeSlot.customerUserID
+          }, "Video Chat")) : React.createElement(React.Fragment, null, React.createElement("div", null, timeSlot.time, " available")));
+        });
+
+      case 'customer':
+        return timeSlots.map(function (timeSlot) {
+          return React.createElement("div", {
+            key: timeSlots.indexOf(timeSlot)
+          }, timeSlot.customerUserID ? '' : React.createElement(React.Fragment, null, React.createElement("input", {
+            id: "timeSlot" + timeSlots.indexOf(timeSlot),
+            type: "checkbox",
+            checked: timeSlot.booked,
+            onClick: function (e) {
+              return _this.handleTimeSlotChange(e.target.checked, timeSlots.indexOf(timeSlot));
+            }
+          }), React.createElement("label", {
+            htmlFor: "timeSlot" + timeSlots.indexOf(timeSlot)
+          }, timeSlot.time, " Available")));
+        });
+    }
+  };
+
+  PremiumVideoChatListing.prototype.handleBuyNow = function () {
+    return __awaiter(this, void 0, void 0, function () {
+      var _a, premiumVideoChatListing, authenticatedUserID, timeSlots, query, newTimeSlots_1, data, productUser, stripe_1;
+
+      return __generator(this, function (_b) {
+        switch (_b.label) {
+          case 0:
+            _a = this.props, premiumVideoChatListing = _a.premiumVideoChatListing, authenticatedUserID = _a.authenticatedUserID;
+            timeSlots = this.state.timeSlots;
+            if (!authenticatedUserID) return [3
+            /*break*/
+            , 5];
+            query = "mutation createProduct($productObjectCollection: String!, $productDescription: String!, $productObjectID: ID!, $userID: ID!, $productObjectUpdateData: String!){\n\t\t\t\tcreateProduct(productObjectCollection: $productObjectCollection, productDescription: $productDescription, productObjectID: $productObjectID, userID: $userID, productObjectUpdateData: $productObjectUpdateData){\n\t\t\t\t\tuserID\n\t\t\t\t\tcost\n\t\t\t\t\tcurrency\n\t\t\t\t\torderedOn\n\t\t\t\t\tproductObject {\n\t\t\t\t\t\t... on PremiumVideoChatListing{\n\t\t\t\t\t\t\t_id\n\t\t\t\t\t\t\tuserID\n\t\t\t\t\t\t\ttopic\n\t\t\t\t\t\t\tlanguage\n\t\t\t\t\t\t\tduration\n\t\t\t\t\t\t\tthumbnailSrc\n\t\t\t\t\t\t\tprice\n\t\t\t\t\t\t\tcurrency\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\tpriceID\n\t\t\t\t}\n\t\t\t}";
+            newTimeSlots_1 = [];
+            timeSlots.forEach(function (timeSlot) {
+              var newTimeSlot = {
+                time: timeSlot.time,
+                customerUserID: timeSlot.customerUserID,
+                booked: timeSlot.booked,
+                completed: timeSlot.completed
+              };
+
+              if (timeSlot.tempCustomerUserID) {
+                newTimeSlot.customerUserID = timeSlot.tempCustomerUserID;
+              }
+
+              newTimeSlots_1.push(newTimeSlot);
+            });
+            return [4
+            /*yield*/
+            , (0, graphQLFetch_js_1.default)(query, {
+              productObjectCollection: 'premium_video_chat_listings',
+              productDescription: 'Premium Video Chat',
+              productObjectID: premiumVideoChatListing._id,
+              userID: authenticatedUserID,
+              productObjectUpdateData: JSON.stringify({
+                timeSlots: newTimeSlots_1
+              })
+            })];
+
+          case 1:
+            data = _b.sent();
+            if (!data.createProduct) return [3
+            /*break*/
+            , 4];
+            if (!(data.createProduct.priceID && premiumVideoChatListing.userID)) return [3
+            /*break*/
+            , 4];
+            return [4
+            /*yield*/
+            , fetch("/user/" + premiumVideoChatListing.userID).then(function (response) {
+              return response.json();
+            })];
+
+          case 2:
+            productUser = _b.sent();
+            if (!productUser.connectedStripeAccountID) return [3
+            /*break*/
+            , 4];
+            return [4
+            /*yield*/
+            , (0, stripe_js_1.loadStripe)("pk_test_51K5VhTKFlSir9ysi41Tl8YwRjRHsClf5ehSCkavclj789g8CpNRBTDk8iGvpro09CZxMDDiBCmzAKL2sKHAoRdaJ00YRnkKrkm" || 0)];
+
+          case 3:
+            stripe_1 = _b.sent();
+            fetch('/create-checkout-session', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                priceID: data.createProduct.priceID,
+                connectedStripeAccountID: productUser.connectedStripeAccountID
+              })
+            }).then(function (response) {
+              return response.json();
+            }).then(function (session) {
+              return stripe_1.redirectToCheckout({
+                sessionId: session.id
+              });
+            }).then(function (result) {
+              // If `redirectToCheckout` fails due to a browser or network
+              // error, you should display the localized error message to your
+              // customer using `error.message`.
+              if (result.error) {
+                alert(result.error.message);
+              }
+            });
+            _b.label = 4;
+
+          case 4:
+            return [3
+            /*break*/
+            , 6];
+
+          case 5:
+            alert('Must be signed in to buy.');
+            _b.label = 6;
+
+          case 6:
+            return [2
+            /*return*/
+            ];
+        }
+      });
+    });
+  };
+
   PremiumVideoChatListing.prototype.render = function () {
+    var _this = this;
+
     var _a = this.props.premiumVideoChatListing,
         topic = _a.topic,
         language = _a.language,
@@ -38443,7 +38931,13 @@ function (_super) {
       },
       src: thumbnailSrc,
       alt: thumbnailSrc
-    })));
+    })), React.createElement(React.Fragment, null, this.renderTimeSlots()), this.props.view == 'customer' ? React.createElement("button", {
+      onClick: function () {
+        return _this.handleBuyNow();
+      }
+    }, "Buy Now", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
+      icon: free_solid_svg_icons_1.faPlus
+    })) : '');
   };
 
   return PremiumVideoChatListing;
@@ -38661,8 +39155,6 @@ var react_slick_1 = __webpack_require__(/*! react-slick */ "./node_modules/react
 
 var languages = __webpack_require__(/*! language-list */ "./node_modules/language-list/language-list.js")();
 
-var stripe_js_1 = __webpack_require__(/*! @stripe/stripe-js */ "./node_modules/@stripe/stripe-js/dist/stripe.esm.js");
-
 var PremiumVideoChatListingFeed =
 /** @class */
 function (_super) {
@@ -38678,7 +39170,6 @@ function (_super) {
     };
     _this.state = state;
     _this.handleSearchSubmit = _this.handleSearchSubmit.bind(_this);
-    _this.handleBuyNow = _this.handleBuyNow.bind(_this);
     return _this;
   }
 
@@ -38688,7 +39179,7 @@ function (_super) {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            query = "query getRecentPremiumVideoChatListings{\n\t\t\tgetRecentPremiumVideoChatListings{\n\t\t\t\tlistings {\n\t\t\t\t\t_id\n\t\t\t\t\ttopic\n\t\t\t\t\tlanguage\n\t\t\t\t\tduration\n\t\t\t\t\tprice\n\t\t\t\t\tcurrency\n\t\t\t\t\tthumbnailSrc\n\t\t\t\t\tuserID\n\t\t\t\t}\n\t\t\t}\n\t\t}";
+            query = "query getRecentPremiumVideoChatListings{\n\t\t\tgetRecentPremiumVideoChatListings{\n\t\t\t\tlistings {\n\t\t\t\t\t_id\n\t\t\t\t\ttopic\n\t\t\t\t\tlanguage\n\t\t\t\t\tduration\n\t\t\t\t\tprice\n\t\t\t\t\tcurrency\n\t\t\t\t\tthumbnailSrc\n\t\t\t\t\tuserID\n\t\t\t\t\ttimeSlots {\n\t\t\t\t\t\ttime\n\t\t\t\t\t\tcustomerUserID\n\t\t\t\t\t\tcompleted\n\t\t\t\t\t\tbooked\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}";
             return [4
             /*yield*/
             , (0, graphQLFetch_js_1.default)(query)];
@@ -38721,7 +39212,7 @@ function (_super) {
           case 0:
             event.preventDefault();
             _a = this.state, topic = _a.topic, language = _a.language;
-            query = "query searchPremiumVideoChatListings($topic: String, $language: String){\n\t\t\tsearchPremiumVideoChatListings(topic: $topic, language: $language){\n\t\t\t\tlistings {\n\t\t\t\t\t_id\n\t\t\t\t\ttopic\n\t\t\t\t\tlanguage\n\t\t\t\t\tduration\n\t\t\t\t\tprice\n\t\t\t\t\tcurrency\n\t\t\t\t\tthumbnailSrc\n\t\t\t\t\tuserID\n\t\t\t\t}\n\t\t\t}\n\t\t}";
+            query = "query searchPremiumVideoChatListings($topic: String, $language: String){\n\t\t\tsearchPremiumVideoChatListings(topic: $topic, language: $language){\n\t\t\t\tlistings {\n\t\t\t\t\t_id\n\t\t\t\t\ttopic\n\t\t\t\t\tlanguage\n\t\t\t\t\tduration\n\t\t\t\t\tprice\n\t\t\t\t\tcurrency\n\t\t\t\t\tthumbnailSrc\n\t\t\t\t\tuserID\n\t\t\t\t\ttimeSlots {\n\t\t\t\t\t\ttime\n\t\t\t\t\t\tcustomerUserID\n\t\t\t\t\t\tcompleted\n\t\t\t\t\t\tbooked\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}";
             return [4
             /*yield*/
             , (0, graphQLFetch_js_1.default)(query, {
@@ -38748,97 +39239,10 @@ function (_super) {
     });
   };
 
-  PremiumVideoChatListingFeed.prototype.handleBuyNow = function (listing) {
-    return __awaiter(this, void 0, void 0, function () {
-      var authenticatedUserID, query, data, productUser, stripe_1;
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            authenticatedUserID = this.props.authenticatedUserID;
-            if (!authenticatedUserID) return [3
-            /*break*/
-            , 5];
-            query = "mutation createProduct($productObjectCollection: String!, $productDescription: String!, $productObjectID: ID!, $userID: ID!){\n\t\t\t\tcreateProduct(productObjectCollection: $productObjectCollection, productDescription: $productDescription, productObjectID: $productObjectID, userID: $userID){\n\t\t\t\t\tuserID\n\t\t\t\t\tcost\n\t\t\t\t\tcurrency\n\t\t\t\t\torderedOn\n\t\t\t\t\tproductObject {\n\t\t\t\t\t\t... on PremiumVideoChatListing{\n\t\t\t\t\t\t\t_id\n\t\t\t\t\t\t\tuserID\n\t\t\t\t\t\t\ttopic\n\t\t\t\t\t\t\tlanguage\n\t\t\t\t\t\t\tduration\n\t\t\t\t\t\t\tthumbnailSrc\n\t\t\t\t\t\t\tprice\n\t\t\t\t\t\t\tcurrency\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\tpriceID\n\t\t\t\t}\n\t\t\t}";
-            return [4
-            /*yield*/
-            , (0, graphQLFetch_js_1.default)(query, {
-              productObjectCollection: 'premium_video_chat_listings',
-              productDescription: 'Premium Video Chat',
-              productObjectID: listing._id,
-              userID: authenticatedUserID
-            })];
-
-          case 1:
-            data = _a.sent();
-            if (!data.createProduct) return [3
-            /*break*/
-            , 4];
-            if (!(data.createProduct.priceID && listing.userID)) return [3
-            /*break*/
-            , 4];
-            return [4
-            /*yield*/
-            , fetch("/user/" + listing.userID).then(function (response) {
-              return response.json();
-            })];
-
-          case 2:
-            productUser = _a.sent();
-            if (!productUser.connectedStripeAccountID) return [3
-            /*break*/
-            , 4];
-            return [4
-            /*yield*/
-            , (0, stripe_js_1.loadStripe)("pk_test_51K5VhTKFlSir9ysi41Tl8YwRjRHsClf5ehSCkavclj789g8CpNRBTDk8iGvpro09CZxMDDiBCmzAKL2sKHAoRdaJ00YRnkKrkm" || 0)];
-
-          case 3:
-            stripe_1 = _a.sent();
-            fetch('/create-checkout-session', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                priceID: data.createProduct.priceID,
-                connectedStripeAccountID: productUser.connectedStripeAccountID
-              })
-            }).then(function (response) {
-              return response.json();
-            }).then(function (session) {
-              return stripe_1.redirectToCheckout({
-                sessionId: session.id
-              });
-            }).then(function (result) {
-              // If `redirectToCheckout` fails due to a browser or network
-              // error, you should display the localized error message to your
-              // customer using `error.message`.
-              if (result.error) {
-                alert(result.error.message);
-              }
-            });
-            _a.label = 4;
-
-          case 4:
-            return [3
-            /*break*/
-            , 6];
-
-          case 5:
-            alert('Must be signed in to buy.');
-            _a.label = 6;
-
-          case 6:
-            return [2
-            /*return*/
-            ];
-        }
-      });
-    });
-  };
-
   PremiumVideoChatListingFeed.prototype.render = function () {
     var _this = this;
 
+    var authenticatedUserID = this.props.authenticatedUserID;
     var _a = this.state,
         premiumVideoChatListings = _a.premiumVideoChatListings,
         topic = _a.topic,
@@ -38894,14 +39298,10 @@ function (_super) {
       return React.createElement("div", {
         key: premiumVideoChatListings.indexOf(listing)
       }, React.createElement(PremiumVideoChatListing_tsx_1.default, {
-        premiumVideoChatListing: listing
-      }), React.createElement("button", {
-        onClick: function () {
-          return _this.handleBuyNow(listing);
-        }
-      }, "Buy Now", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
-        icon: free_solid_svg_icons_1.faPlus
-      })));
+        premiumVideoChatListing: listing,
+        authenticatedUserID: authenticatedUserID,
+        view: authenticatedUserID == listing.userID ? 'owner' : 'customer'
+      }));
     })) : '');
   };
 
@@ -39101,6 +39501,16 @@ var __generator = this && this.__generator || function (thisArg, body) {
   }
 };
 
+var __spreadArray = this && this.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
+  }
+  return to.concat(ar || Array.prototype.slice.call(from));
+};
+
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
@@ -39135,10 +39545,18 @@ function (_super) {
       duration: '',
       price: 0,
       currency: 'usd',
-      thumbnailSrc: ''
+      thumbnailSrc: '',
+      timeSlots: [{
+        time: '',
+        booked: false,
+        completed: false
+      }]
     };
     _this.state = state;
     _this.handleThumbnailChange = _this.handleThumbnailChange.bind(_this);
+    _this.handleTimeSlotChange = _this.handleTimeSlotChange.bind(_this);
+    _this.handleRemoveTimeSlot = _this.handleRemoveTimeSlot.bind(_this);
+    _this.handleAddTimeSlot = _this.handleAddTimeSlot.bind(_this);
     _this.handleSubmit = _this.handleSubmit.bind(_this);
     _this.handleDeleteListing = _this.handleDeleteListing.bind(_this);
     return _this;
@@ -39180,15 +39598,45 @@ function (_super) {
     }
   };
 
+  PremiumVideoChatListingForm.prototype.handleTimeSlotChange = function (time, timeSlotIndex) {
+    var timeSlots = this.state.timeSlots;
+    var timeSlot = timeSlots[timeSlotIndex];
+    timeSlot.time = time;
+    timeSlots[timeSlotIndex] = timeSlot;
+    this.setState({
+      timeSlots: timeSlots
+    });
+  };
+
+  PremiumVideoChatListingForm.prototype.handleRemoveTimeSlot = function (e, timeSlotIndex) {
+    e.preventDefault();
+    var timeSlots = this.state.timeSlots;
+    timeSlots.splice(timeSlotIndex, 1);
+    this.setState({
+      timeSlots: timeSlots
+    });
+  };
+
+  PremiumVideoChatListingForm.prototype.handleAddTimeSlot = function (e) {
+    e.preventDefault();
+    this.setState({
+      timeSlots: __spreadArray(__spreadArray([], this.state.timeSlots, true), [{
+        time: '',
+        booked: false,
+        completed: false
+      }], false)
+    });
+  };
+
   PremiumVideoChatListingForm.prototype.handleSubmit = function (event) {
     return __awaiter(this, void 0, void 0, function () {
-      var _a, topic, language, duration, price, currency, thumbnailSrc, thumbnailFile, savedPremiumVideoChatListing, user, query, variables, mutationName, data;
+      var _a, topic, language, duration, price, currency, thumbnailSrc, thumbnailFile, timeSlots, savedPremiumVideoChatListing, user, query, variables, mutationName, data;
 
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
             event.preventDefault();
-            _a = this.state, topic = _a.topic, language = _a.language, duration = _a.duration, price = _a.price, currency = _a.currency, thumbnailSrc = _a.thumbnailSrc, thumbnailFile = _a.thumbnailFile, savedPremiumVideoChatListing = _a.savedPremiumVideoChatListing;
+            _a = this.state, topic = _a.topic, language = _a.language, duration = _a.duration, price = _a.price, currency = _a.currency, thumbnailSrc = _a.thumbnailSrc, thumbnailFile = _a.thumbnailFile, timeSlots = _a.timeSlots, savedPremiumVideoChatListing = _a.savedPremiumVideoChatListing;
             user = this.props.user;
             if (!(user && topic && language && duration && thumbnailSrc)) return [3
             /*break*/
@@ -39199,7 +39647,7 @@ function (_super) {
 
             if (savedPremiumVideoChatListing) {
               // If updating existing
-              query = "mutation updatePremiumVideoChatListing($listingID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){\n\t\t\t\t\tupdatePremiumVideoChatListing(listingID: $listingID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){\n\t\t\t\t\t\t_id\n\t\t\t\t\t\ttopic\n\t\t\t\t\t\tlanguage\n\t\t\t\t\t\tduration\n\t\t\t\t\t\tprice\n\t\t\t\t\t\tcurrency\n\t\t\t\t\t\tthumbnailSrc\n\t\t\t\t\t\tuserID\n\t\t\t\t\t}\n\t\t\t\t}";
+              query = "mutation updatePremiumVideoChatListing($listingID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){\n\t\t\t\t\tupdatePremiumVideoChatListing(listingID: $listingID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){\n\t\t\t\t\t\t_id\n\t\t\t\t\t\ttopic\n\t\t\t\t\t\tlanguage\n\t\t\t\t\t\tduration\n\t\t\t\t\t\tprice\n\t\t\t\t\t\tcurrency\n\t\t\t\t\t\tthumbnailSrc\n\t\t\t\t\t\tuserID\n\t\t\t\t\t\ttimeSlots {\n\t\t\t\t\t\t\ttime\n\t\t\t\t\t\t\tcustomerUserID\n\t\t\t\t\t\t\tcompleted\n\t\t\t\t\t\t\tbooked\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}";
               variables = {
                 listingID: savedPremiumVideoChatListing._id,
                 premiumVideoChatListing: {
@@ -39207,7 +39655,8 @@ function (_super) {
                   language: language,
                   duration: duration,
                   price: price,
-                  currency: currency
+                  currency: currency,
+                  timeSlots: timeSlots
                 }
               };
 
@@ -39218,7 +39667,7 @@ function (_super) {
               mutationName = 'updatePremiumVideoChatListing';
             } else {
               // If adding new
-              query = "mutation addPremiumVideoChatListing($userID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){\n\t\t\t\t\taddPremiumVideoChatListing(userID: $userID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){\n\t\t\t\t\t\t_id\n\t\t\t\t\t\ttopic\n\t\t\t\t\t\tlanguage\n\t\t\t\t\t\tduration\n\t\t\t\t\t\tprice\n\t\t\t\t\t\tcurrency\n\t\t\t\t\t\tthumbnailSrc\n\t\t\t\t\t\tuserID\n\t\t\t\t\t}\n\t\t\t\t}";
+              query = "mutation addPremiumVideoChatListing($userID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){\n\t\t\t\t\taddPremiumVideoChatListing(userID: $userID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){\n\t\t\t\t\t\t_id\n\t\t\t\t\t\ttopic\n\t\t\t\t\t\tlanguage\n\t\t\t\t\t\tduration\n\t\t\t\t\t\tprice\n\t\t\t\t\t\tcurrency\n\t\t\t\t\t\tthumbnailSrc\n\t\t\t\t\t\tuserID\n\t\t\t\t\t\ttimeSlots {\n\t\t\t\t\t\t\ttime\n\t\t\t\t\t\t\tcustomerUserID\n\t\t\t\t\t\t\tcompleted\n\t\t\t\t\t\t\tbooked\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}";
               variables = {
                 userID: user._id,
                 premiumVideoChatListing: {
@@ -39226,7 +39675,8 @@ function (_super) {
                   language: language,
                   duration: duration,
                   price: price,
-                  currency: currency
+                  currency: currency,
+                  timeSlots: timeSlots
                 },
                 file: thumbnailFile
               };
@@ -39297,6 +39747,7 @@ function (_super) {
         price = _a.price,
         currency = _a.currency,
         thumbnailSrc = _a.thumbnailSrc,
+        timeSlots = _a.timeSlots,
         savedPremiumVideoChatListing = _a.savedPremiumVideoChatListing;
     var user = this.props.user;
     return React.createElement("div", {
@@ -39373,17 +39824,30 @@ function (_super) {
         });
       },
       className: "pure-input-rounded"
+    })), timeSlots.length ? React.createElement(React.Fragment, null, timeSlots.map(function (timeSlot) {
+      return React.createElement("div", {
+        key: timeSlots.indexOf(timeSlot)
+      }, React.createElement("input", {
+        type: "date",
+        name: "time[" + timeSlots.indexOf(timeSlot) + "]",
+        value: timeSlot.time,
+        onChange: function (e) {
+          return _this.handleTimeSlotChange(e.target.value, timeSlots.indexOf(timeSlot));
+        }
+      }), React.createElement("button", {
+        onClick: function (e) {
+          return _this.handleRemoveTimeSlot(e, timeSlots.indexOf(timeSlot));
+        }
+      }, "Remove Time", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
+        icon: free_solid_svg_icons_1.faTimes
+      })));
+    })) : '', React.createElement("button", {
+      onClick: function (e) {
+        return _this.handleAddTimeSlot(e);
+      }
+    }, "Add time slot", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
+      icon: free_solid_svg_icons_1.faPlus
     })), React.createElement("div", {
-      className: "upload-container"
-    }, React.createElement("input", {
-      type: "file",
-      name: "thumbnail",
-      onChange: this.handleThumbnailChange
-    }), React.createElement("label", {
-      htmlFor: "thumbnail"
-    }, "Thumbnail", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
-      icon: free_solid_svg_icons_1.faUpload
-    }))), React.createElement("div", {
       className: "pure-u-l pure-u-md-1-2",
       style: {
         maxWidth: '100%',
@@ -39403,6 +39867,16 @@ function (_super) {
         width: '100%',
         background: "url(" + thumbnailSrc + ") no-repeat center center/cover"
       }
+    }))), React.createElement("div", {
+      className: "upload-container"
+    }, React.createElement("input", {
+      type: "file",
+      name: "thumbnail",
+      onChange: this.handleThumbnailChange
+    }), React.createElement("label", {
+      htmlFor: "thumbnail"
+    }, "Thumbnail", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
+      icon: free_solid_svg_icons_1.faUpload
     }))), React.createElement("div", null, React.createElement("button", {
       onClick: this.handleSubmit
     }, "Submit", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
@@ -39410,7 +39884,9 @@ function (_super) {
     })))), React.createElement("div", {
       className: "pure-u-1 pure-u-md-1-2"
     }, savedPremiumVideoChatListing ? React.createElement("div", null, React.createElement(PremiumVideoChatListing_tsx_1.default, {
-      premiumVideoChatListing: savedPremiumVideoChatListing
+      premiumVideoChatListing: savedPremiumVideoChatListing,
+      authenticatedUserID: user._id,
+      view: user._id == savedPremiumVideoChatListing.userID ? 'owner' : 'customer'
     }), React.createElement("form", null, React.createElement("a", {
       className: "button",
       href: "#remove-listing",
@@ -39469,6 +39945,147 @@ var __extends = this && this.__extends || function () {
   };
 }();
 
+var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function (resolve) {
+      resolve(value);
+    });
+  }
+
+  return new (P || (P = Promise))(function (resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function step(result) {
+      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+
+var __generator = this && this.__generator || function (thisArg, body) {
+  var _ = {
+    label: 0,
+    sent: function () {
+      if (t[0] & 1) throw t[1];
+      return t[1];
+    },
+    trys: [],
+    ops: []
+  },
+      f,
+      y,
+      t,
+      g;
+  return g = {
+    next: verb(0),
+    "throw": verb(1),
+    "return": verb(2)
+  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+    return this;
+  }), g;
+
+  function verb(n) {
+    return function (v) {
+      return step([n, v]);
+    };
+  }
+
+  function step(op) {
+    if (f) throw new TypeError("Generator is already executing.");
+
+    while (_) try {
+      if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+      if (y = 0, t) op = [op[0] & 2, t.value];
+
+      switch (op[0]) {
+        case 0:
+        case 1:
+          t = op;
+          break;
+
+        case 4:
+          _.label++;
+          return {
+            value: op[1],
+            done: false
+          };
+
+        case 5:
+          _.label++;
+          y = op[1];
+          op = [0];
+          continue;
+
+        case 7:
+          op = _.ops.pop();
+
+          _.trys.pop();
+
+          continue;
+
+        default:
+          if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+            _ = 0;
+            continue;
+          }
+
+          if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+            _.label = op[1];
+            break;
+          }
+
+          if (op[0] === 6 && _.label < t[1]) {
+            _.label = t[1];
+            t = op;
+            break;
+          }
+
+          if (t && _.label < t[2]) {
+            _.label = t[2];
+
+            _.ops.push(op);
+
+            break;
+          }
+
+          if (t[2]) _.ops.pop();
+
+          _.trys.pop();
+
+          continue;
+      }
+
+      op = body.call(thisArg, _);
+    } catch (e) {
+      op = [6, e];
+      y = 0;
+    } finally {
+      f = t = 0;
+    }
+
+    if (op[0] & 5) throw op[1];
+    return {
+      value: op[0] ? op[1] : void 0,
+      done: true
+    };
+  }
+};
+
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
@@ -39483,17 +40100,73 @@ function (_super) {
   function Product(props) {
     var _this = _super.call(this, props) || this;
 
-    var state = {};
+    var state = {
+      ownerDisplayName: ''
+    };
     _this.state = state;
     _this.renderProduct = _this.renderProduct.bind(_this);
     return _this;
   }
 
+  Product.prototype.componentWillMount = function () {
+    return __awaiter(this, void 0, void 0, function () {
+      var ownerDisplayName;
+      return __generator(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            return [4
+            /*yield*/
+            , this.getUserNameByID(this.props.product.productObject.userID)];
+
+          case 1:
+            ownerDisplayName = _a.sent();
+            this.setState({
+              ownerDisplayName: ownerDisplayName
+            });
+            return [2
+            /*return*/
+            ];
+        }
+      });
+    });
+  };
+
+  Product.prototype.getUserNameByID = function (userID) {
+    return __awaiter(this, void 0, void 0, function () {
+      var user;
+      return __generator(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            return [4
+            /*yield*/
+            , fetch("/user/" + userID).then(function (response) {
+              return response.json();
+            })];
+
+          case 1:
+            user = _a.sent();
+            return [2
+            /*return*/
+            , user.displayName];
+        }
+      });
+    });
+  };
+
   Product.prototype.renderProduct = function (product) {
+    var _this = this;
+
     var productObject = product.productObject;
 
     switch (product.productObjectCollection) {
       case 'premium_video_chat_listings':
+        var timeSlots_1 = productObject.timeSlots;
+
+        if (timeSlots_1) {// timeSlots = timeSlots.filter((timeSlot) => timeSlot.customerUserID == product.userID);
+        } else {
+          timeSlots_1 = [];
+        }
+
         return React.createElement(React.Fragment, null, React.createElement("div", {
           className: "thumbnail-preview img-container"
         }, React.createElement("img", {
@@ -39504,7 +40177,13 @@ function (_super) {
           },
           src: productObject.thumbnailSrc,
           alt: productObject.thumbnailSrc
-        })), React.createElement("p", null, "Topic: ", productObject.topic), React.createElement("p", null, "Language: ", productObject.language));
+        })), React.createElement("p", null, "Topic: ", productObject.topic), React.createElement("p", null, "Language: ", productObject.language), timeSlots_1.length ? timeSlots_1.map(function (timeSlot) {
+          return React.createElement("div", {
+            key: timeSlots_1.indexOf(timeSlot)
+          }, React.createElement("a", {
+            href: "/video-chat?userID=" + productObject.userID
+          }, "Video Chat with User: ", _this.state.ownerDisplayName, " on ", timeSlot.time));
+        }) : '');
     }
   };
 

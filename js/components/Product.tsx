@@ -16,21 +16,42 @@ interface ProductProps {
 }
 
 interface ProductState {
+	ownerDisplayName: string;
 }
 
 export default class Product extends React.Component<ProductProps, ProductState> {
 	constructor(props: ProductProps){
 		super(props);
 		let state: ProductState = {
+			ownerDisplayName: '',
 		}
 		this.state = state;
 		this.renderProduct = this.renderProduct.bind(this);
+	}
+
+	async componentWillMount(){
+		const ownerDisplayName = await this.getUserNameByID(this.props.product.productObject.userID);
+		this.setState({
+			ownerDisplayName,
+		});
+	}
+
+	async getUserNameByID(userID){
+		const user = await fetch(`/user/${userID}`)
+			.then((response) => response.json());
+		return user.displayName;
 	}
 
 	renderProduct(product){
 		const productObject = product.productObject;
 		switch(product.productObjectCollection){
 			case 'premium_video_chat_listings':
+				let { timeSlots } = productObject;
+				if(timeSlots){
+					// timeSlots = timeSlots.filter((timeSlot) => timeSlot.customerUserID == product.userID);
+				} else {
+					timeSlots = [];
+				}
 				return (
 					<>
 					<div className="thumbnail-preview img-container">
@@ -38,6 +59,15 @@ export default class Product extends React.Component<ProductProps, ProductState>
 					</div>
 					<p>Topic: {productObject.topic}</p>
 					<p>Language: {productObject.language}</p>
+					{timeSlots.length ?
+						timeSlots.map((timeSlot) => 
+							<div key={timeSlots.indexOf(timeSlot)}>
+								<a href={`/video-chat?userID=${productObject.userID}`}>Video Chat with User: {this.state.ownerDisplayName} on {timeSlot.time}</a>
+							</div>
+						)
+						:
+						''
+					}
 					</>
 				);
 		}

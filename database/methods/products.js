@@ -2,10 +2,26 @@ const { getDB } = require('../db.js');
 const mongo = require('mongodb');
 const { createOrder } = require('../../app/stripe.js');
 
-async function createProduct(_, { productObjectCollection, productDescription, productObjectID, userID }){
+async function createProduct(_, { productObjectCollection, productDescription, productObjectID, userID, productObjectUpdateData = null }){
 	const db = getDB();
 	let user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
-	let productObject = await db.collection(productObjectCollection).findOne({ _id: new mongo.ObjectID(productObjectID) });
+	let productObject;
+	if(productObjectUpdateData){
+		 productObject = await db.collection(productObjectCollection).findOneAndUpdate(
+			{ _id: new mongo.ObjectID(productObjectID) },
+			{ $set: JSON.parse(productObjectUpdateData) },
+			{ returnOriginal: false }
+		);
+		productObject = productObject.value;
+
+		switch(productObjectCollection){
+			case 'premium_video_chat_listings':
+				await db.collection('users').updateOne({ _id: new mongo.ObjectID(productObject.userID) }, { $set: { premiumVideoChatListing: productObject } });
+			break;
+		}
+	} else {
+		productObject = await db.collection(productObjectCollection).findOne({ _id: new mongo.ObjectID(productObjectID) });
+	}
 	const stripePrice = await createOrder('test@email.com', productDescription, Math.floor(productObject.price * 100), productObject.currency);
 	let products = user.products || [];
 	const product = {
