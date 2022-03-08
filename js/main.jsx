@@ -71,6 +71,7 @@ if(document.getElementById('account-profile')){
 	var pathResolver = document.getElementById('account-profile').getAttribute('pathresolver');
 	ReactDOM.render(<AccountProfile userID={userID} authenticatedUserID={authenticatedUserID} isCurrentUser={eval(isCurrentUser)} pathResolver={pathResolver}/>, document.getElementById('account-profile'));
 }
-if(document.getElementById('web-rtc')){
-	ReactDOM.render(<VideoChat/>, document.getElementById('web-rtc'));
+if(document.getElementById('video-chat')){
+	var authenticatedUserID = document.getElementById('video-chat').getAttribute('authenticateduserid');
+	ReactDOM.render(<VideoChat authenticatedUserID={authenticatedUserID}/>, document.getElementById('video-chat'));
 }

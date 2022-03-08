@@ -6,7 +6,7 @@ class VideoChat extends React.Component {
   render(){
     return (
       <DefaultLayout pathResolver="../">
-          <div id="web-rtc"></div>
+          <div id="video-chat" authenticateduserid={this.props.authenticatedUserID}></div>
       </DefaultLayout>
     );
   }

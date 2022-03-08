@@ -129,7 +129,7 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 						<>
 							<input id={`timeSlot${timeSlots.indexOf(timeSlot)}`} type="checkbox" checked={timeSlot.completed} onClick={(e) => this.handleTimeSlotChange(e.target.checked, timeSlots.indexOf(timeSlot))}/>
 							<label htmlFor={`timeSlot${timeSlots.indexOf(timeSlot)}`}>{timeSlot.time} with User: {timeSlot.customerDisplayName}</label>
-							<a href={`/video-chat?userID=${timeSlot.customerUserID}`}>Video Chat</a>
+							<a href={`/video-chat?forUserID=${timeSlot.customerUserID}`}>Video Chat</a>
 						</>
 						:
 						<>

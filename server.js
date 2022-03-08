@@ -481,7 +481,11 @@ app.use(express.json());
 		});
 
 		app.get('/video-chat', async (req, res) => {
-			return res.render('video-chat');
+			let userID = null;
+			if(req.user){
+				userID = req.user._id;
+			}
+			return res.render('video-chat', { authenticatedUserID: userID });
 		});
 		app.post('/video-chat-tokens', async (req, res) => {
 			const firebaseConfig = {

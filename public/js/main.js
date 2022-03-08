@@ -38366,8 +38366,11 @@ if (document.getElementById('account-profile')) {
   }), document.getElementById('account-profile'));
 }
 
-if (document.getElementById('web-rtc')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_components_VideoChat_tsx__WEBPACK_IMPORTED_MODULE_10___default()), null), document.getElementById('web-rtc'));
+if (document.getElementById('video-chat')) {
+  var authenticatedUserID = document.getElementById('video-chat').getAttribute('authenticateduserid');
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((_components_VideoChat_tsx__WEBPACK_IMPORTED_MODULE_10___default()), {
+    authenticatedUserID: authenticatedUserID
+  }), document.getElementById('video-chat'));
 }
 
 /***/ }),
@@ -38781,7 +38784,7 @@ function (_super) {
           }), React.createElement("label", {
             htmlFor: "timeSlot" + timeSlots.indexOf(timeSlot)
           }, timeSlot.time, " with User: ", timeSlot.customerDisplayName), React.createElement("a", {
-            href: "/video-chat?userID=" + timeSlot.customerUserID
+            href: "/video-chat?forUserID=" + timeSlot.customerUserID
           }, "Video Chat")) : React.createElement(React.Fragment, null, React.createElement("div", null, timeSlot.time, " available")));
         });
 
@@ -40181,7 +40184,7 @@ function (_super) {
           return React.createElement("div", {
             key: timeSlots_1.indexOf(timeSlot)
           }, React.createElement("a", {
-            href: "/video-chat?userID=" + productObject.userID
+            href: "/video-chat?withUserID=" + productObject.userID
           }, "Video Chat with User: ", _this.state.ownerDisplayName, " on ", timeSlot.time));
         }) : '');
     }
@@ -40469,13 +40472,17 @@ function (_super) {
       webcamButtonDisabled: false,
       callButtonDisabled: true,
       answerButtonDisabled: true,
-      hangupButtonDisabled: true
+      hangupButtonDisabled: true,
+      forUserID: '',
+      forUserDisplayName: '',
+      WithUserID: ''
     };
     _this.state = state;
     _this.startWebcam = _this.startWebcam.bind(_this);
     _this.createCall = _this.createCall.bind(_this);
     _this.answerCall = _this.answerCall.bind(_this);
     _this.hangup = _this.hangup.bind(_this);
+    _this.refreshCallOffers = _this.refreshCallOffers.bind(_this);
     _this.webcamVideo = React.createRef();
     _this.remoteVideo = React.createRef();
     return _this;
@@ -40483,7 +40490,7 @@ function (_super) {
 
   VideoChat.prototype.componentDidMount = function () {
     return __awaiter(this, void 0, void 0, function () {
-      var firebaseConfig, firebaseApp, firestore, servers, peerConnection;
+      var firebaseConfig, firebaseApp, firestore, servers, peerConnection, urlParams, forUserID, withUserID, forUserDisplayName, withUserDisplayName_1, callsCollection, callDocs, callDocsArray_1;
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
@@ -40520,6 +40527,61 @@ function (_super) {
               peerConnection: peerConnection,
               firestore: firestore
             });
+            urlParams = new URLSearchParams(window.location.search);
+            forUserID = urlParams.get('forUserID');
+            withUserID = urlParams.get('withUserID');
+            if (!forUserID) return [3
+            /*break*/
+            , 3];
+            return [4
+            /*yield*/
+            , this.getUserNameByID(forUserID)];
+
+          case 2:
+            forUserDisplayName = _a.sent();
+            this.setState({
+              forUserID: forUserID,
+              forUserDisplayName: forUserDisplayName
+            });
+            return [3
+            /*break*/
+            , 6];
+
+          case 3:
+            if (!withUserID) return [3
+            /*break*/
+            , 6];
+            return [4
+            /*yield*/
+            , this.getUserNameByID(withUserID)];
+
+          case 4:
+            withUserDisplayName_1 = _a.sent();
+            callsCollection = (0, firestore_1.query)((0, firestore_1.collection)(firestore, 'calls'), (0, firestore_1.where)('offer.forUserID', '==', this.props.authenticatedUserID));
+            return [4
+            /*yield*/
+            , (0, firestore_1.getDocs)(callsCollection)];
+
+          case 5:
+            callDocs = _a.sent();
+            callDocsArray_1 = [];
+            callDocs.forEach(function (doc) {
+              if (doc.id) {
+                var call = doc.data();
+                call.offer.withUserDisplayName = withUserDisplayName_1;
+                callDocsArray_1.push(call.offer);
+              }
+            });
+            callDocsArray_1.sort(function (a, b) {
+              return new Date(b.createdDate) - new Date(a.createdDate);
+            });
+            this.setState({
+              withUserID: withUserID,
+              availableCalls: callDocsArray_1
+            });
+            _a.label = 6;
+
+          case 6:
             return [2
             /*return*/
             ];
@@ -40572,16 +40634,38 @@ function (_super) {
     });
   };
 
+  VideoChat.prototype.getUserNameByID = function (userID) {
+    return __awaiter(this, void 0, void 0, function () {
+      var user;
+      return __generator(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            return [4
+            /*yield*/
+            , fetch("/user/" + userID).then(function (response) {
+              return response.json();
+            })];
+
+          case 1:
+            user = _a.sent();
+            return [2
+            /*return*/
+            , user.displayName];
+        }
+      });
+    });
+  };
+
   VideoChat.prototype.createCall = function () {
     return __awaiter(this, void 0, void 0, function () {
-      var _a, peerConnection, firestore, callDocs, callDoc, offerCandidates, answerCandidates, offerDescription, offer;
+      var _a, peerConnection, firestore, forUserID, callDocs, callDoc, offerCandidates, answerCandidates, offerDescription, offer, CallOffer;
 
       var _this = this;
 
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
-            _a = this.state, peerConnection = _a.peerConnection, firestore = _a.firestore;
+            _a = this.state, peerConnection = _a.peerConnection, firestore = _a.firestore, forUserID = _a.forUserID;
             callDocs = (0, firestore_1.collection)(firestore, 'calls');
             return [4
             /*yield*/
@@ -40635,8 +40719,11 @@ function (_super) {
             _b.sent();
 
             offer = {
+              callID: callDoc.id,
               sdp: offerDescription.sdp,
-              type: offerDescription.type
+              type: offerDescription.type,
+              forUserID: forUserID,
+              createdDate: new Date().toString()
             };
             return [4
             /*yield*/
@@ -40780,7 +40867,9 @@ function (_super) {
   };
 
   VideoChat.prototype.hangup = function () {
-    var peerConnection = this.state.peerConnection;
+    var _a = this.state,
+        peerConnection = _a.peerConnection,
+        availableCalls = _a.availableCalls;
     peerConnection.close();
     this.webcamVideo.current.srcObject = null;
     this.remoteVideo.current.srcObject = null;
@@ -40793,9 +40882,120 @@ function (_super) {
     });
   };
 
-  VideoChat.prototype.render = function () {
+  VideoChat.prototype.refreshCallOffers = function () {
+    return __awaiter(this, void 0, void 0, function () {
+      var _a, firestore, withUserID, withUserDisplayName_2, callsCollection, callDocs, callDocsArray_2;
+
+      return __generator(this, function (_b) {
+        switch (_b.label) {
+          case 0:
+            _a = this.state, firestore = _a.firestore, withUserID = _a.withUserID;
+            if (!withUserID) return [3
+            /*break*/
+            , 3];
+            return [4
+            /*yield*/
+            , this.getUserNameByID(withUserID)];
+
+          case 1:
+            withUserDisplayName_2 = _b.sent();
+            callsCollection = (0, firestore_1.query)((0, firestore_1.collection)(firestore, 'calls'), (0, firestore_1.where)('offer.forUserID', '==', this.props.authenticatedUserID));
+            return [4
+            /*yield*/
+            , (0, firestore_1.getDocs)(callsCollection)];
+
+          case 2:
+            callDocs = _b.sent();
+            callDocsArray_2 = [];
+            callDocs.forEach(function (doc) {
+              if (doc.id) {
+                var call = doc.data();
+                call.offer.withUserDisplayName = withUserDisplayName_2;
+                callDocsArray_2.push(call.offer);
+              }
+            });
+            callDocsArray_2.sort(function (a, b) {
+              return new Date(b.createdDate) - new Date(a.createdDate);
+            });
+            this.setState({
+              availableCalls: callDocsArray_2
+            });
+            _b.label = 3;
+
+          case 3:
+            return [2
+            /*return*/
+            ];
+        }
+      });
+    });
+  };
+
+  VideoChat.prototype.renderCallControls = function () {
     var _this = this;
 
+    var _a = this.state,
+        availableCalls = _a.availableCalls,
+        forUserID = _a.forUserID,
+        forUserDisplayName = _a.forUserDisplayName,
+        withUserID = _a.withUserID,
+        callButtonDisabled = _a.callButtonDisabled,
+        answerButtonDisabled = _a.answerButtonDisabled,
+        callID = _a.callID;
+
+    if (forUserID) {
+      return React.createElement("div", {
+        className: "pure-u-1 pure-u-md-1-2"
+      }, React.createElement("div", {
+        className: "pad"
+      }, React.createElement("h2", null, "Create a new Call for ", forUserDisplayName), React.createElement("button", {
+        id: "callButton",
+        disabled: callButtonDisabled,
+        onClick: this.createCall
+      }, callID ? 'Dialed' : 'Create Call', React.createElement(react_fontawesome_1.FontAwesomeIcon, {
+        icon: free_solid_svg_icons_1.faPhone
+      }))));
+    } else if (withUserID) {
+      return React.createElement("div", {
+        className: "pure-u-1 pure-u-md-1-2"
+      }, React.createElement("div", {
+        className: "pad"
+      }, React.createElement("h2", null, "Join a Call"), React.createElement("p", null, "Not seeing the right call? Try clicking refresh."), React.createElement("button", {
+        id: "refreshButton",
+        onClick: this.refreshCallOffers
+      }, "Refresh", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
+        icon: free_solid_svg_icons_1.faSync
+      })), React.createElement("div", {
+        className: "flex y-center"
+      }, availableCalls ? availableCalls.map(function (callOffer) {
+        return React.createElement("div", {
+          key: availableCalls.indexOf(callOffer)
+        }, React.createElement("input", {
+          type: "radio",
+          id: "callOffer_" + callOffer.callID,
+          name: "callID",
+          onClick: function () {
+            return _this.setState({
+              callID: callOffer.callID
+            });
+          }
+        }), React.createElement("label", {
+          htmlFor: "callOffer_" + callOffer.callID
+        }, "With ", callOffer.withUserDisplayName, ", created call on ", callOffer.createdDate), React.createElement("button", {
+          id: "answerButton",
+          disabled: answerButtonDisabled || callID != callOffer.callID,
+          onClick: _this.answerCall
+        }, "Answer", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
+          icon: free_solid_svg_icons_1.faPhone
+        })));
+      }) : '')));
+    }
+
+    return '';
+  };
+
+  VideoChat.prototype.render = function () {
+    var availableCalls = this.state.availableCalls;
     return React.createElement("div", {
       className: "frame"
     }, React.createElement(Navigation_jsx_1.default, null), React.createElement("div", {
@@ -40831,40 +41031,7 @@ function (_super) {
       icon: free_solid_svg_icons_1.faCamera
     }))), React.createElement("div", {
       className: "flex x-center y-center"
-    }, React.createElement("div", {
-      className: "pure-u-1 pure-u-md-1-2"
-    }, React.createElement("div", {
-      className: "pad"
-    }, React.createElement("h2", null, "Create a new Call"), React.createElement("button", {
-      id: "callButton",
-      disabled: this.state.callButtonDisabled,
-      onClick: this.createCall
-    }, "Create Call", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
-      icon: free_solid_svg_icons_1.faPhone
-    })))), React.createElement("div", {
-      className: "pure-u-1 pure-u-md-1-2"
-    }, React.createElement("div", {
-      className: "pad"
-    }, React.createElement("h2", null, "Join a Call"), React.createElement("p", null, "Answer the call from a different browser window or device"), React.createElement("div", {
-      className: "flex y-center"
-    }, React.createElement("input", {
-      id: "callInput",
-      type: "text",
-      defaultValue: this.state.callID,
-      onChange: function (e) {
-        return _this.setState({
-          callID: e.target.value
-        });
-      }
-    }), React.createElement("div", {
-      className: "pad no-y"
-    }, React.createElement("button", {
-      id: "answerButton",
-      disabled: this.state.answerButtonDisabled,
-      onClick: this.answerCall
-    }, "Answer", React.createElement(react_fontawesome_1.FontAwesomeIcon, {
-      icon: free_solid_svg_icons_1.faPhone
-    }))))))), React.createElement("div", {
+    }, this.renderCallControls()), React.createElement("div", {
       className: "flex x-center pure-u-1"
     }, React.createElement("button", {
       id: "hangupButton",

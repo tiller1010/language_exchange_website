@@ -62,7 +62,7 @@ export default class Product extends React.Component<ProductProps, ProductState>
 					{timeSlots.length ?
 						timeSlots.map((timeSlot) => 
 							<div key={timeSlots.indexOf(timeSlot)}>
-								<a href={`/video-chat?userID=${productObject.userID}`}>Video Chat with User: {this.state.ownerDisplayName} on {timeSlot.time}</a>
+								<a href={`/video-chat?withUserID=${productObject.userID}`}>Video Chat with User: {this.state.ownerDisplayName} on {timeSlot.time}</a>
 							</div>
 						)
 						:

@@ -1,20 +1,35 @@
 import * as React from 'react';
 import Navigation from './Navigation.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhone, faCamera } from '@fortawesome/free-solid-svg-icons';
+import { faPhone, faCamera, faSync } from '@fortawesome/free-solid-svg-icons';
 import * as firebase from 'firebase/app';
 import {
 	getFirestore,
+	query,
+	where,
 	collection,
 	doc,
 	getDoc,
+	getDocs,
 	addDoc,
 	setDoc,
 	updateDoc,
 	onSnapshot
 } from 'firebase/firestore';
 
+interface CallOffer {
+	callID: string;
+	sdp: string;
+	type: string;
+	forUserID?: string;
+	withUserID?: string;
+	forUserDisplayName?: string;
+	withUserDisplayName?: string;
+	createdDate: string;
+}
+
 interface VideoChatProps {
+	authenticatedUserID: string;
 }
 
 interface VideoChatState {
@@ -25,6 +40,10 @@ interface VideoChatState {
 	callButtonDisabled: boolean;
 	answerButtonDisabled: boolean;
 	hangupButtonDisabled: boolean;
+	forUserID?: string;
+	forUserDisplayName?: string;
+	WithUserID?: string;
+	availableCalls?: [CallOffer];
 }
 
 export default class VideoChat extends React.Component<VideoChatProps, VideoChatState> {
@@ -40,12 +59,16 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 			callButtonDisabled: true,
 			answerButtonDisabled: true,
 			hangupButtonDisabled: true,
+			forUserID: '',
+			forUserDisplayName: '',
+			WithUserID: '',
 		}
 		this.state = state;
 		this.startWebcam = this.startWebcam.bind(this);
 		this.createCall = this.createCall.bind(this);
 		this.answerCall = this.answerCall.bind(this);
 		this.hangup = this.hangup.bind(this);
+		this.refreshCallOffers = this.refreshCallOffers.bind(this);
 
 		this.webcamVideo = React.createRef();
 		this.remoteVideo = React.createRef();
@@ -84,7 +107,36 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 		this.setState({
 			peerConnection,
 			firestore,
-		})
+		});
+
+		const urlParams = new URLSearchParams(window.location.search);
+		const forUserID = urlParams.get('forUserID'); // The customer ID, used by the owner to create calls for the customer ID
+		const withUserID = urlParams.get('withUserID'); // The video chat owner ID, used by a customer to answer calls with this ID
+
+		if(forUserID){
+			const forUserDisplayName = await this.getUserNameByID(forUserID);
+			this.setState({
+				forUserID,
+				forUserDisplayName,
+			});
+		} else if(withUserID){
+			const withUserDisplayName = await this.getUserNameByID(withUserID);
+			const callsCollection = query(collection(firestore, 'calls'), where('offer.forUserID', '==', this.props.authenticatedUserID));
+			let callDocs = await getDocs(callsCollection)
+			let callDocsArray = [];
+			callDocs.forEach((doc) => {
+				if(doc.id){
+					let call = doc.data();
+					call.offer.withUserDisplayName = withUserDisplayName;
+					callDocsArray.push(call.offer);
+				}
+			});
+			callDocsArray.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
+			this.setState({
+				withUserID,
+				availableCalls: callDocsArray,
+			});
+		}
 	}
 
 	async startWebcam(){
@@ -118,9 +170,15 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 
 	}
 
+	async getUserNameByID(userID){
+		const user = await fetch(`/user/${userID}`)
+			.then((response) => response.json());
+		return user.displayName;
+	}
+
 	async createCall(){
 
-		const { peerConnection, firestore } = this.state;
+		const { peerConnection, firestore, forUserID } = this.state;
 
 		// Reference Firestore collections for signaling
 		const callDocs = collection(firestore, 'calls');
@@ -142,9 +200,12 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 		await peerConnection.setLocalDescription(offerDescription);
 
 		const offer = {
+			callID: callDoc.id,
 			sdp: offerDescription.sdp,
 			type: offerDescription.type,
-		};
+			forUserID,
+			createdDate: (new Date()).toString()
+		}: CallOffer;
 
 		await setDoc(callDoc, ({ offer }));
 
@@ -214,7 +275,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 	}
 
 	hangup(){
-		const { peerConnection } = this.state;
+		const { peerConnection, availableCalls } = this.state;
 
 		peerConnection.close();
 
@@ -230,11 +291,95 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 		});
 	}
 
+	async refreshCallOffers(){
+
+		const { firestore, withUserID } = this.state; // The video chat owner ID, used by a customer to answer calls with this ID
+
+		if(withUserID){
+			const withUserDisplayName = await this.getUserNameByID(withUserID);
+			const callsCollection = query(collection(firestore, 'calls'), where('offer.forUserID', '==', this.props.authenticatedUserID));
+			let callDocs = await getDocs(callsCollection)
+			let callDocsArray = [];
+			callDocs.forEach((doc) => {
+				if(doc.id){
+					let call = doc.data();
+					call.offer.withUserDisplayName = withUserDisplayName;
+					callDocsArray.push(call.offer);
+				}
+			});
+			callDocsArray.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
+			this.setState({
+				availableCalls: callDocsArray,
+			});
+		}
+	}
+
+	renderCallControls(){
+
+		const {
+			availableCalls,
+			forUserID,
+			forUserDisplayName,
+			withUserID,
+			callButtonDisabled,
+			answerButtonDisabled,
+			callID,
+		} = this.state;
+
+		if(forUserID){
+			return(
+				<div className="pure-u-1 pure-u-md-1-2">
+					<div className="pad">
+						<h2>Create a new Call for {forUserDisplayName}</h2>
+						<button id="callButton" disabled={callButtonDisabled} onClick={this.createCall}>
+							{callID ? 'Dialed' : 'Create Call'}
+							<FontAwesomeIcon icon={faPhone}/>
+						</button>
+					</div>
+				</div>
+			);
+		} else if(withUserID){
+			return(
+				<div className="pure-u-1 pure-u-md-1-2">
+					<div className="pad">
+						<h2>Join a Call</h2>
+						<p>Not seeing the right call? Try clicking refresh.</p>
+						<button id="refreshButton" onClick={this.refreshCallOffers}>
+							Refresh
+							<FontAwesomeIcon icon={faSync}/>
+						</button>
+						<div className="flex y-center">
+							{availableCalls ?
+								availableCalls.map((callOffer) =>
+									<div key={availableCalls.indexOf(callOffer)}>
+										<input type="radio" id={`callOffer_${callOffer.callID}`} name="callID" onClick={() => this.setState({ callID: callOffer.callID})}/>
+										<label htmlFor={`callOffer_${callOffer.callID}`}>With {callOffer.withUserDisplayName}, created call on {callOffer.createdDate}</label>
+										<button id="answerButton" disabled={answerButtonDisabled || callID != callOffer.callID} onClick={this.answerCall}>
+											Answer
+											<FontAwesomeIcon icon={faPhone}/>
+										</button>
+									</div>
+								)
+								:
+								''
+							}
+						</div>
+					</div>
+				</div>
+			);
+		}
+		return '';
+	}
+
 	render(){
+
+		const { availableCalls } = this.state;
+
 		return (
 			<div className="frame">
 				<Navigation/>
 				<div className="pure-u-g">
+
 					<h2>Start your Webcam</h2>
 					<div className="flex x-center">
 						<div className="pure-u-1 pure-u-md-1-2">
@@ -257,30 +402,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 						</button>
 					</div>
 					<div className="flex x-center y-center">
-						<div className="pure-u-1 pure-u-md-1-2">
-							<div className="pad">
-								<h2>Create a new Call</h2>
-								<button id="callButton" disabled={this.state.callButtonDisabled} onClick={this.createCall}>
-									Create Call
-									<FontAwesomeIcon icon={faPhone}/>
-								</button>
-							</div>
-						</div>
-						<div className="pure-u-1 pure-u-md-1-2">
-							<div className="pad">
-								<h2>Join a Call</h2>
-								<p>Answer the call from a different browser window or device</p>
-								<div className="flex y-center">
-									<input id="callInput" type="text" defaultValue={this.state.callID} onChange={(e) => this.setState({ callID: e.target.value })}/>
-									<div className="pad no-y">
-										<button id="answerButton" disabled={this.state.answerButtonDisabled} onClick={this.answerCall}>
-											Answer
-											<FontAwesomeIcon icon={faPhone}/>
-										</button>
-									</div>
-								</div>
-							</div>
-						</div>
+						{this.renderCallControls()}
 					</div>
 					<div className="flex x-center pure-u-1">
 						<button id="hangupButton" disabled={this.state.hangupButtonDisabled} onClick={this.hangup}>
