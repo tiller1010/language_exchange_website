@@ -8,10 +8,10 @@ class AccountProfile extends React.Component {
 		return (
 			<DefaultLayout pathResolver={this.props.pathResolver || ''}>
 			    <div id="account-profile"
-				    data-user={JSON.stringify(this.props.user)}
-				    data-authenticatedUser={JSON.stringify(this.props.authenticatedUser)}
-				    data-isCurrentUser={this.props.isCurrentUser}
-				    data-pathResolver={this.props.pathResolver || ''}>
+				    userid={this.props.userID}
+				    authenticateduserid={this.props.authenticatedUserID}
+				    iscurrentuser={String(this.props.isCurrentUser)}
+				    pathresolver={this.props.pathResolver || ''}>
 			    </div>
 			</DefaultLayout>
 		);

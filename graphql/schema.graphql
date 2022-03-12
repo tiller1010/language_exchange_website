@@ -1,0 +1,100 @@
+scalar Upload
+
+type Video {
+	_id: ID!
+	title: String!
+	src: String!
+	originalName: String!
+	thumbnailSrc: String!
+	originalThumbnailName: String!
+	created: String!
+	likes: Int!
+	uploadedBy: User!
+}
+
+type User {
+	_id: ID
+	displayName: String
+	firstName: String!
+	lastName: String!
+	passwordHash: String!
+	completedTopics: String!
+	verified: Boolean
+	isAdmin: Boolean!
+	uploadedVideos: [Video!]
+	likedVideos: [Video!]
+	products: [Product!]
+	premiumVideoChatListing: PremiumVideoChatListing
+	connectedStripeAccountID: String
+}
+
+# union PossibleProduct = PremiumVideoChatListing | OtherProduct
+union PossibleProduct = PremiumVideoChatListing
+
+type Product {
+	userID: ID
+	cost: Float
+	currency: String
+	orderedOn: String
+	productObject: PossibleProduct
+	productObjectCollection: String
+	priceID: String
+	status: String
+}
+
+type PremiumVideoChatListing {
+	_id: ID
+	userID: ID
+	topic: String
+	language: String
+	duration: String
+	thumbnailSrc: String
+	price: Float
+	currency: String
+	timeSlots: [VideoChatTimeSlot]
+}
+
+type VideoChatTimeSlot {
+	customerUserID: ID
+	time: String
+	booked: Boolean
+	completed: Boolean
+}
+
+input VideoChatTimeSlotInputs {
+	customerUserID: ID
+	time: String
+	booked: Boolean
+	completed: Boolean
+}
+
+input PremiumVideoChatListingInputs {
+	topic: String
+	language: String
+	duration: String
+	price: Float
+	currency: String
+	timeSlots: [VideoChatTimeSlotInputs]
+}
+
+type PremiumVideoChatListingFeed {
+	listings: [PremiumVideoChatListing]
+}
+
+type Query {
+	indexVideos: [Video]
+	getRecentPremiumVideoChatListings: PremiumVideoChatListingFeed
+	searchPremiumVideoChatListings(topic: String, language: String): PremiumVideoChatListingFeed
+	findUserByID(userID: String!): User
+}
+
+type Mutation {
+	addLike(userID: ID!, videoID: ID!): Video
+	removeLike(userID: ID!, videoID: ID!): Video
+	verifyUser(userID: ID!, verificationStatus: Boolean!): User
+	addPremiumVideoChatListing(userID: ID!, premiumVideoChatListing: PremiumVideoChatListingInputs, thumbnailFile: Upload): PremiumVideoChatListing
+	addPremiumVideoChatListingThumbnailTest(thumbnailFile: Upload): PremiumVideoChatListing
+	updatePremiumVideoChatListing(listingID: ID!, premiumVideoChatListing: PremiumVideoChatListingInputs, thumbnailFile: Upload): PremiumVideoChatListing
+	removePremiumVideoChatListing(userID: ID!): Boolean
+	createProduct(productObjectCollection: String!, productDescription: String!, productObjectID: ID!, userID: ID!, productObjectUpdateData: String!): Product
+}

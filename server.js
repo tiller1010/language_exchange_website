@@ -1,23 +1,37 @@
+// Server
 require('dotenv').config();
 const express = require('express');
-const multer  = require('multer');
-var upload = multer({ dest: 'public/assets/' });
+const https = require('https')
+const fs = require('fs')
 const path = require('path');
+const session = require('express-session');
+const flash = require('connect-flash');
+const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
 const appPort = process.env.APP_PORT || 3000;
-const { connectToDB, getDB } = require('./db.js');
-const { indexVideos, addVideo, removeVideo, getRecent, addVideoToUsersUploads } = require('./videos.js');
-const feathers = require('@feathersjs/feathers');
-const service = require('feathers-mongodb');
-const search = require('feathers-mongodb-fuzzy-search');
-const { passport } = require('./passport.js');
-var session = require('express-session');
-var flash = require('connect-flash');
-var { addUser, findAndSyncUser, findUserByID, addCompletedTopic, removeCompletedTopic } = require('./users.js');
-var { getTopic, getTopicChallenges } = require('./topics.js');
-var { addLike, removeLike } = require('./likes.js');
-const { installHandler } = require('./api_handler.js');
 
-var app = express();
+// Database Methods
+const { addLike, removeLike } = require('./database/methods/likes.js');
+const { addUser, findAndSyncUser, findUserByID, addCompletedTopic, removeCompletedTopic, addStripeAccountIDToUser } = require('./database/methods/users.js');
+const { indexVideos, addVideo, removeVideo, getRecent, addVideoToUsersUploads } = require('./database/methods/videos.js');
+const { completeOrder } = require('./database/methods/products.js');
+
+// Strapi Methods
+const { getTopic, getTopicChallenges } = require('./strapi/topics.js');
+
+// App Services
+const { passport } = require('./app/passport.js');
+const bcrypt = require('bcrypt');
+const createSearchService = require('./app/search.js');
+const upload = require('./app/upload.js')();
+const stripe = require('stripe')(process.env.STRIPE_SECRET || '');
+
+// GraphQL
+const { installHandler } = require('./graphql/api_handler.js');
+const { graphqlUploadExpress } = require('graphql-upload');
+
+// Configure Server
+const app = express();
 app.set('views', __dirname + '/views');
 app.set('view engine', '.jsx');
 app.engine('jsx', require('express-react-views').createEngine());
@@ -29,6 +43,7 @@ app.use(session({
 	saveUninitialized: true
 }));
 app.use(flash());
+app.use(cookieParser());
 
 app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -36,57 +51,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json());
 
-// Install GraphQL API Handler
-installHandler(app);
-
-function randomFilename() {
-  var text = "";
-  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-  for(var i = 0; i < 40; i++){
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-
-  return text;
-}
-
-var storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, __dirname + '/public/assets');
-	},
-	filename: function(req, file, cb){
-		let fileExtension = file.mimetype.split('').splice(file.mimetype.indexOf('/') + 1, file.mimetype.length).join('');
-		if(fileExtension == 'quicktime'){
-			fileExtension = 'mov';
-		}
-		cb(null, randomFilename() + '.' + fileExtension);
-	}
-})
- 
-var upload = multer({ storage });
 
 (async function start(){
 	try{
-		await connectToDB();
-		const db = await getDB();
 
-		// Create search service
-		const feathersService = feathers();
-		// Use videos for search
-		feathersService.use('/videos', service({
-			Model: db.collection('videos'),
-			whitelist: ['$text', '$search']
-		}));
-		// Create video search service
-		const VideoService = feathersService.service('videos');
-		// Create videos index
-		VideoService.Model.createIndex({ title: 'text' })
-		// Add search hooks
-		VideoService.hooks({
-			before: {
-			  find: search()
-			}
-		})
+		// Install GraphQL API Handler
+		app.route('/graphql').post(graphqlUploadExpress());
+		await installHandler(app);
+
+		const VideoSearchService = await createSearchService('videos', ['title']);
 
 		// Home route
 		app.get('/', (req, res) => {
@@ -170,15 +143,15 @@ var upload = multer({ storage });
 			// If using search keywords
 			if(keywords){
 				const searchPageLength = 3;
-				videos = await VideoService.find({
+				videos = await VideoSearchService.find({
 					query: {
-						$search: keywords,
+						title: { $search: keywords },
 						$sort: sortObject,
 						$limit: searchPageLength,
 						$skip: (page - 1) * searchPageLength
 					}
 				});
-				const allVideoResults = await VideoService.find({ query: { $search: keywords } });
+				const allVideoResults = await VideoSearchService.find({ query: { title: { $search: keywords } } });
 				const pages = Math.ceil(allVideoResults.length / searchPageLength);
 
 			    videos = {
@@ -246,13 +219,15 @@ var upload = multer({ storage });
 				created: new Date(),
 				uploadedBy: req.user ? { _id: req.user._id, displayName: req.user.displayName } : { displayName: 'Guest' }
 			});
+			let redirectTo = '/videos';
 			if(req.user){
+				redirectTo = '/account-profile';
 				await addVideoToUsersUploads(newVideo, req.user._id);
 			}
 			if(req.body.nativeFlag){
 				res.status(200).send('Successful upload');
 			} else {
-				res.redirect('/videos');
+				res.redirect(redirectTo);
 			}
 		});
 
@@ -273,18 +248,19 @@ var upload = multer({ storage });
 			async (req, res) => {
 				if(req.params.viewOtherUserID){
 					let user = await findAndSyncUser(req.params.viewOtherUserID, 'id');
+					let isCurrentUser = req.user ? String(req.user._id) == String(user._id) : false;
 					return res.render('account-profile', {
-						user,
-						authenticatedUser: req.user || null,
-						isCurrentUser: false,
-						pathResolver: '../'
+						userID: user._id,
+						authenticatedUserID: req.user ? req.user._id : null,
+						isCurrentUser,
+						pathResolver: '../',
 					});
 				}else if(req.user){
 					let user = req.user;
 					return res.render('account-profile', {
-						user,
-						authenticatedUser: req.user || null,
-						isCurrentUser: true
+						userID: user._id,
+						authenticatedUserID: req.user._id,
+						isCurrentUser: true,
 					});
 				} else {
 					return res.redirect('/login');
@@ -301,16 +277,42 @@ var upload = multer({ storage });
 			res.render('login', { errors });
 		});
 		// Submit login form
-		app.post('/login', passport.authenticate('local-login', {
-			successRedirect: '/account-profile',
-			failureRedirect: '/login',
-			failureFlash: true 
-		}));
+		app.post('/login', async (req, res) => {
+			// Set JWT cookie to stay signed in
+			const { displayName, password } = req.body;
+			if((displayName && password) && !req.cookies.jwt){
+				const user = await findAndSyncUser(displayName, 'local');
+				if(user && bcrypt.compareSync(password, user.passwordHash)){
+					const { JWT_SECRET } = process.env;
+					const credentials = {
+						identifier: displayName,
+						strategy: 'local',
+					};
+					const token = jwt.sign(credentials, JWT_SECRET);
+					const domain = process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL || 'localhost';
+
+					if(domain){
+						res.cookie('jwt', token, { httpOnly: true, domain });
+					} else {
+						res.cookie('jwt', token, { httpOnly: true });
+					}
+				}
+			}
+			passport.authenticate('local-login', {
+				successRedirect: '/account-profile',
+				failureRedirect: '/login',
+				failureFlash: true 
+			})(req, res);
+		});
 		// Submit login form from react native
 		app.post('/react-native-login', passport.authenticate('local-login'), async (req, res) => {
 			if(req.body.nativeFlag && req.user){
 				res.status(200).json(req.user);
 			}
+		});
+		// Check if should perform JWT login
+		app.get('/do-jwt-login', (req, res) => {
+			return res.status(200).json(req.cookies.jwt && (!req.user));
 		});
 
 		// Google login
@@ -322,6 +324,23 @@ var upload = multer({ storage });
 			next();
 		}, passport.authenticate('google', { scope: 'https://www.googleapis.com/auth/plus.login' }));
 		app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
+
+			if(req.user && !req.cookies.jwt){
+				const { JWT_SECRET } = process.env;
+				const credentials = {
+					identifier: req.user.googleID,
+					strategy: 'google',
+				};
+				const token = jwt.sign(credentials, JWT_SECRET);
+				const domain = process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL || 'localhost';
+
+				if(domain){
+					res.cookie('jwt', token, { httpOnly: true, domain });
+				} else {
+					res.cookie('jwt', token, { httpOnly: true });
+				}
+			}
+
 			if(googleNativeFlag && req.user){
 				googleNativeFlag = false;
 				res.redirect(process.env.REACT_NATIVE_APP_URL + '?userID=' + String(req.user._id));
@@ -360,8 +379,9 @@ var upload = multer({ storage });
 
 		// Account logout
 		app.get('/logout', (req, res) => {
+			res.clearCookie('jwt');
 			req.logout();
-			res.redirect('/');
+			res.redirect('/login');
 		});
 
 		// Find user api for react native
@@ -372,10 +392,127 @@ var upload = multer({ storage });
 			}
 		});
 
-		// Start app
-		app.listen(appPort, () => {
-			console.log(`App up on port ${appPort}`);
+		// Stripe account creation
+		app.get('/manage-stripe-account/:accountID?', async (req, res) => {
+			if(req.user){
+				let account;
+				if(req.params.accountID){
+					account = await stripe.accounts.retrieve(req.params.accountID);
+
+					// Redirect to Stripe login if already onboarded
+					if(account.charges_enabled && account.payouts_enabled){
+						return res.redirect('https://dashboard.stripe.com/login');
+					}
+				} else {
+					account = await stripe.accounts.create({
+						country: 'US',
+						type: 'express',
+						capabilities: {
+							card_payments: {
+								requested: true
+							},
+							transfers: {
+								requested: true
+							},
+						},
+						business_type: 'individual',
+					});
+
+					// Add connectedStripeAccountID to user
+					await addStripeAccountIDToUser(req.user._id, account.id);
+				}
+
+				const base_url = process.env.SECURED_DOMAIN_WITH_PROTOCOL ? process.env.SECURED_DOMAIN_WITH_PROTOCOL : `http${appPort == 443 ? 's' : ''}://localhost:${appPort}`;
+
+				const return_url = `${base_url}/account-profile`;
+				const refresh_url = `${base_url}/account-profile`;
+
+				const accountLink = await stripe.accountLinks.create({
+					account: account.id,
+					return_url,
+					refresh_url,
+					type: 'account_onboarding',
+				});
+
+				return res.redirect(accountLink.url);
+			}
 		});
+
+		// Stripe checkout
+		app.post('/create-checkout-session', async (req, res) => {
+			try {
+				const priceID = req.body.priceID;
+				const price = await stripe.prices.retrieve(priceID);
+
+				const connectedStripeAccountID = req.body.connectedStripeAccountID;
+
+				const base_url = process.env.SECURED_DOMAIN_WITH_PROTOCOL ? process.env.SECURED_DOMAIN_WITH_PROTOCOL : `http${appPort == 443 ? 's' : ''}://localhost:${appPort}`;
+
+				const success_url = `${base_url}/complete-order/${priceID}`;
+				const cancel_url = base_url;
+
+				const session = await stripe.checkout.sessions.create({
+					success_url,
+					cancel_url,
+					line_items: [
+						{
+							price: priceID,
+							quantity: 1,
+						},
+					],
+					mode: 'payment',
+					payment_intent_data: {
+						application_fee_amount: 123,
+						transfer_data: {
+							destination: connectedStripeAccountID,
+						},
+					},
+				});
+				return res.send(JSON.stringify(session));
+			} catch(e) {
+				console.log(e);
+			}
+		});
+		app.get('/complete-order/:priceID', async (req, res) => {
+			if(req.user && req.params.priceID){
+				await completeOrder(req.user._id, req.params.priceID);
+				return res.redirect('/account-profile');
+			}
+		});
+
+		app.get('/video-chat', async (req, res) => {
+			let userID = null;
+			if(req.user){
+				userID = req.user._id;
+			}
+			return res.render('video-chat', { authenticatedUserID: userID });
+		});
+		app.post('/video-chat-tokens', async (req, res) => {
+			const firebaseConfig = {
+				projectId: process.env.FIREBASE_PROJECT_ID,
+				apiKey: process.env.FIREBASE_API_KEY,
+				authDomain: process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL || 'localhost',
+			};
+			return res.json(firebaseConfig);
+		});
+
+		const httpsOptions = {
+			key: fs.readFileSync('./security/cert.key'),
+			cert: fs.readFileSync('./security/cert.pem')
+		}
+
+		// Start app
+		if(appPort == 443){
+			https.createServer(httpsOptions, app)
+				.listen(appPort, () => {
+					console.log(`App up on port ${appPort}`);
+				});
+		} else {
+			app.listen(appPort, () => {
+				console.log(`App up on port ${appPort}`);
+			});
+		}
+
 	} catch(err){
 		console.log(`Error: ${err}`);
 	}

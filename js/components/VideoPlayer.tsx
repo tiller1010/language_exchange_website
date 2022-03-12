@@ -3,7 +3,7 @@ import ReadMore from '@jamespotz/react-simple-readmore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
-import graphQLFetch from './graphQLFetch.js';
+import graphQLFetch from '../graphQLFetch.js';
 
 interface User {
 	_id: string;

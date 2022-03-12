@@ -1,10 +1,13 @@
 import React from 'react';
 import Navigation from './Navigation.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt, faTrash, faTimes, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faLongArrowAltRight, faUser } from '@fortawesome/free-solid-svg-icons';
 import Slider from 'react-slick';
-import graphQLFetch from './graphQLFetch.js';
+import graphQLFetch from '../graphQLFetch.js';
 import VideoPlayer from './VideoPlayer.tsx';
+import Product from './Product.tsx';
+import PremiumVideoChatListingForm from './PremiumVideoChatListingForm.tsx';
+import RemoveConfirmationModal from './RemoveConfirmationModal.tsx';
 
 class AccountProfile extends React.Component {
 	constructor(props){
@@ -13,40 +16,78 @@ class AccountProfile extends React.Component {
 			user: {
 				completedTopics: [],
 				uploadedVideos: [],
-				likedVideos: []
+				products: [],
+				likedVideos: [],
+				verified: false
 			},
-			openRemovalForm: false
+			openVideoRemovalForm: false
 		}
 		this.findAndSyncUser = this.findAndSyncUser.bind(this);
+		this.verifyUser = this.verifyUser.bind(this);
 		this.afterToggleLike = this.afterToggleLike.bind(this);
 		this.currentUserHasLikedVideo = this.currentUserHasLikedVideo.bind(this);
 		this.handleDeleteVideo = this.handleDeleteVideo.bind(this);
 	}
 
 	async componentDidMount(){
-		if(this.props.user){
+		if(this.props.userID){
 			this.findAndSyncUser();
 		}
 	}
 
 	async findAndSyncUser(){
-		const userProfile = JSON.parse(this.props.user);
-		const authenticatedUser = JSON.parse(this.props.authenticatedUser);
+		let userProfile = await fetch(`/user/${this.props.userID}`)
+			.then((response) => response.json());
+		let authenticatedUser;
+		if(this.props.authenticatedUserID){
+			authenticatedUser = await fetch(`/user/${this.props.authenticatedUserID}`)
+				.then((response) => response.json());
+		}
 		if(userProfile && authenticatedUser){
 			// Check if user has liked their own video
 			if(userProfile.uploadedVideos && authenticatedUser.likedVideos){
 				userProfile.uploadedVideos.forEach((video) => {
-					video.likedByCurrentUser = this.currentUserHasLikedVideo(video, authenticatedUser);
+					if(video){
+						video.likedByCurrentUser = this.currentUserHasLikedVideo(video, authenticatedUser);
+					} else {
+						delete userProfile.uploadedVideos[userProfile.uploadedVideos.indexOf(video)];
+					}
 				});
 			}
 			// Check if user has liked their own video
 			if(userProfile.likedVideos && authenticatedUser.likedVideos){
 				userProfile.likedVideos.forEach((video) => {
-					video.likedByCurrentUser = this.currentUserHasLikedVideo(video, authenticatedUser);
+					if(video){
+						video.likedByCurrentUser = this.currentUserHasLikedVideo(video, authenticatedUser);
+					} else {
+						delete userProfile.likedVideos[userProfile.likedVideos.indexOf(video)];
+					}
 				});
 			}
 		}
-		this.setState({ user: userProfile });
+		this.setState({
+			user: userProfile,
+			authenticatedUser,
+		});
+	}
+
+	async verifyUser(verificationStatus){
+		if(this.props.userID){
+			const query = `mutation verifyUser($userID: ID!, $verificationStatus: Boolean!){
+				verifyUser(userID: $userID, verificationStatus: $verificationStatus){
+					verified
+				}
+			}`;
+			const data = await graphQLFetch(query, {
+				userID: this.state.user._id,
+				verificationStatus: verificationStatus
+			});
+			let updatedUser = this.state.user;
+			updatedUser.verified = data.verifyUser.verified;
+			this.setState({
+				user: updatedUser
+			});
+		}
 	}
 
 	afterToggleLike(newVideo, likedByCurrentUser){
@@ -89,11 +130,11 @@ class AccountProfile extends React.Component {
 	}
 
 	handleDeleteVideo(event){
-		if(this.state.openRemovalForm){
-			this.state.openRemovalForm.submit();
+		if(this.state.openVideoRemovalForm){
+			this.state.openVideoRemovalForm.submit();
 		}
 		this.setState({
-			openRemovalForm: event.target.parentElement
+			openVideoRemovalForm: event.target.parentElement
 		})
 	}
 
@@ -114,11 +155,14 @@ class AccountProfile extends React.Component {
 
 	render(){
 
-		const authenticatedUser = JSON.parse(this.props.authenticatedUser);
+		const authenticatedUser = this.state.authenticatedUser;
+		const authenticatedUserIsAdmin = authenticatedUser ? authenticatedUser.isAdmin : false;
+		const authenticatedUserIsVerified = authenticatedUser ? authenticatedUser.verified : false;
+		const products = this.state.user.products || [];
 
 		document.addEventListener('cssmodal:hide', () => {
 			this.setState({
-				openRemovalForm: false
+				openVideoRemovalForm: false
 			});
 		});
 
@@ -135,6 +179,41 @@ class AccountProfile extends React.Component {
 					</div>
 					:
 					<h1>{this.state.user.firstName}</h1>
+				}
+				{authenticatedUserIsAdmin ?
+					<form>
+						{this.state.user.verified ?
+							<div>
+								<label htmlFor="verifyUser">Remove verification for this user?</label>
+								<input type="checkbox" name="verifyUser" checked="checked" onChange={(event) => this.verifyUser(!this.state.user.verified)}/>
+							</div>
+							:
+							<div>
+								<label htmlFor="verifyUser">Verify this user?</label>
+								<input type="checkbox" name="verifyUser" onChange={(event) => this.verifyUser(!this.state.user.verified)}/>
+							</div>
+						}
+					</form>
+					:
+					''
+				}
+				{authenticatedUserIsVerified && this.props.isCurrentUser ?
+					<>
+						<PremiumVideoChatListingForm user={authenticatedUser}/>
+						<p>
+							{authenticatedUser.connectedStripeAccountID ?
+								<p>Stripe Account ID: {authenticatedUser.connectedStripeAccountID}</p>
+								:
+								''
+							}
+							<a href={`/manage-stripe-account/${authenticatedUser.connectedStripeAccountID || ''}`} className="button">
+								Manage Stripe Account
+								<FontAwesomeIcon icon={faUser}/>
+							</a>
+						</p>
+					</>
+					:
+					''
 				}
 				{this.state.user.completedTopics.length ?
 					<div className="topics">
@@ -180,29 +259,47 @@ class AccountProfile extends React.Component {
 					</div>
 				}
 				{this.props.isCurrentUser ?
-					<section className="modal--show" id="remove-video" tabIndex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
-						<div className="modal-inner">
-							<header id="modal-label">
-								<h2>Remove Video</h2>
-							</header>
-							<div className="modal-content">
-								Are you sure you want to remove this video?
-							</div>
-							<footer className="flex x-space-around">
-								<a className="button" href="#remove-video" onClick={this.handleDeleteVideo}>
-									Remove Video
-									<FontAwesomeIcon icon={faTrash}/>
-								</a>
-								<a href="#!" className="button">
-									Close
-									<FontAwesomeIcon icon={faTimes}/>
-								</a>
-							</footer>
-						</div>
-						<a href="#!" className="modal-close" title="Close this modal" data-close="Close" data-dismiss="modal">?</a>
-					</section>
+					<RemoveConfirmationModal
+						buttonText="Remove Video"
+						buttonAnchor="remove-video"
+						modalTitle="Remove Video"
+						modalContent="Are you sure you want to remove this video?"
+						handleDelete={this.handleDeleteVideo}
+					/>
 					:
 					''
+				}
+				{products.length && this.props.isCurrentUser ?
+					<div>
+						<h2 className="text-center">Products</h2>
+						<hr/>
+			    		<Slider {...{
+							dots: false,
+							infinite: false,
+							speed: 500,
+							slidesToShow: 3,
+							slidesToScroll: 1,
+							responsive: [
+								{
+									breakpoint: 1024,
+									settings: {
+										slidesToShow: 1.5
+									}
+								}
+							]
+			    		}}>
+							{this.state.user.products.reverse().map((product) => 
+								<div key={product._id} className="pure-u-1 pure-u-lg-1-3">
+									<Product product={product}/>
+								</div>
+							)}
+						</Slider>
+					</div>
+					:
+					<div>
+						<h2 className="text-center">No Uploaded Videos</h2>
+						<hr/>
+					</div>
 				}
 				{this.state.user.uploadedVideos.length ?
 					<div>
@@ -234,7 +331,7 @@ class AccountProfile extends React.Component {
 										likes={video.likes}
 										likedByCurrentUser={video.likedByCurrentUser}
 										authenticatedUserID={authenticatedUser ? authenticatedUser._id : null}
-										handleDeleteVideo={this.handleDeleteVideo}
+										handleDeleteVideo={this.props.isCurrentUser ? this.handleDeleteVideo : null}
 										afterToggleLike={this.afterToggleLike}
 						    		/>
 								</div>

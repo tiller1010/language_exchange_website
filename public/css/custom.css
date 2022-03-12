@@ -36,6 +36,8 @@ body {
 
 .frame {
   padding: 100px 20px 150px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 nav {
@@ -234,6 +236,7 @@ input[type=text], input[type=password] {
 button, a.button {
   position: relative;
   display: block;
+  width: max-content;
   margin: 10px 0;
   padding: 10px;
   padding-right: 40px;
@@ -377,7 +380,7 @@ button svg, a.button svg {
   padding-top: 20px;
 }
 
-i {
+i.fa {
   font-family: "Font Awesome 5";
 }
 
