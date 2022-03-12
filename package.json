@@ -20,7 +20,7 @@
     "@jamespotz/react-simple-readmore": "^1.0.0",
     "@stripe/stripe-js": "^1.22.0",
     "apollo-server-express": "^3.3.0",
-    "axios": "^0.21.0",
+    "axios": "^0.21.2",
     "bcrypt": "^5.0.1",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
