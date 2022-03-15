@@ -379,7 +379,7 @@ app.use(express.json());
 
 		// Account logout
 		app.get('/logout', (req, res) => {
-			res.clearCookie('jwt');
+			res.clearCookie('jwt', { domain: process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL });
 			req.logout();
 			res.redirect('/login');
 		});
