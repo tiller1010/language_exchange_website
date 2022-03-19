@@ -2,5 +2,5 @@ html{
 	position: relative;
 }
 body{
-	background-color: #eee;
+	background-color: getThemeProperty(backgroundColorLight);
 }

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
 import graphQLFetch from '../graphQLFetch.js';
 
 interface PremiumVideoChatListingObject {
@@ -126,14 +126,19 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 			return timeSlots.map((timeSlot) => 
 				<div key={timeSlots.indexOf(timeSlot)}>
 					{timeSlot.customerUserID ? 
-						<>
-							<input id={`timeSlot${timeSlots.indexOf(timeSlot)}`} type="checkbox" checked={timeSlot.completed} onClick={(e) => this.handleTimeSlotChange(e.target.checked, timeSlots.indexOf(timeSlot))}/>
-							<label htmlFor={`timeSlot${timeSlots.indexOf(timeSlot)}`}>{timeSlot.time} with User: {timeSlot.customerDisplayName}</label>
-							<a href={`/video-chat?forUserID=${timeSlot.customerUserID}`}>Video Chat</a>
-						</>
+						<div>
+							<div className="field checkbox" style={{ whiteSpace: 'nowrap' }}>
+								<input id={`timeSlot${timeSlots.indexOf(timeSlot)}`} type="checkbox" checked={timeSlot.completed} onClick={(e) => this.handleTimeSlotChange(e.target.checked, timeSlots.indexOf(timeSlot))}/>
+								<label htmlFor={`timeSlot${timeSlots.indexOf(timeSlot)}`}>{timeSlot.time} with User: {timeSlot.customerDisplayName}</label>
+							</div>
+							<a className="button" href={`/video-chat?forUserID=${timeSlot.customerUserID}`}>
+								Go to Video Chat
+								<FontAwesomeIcon icon={faLongArrowAltRight}/>
+							</a>
+						</div>
 						:
 						<>
-							<div>{timeSlot.time} available</div>
+							<div>{timeSlot.time} Available</div>
 						</>
 					}
 				</div>
@@ -144,10 +149,10 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 					{timeSlot.customerUserID ?
 						''
 						:
-						<>
+						<div className="field checkbox" style={{ whiteSpace: 'nowrap' }}>
 							<input id={`timeSlot${timeSlots.indexOf(timeSlot)}`} type="checkbox" checked={timeSlot.booked} onClick={(e) => this.handleTimeSlotChange(e.target.checked,  timeSlots.indexOf(timeSlot))}/>
-							<label htmlFor={`timeSlot${timeSlots.indexOf(timeSlot)}`}>{timeSlot.time} Available</label>
-						</>
+							<label htmlFor={`timeSlot${timeSlots.indexOf(timeSlot)}`}>{timeSlot.time}</label>
+						</div>
 					}
 				</div>
 			);
@@ -267,12 +272,12 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 					<img style={{ height: '100%', width: '100%', objectFit: 'cover' }} src={thumbnailSrc} alt={thumbnailSrc}/>
 				</div>
 
-					<>
-						{this.renderTimeSlots()}
-					</>
+				<div className="fw-form">
+					{this.renderTimeSlots()}
+				</div>
 
 				{this.props.view == 'customer' ?
-					<button onClick={() => this.handleBuyNow()}>
+					<button className="button" onClick={() => this.handleBuyNow()}>
 						Buy Now
 						<FontAwesomeIcon icon={faPlus}/>
 					</button>

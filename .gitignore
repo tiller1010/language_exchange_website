@@ -1,3 +1,8 @@
 node_modules
 public/assets/*
+public/*.svg
+public/*.woff
+public/*.eot
+public/*.ttf
+public/*.gif
 .env

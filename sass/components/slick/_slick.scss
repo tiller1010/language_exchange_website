@@ -1,5 +1,5 @@
 .slick-slider{
-	padding-bottom: 50px;
+	padding-bottom: 80px;
 	.slick-slide{
 		padding: 0 10px;
 		box-sizing: border-box;
@@ -22,11 +22,11 @@
 	.slick-prev, .slick-next{
 		height: unset;
 		width: unset;
-		padding: 5px 10px;
+		padding: 10px 10px 5px 10px;
 		border-radius: 25px;
-		background-color: $blue;
+		background-color: getThemeProperty(primaryColor);
 		&:before{
-			color: $white;
+			color: getThemeProperty(textColorLight);
 			font-size: 30px;
 		}
 	}

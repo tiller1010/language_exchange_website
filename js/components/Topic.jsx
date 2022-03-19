@@ -157,14 +157,18 @@ class Topic extends React.Component {
 					</div>
 					<h2 className="text-center pure-u-1">{this.state.topic}</h2>
 					<div className="pad">
-			    		<button className="available-answers button icon-left" onClick={this.handleToggleOptions}>
-							<FontAwesomeIcon icon={faBars}/>
-			    			Available Answers
-			    		</button>
+						<button className={`button no-icon flex-vertical-center hamburger hamburger--collapse ${this.state.optionsStatus == 'opened' ? 'is-active' : ''}`} type="button" onClick={this.handleToggleOptions} style={{ display: 'flex' }}>
+							<span className="hamburger-box">
+								<span className="hamburger-inner"></span>
+							</span>
+							<span className="fw-space half">
+				    			Available Answers
+			    			</span>
+						</button>
 		    		</div>
 	    			{this.state.allChallengesAnswered ?
 						<div className="pure-u-1 flex x-center">
-							<button onClick={this.handleResetTopic}>
+							<button className="button" onClick={this.handleResetTopic}>
 								Reset Topic
 								<FontAwesomeIcon icon={faSync}/>
 							</button>
@@ -195,13 +199,16 @@ class Topic extends React.Component {
 			    }
 
 			    {this.state.challenges ?
-			    	<div className="challenges pure-u-1 flex x-space-around">
+			    	<form className="challenges pure-u-1 fw-form flex x-space-around">
 				    	{this.state.challenges.map((challenge) => 
 				    		<div key={this.state.challenges.indexOf(challenge)} className="flex x-center pure-u-1 pure-u-lg-1-2">
 					    		<div className="challenge">
 						    		<div className="pad">
 						    			<div className={`challenge-input ${challenge.answered}`}>
-							    			<input type="text" placeholder="Guess meaning" onChange={(event) => this.checkAnswerInput(event.target.value, challenge)}/>
+							    			<div className="field text">
+								    			<label htmlFor={`meaning${challenge.Title}Field`}>Guess meaning</label>
+								    			<input type="text" name={`meaning${challenge.Title}Field`} id={`meaning${challenge.Title}Field`} onChange={(event) => this.checkAnswerInput(event.target.value, challenge)}/>
+							    			</div>
 							    			<div className="correct-answer">{challenge.Title}</div>
 							    			<div className="input-correct">
 							    				<p>Correct!</p>
@@ -232,7 +239,7 @@ class Topic extends React.Component {
 					    		</div>
 				    		</div>
 			    		)}
-		    		</div>
+		    		</form>
 			    	:
 			    	<h2>No challenges</h2>
 			    }

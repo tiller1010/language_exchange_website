@@ -102,8 +102,11 @@ class VideosAdd extends React.Component {
 
 					<div className="page-form pure-u-1 pure-u-md-1-4">
 						<h1>Video Add</h1>
-						<form action="/videos/add" method="POST" encType="multipart/form-data" className="flex-col x-end">
-							<input type="text" name="title" value={this.state.title} onChange={this.handleTitleChange} placeholder="Title" aria-label="title" required/>
+						<form action="/videos/add" method="POST" encType="multipart/form-data" className="flex-col x-end fw-form">
+							<div className="field text" htmlFor="titleField">
+								<label htmlFor="titleField">Title</label>
+								<input type="text" name="title" id="titleField" value={this.state.title} onChange={this.handleTitleChange} aria-label="title" required/>
+							</div>
 							<div className="upload-container">
 								<input type="file" name="video" onChange={this.handleVideoUploadChange} required/>
 								<label htmlFor="video">
@@ -117,7 +120,7 @@ class VideosAdd extends React.Component {
 									<FontAwesomeIcon icon={faUpload}/>
 								</label>
 							</div>
-							<button type="submit">
+							<button className="button" type="submit">
 								Submit
 								<FontAwesomeIcon icon={faPlus}/>
 							</button>

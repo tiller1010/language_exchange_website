@@ -9,9 +9,21 @@ import Login from './components/Login.jsx';
 import Register from './components/Register.jsx';
 import AccountProfile from './components/AccountProfile.jsx';
 import VideoChat from './components/VideoChat.tsx';
+
+import 'purecss/build/pure-min.css';
+import 'purecss/build/grids-responsive-min.css';
+
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+
 import 'css-modal/build/modal.css';
+import 'css-modal/modal.js';
+
+import { initFramewerk } from 'werkbot-framewerk';
+setTimeout(() => {
+	initFramewerk(false);
+	window.dispatchEvent(new Event('load'));
+}, 1000);
 
 (async function(){
 	await fetch('/do-jwt-login')

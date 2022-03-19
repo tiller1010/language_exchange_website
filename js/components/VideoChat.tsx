@@ -42,7 +42,7 @@ interface VideoChatState {
 	hangupButtonDisabled: boolean;
 	forUserID?: string;
 	forUserDisplayName?: string;
-	WithUserID?: string;
+	withUserID?: string;
 	availableCalls?: [CallOffer];
 }
 
@@ -61,7 +61,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 			hangupButtonDisabled: true,
 			forUserID: '',
 			forUserDisplayName: '',
-			WithUserID: '',
+			withUserID: '',
 		}
 		this.state = state;
 		this.startWebcam = this.startWebcam.bind(this);
@@ -331,7 +331,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 				<div className="pure-u-1 pure-u-md-1-2">
 					<div className="pad">
 						<h2>Create a new Call for {forUserDisplayName}</h2>
-						<button id="callButton" disabled={callButtonDisabled} onClick={this.createCall}>
+						<button className="button" id="callButton" disabled={callButtonDisabled} onClick={this.createCall}>
 							{callID ? 'Dialed' : 'Create Call'}
 							<FontAwesomeIcon icon={faPhone}/>
 						</button>
@@ -344,25 +344,29 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 					<div className="pad">
 						<h2>Join a Call</h2>
 						<p>Not seeing the right call? Try clicking refresh.</p>
-						<button id="refreshButton" onClick={this.refreshCallOffers}>
+						<button className="button" id="refreshButton" onClick={this.refreshCallOffers}>
 							Refresh
 							<FontAwesomeIcon icon={faSync}/>
 						</button>
-						<div className="flex y-center">
-							{availableCalls ?
-								availableCalls.map((callOffer) =>
-									<div key={availableCalls.indexOf(callOffer)}>
-										<input type="radio" id={`callOffer_${callOffer.callID}`} name="callID" onClick={() => this.setState({ callID: callOffer.callID})}/>
-										<label htmlFor={`callOffer_${callOffer.callID}`}>With {callOffer.withUserDisplayName}, created call on {callOffer.createdDate}</label>
-										<button id="answerButton" disabled={answerButtonDisabled || callID != callOffer.callID} onClick={this.answerCall}>
-											Answer
-											<FontAwesomeIcon icon={faPhone}/>
-										</button>
-									</div>
-								)
-								:
-								''
-							}
+						<div className="fw-form">
+							<div className="flex y-center field optionset">
+								{availableCalls ?
+									availableCalls.map((callOffer) =>
+										<div key={availableCalls.indexOf(callOffer)}>
+											<div style={{ whiteSpace: 'nowrap' }}>
+												<input type="radio" id={`callOffer_${callOffer.callID}`} name="callID" onClick={() => this.setState({ callID: callOffer.callID})}/>
+												<label htmlFor={`callOffer_${callOffer.callID}`}>With {callOffer.withUserDisplayName}, created call on {callOffer.createdDate}</label>
+											</div>
+											<button className="button" id="answerButton" disabled={answerButtonDisabled || callID != callOffer.callID} onClick={this.answerCall}>
+												Answer
+												<FontAwesomeIcon icon={faPhone}/>
+											</button>
+										</div>
+									)
+									:
+									''
+								}
+							</div>
 						</div>
 					</div>
 				</div>
@@ -396,7 +400,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 						</div>
 					</div>
 					<div className="flex x-center pure-u-1">
-						<button id="webcamButton" disabled={this.state.webcamButtonDisabled} onClick={this.startWebcam}>
+						<button className="button" id="webcamButton" disabled={this.state.webcamButtonDisabled} onClick={this.startWebcam}>
 							Start webcam
 							<FontAwesomeIcon icon={faCamera}/>
 						</button>
@@ -405,7 +409,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 						{this.renderCallControls()}
 					</div>
 					<div className="flex x-center pure-u-1">
-						<button id="hangupButton" disabled={this.state.hangupButtonDisabled} onClick={this.hangup}>
+						<button className="button" id="hangupButton" disabled={this.state.hangupButtonDisabled} onClick={this.hangup}>
 							Hangup
 							<FontAwesomeIcon icon={faPhone}/>
 						</button>

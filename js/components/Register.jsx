@@ -40,7 +40,7 @@ class Register extends React.Component {
 						''
 					}
 
-					<form action="/register" method="POST" className="flex-col x-end">
+					<form action="/register" method="POST" className="flex-col x-end fw-form">
 						<div className="small-pad no-x">
 							<input type="text" name="firstName" placeholder="First Name" aria-label="first name"/>
 						</div>

@@ -1,16 +1,5 @@
-button, a.button{
-	position: relative;
-	display: block;
+a.button, input.button, button.button, span.button{
 	width: max-content;
-	margin: 10px 0;
-	padding: 10px;
-	padding-right: 40px;
-	border: 1px solid $blue;
-	border-radius: 20px;
-	text-decoration: none;
-	color: $blue;
-	transition: background-color .25s ease;
-	cursor: pointer;
 	white-space: nowrap;
 	&.icon-left{
 		padding-left: 40px;
@@ -25,25 +14,9 @@ button, a.button{
 		padding-left: 20px;
 		padding-right: 20px;
 	}
-	&:hover, &.selected, &[type="submit"]{
-		background-color: $blue;
-		color: $white;
-		&[type="submit"]:hover{
-			border-color: $white;
-			background-color: $white;
-			color: $blue;
-			svg{
-				color: $blue;
-			}
-		}
-		svg{
-			color: $white;
-		}
-	}
 	svg{
 		position: absolute;
 		right: 15px;
 		top: 11px;
-		color: $blue;
 	}
 }

@@ -119,18 +119,20 @@ export default class VideoPlayer extends React.Component<VideoPlayerProps, Video
 						            minHeight={58}
 						            btnStyles={{
 						            	position: 'absolute',
-						            	bottom: '-15px',
-						            	border: 'none',
+						            	bottom: '-30px',
+						            	border: '1px solid #000',
+						            	borderRadius: '5px',
 						            	margin: 0,
 						            	padding: '5px',
-						            	zIndex: 1
+						            	zIndex: 1,
+						            	cursor: 'pointer',
 						            }}
 					            >
 									<h3>{title}</h3>
 								</ReadMore>
 							</div>
 							{this.props.handleDeleteVideo ?
-								<form action="/videos/remove" method="POST">
+								<form action="/videos/remove" method="POST" className="fw-form">
 									<input type="hidden" name="videoID" value={this.props._id}/>
 									<a className="button" href="#remove-video" onClick={(event) => this.props.handleDeleteVideo(event)}>
 										Remove Video
@@ -159,7 +161,7 @@ export default class VideoPlayer extends React.Component<VideoPlayerProps, Video
 				</div>
 				<div className="flex x-space-around y-center">
 					<p>Likes: {likes || 0}</p>
-						<button onClick={() => this.toggleLike(_id)}>
+						<button className="button" onClick={() => this.toggleLike(_id)}>
 						{likedByCurrentUser ?
 							<span>
 								Liked

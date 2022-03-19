@@ -121,7 +121,7 @@ class VideosIndex extends React.Component {
 					/>
 				    <div className="flex">
 					    <div>
-							<button onClick={this.refreshVideos}>
+							<button className="button" onClick={this.refreshVideos}>
 								Refresh
 						        <FontAwesomeIcon icon={faSync}/>
 							</button>
@@ -188,16 +188,18 @@ class VideosIndex extends React.Component {
 			    		<div className="flex">
 							{this.state.videos.map((video) => 
 								<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
-						    		<VideoPlayer
-										_id={video._id}
-										title={video.title}
-										src={video.src}
-										thumbnailSrc={video.thumbnailSrc}
-										uploadedBy={video.uploadedBy}
-										likes={video.likes}
-										likedByCurrentUser={this.currentUserHasLikedVideo(video)}
-										authenticatedUserID={this.props.userID}
-						    		/>
+									<div className="fw-space half notop nobottom">
+										<VideoPlayer
+											_id={video._id}
+											title={video.title}
+											src={video.src}
+											thumbnailSrc={video.thumbnailSrc}
+											uploadedBy={video.uploadedBy}
+											likes={video.likes}
+											likedByCurrentUser={this.currentUserHasLikedVideo(video)}
+											authenticatedUserID={this.props.userID}
+										/>
+									</div>
 								</div>
 							)}
 						</div>

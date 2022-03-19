@@ -2,16 +2,9 @@ nav{
 	position: fixed;
 	top: 0;
 	right: 0;
-	background-color: $nav-blue;
+	background-color: getThemeProperty(secondaryColor);
 	border-radius: 0 0 0 25px;
 	z-index: 10;
-	a.button{
-		border-color: $white;
-		color: $white;
-		svg{
-			color: $white;
-		}
-	}
 }
 @media only screen and (max-width: 815px){
 	nav{
@@ -25,7 +18,7 @@ nav{
 		a.button{
 			display: flex;
 			justify-content: center;
-		    align-items: center;
+			align-items: center;
 			padding-right: 10px;
 			box-sizing: border-box;
 			height: 50px;

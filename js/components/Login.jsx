@@ -40,20 +40,23 @@ class Login extends React.Component {
 						''
 					}
 					
-					<form action="/login" method="POST" className="flex-col x-end">
-						<div className="small-pad no-x">
-							<input type="text" name="displayName" placeholder="Display Name" aria-label="display name"/>
+					<form action="/login" method="POST" className="flex-col x-end fw-form">
+						<div className="field text small-pad no-x">
+							<label htmlFor="displayNameField">Display Name</label>
+							<input type="text" name="displayName" id="displayNameField" aria-label="display name"/>
+						</div>
+						<div className="field text small-pad no-x">
+							<label htmlFor="passwordField">Password</label>
+							<input type="password" name="password" id="passwordField" aria-label="password"/>
 						</div>
 						<div className="small-pad no-x">
-							<input type="password" name="password" placeholder="Password" aria-label="password"/>
-						</div>
-						<div className="small-pad no-x">
-							<button type="submit">
+							<button className="button" type="submit">
 								Login
 								<FontAwesomeIcon icon={faLongArrowAltRight}/>
 							</button>
 						</div>
 					</form>
+
 				    <a href="/register" className="button">
 					    Register
 					    <FontAwesomeIcon icon={faLongArrowAltRight}/>
