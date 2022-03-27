@@ -22,15 +22,18 @@
     left: -195px;
     height: 100%;
     width: 195px;
-    border-right: 20px solid $input-grey;
+    border-right: 20px solid getThemeProperty(backgroundColorMedium);
     display: flex;
     flex-direction: column;
-    background-color: #DAD0EB;
+    background-color: getThemeProperty(backgroundColorLight);
     overflow-y: auto;
     cursor: pointer;
     transition: left .25s ease;
     &.opened{
     	left: 0;
+    }
+    svg{
+    	box-sizing: initial;
     }
     svg.close{
     	align-self: flex-end;
@@ -41,7 +44,7 @@
     	display: flex;
     	align-items: center;
 	    &.correct{
-	    	color: $green;
+	    	color: getThemeProperty(tertiaryColor);
 	    	svg{
 	    		display: block;
 	    	}
@@ -68,7 +71,7 @@
 		display: flex;
 		visibility: hidden;
 		align-items: center;
-		color: $green;
+		color: getThemeProperty(tertiaryColor);
 		svg{
 			margin-left: 10px;
 		}

@@ -131,15 +131,15 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 
 		return(
 			<div>
-				<form className="pure-u-1 pure-u-md-1-2 pure-form pure-form-stacked">
+				<form className="pure-u-1 pure-u-md-1-2 fw-form">
 					<h2>Premium video chats</h2>
-					<div>
-						<label htmlFor="topic">Topic</label>
-						<input type="text" name="topic" value={topic} onChange={(event) => this.setState({topic: event.target.value})} className="pure-input-rounded"/>
+					<div className="field text">
+						<label htmlFor="topicField">Topic</label>
+						<input type="text" name="topic" id="topicField" value={topic} onChange={(event) => this.setState({topic: event.target.value})} className="pure-input-rounded"/>
 					</div>
-					<div>
-						<label htmlFor="language">Language</label>
-						<select name="language" onChange={(event) => this.setState({language: event.target.value})} className="pure-input-rounded" defaultValue={language}>
+					<div className="field dropdown">
+						<label htmlFor="languageField">Language</label>
+						<select name="language" id="languageField" onChange={(event) => this.setState({language: event.target.value})} className="pure-input-rounded" defaultValue={language}>
 							<option value="">Select a language</option>
 							<option>ASL</option>
 							{languages.getLanguageCodes().map((langCode) => 
@@ -148,7 +148,7 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 						</select>
 					</div>
 					<div>
-						<button onClick={this.handleSearchSubmit}>
+						<button className="button" onClick={this.handleSearchSubmit}>
 							Submit
 							<FontAwesomeIcon icon={faLongArrowAltRight}/>
 						</button>

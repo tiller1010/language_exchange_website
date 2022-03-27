@@ -77,17 +77,22 @@ export default class VideoSearchForm extends React.Component<VideoSearchFormProp
 		const { keywords, sortControlStatus, sort} = this.state;
 
 		return(
-			<form action="/videos" method="GET">
-				<div className="flex">
-					<div className="search-input">
-						<input type="text" name="keywords" value={keywords} onChange={this.handleKeywordsChange}  placeholder="Search video submissions"/>
-				        <FontAwesomeIcon icon={faSearch}/>
-						<input type="submit" value="Search"/>
+			<form action="/videos" method="GET" className="fw-form video-search-form">
+				<div className="flex-container flex-vertical-stretch">
+					<div className="field text">
+						<label htmlFor="keywordsField">Search video submissions</label>
+						<input type="text" name="keywords" id="keywordsField" value={keywords} onChange={this.handleKeywordsChange}/>
 					</div>
+					<button type="submit" value="Search" className="button">
+						Search
+						<FontAwesomeIcon icon={faSearch}/>
+					</button>
 					<div className="sort-controls flex">
-						<div className="control-icon pure-u-1" onClick={this.toggleSortControls}>
-							<FontAwesomeIcon icon={faSlidersH}/>
-						</div>
+						<button className={`button no-icon hamburger hamburger--collapse ${sortControlStatus == 'open' ? 'is-active' : ''}`} type="button" onClick={this.toggleSortControls}>
+							<span className="hamburger-box">
+								<span className="hamburger-inner"></span>
+							</span>
+						</button>
 						<div className={`sort-options flex pure-u-1 ${sortControlStatus}`}>
 							<div>
 								<label htmlFor="sort-all">All</label>

@@ -1,4 +1,60 @@
-@import './components/colors/colors';
+$theme-properties: (
+	primaryColor: #9f74e4,
+	secondaryColor: #747de8,
+	tertiaryColor: #25781f,
+	textColorLight: #fff,
+	textColorMedium: #DAD0EB,
+	backgroundColorLight: #eee,
+	backgroundColorMedium: #777,
+	fontHeader: sans-serif,
+	fontText: sans-serif,
+	fontIcon: 'Font Awesome 5 Free',
+);
+
+$component-button-properties: (
+	backgroundColor: map-get($theme-properties, primaryColor),
+	backgroundHoverColor: map-get($theme-properties, backgroundColorMedium),
+	textColor: map-get($theme-properties, textColorLight),
+	textHoverColor: map-get($theme-properties, textColorLight),
+	padding: 10px 40px 10px 10px,
+	margin: 10px 0,
+);
+
+$component-hamburger-properties:(
+  hamburger-layer-color: map-get($theme-properties, textColorLight),
+  hamburger-active-layer-color: map-get($theme-properties, textColorLight),
+);
+
+$component-form-properties:(
+  fieldSpacing: 5px,
+);
+
+$component-form-numeric-properties:(
+  backgroundColor: #fff,
+);
+
+$component-form-select-properties:(
+  backgroundColor: #fff,
+);
+
+$component-form-checkbox-properties:(
+  backgroundColor: map-get($theme-properties, backgroundColorLight),
+);
+
+$component-form-radio-properties:(
+  backgroundColor: map-get($theme-properties, backgroundColorLight),
+);
+
+@font-face {
+	font-family: 'Font Awesome 5 Solid';
+	src: url('https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/webfonts/fa-solid-900.woff2') format('woff2');
+}
+i.fas, .fw-form .field.dropdown:after{
+	font-family: 'Font Awesome 5 Solid' !important;
+}
+
+@import 'werkbot-framewerk/sass/fw-bundle';
+
 @import './components/flex/flex';
 @import './components/html/html';
 @import './components/frame/frame';
@@ -6,8 +62,14 @@
 @import './components/img/img';
 @import './components/video/video';
 @import './components/video/video-add';
-@import './components/input/input';
+
+@import './components/custom-inputs/upload-input';
+@import './components/custom-inputs/sort-input';
+@import './components/custom-inputs/checked-selection-override';
+@import './components/custom-inputs/video-search-form';
+
 @import './components/button/button';
+
 @import './components/loader/loader';
 @import './components/padding/padding';
 @import './components/typography/typography';

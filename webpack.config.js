@@ -12,13 +12,10 @@ const envKeys = Object.keys(env).reduce((prev, next) => {
 module.exports = {
 	entry: [
 		path.resolve(__dirname, 'js/main.jsx'),
-		path.resolve(__dirname, 'node_modules/css-modal/modal.js'),
-		path.resolve(__dirname, 'node_modules/purecss/build/pure-min.css'),
-		path.resolve(__dirname, 'node_modules/purecss/build/grids-responsive-min.css'),
 		path.resolve(__dirname, 'sass/custom.scss')
 	],
 	output: {
-		filename: 'js/[name].js',
+		filename: 'js/main.js',
 		path: path.resolve(__dirname, 'public')
 	},
 	mode: 'development',
@@ -38,28 +35,22 @@ module.exports = {
 				}
 			},
 			{
-				test: /modal\.js$/,
-				use: {
-					loader: 'file-loader',
-					options: {
-						name: 'js/[name].js'
-					}
-				}
-			},
-			{
 				test: /\.(scss|css)$/,
 				use: [
 					{
 						loader: 'style-loader'
 					},
 					{
-						loader: 'file-loader',
-						options: {
-							name: 'css/[name].css'
-						}
+						loader: 'css-loader',
+            options: {
+              sourceMap: true,
+            }
 					},
 					{
-						loader: 'sass-loader'
+						loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            }
 					}
 				]
 			}

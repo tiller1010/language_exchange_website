@@ -290,77 +290,90 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 		return(
 			<div className="pure-g">
 				<h2 className="pure-u-1">Premium video chat listing</h2>
-				<form className="pure-u-1 pure-u-md-1-2 pure-form pure-form-stacked">
-					<div>
-						<label htmlFor="topic">Topic</label>
-						<input type="text" name="topic" value={topic} onChange={(event) => this.setState({topic: event.target.value})} className="pure-input-rounded"/>
-					</div>
-					<div>
-						<label htmlFor="language">Language</label>
-						<select name="language" onChange={(event) => this.setState({language: event.target.value})} className="pure-input-rounded" value={language}>
-							<option value="">Select a language</option>
-							<option>ASL</option>
-							{languages.getLanguageCodes().map((langCode) => 
-								<option key={langCode}>{languages.getLanguageName(langCode)}</option>
-							)}
-						</select>
-					</div>
-					<div>
-						<label htmlFor="duration">Duration</label>
-						<input type="text" name="duration" placeholder="5 minutes" value={duration} onChange={(event) => this.setState({duration: event.target.value})} className="pure-input-rounded"/>
-					</div>
-					<div>
-						<label htmlFor="price">Price</label>
-						<input type="number" min="0.50" step="0.01" name="price" value={price} onChange={(event) => this.setState({price: Number(event.target.value)})} className="pure-input-rounded"/>
-						<p><i>Application fees will be applied</i></p>
-					</div>
-					<div>
-						<label htmlFor="currency">Currency</label>
-						<input type="text" name="currency" value={currency} onChange={(event) => this.setState({currency: event.target.value})} className="pure-input-rounded"/>
-					</div>
-					{timeSlots.length ?
-						<>
-							{timeSlots.map((timeSlot) => 
-								<div key={timeSlots.indexOf(timeSlot)}>
-									<input type="date" name={`time[${timeSlots.indexOf(timeSlot)}]`} value={timeSlot.time} onChange={(e) => this.handleTimeSlotChange(e.target.value, timeSlots.indexOf(timeSlot))}/>
-									<button onClick={(e) => this.handleRemoveTimeSlot(e, timeSlots.indexOf(timeSlot))}>
-										Remove Time
-										<FontAwesomeIcon icon={faTimes}/>
-									</button>
-								</div>
-							)}
-						</>
-						:
-						''
-					}
-					<button onClick={(e) => this.handleAddTimeSlot(e)}>
-						Add time slot
-						<FontAwesomeIcon icon={faPlus}/>
-					</button>
-
-					<div className="pure-u-l pure-u-md-1-2" style={{ maxWidth: '100%', height: '300px' }}>
-						<div className="pad" style={{ height: '100%', width: '100%', boxSizing: 'border-box' }}>
-							<div className="thumbnail-preview img-container" style={{ height: '100%', width: '100%', background: `url(${ thumbnailSrc }) no-repeat center center/cover` }}></div>
+				<form className="pure-u-1 fw-form">
+					<div className="flex-container desktop-100">
+						<div className="desktop-50 phone-100">
+							<div className="field text">
+								<label htmlFor="topicField">Topic</label>
+								<input type="text" name="topic" id="topicField" value={topic} onChange={(event) => this.setState({topic: event.target.value})}/>
+							</div>
+							<div className="field dropdown">
+								<label htmlFor="languageField">Language</label>
+								<select name="language" id="languageField" onChange={(event) => this.setState({language: event.target.value})} value={language}>
+									<option value="">Select a language</option>
+									<option>ASL</option>
+									{languages.getLanguageCodes().map((langCode) => 
+										<option key={langCode}>{languages.getLanguageName(langCode)}</option>
+									)}
+								</select>
+							</div>
+							<div className="field text">
+								<label htmlFor="durationField">Duration</label>
+								<input type="text" name="duration" id="durationField" placeholder="5 minutes" value={duration} onChange={(event) => this.setState({duration: event.target.value})}/>
+							</div>
+							<div className="field numeric">
+								<label htmlFor="priceField">Price</label>
+								<input type="number" min="0.50" step="0.01" name="price" id="priceField" value={price} onChange={(event) => this.setState({price: Number(event.target.value)})}/>
+								<p><i>Application fees will be applied</i></p>
+							</div>
+							<div className="field text">
+								<label htmlFor="currencyField">Currency</label>
+								<input type="text" name="currency" id="currencyField" value={currency} onChange={(event) => this.setState({currency: event.target.value})}/>
+							</div>
 						</div>
-					</div>
-					<div className="upload-container">
-						<input type="file" name="thumbnail" onChange={this.handleThumbnailChange}/>
-						<label htmlFor="thumbnail">
-							Thumbnail
-							<FontAwesomeIcon icon={faUpload}/>
-						</label>
-					</div>
 
-					<div>
-						<button onClick={this.handleSubmit}>
-							Submit
-							<FontAwesomeIcon icon={faLongArrowAltRight}/>
-						</button>
+						<div className="desktop-20 phone-100">
+							<div className="fw-space">
+								{timeSlots.length ?
+									<>
+										{timeSlots.map((timeSlot) => 
+											<div key={timeSlots.indexOf(timeSlot)}>
+												<input type="date" name={`time[${timeSlots.indexOf(timeSlot)}]`} value={timeSlot.time} onChange={(e) => this.handleTimeSlotChange(e.target.value, timeSlots.indexOf(timeSlot))}/>
+												<button className="button" onClick={(e) => this.handleRemoveTimeSlot(e, timeSlots.indexOf(timeSlot))}>
+													Remove Time
+													<FontAwesomeIcon icon={faTimes}/>
+												</button>
+											</div>
+										)}
+									</>
+									:
+									''
+								}
+								<button className="button" onClick={(e) => this.handleAddTimeSlot(e)}>
+									Add time slot
+									<FontAwesomeIcon icon={faPlus}/>
+								</button>
+							</div>
+						</div>
+
+						<div className="desktop-30 phone-100">
+							<div className="desktop-100" style={{ maxWidth: '100%', height: '300px' }}>
+								<div className="pad" style={{ height: '100%', width: '100%', boxSizing: 'border-box' }}>
+									<div className="thumbnail-preview img-container" style={{ height: '100%', width: '100%', background: `url(${ thumbnailSrc }) no-repeat center center/cover` }}></div>
+								</div>
+							</div>
+							<div className="upload-container">
+								<input type="file" name="thumbnail" onChange={this.handleThumbnailChange}/>
+								<label htmlFor="thumbnail">
+									Thumbnail
+									<FontAwesomeIcon icon={faUpload}/>
+								</label>
+							</div>
+
+							<div>
+								<button className="button" onClick={this.handleSubmit}>
+									Submit
+									<FontAwesomeIcon icon={faLongArrowAltRight}/>
+								</button>
+							</div>
+						</div>
+
 					</div>
 				</form>
-				<div className="pure-u-1 pure-u-md-1-2">
+				<div className="pure-u-1 flex-container flex-horizontal-center">
 					{savedPremiumVideoChatListing ?
 						<div>
+							<h3>Your saved Video Chat Listing</h3>
 							<PremiumVideoChatListing premiumVideoChatListing={savedPremiumVideoChatListing} authenticatedUserID={user._id} view={user._id == savedPremiumVideoChatListing.userID ? 'owner' : 'customer'}/>
 							<form>
 								<a className="button" href="#remove-listing" style={{ width: 'max-content' }}>

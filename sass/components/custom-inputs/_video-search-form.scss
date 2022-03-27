@@ -1,0 +1,15 @@
+.video-search-form{
+	.field.text{
+		margin: 10px 0;
+	}
+	.button{
+		border-radius: 0;
+		border-left: 1px solid getThemeProperty(textColorLight);
+		&.hamburger{
+			border-radius: 0 5px 5px 0;
+		}
+		svg.fa-search{
+			top: 25px;
+		}
+	}
+}

@@ -181,16 +181,16 @@ class AccountProfile extends React.Component {
 					<h1>{this.state.user.firstName}</h1>
 				}
 				{authenticatedUserIsAdmin ?
-					<form>
+					<form className="fw-form">
 						{this.state.user.verified ?
-							<div>
-								<label htmlFor="verifyUser">Remove verification for this user?</label>
-								<input type="checkbox" name="verifyUser" checked="checked" onChange={(event) => this.verifyUser(!this.state.user.verified)}/>
+							<div className="field checkbox">
+								<input type="checkbox" name="verifyUser" id="verifyUserField" checked="checked" onChange={(event) => this.verifyUser(!this.state.user.verified)}/>
+								<label htmlFor="verifyUserField">Remove verification for this user?</label>
 							</div>
 							:
-							<div>
-								<label htmlFor="verifyUser">Verify this user?</label>
-								<input type="checkbox" name="verifyUser" onChange={(event) => this.verifyUser(!this.state.user.verified)}/>
+							<div className="field checkbox">
+								<input type="checkbox" name="verifyUser" id="verifyUserField" onChange={(event) => this.verifyUser(!this.state.user.verified)}/>
+								<label htmlFor="verifyUserField">Verify this user?</label>
 							</div>
 						}
 					</form>
@@ -297,7 +297,7 @@ class AccountProfile extends React.Component {
 					</div>
 					:
 					<div>
-						<h2 className="text-center">No Uploaded Videos</h2>
+						<h2 className="text-center">No Purchased Products</h2>
 						<hr/>
 					</div>
 				}
