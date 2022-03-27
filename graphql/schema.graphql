@@ -56,6 +56,7 @@ type PremiumVideoChatListing {
 
 type VideoChatTimeSlot {
 	customerUserID: ID
+	date: String
 	time: String
 	booked: Boolean
 	completed: Boolean
@@ -63,6 +64,7 @@ type VideoChatTimeSlot {
 
 input VideoChatTimeSlotInputs {
 	customerUserID: ID
+	date: String
 	time: String
 	booked: Boolean
 	completed: Boolean

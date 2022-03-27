@@ -47,9 +47,7 @@ export default class Product extends React.Component<ProductProps, ProductState>
 		switch(product.productObjectCollection){
 			case 'premium_video_chat_listings':
 				let { timeSlots } = productObject;
-				if(timeSlots){
-					// timeSlots = timeSlots.filter((timeSlot) => timeSlot.customerUserID == product.userID);
-				} else {
+				if(!timeSlots){
 					timeSlots = [];
 				}
 				return (
@@ -62,7 +60,7 @@ export default class Product extends React.Component<ProductProps, ProductState>
 					{timeSlots.length ?
 						timeSlots.map((timeSlot) => 
 							<div key={timeSlots.indexOf(timeSlot)}>
-								<a href={`/video-chat?withUserID=${productObject.userID}`}>Video Chat with User: {this.state.ownerDisplayName} on {timeSlot.time}</a>
+								<a href={`/video-chat?withUserID=${productObject.userID}`}>Video Chat with User: {this.state.ownerDisplayName} on {timeSlot.date} - {timeSlot.time.convertTo12HourTime()}</a>
 							</div>
 						)
 						:

@@ -13,20 +13,21 @@ interface PremiumVideoChatListingObject {
 	currency: string
 	thumbnailSrc: string
 	userID: string
-	timeSlots: [VideoChatTimeSlot]
+	timeSlots: VideoChatTimeSlot[]
 }
 
 interface VideoChatTimeSlot {
 	customerDisplayName?: string
 	customerUserID?: string
 	tempCustomerUserID?: string
+	date: string
 	time: string
 	booked?: boolean
 	completed?: boolean
 }
 
 interface PremiumVideoChatListingState {
-	timeSlots: [VideoChatTimeSlot?]
+	timeSlots: VideoChatTimeSlot[]
 }
 
 interface PremiumVideoChatListingProps {
@@ -128,8 +129,10 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 					{timeSlot.customerUserID ? 
 						<div>
 							<div className="field checkbox" style={{ whiteSpace: 'nowrap' }}>
+								{/* @ts-ignore */}
 								<input id={`timeSlot${timeSlots.indexOf(timeSlot)}`} type="checkbox" checked={timeSlot.completed} onClick={(e) => this.handleTimeSlotChange(e.target.checked, timeSlots.indexOf(timeSlot))}/>
-								<label htmlFor={`timeSlot${timeSlots.indexOf(timeSlot)}`}>{timeSlot.time} with User: {timeSlot.customerDisplayName}</label>
+								{/* @ts-ignore */}
+								<label htmlFor={`timeSlot${timeSlots.indexOf(timeSlot)}`}>{timeSlot.date} - {timeSlot.time.convertTo12HourTime()} with User: {timeSlot.customerDisplayName}</label>
 							</div>
 							<a className="button" href={`/video-chat?forUserID=${timeSlot.customerUserID}`}>
 								Go to Video Chat
@@ -138,7 +141,8 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 						</div>
 						:
 						<>
-							<div>{timeSlot.time} Available</div>
+							{/* @ts-ignore */}
+							<div>{timeSlot.date} - {timeSlot.time.convertTo12HourTime()} Available</div>
 						</>
 					}
 				</div>
@@ -150,8 +154,10 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 						''
 						:
 						<div className="field checkbox" style={{ whiteSpace: 'nowrap' }}>
+							{/* @ts-ignore */}
 							<input id={`timeSlot${timeSlots.indexOf(timeSlot)}`} type="checkbox" checked={timeSlot.booked} onClick={(e) => this.handleTimeSlotChange(e.target.checked,  timeSlots.indexOf(timeSlot))}/>
-							<label htmlFor={`timeSlot${timeSlots.indexOf(timeSlot)}`}>{timeSlot.time}</label>
+							{/* @ts-ignore */}
+							<label htmlFor={`timeSlot${timeSlots.indexOf(timeSlot)}`}>{timeSlot.date} - {timeSlot.time.convertTo12HourTime()}</label>
 						</div>
 					}
 				</div>
@@ -189,6 +195,7 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 			let newTimeSlots = [];
 			timeSlots.forEach((timeSlot) => {
 				let newTimeSlot = {
+					date: timeSlot.date,
 					time: timeSlot.time,
 					customerUserID: timeSlot.customerUserID,
 					booked: timeSlot.booked,

@@ -59,6 +59,7 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 					thumbnailSrc
 					userID
 					timeSlots {
+						date
 						time
 						customerUserID
 						completed
@@ -98,6 +99,7 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 					thumbnailSrc
 					userID
 					timeSlots {
+						date
 						time
 						customerUserID
 						completed

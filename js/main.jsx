@@ -19,12 +19,20 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'css-modal/build/modal.css';
 import 'css-modal/modal.js';
 
+// Initialize Framewerk after app is rendered
 import { initFramewerk } from 'werkbot-framewerk';
 setTimeout(() => {
 	initFramewerk(false);
 	window.dispatchEvent(new Event('load'));
 }, 1000);
 
+// Add a string method to convert times to AM/PM format
+String.prototype.convertTo12HourTime = function(){
+	// Should be called like: '21:00.convertTo12HourTime()'. '1/1/2000' is an arbitrary valid date.
+	return new Date('1/1/2000 ' + this).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+};
+
+// Attempt Login with JWT
 (async function(){
 	await fetch('/do-jwt-login')
 		.then((response) => response.json())

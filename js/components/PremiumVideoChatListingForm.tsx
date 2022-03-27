@@ -23,11 +23,12 @@ interface PremiumVideoChatListingObject {
 	currency: string
 	thumbnailSrc: string
 	userID: string
-	timeSlots: [VideoChatTimeSlot]
+	timeSlots: VideoChatTimeSlot[]
 }
 
 interface VideoChatTimeSlot {
 	customerUserID?: string
+	date: string
 	time: string
 	booked?: boolean
 	completed?: boolean
@@ -39,7 +40,7 @@ interface PremiumVideoChatListingFormState {
 	duration: string
 	price: number
 	currency: string
-	timeSlots?: [VideoChatTimeSlot]
+	timeSlots?: VideoChatTimeSlot[]
 	thumbnailSrc: string
 	thumbnailFile?: File
 	savedPremiumVideoChatListing?: PremiumVideoChatListingObject
@@ -61,6 +62,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 			thumbnailSrc: '',
 			timeSlots: [
 				{
+					date: '',
 					time: '',
 					booked: false,
 					completed: false,
@@ -109,10 +111,10 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 	    }
 	}
 
-	handleTimeSlotChange(time, timeSlotIndex){
+	handleTimeSlotChange(valueKey, value, timeSlotIndex){
 		let { timeSlots } = this.state;
 		let timeSlot = timeSlots[timeSlotIndex];
-		timeSlot.time = time;
+		timeSlot[valueKey] = value;
 		timeSlots[timeSlotIndex] = timeSlot;
 		this.setState({
 			timeSlots
@@ -134,6 +136,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 			timeSlots: [
 				...this.state.timeSlots,
 				{
+					date: '',
 					time: '',
 					booked: false,
 					completed: false,
@@ -177,6 +180,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 						thumbnailSrc
 						userID
 						timeSlots {
+							date
 							time
 							customerUserID
 							completed
@@ -212,6 +216,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 						thumbnailSrc
 						userID
 						timeSlots {
+							date
 							time
 							customerUserID
 							completed
@@ -328,7 +333,8 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 									<>
 										{timeSlots.map((timeSlot) => 
 											<div key={timeSlots.indexOf(timeSlot)}>
-												<input type="date" name={`time[${timeSlots.indexOf(timeSlot)}]`} value={timeSlot.time} onChange={(e) => this.handleTimeSlotChange(e.target.value, timeSlots.indexOf(timeSlot))}/>
+												<input type="date" name={`date[${timeSlots.indexOf(timeSlot)}]`} value={timeSlot.date} onChange={(e) => this.handleTimeSlotChange('date', e.target.value, timeSlots.indexOf(timeSlot))}/>
+												<input type="time" name={`time[${timeSlots.indexOf(timeSlot)}]`} value={timeSlot.time} onChange={(e) => this.handleTimeSlotChange('time', e.target.value, timeSlots.indexOf(timeSlot))}/>
 												<button className="button" onClick={(e) => this.handleRemoveTimeSlot(e, timeSlots.indexOf(timeSlot))}>
 													Remove Time
 													<FontAwesomeIcon icon={faTimes}/>
@@ -362,7 +368,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 
 							<div>
 								<button className="button" onClick={this.handleSubmit}>
-									Submit
+									Save
 									<FontAwesomeIcon icon={faLongArrowAltRight}/>
 								</button>
 							</div>
