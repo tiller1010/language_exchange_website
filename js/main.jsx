@@ -9,6 +9,8 @@ import Login from './components/Login.jsx';
 import Register from './components/Register.jsx';
 import AccountProfile from './components/AccountProfile.jsx';
 import VideoChat from './components/VideoChat.tsx';
+import Chats from './components/Chats.jsx';
+import Lessons from './components/Lessons.jsx';
 
 import 'purecss/build/pure-min.css';
 import 'purecss/build/grids-responsive-min.css';
@@ -94,4 +96,12 @@ if(document.getElementById('account-profile')){
 if(document.getElementById('video-chat')){
 	var authenticatedUserID = document.getElementById('video-chat').getAttribute('authenticateduserid');
 	ReactDOM.render(<VideoChat authenticatedUserID={authenticatedUserID}/>, document.getElementById('video-chat'));
+}
+if(document.getElementById('chats')){
+	var authenticatedUserID = document.getElementById('chats').getAttribute('authenticateduserid');
+	ReactDOM.render(<Chats authenticatedUserID={authenticatedUserID}/>, document.getElementById('chats'));
+}
+if(document.getElementById('lessons')){
+	var authenticatedUserID = document.getElementById('lessons').getAttribute('authenticateduserid');
+	ReactDOM.render(<Lessons authenticatedUserID={authenticatedUserID}/>, document.getElementById('lessons'));
 }

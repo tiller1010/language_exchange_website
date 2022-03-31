@@ -72,6 +72,24 @@ app.use(express.json());
 			res.render('home', { userLikedVideos, userID });
 		});
 
+		// Lessons route
+		app.get('/lessons', (req, res) => {
+			let userID = null;
+			if(req.user){
+				userID = req.user._id;
+			}
+			res.render('lessons', { userID });
+		});
+
+		// Chats route
+		app.get('/chats', (req, res) => {
+			let userID = null;
+			if(req.user){
+				userID = req.user._id;
+			}
+			res.render('chats', { userID });
+		});
+
 		// Recent videos API
 		app.get('/recent-videos', async (req, res) => {
 			const videos = await getRecent();

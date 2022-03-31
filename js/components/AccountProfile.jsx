@@ -1,7 +1,7 @@
 import React from 'react';
 import Navigation from './Navigation.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt, faLongArrowAltRight, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faLongArrowAltRight, faUser, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Slider from 'react-slick';
 import graphQLFetch from '../graphQLFetch.js';
 import VideoPlayer from './VideoPlayer.tsx';
@@ -344,6 +344,12 @@ class AccountProfile extends React.Component {
 						<hr/>
 					</div>
 				}
+			    <div className="small-pad">
+				    <a href="/videos/add" className="button">
+					    <span>Add a video</span>
+				        <FontAwesomeIcon icon={faPlus}/>
+				    </a>
+			    </div>
 				{this.state.user.likedVideos.length ?
 					<div>
 						<h2 className="text-center">Liked Videos</h2>
