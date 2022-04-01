@@ -1,0 +1,18 @@
+.home-banner {
+	height: 90vh;
+	position: relative;
+	align-content: center;
+	.home-banner-content{
+		background: #aaaaaaaa;
+		*{
+			color: getThemeProperty(textColorLight);
+		}
+	}
+	.home-banner-link{
+		display: block;
+		text-decoration: none;
+		background-color: getThemeProperty(backgroundColorLight);
+		border-radius: 15px;
+		box-shadow: 0px 5px 10px getThemeProperty(backgroundColorMedium);
+	}
+}
