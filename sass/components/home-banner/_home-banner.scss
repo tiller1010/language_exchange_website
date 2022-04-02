@@ -1,18 +1,34 @@
 .home-banner {
 	height: 90vh;
 	position: relative;
-	align-content: center;
+	align-content: space-evenly;
 	.home-banner-content{
-		background: #aaaaaaaa;
+		background: #{getThemeProperty(primaryColor) + 'aa'};
 		*{
 			color: getThemeProperty(textColorLight);
+		}
+	}
+	.flex-container{
+		.fw-space, a {
+			height: 100%;
+			box-sizing: border-box;
 		}
 	}
 	.home-banner-link{
 		display: block;
 		text-decoration: none;
-		background-color: getThemeProperty(backgroundColorLight);
+		background-color: getThemeProperty(secondaryColor);
 		border-radius: 15px;
-		box-shadow: 0px 5px 10px getThemeProperty(backgroundColorMedium);
+		transition: transform .25s ease;
+		h2{
+			@include font-size(getThemeProperty(fontSizes, $element-h3-properties));
+		}
+		*{
+			color: getThemeProperty(textColorLight);
+		}
+		&:hover{
+			transform: scale(1.05);
+			box-shadow: 0px 1px 10px #ccc;
+		}
 	}
 }
