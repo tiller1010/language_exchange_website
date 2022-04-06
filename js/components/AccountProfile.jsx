@@ -1,7 +1,7 @@
 import React from 'react';
 import Navigation from './Navigation.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt, faLongArrowAltRight, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faLongArrowAltRight, faUser, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Slider from 'react-slick';
 import graphQLFetch from '../graphQLFetch.js';
 import VideoPlayer from './VideoPlayer.tsx';
@@ -167,97 +167,113 @@ class AccountProfile extends React.Component {
 		});
 
 		return (
-			<div className="frame">
+			<div className="frame fw-typography-spacing">
 				<Navigation/>
-				{this.props.isCurrentUser ?
-					<div>
-						<h1>Welcome, {this.state.user.firstName}!</h1>
-						<a href="/logout" className="button" style={{ width: 'max-content' }}>
-							Logout
-							<FontAwesomeIcon icon={faSignOutAlt}/>
-						</a>
-					</div>
-					:
-					<h1>{this.state.user.firstName}</h1>
-				}
-				{authenticatedUserIsAdmin ?
-					<form className="fw-form">
-						{this.state.user.verified ?
-							<div className="field checkbox">
-								<input type="checkbox" name="verifyUser" id="verifyUserField" checked="checked" onChange={(event) => this.verifyUser(!this.state.user.verified)}/>
-								<label htmlFor="verifyUserField">Remove verification for this user?</label>
-							</div>
-							:
-							<div className="field checkbox">
-								<input type="checkbox" name="verifyUser" id="verifyUserField" onChange={(event) => this.verifyUser(!this.state.user.verified)}/>
-								<label htmlFor="verifyUserField">Verify this user?</label>
-							</div>
-						}
-					</form>
-					:
-					''
-				}
-				{authenticatedUserIsVerified && this.props.isCurrentUser ?
-					<>
-						<PremiumVideoChatListingForm user={authenticatedUser}/>
-						<p>
-							{authenticatedUser.connectedStripeAccountID ?
-								<p>Stripe Account ID: {authenticatedUser.connectedStripeAccountID}</p>
-								:
-								''
-							}
-							<a href={`/manage-stripe-account/${authenticatedUser.connectedStripeAccountID || ''}`} className="button">
-								Manage Stripe Account
-								<FontAwesomeIcon icon={faUser}/>
+
+				<section className="fw-space double noleft noright">
+					{this.props.isCurrentUser ?
+						<div>
+							<h1>Welcome, {this.state.user.firstName}!</h1>
+							<a href="/logout" className="button" style={{ width: 'max-content' }}>
+								Logout
+								<FontAwesomeIcon icon={faSignOutAlt}/>
 							</a>
-						</p>
-					</>
-					:
-					''
-				}
-				{this.state.user.completedTopics.length ?
-					<div className="topics">
-						<h2 className="text-center">Completed Topics</h2>
-						<hr/>
-			    		<Slider {...{
-							dots: false,
-							infinite: false,
-							speed: 500,
-							slidesToShow: 3,
-							slidesToScroll: 1,
-							responsive: [
-								{
-									breakpoint: 1024,
-									settings: {
-										slidesToShow: 1.5
-									}
+						</div>
+						:
+						<h1>{this.state.user.firstName}</h1>
+					}
+					
+					{authenticatedUserIsAdmin ?
+						<form className="fw-form">
+							{this.state.user.verified ?
+								<div className="field checkbox">
+									<input type="checkbox" name="verifyUser" id="verifyUserField" checked="checked" onChange={(event) => this.verifyUser(!this.state.user.verified)}/>
+									<label htmlFor="verifyUserField">Remove verification for this user?</label>
+								</div>
+								:
+								<div className="field checkbox">
+									<input type="checkbox" name="verifyUser" id="verifyUserField" onChange={(event) => this.verifyUser(!this.state.user.verified)}/>
+									<label htmlFor="verifyUserField">Verify this user?</label>
+								</div>
+							}
+						</form>
+						:
+						''
+					}
+
+			    </section>
+
+				<section className="fw-space double noleft noright">
+
+					{authenticatedUserIsVerified && this.props.isCurrentUser ?
+						<>
+							<PremiumVideoChatListingForm user={authenticatedUser}/>
+							<p>
+								{authenticatedUser.connectedStripeAccountID ?
+									<p>Stripe Account ID: {authenticatedUser.connectedStripeAccountID}</p>
+									:
+									''
 								}
-							]
-			    		}}>
-							{this.state.user.completedTopics.map((topic) => 
-			    				<div className="topic pure-u-1 pure-u-md-11-24" key={topic.id}>
-				    				<div className="pad">
-					    				<div className="flex x-space-between">
-					    					<h3 className="pad no-y no-left">{topic.Topic}</h3>
-											<a href={`${this.props.pathResolver}level/${topic.levelID}/topic/${topic.topicID}`} className="button">
-											    View Topic
-											    <FontAwesomeIcon icon={faLongArrowAltRight}/>
-										    </a>
-									    </div>
-				    					<a href={`level/${topic.levelID}/topic/${topic.topicID}`}>
-					    					{this.renderMedia(topic)}
-				    					</a>
+								<a href={`/manage-stripe-account/${authenticatedUser.connectedStripeAccountID || ''}`} className="button">
+									Manage Stripe Account
+									<FontAwesomeIcon icon={faUser}/>
+								</a>
+							</p>
+						</>
+						:
+						''
+					}
+
+				</section>
+
+				<section className="fw-space double noleft noright">
+
+					{this.state.user.completedTopics.length ?
+						<div className="topics">
+							<h2 className="text-center">Completed Topics</h2>
+							<hr/>
+				    		<Slider {...{
+								dots: false,
+								infinite: false,
+								speed: 500,
+								slidesToShow: 3,
+								slidesToScroll: 1,
+								responsive: [
+									{
+										breakpoint: 1024,
+										settings: {
+											slidesToShow: 1.5
+										}
+									}
+								]
+				    		}}>
+								{this.state.user.completedTopics.map((topic) => 
+				    				<div className="topic pure-u-1 pure-u-md-11-24" key={topic.id}>
+					    				<div className="pad">
+						    				<div className="flex x-space-between">
+						    					<h3 className="pad no-y no-left">{topic.Topic}</h3>
+												<a href={`${this.props.pathResolver}level/${topic.levelID}/topic/${topic.topicID}`} className="button">
+												    View Topic
+												    <FontAwesomeIcon icon={faLongArrowAltRight}/>
+											    </a>
+										    </div>
+					    					<a href={`level/${topic.levelID}/topic/${topic.topicID}`}>
+						    					{this.renderMedia(topic)}
+					    					</a>
+				    					</div>
 			    					</div>
-		    					</div>
-							)}
-						</Slider>
-					</div>
-					:
-					<div>
-						<h2 className="text-center">No Completed Topics</h2>
-						<hr/>
-					</div>
-				}
+								)}
+							</Slider>
+						</div>
+						:
+						<div>
+							<h2 className="text-center">No Completed Topics</h2>
+							<hr/>
+						</div>
+					}
+
+				</section>
+
 				{this.props.isCurrentUser ?
 					<RemoveConfirmationModal
 						buttonText="Remove Video"
@@ -269,123 +285,145 @@ class AccountProfile extends React.Component {
 					:
 					''
 				}
-				{products.length && this.props.isCurrentUser ?
-					<div>
-						<h2 className="text-center">Products</h2>
-						<hr/>
-			    		<Slider {...{
-							dots: false,
-							infinite: false,
-							speed: 500,
-							slidesToShow: 3,
-							slidesToScroll: 1,
-							responsive: [
-								{
-									breakpoint: 1024,
-									settings: {
-										slidesToShow: 1.5
+
+				<section className="fw-space double noleft noright">
+
+					{products.length && this.props.isCurrentUser ?
+						<div>
+							<h2 className="text-center">Products</h2>
+							<hr/>
+				    		<Slider {...{
+								dots: false,
+								infinite: false,
+								speed: 500,
+								slidesToShow: 3,
+								slidesToScroll: 1,
+								responsive: [
+									{
+										breakpoint: 1024,
+										settings: {
+											slidesToShow: 1.5
+										}
 									}
-								}
-							]
-			    		}}>
-							{this.state.user.products.reverse().map((product) => 
-								<div key={product._id} className="pure-u-1 pure-u-lg-1-3">
-									<Product product={product}/>
-								</div>
-							)}
-						</Slider>
-					</div>
-					:
-					<div>
-						<h2 className="text-center">No Purchased Products</h2>
-						<hr/>
-					</div>
-				}
-				{this.state.user.uploadedVideos.length ?
-					<div>
-						<h2 className="text-center">Uploaded Videos</h2>
-						<hr/>
-			    		<Slider {...{
-							dots: false,
-							infinite: false,
-							speed: 500,
-							slidesToShow: 3,
-							slidesToScroll: 1,
-							responsive: [
-								{
-									breakpoint: 1024,
-									settings: {
-										slidesToShow: 1.5
+								]
+				    		}}>
+								{this.state.user.products.reverse().map((product) => 
+									<div key={product._id} className="pure-u-1 pure-u-lg-1-3">
+										<Product product={product}/>
+									</div>
+								)}
+							</Slider>
+						</div>
+						:
+						<div>
+							<h2 className="text-center">No Purchased Products</h2>
+							<hr/>
+						</div>
+					}
+
+				</section>
+
+				<section className="fw-space double noleft noright">
+
+					{this.state.user.uploadedVideos.length ?
+						<div>
+							<h2 className="text-center">Uploaded Videos</h2>
+							<hr/>
+				    		<Slider {...{
+								dots: false,
+								infinite: false,
+								speed: 500,
+								slidesToShow: 3,
+								slidesToScroll: 1,
+								responsive: [
+									{
+										breakpoint: 1024,
+										settings: {
+											slidesToShow: 1.5
+										}
 									}
-								}
-							]
-			    		}}>
-							{this.state.user.uploadedVideos.map((video) => 
-								<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
-						    		<VideoPlayer
-										_id={video._id}
-										title={video.title}
-										src={`${this.props.pathResolver}${video.src}`}
-										thumbnailSrc={`${this.props.pathResolver}${video.thumbnailSrc}`}
-										uploadedBy={video.uploadedBy}
-										likes={video.likes}
-										likedByCurrentUser={video.likedByCurrentUser}
-										authenticatedUserID={authenticatedUser ? authenticatedUser._id : null}
-										handleDeleteVideo={this.props.isCurrentUser ? this.handleDeleteVideo : null}
-										afterToggleLike={this.afterToggleLike}
-						    		/>
-								</div>
-							)}
-						</Slider>
-					</div>
-					:
-					<div>
-						<h2 className="text-center">No Uploaded Videos</h2>
-						<hr/>
-					</div>
-				}
-				{this.state.user.likedVideos.length ?
-					<div>
-						<h2 className="text-center">Liked Videos</h2>
-						<hr/>
-			    		<Slider {...{
-							dots: false,
-							infinite: false,
-							speed: 500,
-							slidesToShow: 3,
-							slidesToScroll: 1,
-							responsive: [
-								{
-									breakpoint: 1024,
-									settings: {
-										slidesToShow: 1.5
+								]
+				    		}}>
+								{this.state.user.uploadedVideos.map((video) => 
+									<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
+							    		<VideoPlayer
+											_id={video._id}
+											title={video.title}
+											src={`${this.props.pathResolver}${video.src}`}
+											thumbnailSrc={`${this.props.pathResolver}${video.thumbnailSrc}`}
+											uploadedBy={video.uploadedBy}
+											likes={video.likes}
+											likedByCurrentUser={video.likedByCurrentUser}
+											authenticatedUserID={authenticatedUser ? authenticatedUser._id : null}
+											handleDeleteVideo={this.props.isCurrentUser ? this.handleDeleteVideo : null}
+											afterToggleLike={this.afterToggleLike}
+							    		/>
+									</div>
+								)}
+							</Slider>
+						</div>
+						:
+						<div>
+							<h2 className="text-center">No Uploaded Videos</h2>
+							<hr/>
+						</div>
+					}
+				    <div className="small-pad">
+					    <a href="/videos/add" className="button">
+						    <span>Add a video</span>
+					        <FontAwesomeIcon icon={faPlus}/>
+					    </a>
+				    </div>
+
+			    </section>
+
+				<section className="fw-space double noleft noright">
+
+					{this.state.user.likedVideos.length ?
+						<div>
+							<h2 className="text-center">Liked Videos</h2>
+							<hr/>
+				    		<Slider {...{
+								dots: false,
+								infinite: false,
+								speed: 500,
+								slidesToShow: 3,
+								slidesToScroll: 1,
+								responsive: [
+									{
+										breakpoint: 1024,
+										settings: {
+											slidesToShow: 1.5
+										}
 									}
-								}
-							]
-			    		}}>
-							{this.state.user.likedVideos.map((video) => 
-								<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
-						    		<VideoPlayer
-										_id={video._id}
-										title={video.title}
-										src={`${this.props.pathResolver}${video.src}`}
-										thumbnailSrc={`${this.props.pathResolver}${video.thumbnailSrc}`}
-										uploadedBy={video.uploadedBy}
-										likes={video.likes}
-										likedByCurrentUser={video.likedByCurrentUser}
-										authenticatedUserID={authenticatedUser ? authenticatedUser._id : null}
-										afterToggleLike={this.afterToggleLike}
-						    		/>
-								</div>
-							)}
-						</Slider>
-					</div>
-					:
-					<div>
-						<h2 className="text-center">No Liked Videos</h2>
-						<hr/>
-					</div>
-				}
+								]
+				    		}}>
+								{this.state.user.likedVideos.map((video) => 
+									<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
+							    		<VideoPlayer
+											_id={video._id}
+											title={video.title}
+											src={`${this.props.pathResolver}${video.src}`}
+											thumbnailSrc={`${this.props.pathResolver}${video.thumbnailSrc}`}
+											uploadedBy={video.uploadedBy}
+											likes={video.likes}
+											likedByCurrentUser={video.likedByCurrentUser}
+											authenticatedUserID={authenticatedUser ? authenticatedUser._id : null}
+											afterToggleLike={this.afterToggleLike}
+							    		/>
+									</div>
+								)}
+							</Slider>
+						</div>
+						:
+						<div>
+							<h2 className="text-center">No Liked Videos</h2>
+							<hr/>
+						</div>
+					}
+
+			    </section>
+
 			</div>
 		);
 	}

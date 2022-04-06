@@ -1,0 +1,5 @@
+{
+	"extends": "airbnb-base",
+	"root": true,
+	"parser": "@babel/eslint-parser"
+}

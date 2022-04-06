@@ -100,16 +100,75 @@ class Home extends React.Component {
 		var { strapiTestImage } = this.state || 'notfound';
 
 		return (
-			<div className="frame">
+			<div>
 				<Navigation/>
-				<div className="pure-u-g">
 
-					<div className="pure-u-l pure-u-md-1-2">
-						<PremiumVideoChatListingFeed authenticatedUserID={this.props.userID}/>
+				<div className="home-banner flex-container fw-typography-spacing" style={{background: 'url("https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwallup.net%2Fwp-content%2Fuploads%2F2016%2F01%2F296416-landscape-nature-mountain-lake-trees-snow-clouds-forest.jpg&f=1&nofb=1") no-repeat center center/cover'}}>
+					<div className="desktop-100 home-banner-content">
+						<div className="fw-container">
+							<div className="fw-space">
+								<h1>Learn languages from everyone</h1>
+								<p>Language is fastest learned when used. Why not start speaking the language you want to learn today?</p>
+							</div>
+						</div>
 					</div>
+					<div className="desktop-100 fw-container flex-container flex-vertical-bottom">
+						<div className="fw-space">
+							<div className="flex-container flex-vertical-stretch">
 
+								<div className="desktop-33 tablet-100">
+									<div className="fw-space">
+										<a href="/videos" className="home-banner-link">
+											<div className="fw-space">
+												<h2>Videos from learners</h2>
+												<p>
+													Learn from students just like you. Browse videos from language learners around the world.
+												</p>
+											</div>
+										</a>
+									</div>
+								</div>
 
-					<div className="pure-u-l pure-u-md-1-2">
+								<div className="desktop-33 tablet-100">
+									<div className="fw-space">
+										<a href="/lessons" className="home-banner-link">
+											<div className="fw-space">
+												<h2>Improve your skills</h2>
+												<p>
+													Complete challenges and sharpen your skills.
+												</p>
+											</div>
+										</a>
+									</div>
+								</div>
+
+								<div className="desktop-33 tablet-100">
+									<div className="fw-space">
+										<a href="/chats" className="home-banner-link">
+											<div className="fw-space">
+												<h2>Schedule practice time</h2>
+												<p>
+													Set a time to practice with a native speaker.
+												</p>
+											</div>
+										</a>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div className="pure-u-g fw-typography-spacing frame">
+
+					<section className="fw-space double noleft noright">
+
+						<div className="fw-space double noleft noright">
+							<h2>Browse videos from language learners around the world.</h2>
+							<hr/>
+						</div>
+
 						<div className="page-form">
 							<h2>User Submitted Videos</h2>
 							<VideoSearchForm
@@ -155,48 +214,72 @@ class Home extends React.Component {
 					    	:
 					    	''
 					    }
-				    </div>
+
+				    </section>
+
+				    <section className="fw-space double noleft noright">
+
+						<div className="fw-space double noleft noright">
+							<h2>Complete challenges and sharpen your skills.</h2>
+							<hr/>
+						</div>
+
+					    {this.state.levels ?
+					    	this.state.levels.map((level) => 
+					    		<div key={level.id} className="flex x-center">
+						    		<h2 className="pad">Level {level.Level}</h2>
+						    		<a href={`/level/${level.id}`} className="button" style={{ alignSelf: 'center' }}>
+							    		View Level
+							    		<FontAwesomeIcon icon={faLongArrowAltRight}/>
+						    		</a>
+						    		<div className="pure-u-1">
+							    		<hr/>
+						    		</div>
+						    		{level.topics ?
+						    			<div className="topics pure-u-1 flex x-space-around">
+							    			{this.randomTopics(level).map((topic) =>
+							    				<div className="topic pure-u-1 pure-u-md-1-3" key={topic.id}>
+								    				<div className="pad">
+									    				<div className="flex x-space-between">
+									    					<h3 className="pad no-y no-left">{topic.Topic}</h3>
+									    					<a href={`/level/${level.id}/topic/${topic.id}`} className="button">
+															    View Topic
+															    <FontAwesomeIcon icon={faLongArrowAltRight}/>
+														    </a>
+													    </div>
+								    					<a href={`/level/${level.id}/topic/${topic.id}`}>
+									    					{this.renderMedia(topic)}
+								    					</a>
+							    					</div>
+						    					</div>
+						    				)}
+					    				</div>
+					    				:
+					    				<p>No topics</p>
+						    		}
+					    		</div>
+				    		) 
+					    	:
+					    	<h2>No levels</h2>
+					    }
+
+				    </section>
+
+				    <section className="fw-space double noleft noright">
+
+						<div className="fw-space double noleft noright">
+							<h2>Support teachers.</h2>
+							<hr/>
+						</div>
+
+						<div className="desktop-100">
+							<PremiumVideoChatListingFeed authenticatedUserID={this.props.userID}/>
+						</div>
+
+				    </section>
 
 			    </div>
 
-			    {this.state.levels ?
-			    	this.state.levels.map((level) => 
-			    		<div key={level.id} className="flex x-center">
-				    		<h2 className="pad">Level {level.Level}</h2>
-				    		<a href={`/level/${level.id}`} className="button" style={{ alignSelf: 'center' }}>
-					    		View Level
-					    		<FontAwesomeIcon icon={faLongArrowAltRight}/>
-				    		</a>
-				    		<div className="pure-u-1">
-					    		<hr/>
-				    		</div>
-				    		{level.topics ?
-				    			<div className="topics pure-u-1 flex x-space-around">
-					    			{this.randomTopics(level).map((topic) =>
-					    				<div className="topic pure-u-1 pure-u-md-1-3" key={topic.id}>
-						    				<div className="pad">
-							    				<div className="flex x-space-between">
-							    					<h3 className="pad no-y no-left">{topic.Topic}</h3>
-							    					<a href={`/level/${level.id}/topic/${topic.id}`} className="button">
-													    View Topic
-													    <FontAwesomeIcon icon={faLongArrowAltRight}/>
-												    </a>
-											    </div>
-						    					<a href={`/level/${level.id}/topic/${topic.id}`}>
-							    					{this.renderMedia(topic)}
-						    					</a>
-					    					</div>
-				    					</div>
-				    				)}
-			    				</div>
-			    				:
-			    				<p>No topics</p>
-				    		}
-			    		</div>
-		    		) 
-			    	:
-			    	<h2>No levels</h2>
-			    }
 			</div>
 		);
 	}
