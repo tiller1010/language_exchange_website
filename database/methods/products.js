@@ -22,7 +22,7 @@ async function createProduct(_, { productObjectCollection, productDescription, p
 	} else {
 		productObject = await db.collection(productObjectCollection).findOne({ _id: new mongo.ObjectID(productObjectID) });
 	}
-	const stripePrice = await createOrder('test@email.com', productDescription, Math.floor(productObject.price * 100), productObject.currency);
+	const stripePrice = await createOrder(user.email, productDescription, Math.floor(productObject.price * 100), productObject.currency);
 	let products = user.products || [];
 	const product = {
 		userID,

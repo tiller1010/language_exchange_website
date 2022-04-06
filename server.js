@@ -340,7 +340,7 @@ app.use(express.json());
 				googleNativeFlag = true;
 			}
 			next();
-		}, passport.authenticate('google', { scope: 'https://www.googleapis.com/auth/plus.login' }));
+		}, passport.authenticate('google', { scope: [ 'https://www.googleapis.com/auth/plus.login', 'email' ] }));
 		app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
 
 			if(req.user && !req.cookies.jwt){

@@ -3,8 +3,8 @@ import PremiumVideoChatListingFeed from './PremiumVideoChatListingFeed.tsx';
 import Navigation from './Navigation.jsx';
 
 class Chats extends React.Component {
-	constructor(){
-		super();
+	constructor(props){
+		super(props);
 		this.state = {
 		}
 	}
@@ -20,7 +20,7 @@ class Chats extends React.Component {
 				<div className="pure-u-g">
 
 					<div className="desktop-100">
-						<PremiumVideoChatListingFeed authenticatedUserID={this.props.userID}/>
+						<PremiumVideoChatListingFeed authenticatedUserID={this.props.authenticatedUserID}/>
 					</div>
 
 			    </div>

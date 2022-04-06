@@ -56,6 +56,7 @@ passport.use('local-signup', new LocalStrategy({
 					return done(null, false, { message: 'Passwords do not match.' });
 				}
 				let newUser = {
+					email : req.body.email,
 					displayName,
 					firstName : req.body.firstName,
 					lastName : req.body.lastName,
@@ -79,7 +80,9 @@ passport.use(new GoogleStrategy({
 	clientSecret: process.env.GOOGLE_AUTH_SECRET,
 	callbackURL
 }, async (token, tokenSecret, profile, done) => {
+		let email = profile.emails.length ? profile.emails[0].value : 'test@test.com';
 		const newUser = {
+			email,
 			googleID: profile.id,
 			displayName: profile.displayName,
 			firstName: profile.name.givenName,

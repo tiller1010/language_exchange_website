@@ -41,23 +41,32 @@ class Register extends React.Component {
 					}
 
 					<form action="/register" method="POST" className="flex-col x-end fw-form">
-						<div className="small-pad no-x">
-							<input type="text" name="firstName" placeholder="First Name" aria-label="first name"/>
+						<div className="field text">
+							<label htmlFor="firstNameField">First Name</label>
+							<input type="text" id="firstNameField" name="firstName" aria-label="first name"/>
 						</div>
-						<div className="small-pad no-x">
-							<input type="text" name="lastName" placeholder="Last Name" aria-label="last name"/>
+						<div className="field text">
+							<label htmlFor="lastNameField">Last Name</label>
+							<input type="text" id="lastNameField" name="lastName" aria-label="last name"/>
 						</div>
-						<div className="small-pad no-x">
-							<input type="text" name="displayName" placeholder="Display Name" aria-label="display name"/>
+						<div className="field text">
+							<label htmlFor="emailField">Email</label>
+							<input type="email" id="emailField" name="email" aria-label="Email"/>
 						</div>
-						<div className="small-pad no-x">
-							<input type="password" name="password" placeholder="Password" aria-label="password"/>
+						<div className="field text">
+							<label htmlFor="displayNameField">Display Name</label>
+							<input type="text" id="displayNameField" name="displayName" aria-label="display name"/>
 						</div>
-						<div className="small-pad no-x">
-							<input type="password" name="confirmPassword" placeholder="Confirm Password" aria-label="confirm password"/>
+						<div className="field text">
+							<label htmlFor="passwordField">Password</label>
+							<input type="password" id="passwordField" name="password" aria-label="password"/>
 						</div>
-						<div className="small-pad no-x">
-							<button type="submit">
+						<div className="field text">
+							<label htmlFor="confirmPasswordField">Confirm Password</label>
+							<input type="password" id="confirmPasswordField" name="confirmPassword" aria-label="confirm password"/>
+						</div>
+						<div className="field text">
+							<button className="button" type="submit">
 								Register
 								<FontAwesomeIcon icon={faLongArrowAltRight}/>
 							</button>
