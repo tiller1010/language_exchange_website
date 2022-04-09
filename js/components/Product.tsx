@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
 
 interface ProductObject {
 	userID: string;
@@ -60,7 +62,10 @@ export default class Product extends React.Component<ProductProps, ProductState>
 					{timeSlots.length ?
 						timeSlots.map((timeSlot) => 
 							<div key={timeSlots.indexOf(timeSlot)}>
-								<a href={`/video-chat?withUserID=${productObject.userID}`}>Video Chat with User: {this.state.ownerDisplayName} on {timeSlot.date} - {timeSlot.time.convertTo12HourTime()}</a>
+								<a className="button" href={`/video-chat?withUserID=${productObject.userID}`}>
+									Video Chat with User: {this.state.ownerDisplayName} on {timeSlot.date} - {timeSlot.time.convertTo12HourTime()}
+									<FontAwesomeIcon icon={faLongArrowAltRight}/>
+								</a>
 							</div>
 						)
 						:

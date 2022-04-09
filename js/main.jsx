@@ -19,7 +19,6 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 import 'css-modal/build/modal.css';
-import 'css-modal/modal.js';
 
 // Initialize Framewerk after app is rendered
 import { initFramewerk } from 'werkbot-framewerk';

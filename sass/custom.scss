@@ -18,6 +18,14 @@ $component-button-properties: (
 	textHoverColor: map-get($theme-properties, textColorLight),
 	padding: 10px 40px 10px 10px,
 	margin: 10px 0,
+	variants: (
+		selected: (
+			background-color: map-get($theme-properties, backgroundColorMedium),
+			hoverStyle: (
+				background-color: map-get($theme-properties, primaryColor),
+			)
+		)
+	)
 );
 
 $component-hamburger-properties:(
