@@ -14,6 +14,7 @@ import {
 	addDoc,
 	setDoc,
 	updateDoc,
+	deleteDoc,
 	onSnapshot
 } from 'firebase/firestore';
 
@@ -43,7 +44,7 @@ interface VideoChatState {
 	forUserID?: string;
 	forUserDisplayName?: string;
 	withUserID?: string;
-	availableCalls?: [CallOffer];
+	availableCalls?: CallOffer[];
 }
 
 export default class VideoChat extends React.Component<VideoChatProps, VideoChatState> {
@@ -121,20 +122,37 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 			});
 		} else if(withUserID){
 			const withUserDisplayName = await this.getUserNameByID(withUserID);
-			const callsCollection = query(collection(firestore, 'calls'), where('offer.forUserID', '==', this.props.authenticatedUserID));
-			let callDocs = await getDocs(callsCollection)
+			const callsCollection = collection(firestore, 'calls');
+			const filteredCallsCollection = query(callsCollection, where('offer.forUserID', '==', this.props.authenticatedUserID));
+			let callDocs = await getDocs(filteredCallsCollection)
+
+			// Format call docs into array
 			let callDocsArray = [];
-			callDocs.forEach((doc) => {
+			callDocs.forEach(async (doc) => {
 				if(doc.id){
 					let call = doc.data();
 					call.offer.withUserDisplayName = withUserDisplayName;
 					callDocsArray.push(call.offer);
 				}
 			});
+
+			// Only show one call offer, and delete old call offers from database
+			let availableCalls = [];
 			callDocsArray.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
+			callDocsArray.forEach(async (callDoc) => {
+				if(availableCalls.length == 5){
+					let oldDoc = await doc(callsCollection, callDoc.callID);
+					deleteDoc(oldDoc);
+				} else if (availableCalls.length) {
+					// Do nothing
+				} else {
+					availableCalls.push(callDoc);
+				}
+			});
+
 			this.setState({
 				withUserID,
-				availableCalls: callDocsArray,
+				availableCalls,
 			});
 		}
 	}
