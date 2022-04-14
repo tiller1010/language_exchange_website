@@ -90,23 +90,53 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 		}
 	}
 
-	handleTimeSlotChange(checked, timeSlotIndex){
+	async handleTimeSlotChange(checked, timeSlotIndex){
 
 		const { authenticatedUserID } = this.props;
 
 		if(authenticatedUserID){
 			let { timeSlots } = this.state;
 			let timeSlot = timeSlots[timeSlotIndex];
+			let query : string = '';
 			if(this.props.view == 'owner'){
 				timeSlot.completed = checked;
+				query = `mutation updatePremiumVideoChatListing($listingID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){
+					updatePremiumVideoChatListing(listingID: $listingID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){
+						timeSlots {
+							completed
+						}
+					}
+				}`;
 			} else {
 				timeSlot.booked = checked;
 				timeSlot.tempCustomerUserID = checked ? authenticatedUserID : null;
 			}
 			timeSlots[timeSlotIndex] = timeSlot;
+
 			this.setState({
 				timeSlots
-			})
+			});
+
+			if(query){
+				// Format timeSlots as VideoChatTimeSlotInputs
+				let graphql_timeSlots = [];
+				timeSlots.forEach((timeSlotData) => {
+					graphql_timeSlots.push({
+						customerUserID: timeSlotData.customerUserID,
+						date: timeSlotData.date,
+						time: timeSlotData.time,
+						booked: timeSlotData.booked,
+						completed: timeSlotData.completed,
+					});
+				});
+				const data = await graphQLFetch(query, {
+					listingID: this.props.premiumVideoChatListing._id,
+					premiumVideoChatListing: {
+						timeSlots: graphql_timeSlots
+					}
+				}, false);
+			}
+
 		} else {
 			alert('Must be signed in to buy.');
 		}
