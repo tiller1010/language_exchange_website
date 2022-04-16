@@ -33,6 +33,7 @@ type User {
 union PossibleProduct = PremiumVideoChatListing
 
 type Product {
+	_id: ID
 	userID: ID
 	cost: Float
 	currency: String
@@ -56,6 +57,7 @@ type PremiumVideoChatListing {
 }
 
 type VideoChatTimeSlot {
+	productID: ID
 	customerUserID: ID
 	date: String
 	time: String
@@ -64,6 +66,7 @@ type VideoChatTimeSlot {
 }
 
 input VideoChatTimeSlotInputs {
+	shouldAddProductID: Boolean # Used when creating new product
 	customerUserID: ID
 	date: String
 	time: String
