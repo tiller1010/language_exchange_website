@@ -137,6 +137,12 @@ class Topic extends React.Component {
 								<source src={`${process.env.STRAPI_URL}${challenge.FeaturedMedia[0].url}`} type="video/mp4"/>
 							</video>
 						);
+					case 'audio/wav':
+						return (
+							<audio height="225" width="400" controls tabIndex="-1">
+								<source src={`${process.env.STRAPI_URL}${challenge.FeaturedMedia[0].url}`} type="audio/wav"/>
+							</audio>
+						);
 					default:
 						return <p>Invalid media</p>
 				}
