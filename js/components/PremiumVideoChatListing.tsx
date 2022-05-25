@@ -17,6 +17,7 @@ interface PremiumVideoChatListingObject {
 }
 
 interface VideoChatTimeSlot {
+	shouldAddProductID?: boolean
 	customerDisplayName?: string
 	customerUserID?: string
 	tempCustomerUserID?: string
@@ -203,6 +204,7 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 		if(authenticatedUserID){
 			const query = `mutation createProduct($productObjectCollection: String!, $productDescription: String!, $productObjectID: ID!, $userID: ID!, $productObjectUpdateData: String!){
 				createProduct(productObjectCollection: $productObjectCollection, productDescription: $productDescription, productObjectID: $productObjectID, userID: $userID, productObjectUpdateData: $productObjectUpdateData){
+					_id
 					userID
 					cost
 					currency
@@ -230,8 +232,10 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 					customerUserID: timeSlot.customerUserID,
 					booked: timeSlot.booked,
 					completed: timeSlot.completed,
+					shouldAddProductID: false,
 				}
 				if(timeSlot.tempCustomerUserID){
+					newTimeSlot.shouldAddProductID = true;
 					newTimeSlot.customerUserID = timeSlot.tempCustomerUserID;
 				}
 				newTimeSlots.push(newTimeSlot);

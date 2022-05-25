@@ -5,28 +5,79 @@ const { createOrder } = require('../../app/stripe.js');
 async function createProduct(_, { productObjectCollection, productDescription, productObjectID, userID, productObjectUpdateData = null }){
 	const db = getDB();
 	let user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
+
+	// Insert into products collections. Creates ID, key:value data is added later.
+	let product = await db.collection('products').insertOne({});
+
+	// Define blank product object and price
 	let productObject;
+	let price;
+
+	// If we need to update the product's object document, do so
 	if(productObjectUpdateData){
-		 productObject = await db.collection(productObjectCollection).findOneAndUpdate(
+
+		// Pre-process update data
+		productObjectUpdateData = JSON.parse(productObjectUpdateData);
+		switch(productObjectCollection){
+			case 'premium_video_chat_listings':
+				let newTimeSlots = [];
+				var purchasedTimeSlotsCount = 0;
+				productObjectUpdateData.timeSlots.forEach((timeSlot) => {
+					let newTimeSlot = {
+						date: timeSlot.date,
+						time: timeSlot.time,
+						customerUserID: timeSlot.customerUserID,
+						booked: timeSlot.booked,
+						completed: timeSlot.completed,
+					}
+					if(timeSlot.shouldAddProductID){
+						// Insert productID, and drop shouldAddProductID flag
+						newTimeSlot.productID = String(product.insertedId);
+
+						// Increase price per timeSlot
+						purchasedTimeSlotsCount++; 
+					}
+					newTimeSlots.push(newTimeSlot);
+				});
+				productObjectUpdateData.timeSlots = newTimeSlots;
+			break;
+		}
+
+		// Update and return product.productObject source
+		productObject = await db.collection(productObjectCollection).findOneAndUpdate(
 			{ _id: new mongo.ObjectID(productObjectID) },
-			{ $set: JSON.parse(productObjectUpdateData) },
+			{ $set: productObjectUpdateData },
 			{ returnOriginal: false }
 		);
 		productObject = productObject.value;
 
+		// Post-process update data
 		switch(productObjectCollection){
 			case 'premium_video_chat_listings':
+				// Update the owner user document
 				await db.collection('users').updateOne({ _id: new mongo.ObjectID(productObject.userID) }, { $set: { premiumVideoChatListing: productObject } });
+
+				// Filter for timeslots associated with this purchase. Inserted into customer user document and products collections.
+				productObject.timeSlots = productObject.timeSlots.filter(timeSlot => timeSlot.productID == String(product.insertedId));
+
+				// Multiply price by amount of timeslots
+				price = (productObject.price * 100) * purchasedTimeSlotsCount;
 			break;
 		}
+
+	// Default product data
 	} else {
 		productObject = await db.collection(productObjectCollection).findOne({ _id: new mongo.ObjectID(productObjectID) });
+		price = productObject.price * 100;
 	}
-	const stripePrice = await createOrder(user.email, productDescription, Math.floor(productObject.price * 100), productObject.currency);
-	let products = user.products || [];
-	const product = {
+
+	// Create stripe order
+	const stripePrice = await createOrder(user.email, productDescription, Math.floor(price), productObject.currency);
+
+	// Update product document
+	productUpdateData = {
 		userID,
-		cost: productObject.price,
+		cost: price,
 		currency: productObject.currency,
 		orderedOn: new Date().toDateString(),
 		productObject,
@@ -35,6 +86,15 @@ async function createProduct(_, { productObjectCollection, productDescription, p
 		priceID: stripePrice.id,
 		status: 'Unpaid',
 	}
+	product = await db.collection('products').findOneAndUpdate(
+		{ _id: product.insertedId },
+		{ $set: { ...productUpdateData } },
+		{ returnOriginal: false }
+	);
+	product = product.value;
+
+	// Update customer user document	
+	let products = user.products || [];
 	products.push(product);
 	user = await db.collection('users').findOneAndUpdate(
 		{ _id: new mongo.ObjectID(userID) },
