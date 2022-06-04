@@ -97,8 +97,6 @@ class Home extends React.Component {
 
 	render(){
 
-		var { strapiTestImage } = this.state || 'notfound';
-
 		return (
 			<div>
 				<Navigation/>

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSlidersH, faStar } from '@fortawesome/free-solid-svg-icons';
@@ -6,66 +6,65 @@ import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import Slider from 'react-slick';
 import Navigation from './Navigation.jsx';
 
-class Lessons extends React.Component {
-	constructor(){
-		super();
+interface LevelAttributes {
+	Level: string;
+	createdAt: string;
+	publishedAt: string;
+	updatedAt: string;
+}
+
+interface LevelData {
+	id: number;
+	attributes: LevelAttributes;
+}
+
+interface StrapiPagination {
+	page: number;
+	pageCount: number;
+	pageSize: number;
+	total: number;
+}
+
+interface LevelMetaData {
+	pagination: StrapiPagination;
+}
+
+interface StrapiData {
+	data: LevelData[];
+	meta: LevelMetaData
+}
+
+interface LessonsProps {
+}
+
+interface LessonsState {
+	levels?: LevelData[];
+}
+
+class Lessons extends React.Component<LessonsProps, LessonsState> {
+	constructor(props){
+		super(props);
 		this.state = {
 		}
 	}
 
 	componentDidMount(){
-
-		// Get recent videos
-		axios.get(`${document.location.origin}/recent-videos`)
+		axios.get(`${process.env.STRAPI_URL}/levels?populate=*`)
 			.then(res => {
-				// console.log(res)
-				this.setState({
-					recentVideos: res.data.videos
-				}, () => {// Check if the current user has liked each video
-					let likedRecentVideos = [];
-					if(this.props.userLikedVideos){
-						// console.log(JSON.parse(this.props.userLikedVideos))
-						this.setState({
-							userLikedVideos: JSON.parse(this.props.userLikedVideos)
-						}, () => {
-							this.state.recentVideos.forEach((video) => {
-								video.likedByCurrentUser = this.currentUserHasLikedVideo(video);
-								likedRecentVideos.push(video);
-							});
-							this.setState({
-								recentVideos: likedRecentVideos
-							});
-						});
-					}
-				});
+				console.log(res.data)
+				const data: StrapiData = res.data;
+				const levels: LevelData[] = data.data;
+				this.setState({ levels });
 			});
-
-		axios.get(`${process.env.STRAPI_URL}/levels`)
-			.then(res => {
-				// console.log(res)
-				this.setState({
-					levels: res.data
-				});
-			});
-	}
-
-	currentUserHasLikedVideo(video){
-		let liked = false;
-		this.state.userLikedVideos.forEach((userLikedVideo) => {
-			if(userLikedVideo._id === video._id){
-				liked = true;
-			}
-		});
-		return liked;
 	}
 
 	renderMedia(topic){
-		if(topic.FeaturedImage){
-			switch(topic.FeaturedImage.mime){
+		if(topic.attributes.FeaturedImage){
+			switch(topic.attributes.FeaturedImage.mime){
 				case 'image/jpeg':
 					return (
 						<div className="img-container">
-							<img src={`${process.env.STRAPI_URL}${topic.FeaturedImage.url}`}/>
+							<img src={`${process.env.STRAPI_URL}${topic.attributes.FeaturedImage.url}`}/>
 						</div>
 					);
 				default:
@@ -75,18 +74,16 @@ class Lessons extends React.Component {
 	}
 
 	randomTopics(level){
-		if(level.topicsRandomized){
-			return level.topics;
+		if(level.attributes.topicsRandomized){
+			return level.attributes.topics.data;
 		} else {
 			level.topicsRandomized = true;
-			level.topics = level.topics.sort(() => .5 - Math.random()).slice(0, 5);
-			return level.topics;
+			level.attributes.topics.data = level.attributes.topics.data.sort(() => .5 - Math.random()).slice(0, 5);
+			return level.attributes.topics.data;
 		}
 	}
 
 	render(){
-
-		var { strapiTestImage } = this.state || 'notfound';
 
 		return (
 			<div className="frame">
@@ -95,7 +92,7 @@ class Lessons extends React.Component {
 			    {this.state.levels ?
 			    	this.state.levels.map((level) => 
 			    		<div key={level.id} className="flex x-center">
-				    		<h2 className="pad">Level {level.Level}</h2>
+				    		<h2 className="pad">Level {level.attributes.Level}</h2>
 				    		<a href={`/level/${level.id}`} className="button" style={{ alignSelf: 'center' }}>
 					    		View Level
 					    		<FontAwesomeIcon icon={faLongArrowAltRight}/>
@@ -103,13 +100,13 @@ class Lessons extends React.Component {
 				    		<div className="pure-u-1">
 					    		<hr/>
 				    		</div>
-				    		{level.topics ?
+				    		{level.attributes.topics.data ?
 				    			<div className="topics pure-u-1 flex x-space-around">
 					    			{this.randomTopics(level).map((topic) =>
 					    				<div className="topic pure-u-1 pure-u-md-1-3" key={topic.id}>
 						    				<div className="pad">
 							    				<div className="flex x-space-between">
-							    					<h3 className="pad no-y no-left">{topic.Topic}</h3>
+							    					<h3 className="pad no-y no-left">{topic.attributes.Topic}</h3>
 							    					<a href={`/level/${level.id}/topic/${topic.id}`} className="button">
 													    View Topic
 													    <FontAwesomeIcon icon={faLongArrowAltRight}/>

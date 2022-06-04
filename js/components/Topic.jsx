@@ -34,19 +34,20 @@ class Topic extends React.Component {
 			.then(res => {
 				// console.log(res)
 				if(res.data){
-					this.setState({
-						topic: res.data.Topic
-					})
+					const topic = res.data.data.attributes.Topic;
+					this.setState({ topic });
 				}
 			})
 
-		axios.get(`${process.env.STRAPI_URL}/challenges`)
+		axios.get(`${process.env.STRAPI_URL}/challenges?populate=*`)
 			.then(res => {
+				console.log(res)
 				if(res.data){
-					res.data.forEach((challenge) => {
-						if(challenge.topic){
+					const strapi_challenges = res.data.data;
+					strapi_challenges.forEach((challenge) => {
+						if(challenge.attributes.topic){
 							var challenges = this.state.challenges;
-							if(this.props.topicID == challenge.topic.id){
+							if(this.props.topicID == challenge.attributes.topic.data.id){
 								challenges = challenges.concat(challenge);
 								this.setState({
 									challenges
@@ -122,25 +123,25 @@ class Topic extends React.Component {
 	}
 
 	renderMedia(challenge){
-		if(challenge.FeaturedMedia){
-			if(challenge.FeaturedMedia.length){
-				switch(challenge.FeaturedMedia[0].mime){
+		if(challenge.attributes.FeaturedMedia){
+			if(challenge.attributes.FeaturedMedia.length){
+				switch(challenge.attributes.FeaturedMedia[0].mime){
 					case 'image/jpeg':
 						return (
 							<div className="img-container">
-								<img src={`${process.env.STRAPI_URL}${challenge.FeaturedMedia[0].url}`}/>
+								<img src={`${process.env.STRAPI_URL}${challenge.attributes.FeaturedMedia[0].url}`}/>
 							</div>
 						);
 					case 'video/mp4':
 						return (
 							<video height="225" width="400" controls tabIndex="-1">
-								<source src={`${process.env.STRAPI_URL}${challenge.FeaturedMedia[0].url}`} type="video/mp4"/>
+								<source src={`${process.env.STRAPI_URL}${challenge.attributes.FeaturedMedia[0].url}`} type="video/mp4"/>
 							</video>
 						);
 					case 'audio/wav':
 						return (
 							<audio height="225" width="400" controls tabIndex="-1">
-								<source src={`${process.env.STRAPI_URL}${challenge.FeaturedMedia[0].url}`} type="audio/wav"/>
+								<source src={`${process.env.STRAPI_URL}${challenge.attributes.FeaturedMedia[0].url}`} type="audio/wav"/>
 							</audio>
 						);
 					default:
@@ -212,28 +213,28 @@ class Topic extends React.Component {
 						    		<div className="pad">
 						    			<div className={`challenge-input ${challenge.answered}`}>
 							    			<div className="field text">
-								    			<label htmlFor={`meaning${challenge.Title}Field`}>Guess meaning</label>
-								    			<input type="text" name={`meaning${challenge.Title}Field`} id={`meaning${challenge.Title}Field`} onChange={(event) => this.checkAnswerInput(event.target.value, challenge)}/>
+								    			<label htmlFor={`meaning${challenge.attributes.Title}Field`}>Guess meaning</label>
+								    			<input type="text" name={`meaning${challenge.attributes.Title}Field`} id={`meaning${challenge.attributes.Title}Field`} onChange={(event) => this.checkAnswerInput(event.target.value, challenge)}/>
 							    			</div>
-							    			<div className="correct-answer">{challenge.Title}</div>
+							    			<div className="correct-answer">{challenge.attributes.Title}</div>
 							    			<div className="input-correct">
 							    				<p>Correct!</p>
 								    			<FontAwesomeIcon icon={faCheckCircle}/>
 							    			</div>
 						    			</div>
-						    			<p>{challenge.Content}</p>
-						    			{challenge.FeaturedMedia.length ?
+						    			<p>{challenge.attributes.Content}</p>
+						    			{challenge.attributes.FeaturedMedia.length ?
 						    				this.renderMedia(challenge)
 						    				:
 						    				''
 						    			}
 						    			{this.state.allChallengesAnswered ?
 							    			<div className="flex x-space-between">
-								    			<a href={`/videos?keywords=${challenge.Title}`} className="button">
+								    			<a href={`/videos?keywords=${challenge.attributes.Title}`} className="button">
 									    			View others
 													<FontAwesomeIcon icon={faSearch}/>
 								    			</a>
-								    			<a href={`/videos/add?challenge=${challenge.Title}`} className="button">
+								    			<a href={`/videos/add?challenge=${challenge.attributes.Title}`} className="button">
 									    			Submit your own
 													<FontAwesomeIcon icon={faPlus}/>
 								    			</a>

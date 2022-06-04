@@ -14,23 +14,25 @@ class Level extends React.Component {
 	}
 
 	componentDidMount(){
-		axios.get(`${process.env.STRAPI_URL}/levels/${this.props.levelID}`)
+		axios.get(`${process.env.STRAPI_URL}/levels/${this.props.levelID}?populate[topics]=*`)
 			.then(res => {
-				this.setState({
-					topics: res.data.topics
-				});
+				const data = res.data;
+				const level = data.data;
+				const topics = level.attributes.topics.data;
+				this.setState({ topics });
 			})
 
-		axios.get(`${process.env.STRAPI_URL}/challenges`)
+		axios.get(`${process.env.STRAPI_URL}/challenges?populate=*`)
 			.then(res => {
 				console.log(res)
 				if(res.data){
-					res.data.forEach((challenge) => {
-						if(challenge.topic){
+					const challenges = res.data.data;
+					challenges.forEach((challenge) => {
+						if(challenge.attributes.topic){
 							var topics = this.state.topics;
 							topics.forEach((topic) => {
-								if(topic.id === challenge.topic.id){
-									topic.challenges = topic.challenges ? topic.challenges.concat(challenge) : [ challenge ];
+								if(topic.id === challenge.attributes.topic.data.id){
+									topic.attributes.challenges = topic.attributes.challenges ? topic.attributes.challenges.concat(challenge) : [ challenge ];
 									this.setState({
 										topics
 									});
@@ -58,7 +60,7 @@ class Level extends React.Component {
 	}
 
 	randomChallenges(topic){
-		return topic.challenges.sort(() => .5 - Math.random()).slice(0, 5);
+		return topic.attributes.challenges.sort(() => .5 - Math.random()).slice(0, 5);
 	}
 
 	render(){
@@ -71,7 +73,7 @@ class Level extends React.Component {
 				    		<div key={this.state.topics.indexOf(topic)} className="topic pure-u-1 pure-u-md-1-3">
 					    		<div className="pad">
 						    		<div className="flex x-space-between">
-							    		<h2 className="pad">{topic.Topic}</h2>
+							    		<h2 className="pad">{topic.attributes.Topic}</h2>
 							    		<a href={`/level/${this.props.levelID}/topic/${topic.id}`} className="button" style={{ alignSelf: 'center' }}>
 								    		View Topic
 								    		<FontAwesomeIcon icon={faLongArrowAltRight}/>
@@ -80,7 +82,7 @@ class Level extends React.Component {
 											{this.renderMedia(topic)}
 							    		</a>
 						    		</div>
-						    		{topic.challenges ?
+						    		{topic.attributes.challenges ?
 						    			<div className="challenges">
 								    		<Slider {...{
 												dots: false,
@@ -96,10 +98,10 @@ class Level extends React.Component {
 										    		</div>
 									    		</div>
 								    			{this.randomChallenges(topic).map((challenge) =>
-								    				<div key={topic.challenges.indexOf(challenge)} className="challenge">
+								    				<div key={topic.attributes.challenges.indexOf(challenge)} className="challenge">
 									    				<div className="pad">
-										    				<h3>{challenge.Title}</h3>
-									    					<p>{challenge.Content}</p>
+										    				<h3>{challenge.attributes.Title}</h3>
+									    					<p>{challenge.attributes.Content}</p>
 								    					</div>
 							    					</div>
 							    				)}

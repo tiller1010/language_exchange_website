@@ -7,7 +7,7 @@ import graphQLFetch from '../graphQLFetch.js';
 
 interface User {
 	_id: string;
-	displayName: string
+	displayName: string;
 }
 
 interface VideoPlayerState {
