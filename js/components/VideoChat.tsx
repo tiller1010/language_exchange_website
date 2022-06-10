@@ -325,7 +325,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 					callDocsArray.push(call.offer);
 				}
 			});
-			callDocsArray.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
+			callDocsArray.sort((a, b) => Date.parse(b.createdDate) - Date.parse(a.createdDate));
 			this.setState({
 				availableCalls: callDocsArray,
 			});

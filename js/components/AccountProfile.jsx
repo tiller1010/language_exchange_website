@@ -139,12 +139,26 @@ class AccountProfile extends React.Component {
 	}
 
 	renderMedia(topic){
-		if(topic.FeaturedImage){
+		if(topic.attributes){
+			if(topic.attributes.FeaturedMedia.data){
+				switch(topic.attributes.FeaturedMedia.data.attributes.mime){
+					case 'image/jpeg':
+						return (
+							<div className="img-container">
+								<img src={`${process.env.STRAPI_PUBLIC_URL}${topic.attributes.FeaturedMedia.data.attributes.url}`}/>
+							</div>
+						);
+					default:
+						return <p>Invalid media</p>
+				}
+			}
+		// Completed and saved with strapi 3
+		} else if(topic.FeaturedImage){
 			switch(topic.FeaturedImage.mime){
 				case 'image/jpeg':
 					return (
 						<div className="img-container">
-							<img src={`${process.env.STRAPI_URL}${topic.FeaturedImage.url}`}/>
+							<img src={`${process.env.STRAPI_PUBLIC_URL}${topic.FeaturedImage.url}`}/>
 						</div>
 					);
 				default:

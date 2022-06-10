@@ -14,7 +14,7 @@ class Level extends React.Component {
 	}
 
 	componentDidMount(){
-		axios.get(`${process.env.STRAPI_URL}/levels/${this.props.levelID}?populate[topics]=*`)
+		axios.get(`${process.env.STRAPI_API_URL}/levels/${this.props.levelID}?populate[topics][populate][0]=FeaturedMedia`)
 			.then(res => {
 				const data = res.data;
 				const level = data.data;
@@ -22,9 +22,8 @@ class Level extends React.Component {
 				this.setState({ topics });
 			})
 
-		axios.get(`${process.env.STRAPI_URL}/challenges?populate=*`)
+		axios.get(`${process.env.STRAPI_API_URL}/challenges?populate=*`)
 			.then(res => {
-				console.log(res)
 				if(res.data){
 					const challenges = res.data.data;
 					challenges.forEach((challenge) => {
@@ -45,16 +44,18 @@ class Level extends React.Component {
 	}
 
 	renderMedia(topic){
-		if(topic.FeaturedImage){
-			switch(topic.FeaturedImage.mime){
-				case 'image/jpeg':
-					return (
-						<div className="img-container">
-							<img src={`${process.env.STRAPI_URL}${topic.FeaturedImage.url}`}/>
-						</div>
-					);
-				default:
-					return <p>Invalid media</p>
+		if(topic.attributes.FeaturedMedia){
+			if(topic.attributes.FeaturedMedia.data){
+				switch(topic.attributes.FeaturedMedia.data.attributes.mime){
+					case 'image/jpeg':
+						return (
+							<div className="img-container">
+								<img src={`${process.env.STRAPI_PUBLIC_URL}${topic.attributes.FeaturedMedia.data.attributes.url}`}/>
+							</div>
+						);
+					default:
+						return <p>Invalid media</p>
+				}
 			}
 		}
 	}

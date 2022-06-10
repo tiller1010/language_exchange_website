@@ -109,6 +109,10 @@ app.use(express.json());
 				completedTopics.forEach((topic) => {
 					if(topic.id == req.params.topicID){
 						completed = true;
+					} else if (topic.data) {
+						if(topic.data.id == req.params.topicID){
+							completed = true;
+						}
 					}
 				});
 			}

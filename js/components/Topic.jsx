@@ -30,18 +30,16 @@ class Topic extends React.Component {
 	}
 
 	componentDidMount(){
-		axios.get(`${process.env.STRAPI_URL}/topics/${this.props.topicID}`)
+		axios.get(`${process.env.STRAPI_API_URL}/topics/${this.props.topicID}`)
 			.then(res => {
-				// console.log(res)
 				if(res.data){
 					const topic = res.data.data.attributes.Topic;
 					this.setState({ topic });
 				}
 			})
 
-		axios.get(`${process.env.STRAPI_URL}/challenges?populate=*`)
+		axios.get(`${process.env.STRAPI_API_URL}/challenges?populate=*`)
 			.then(res => {
-				console.log(res)
 				if(res.data){
 					const strapi_challenges = res.data.data;
 					strapi_challenges.forEach((challenge) => {
@@ -78,7 +76,7 @@ class Topic extends React.Component {
 	}
 
 	checkAnswerInput(input, challenge){
-		if(input.toLowerCase() == challenge.Title.toLowerCase()){
+		if(input.toLowerCase() == challenge.attributes.Title.toLowerCase()){
 			const newState = this.state;
 			const challengeIndex = newState.challenges.indexOf(challenge);
 			challenge.answered = 'correct';
@@ -98,7 +96,6 @@ class Topic extends React.Component {
 			axios.post(`/level/${this.props.levelID}/topic/${this.props.topicID}`)
 				.then(res => {
 					if(res.data){
-						// console.log(res.data)
 					}
 				})
 			this.setState({
@@ -124,24 +121,24 @@ class Topic extends React.Component {
 
 	renderMedia(challenge){
 		if(challenge.attributes.FeaturedMedia){
-			if(challenge.attributes.FeaturedMedia.length){
-				switch(challenge.attributes.FeaturedMedia[0].mime){
+			if(challenge.attributes.FeaturedMedia.data){
+				switch(challenge.attributes.FeaturedMedia.data.attributes.mime){
 					case 'image/jpeg':
 						return (
 							<div className="img-container">
-								<img src={`${process.env.STRAPI_URL}${challenge.attributes.FeaturedMedia[0].url}`}/>
+								<img src={`${process.env.STRAPI_PUBLIC_URL}${challenge.attributes.FeaturedMedia.data.attributes.url}`}/>
 							</div>
 						);
 					case 'video/mp4':
 						return (
 							<video height="225" width="400" controls tabIndex="-1">
-								<source src={`${process.env.STRAPI_URL}${challenge.attributes.FeaturedMedia[0].url}`} type="video/mp4"/>
+								<source src={`${process.env.STRAPI_PUBLIC_URL}${challenge.attributes.FeaturedMedia.data.attributes.url}`} type="video/mp4"/>
 							</video>
 						);
 					case 'audio/wav':
 						return (
 							<audio height="225" width="400" controls tabIndex="-1">
-								<source src={`${process.env.STRAPI_URL}${challenge.attributes.FeaturedMedia[0].url}`} type="audio/wav"/>
+								<source src={`${process.env.STRAPI_PUBLIC_URL}${challenge.attributes.FeaturedMedia.data.attributes.url}`} type="audio/wav"/>
 							</audio>
 						);
 					default:
@@ -194,7 +191,7 @@ class Topic extends React.Component {
 				    		<div key={this.state.challenges.indexOf(challenge)}>
 					    		<div className="pad">
 					    			<div className={`challenge-option ${challenge.answered}`}>
-						    			<p>{challenge.Title}</p>
+						    			<p>{challenge.attributes.Title}</p>
 						    			<FontAwesomeIcon icon={faCheckCircle}/>
 					    			</div>
 					    		</div>
@@ -223,7 +220,7 @@ class Topic extends React.Component {
 							    			</div>
 						    			</div>
 						    			<p>{challenge.attributes.Content}</p>
-						    			{challenge.attributes.FeaturedMedia.length ?
+						    			{challenge.attributes.FeaturedMedia.data ?
 						    				this.renderMedia(challenge)
 						    				:
 						    				''

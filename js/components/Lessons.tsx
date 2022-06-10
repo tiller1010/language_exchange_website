@@ -49,9 +49,8 @@ class Lessons extends React.Component<LessonsProps, LessonsState> {
 	}
 
 	componentDidMount(){
-		axios.get(`${process.env.STRAPI_URL}/levels?populate=*`)
+		axios.get(`${process.env.STRAPI_API_URL}/levels?populate[topics][populate]=FeaturedMedia`)
 			.then(res => {
-				console.log(res.data)
 				const data: StrapiData = res.data;
 				const levels: LevelData[] = data.data;
 				this.setState({ levels });
@@ -59,16 +58,18 @@ class Lessons extends React.Component<LessonsProps, LessonsState> {
 	}
 
 	renderMedia(topic){
-		if(topic.attributes.FeaturedImage){
-			switch(topic.attributes.FeaturedImage.mime){
-				case 'image/jpeg':
-					return (
-						<div className="img-container">
-							<img src={`${process.env.STRAPI_URL}${topic.attributes.FeaturedImage.url}`}/>
-						</div>
-					);
-				default:
-					return <p>Invalid media</p>
+		if(topic.attributes.FeaturedMedia){
+			if(topic.attributes.FeaturedMedia.data){
+				switch(topic.attributes.FeaturedMedia.data.attributes.mime){
+					case 'image/jpeg':
+						return (
+							<div className="img-container">
+								<img src={`${process.env.STRAPI_PUBLIC_URL}${topic.attributes.FeaturedMedia.data.attributes.url}`}/>
+							</div>
+						);
+					default:
+						return <p>Invalid media</p>
+				}
 			}
 		}
 	}
