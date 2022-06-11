@@ -14,32 +14,13 @@ class Level extends React.Component {
 	}
 
 	componentDidMount(){
-		axios.get(`${process.env.STRAPI_API_URL}/levels/${this.props.levelID}?populate[topics][populate][0]=FeaturedMedia`)
+		axios.get(`${process.env.STRAPI_API_URL}/levels/${this.props.levelID}?populate[topics][populate][0]=FeaturedMedia%2Cchallenges`)
 			.then(res => {
 				const data = res.data;
 				const level = data.data;
 				const topics = level.attributes.topics.data;
+				console.log(topics[0])
 				this.setState({ topics });
-			})
-
-		axios.get(`${process.env.STRAPI_API_URL}/challenges?populate=*`)
-			.then(res => {
-				if(res.data){
-					const challenges = res.data.data;
-					challenges.forEach((challenge) => {
-						if(challenge.attributes.topic){
-							var topics = this.state.topics;
-							topics.forEach((topic) => {
-								if(topic.id === challenge.attributes.topic.data.id){
-									topic.attributes.challenges = topic.attributes.challenges ? topic.attributes.challenges.concat(challenge) : [ challenge ];
-									this.setState({
-										topics
-									});
-								}
-							});
-						}
-					})
-				}
 			})
 	}
 
@@ -61,7 +42,7 @@ class Level extends React.Component {
 	}
 
 	randomChallenges(topic){
-		return topic.attributes.challenges.sort(() => .5 - Math.random()).slice(0, 5);
+		return topic.attributes.challenges.data.sort(() => .5 - Math.random()).slice(0, 5);
 	}
 
 	render(){
@@ -83,7 +64,7 @@ class Level extends React.Component {
 											{this.renderMedia(topic)}
 							    		</a>
 						    		</div>
-						    		{topic.attributes.challenges ?
+						    		{topic.attributes.challenges.data ?
 						    			<div className="challenges">
 								    		<Slider {...{
 												dots: false,
@@ -99,7 +80,7 @@ class Level extends React.Component {
 										    		</div>
 									    		</div>
 								    			{this.randomChallenges(topic).map((challenge) =>
-								    				<div key={topic.attributes.challenges.indexOf(challenge)} className="challenge">
+								    				<div key={topic.attributes.challenges.data.indexOf(challenge)} className="challenge">
 									    				<div className="pad">
 										    				<h3>{challenge.attributes.Title}</h3>
 									    					<p>{challenge.attributes.Content}</p>

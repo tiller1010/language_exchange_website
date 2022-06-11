@@ -265,7 +265,7 @@ class AccountProfile extends React.Component {
 				    				<div className="topic pure-u-1 pure-u-md-11-24" key={topic.id}>
 					    				<div className="pad">
 						    				<div className="flex x-space-between">
-						    					<h3 className="pad no-y no-left">{topic.Topic}</h3>
+						    					<h3 className="pad no-y no-left">{topic.attributes ? topic.attributes.Topic : topic.Topic}</h3>
 												<a href={`${this.props.pathResolver}level/${topic.levelID}/topic/${topic.topicID}`} className="button">
 												    View Topic
 												    <FontAwesomeIcon icon={faLongArrowAltRight}/>

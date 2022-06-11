@@ -30,41 +30,25 @@ class Topic extends React.Component {
 	}
 
 	componentDidMount(){
-		axios.get(`${process.env.STRAPI_API_URL}/topics/${this.props.topicID}`)
+		axios.get(`${process.env.STRAPI_API_URL}/topics/${this.props.topicID}?populate[challenges][populate][0]=FeaturedMedia`)
 			.then(res => {
 				if(res.data){
 					const topic = res.data.data.attributes.Topic;
-					this.setState({ topic });
+					this.setState({
+						topic,
+						challenges: res.data.data.attributes.challenges.data
+					});
 				}
-			})
-
-		axios.get(`${process.env.STRAPI_API_URL}/challenges?populate=*`)
-			.then(res => {
-				if(res.data){
-					const strapi_challenges = res.data.data;
-					strapi_challenges.forEach((challenge) => {
-						if(challenge.attributes.topic){
-							var challenges = this.state.challenges;
-							if(this.props.topicID == challenge.attributes.topic.data.id){
-								challenges = challenges.concat(challenge);
-								this.setState({
-									challenges
-								}, () => {
-									if(this.props.completed){
-										let completedChalleges = [];
-										this.state.challenges.forEach((stateChallenge) => {
-											stateChallenge.answered = 'correct';
-											completedChalleges.push(stateChallenge);
-										});
-										this.setState({
-											challenges: completedChalleges,
-											allChallengesAnswered: true
-										});
-									}
-								});
-							}
-						}
-					})
+				if(this.props.completed){
+					let completedChalleges = [];
+					this.state.challenges.forEach((stateChallenge) => {
+						stateChallenge.answered = 'correct';
+						completedChalleges.push(stateChallenge);
+					});
+					this.setState({
+						challenges: completedChalleges,
+						allChallengesAnswered: true
+					});
 				}
 			})
 	}
