@@ -144,15 +144,17 @@ class Topic extends React.Component {
 						</a>
 					</div>
 					<h2 className="text-center pure-u-1">{this.state.topic}</h2>
-					<div className="pad">
-						<button className={`button no-icon flex-vertical-center hamburger hamburger--collapse ${this.state.optionsStatus == 'opened' ? 'is-active' : ''}`} type="button" onClick={this.handleToggleOptions} style={{ display: 'flex' }}>
-							<span className="hamburger-box">
-								<span className="hamburger-inner"></span>
-							</span>
-							<span className="fw-space half">
-				    			Available Answers
-			    			</span>
-						</button>
+					<div className="tablet-hide">
+						<div className="pad">
+							<button className={`button no-icon flex-vertical-center hamburger hamburger--collapse ${this.state.optionsStatus == 'opened' ? 'is-active' : ''}`} type="button" onClick={this.handleToggleOptions} style={{ display: 'flex' }}>
+								<span className="hamburger-box">
+									<span className="hamburger-inner"></span>
+								</span>
+								<span className="fw-space half">
+					    			Available Answers
+				    			</span>
+							</button>
+			    		</div>
 		    		</div>
 	    			{this.state.allChallengesAnswered ?
 						<div className="pure-u-1 flex x-center">
@@ -193,11 +195,11 @@ class Topic extends React.Component {
 					    		<div className="challenge">
 						    		<div className="pad">
 						    			<div className={`challenge-input ${challenge.answered}`}>
+							    			<div className="correct-answer desktop-100">{challenge.attributes.Title}</div>
 							    			<div className="field text">
 								    			<label htmlFor={`meaning${challenge.attributes.Title}Field`}>Guess meaning</label>
 								    			<input type="text" name={`meaning${challenge.attributes.Title}Field`} id={`meaning${challenge.attributes.Title}Field`} onChange={(event) => this.checkAnswerInput(event.target.value, challenge)}/>
 							    			</div>
-							    			<div className="correct-answer">{challenge.attributes.Title}</div>
 							    			<div className="input-correct">
 							    				<p>Correct!</p>
 								    			<FontAwesomeIcon icon={faCheckCircle}/>
@@ -205,7 +207,9 @@ class Topic extends React.Component {
 						    			</div>
 						    			<p>{challenge.attributes.Content}</p>
 						    			{challenge.attributes.FeaturedMedia.data ?
-						    				this.renderMedia(challenge)
+						    				<div className="desktop-100">
+							    				{this.renderMedia(challenge)}
+						    				</div>
 						    				:
 						    				''
 						    			}

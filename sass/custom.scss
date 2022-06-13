@@ -9,6 +9,9 @@ $theme-properties: (
 	fontHeader: sans-serif,
 	fontText: sans-serif,
 	fontIcon: 'Font Awesome 5 Free',
+  breakpointResponsive: (
+    tablet: 815px
+  )	
 );
 
 $component-button-properties: (

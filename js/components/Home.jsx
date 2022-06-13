@@ -225,7 +225,7 @@ class Home extends React.Component {
 					    {this.state.levels ?
 					    	this.state.levels.map((level) => 
 					    		<div key={level.id} className="flex x-center">
-						    		<h2 className="pad">Level {level.attributes.Level}</h2>
+						    		<h2 className="pad">{level.attributes.Level}</h2>
 						    		<a href={`/level/${level.id}`} className="button" style={{ alignSelf: 'center' }}>
 							    		View Level
 							    		<FontAwesomeIcon icon={faLongArrowAltRight}/>
@@ -238,7 +238,7 @@ class Home extends React.Component {
 							    			{this.randomTopics(level).map((topic) =>
 							    				<div className="topic pure-u-1 pure-u-md-1-3" key={topic.id}>
 								    				<div className="pad">
-									    				<div className="flex x-space-between">
+									    				<div className="flex flex-vertical-center x-space-between">
 									    					<h3 className="pad no-y no-left">{topic.attributes.Topic}</h3>
 									    					<a href={`/level/${level.id}/topic/${topic.id}`} className="button">
 															    View Topic

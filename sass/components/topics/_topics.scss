@@ -57,6 +57,7 @@
 }
 .challenge-input{
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-between;
 	align-items: center;
 	&.correct{
@@ -78,6 +79,9 @@
 	}
 }
 @media only screen and (max-width: 815px){
+	.topic-heading {
+		margin-top: 100px;
+	}
 	.available-answers{
 		display: none;
 	}
@@ -85,6 +89,7 @@
 		left: 0;
 		height: unset;
 		width: 100%;
+		border: none;
 		overflow-y: unset;
 		overflow-x: auto;
 		flex-direction: row;
