@@ -17,6 +17,7 @@ const { indexVideos, addVideo, removeVideo, getRecent, addVideoToUsersUploads } 
 const { completeOrder } = require('./database/methods/products.js');
 
 // Strapi Methods
+const { getLevel } = require('./strapi/levels.js');
 const { getTopic, getTopicChallenges } = require('./strapi/topics.js');
 
 // App Services
@@ -97,25 +98,45 @@ app.use(express.json());
 		});
 
 		// Levels route
-		app.get('/level/:levelID', (req, res) => {
-			res.render('level.jsx', {levelID: req.params.levelID});
+		app.get('/level/:levelID', async (req, res) => {
+			const levelID = req.params.levelID;
+			const level = await getLevel(levelID);
+			const levelName = level.attributes.Level;
+			res.render('level.jsx', {
+				levelName,
+				levelID,
+			});
 		});
 
 		// Topics route
-		app.get('/level/:levelID/topic/:topicID', (req, res) => {
+		app.get('/level/:levelID/topic/:topicID', async (req, res) => {
+			const levelID = req.params.levelID;
+			const level = await getLevel(levelID);
+			const levelName = level.attributes.Level;
+
+			const topicID = req.params.topicID;
+			const topic = await getTopic(topicID);
+			const topicName = topic.attributes.Topic;
+
 			let completed = false;
 			if(req.user){
 				let completedTopics = req.user.completedTopics || [];
 				completedTopics.forEach((topic) => {
-					if(topic.id == req.params.topicID){
+					if(topic.id == topicID){
 						completed = true;
+					} else if (topic.data) {
+						if(topic.data.id == topicID){
+							completed = true;
+						}
 					}
 				});
 			}
 			res.render('topic.jsx', {
-				levelID: req.params.levelID,
-				topicID: req.params.topicID,
-				completed
+				levelID,
+				levelName,
+				topicID,
+				topicName,
+				completed,
 			});
 		});
 		app.post('/level/:levelID/topic/:topicID', async (req, res) => {

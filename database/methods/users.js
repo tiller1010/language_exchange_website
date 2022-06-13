@@ -87,7 +87,7 @@ async function removeCompletedTopic(userID, topicID){
 	let completedTopics = user.completedTopics || [];
 	let newCompletedTopics = [];
 	completedTopics.forEach((topic) => {
-		if(!topicID == topic.id){
+		if(topicID != topic.id){
 			newCompletedTopics.push(topic);
 		}
 	});

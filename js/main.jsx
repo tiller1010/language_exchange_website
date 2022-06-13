@@ -10,7 +10,7 @@ import Register from './components/Register.jsx';
 import AccountProfile from './components/AccountProfile.jsx';
 import VideoChat from './components/VideoChat.tsx';
 import Chats from './components/Chats.jsx';
-import Lessons from './components/Lessons.jsx';
+import Lessons from './components/Lessons.tsx';
 
 import 'purecss/build/pure-min.css';
 import 'purecss/build/grids-responsive-min.css';

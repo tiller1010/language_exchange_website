@@ -30,42 +30,25 @@ class Topic extends React.Component {
 	}
 
 	componentDidMount(){
-		axios.get(`${process.env.STRAPI_URL}/topics/${this.props.topicID}`)
+		axios.get(`${process.env.STRAPI_API_URL}/topics/${this.props.topicID}?populate[challenges][populate][0]=FeaturedMedia`)
 			.then(res => {
-				// console.log(res)
 				if(res.data){
+					const topic = res.data.data.attributes.Topic;
 					this.setState({
-						topic: res.data.Topic
-					})
+						topic,
+						challenges: res.data.data.attributes.challenges.data
+					});
 				}
-			})
-
-		axios.get(`${process.env.STRAPI_URL}/challenges`)
-			.then(res => {
-				if(res.data){
-					res.data.forEach((challenge) => {
-						if(challenge.topic){
-							var challenges = this.state.challenges;
-							if(this.props.topicID == challenge.topic.id){
-								challenges = challenges.concat(challenge);
-								this.setState({
-									challenges
-								}, () => {
-									if(this.props.completed){
-										let completedChalleges = [];
-										this.state.challenges.forEach((stateChallenge) => {
-											stateChallenge.answered = 'correct';
-											completedChalleges.push(stateChallenge);
-										});
-										this.setState({
-											challenges: completedChalleges,
-											allChallengesAnswered: true
-										});
-									}
-								});
-							}
-						}
-					})
+				if(this.props.completed){
+					let completedChalleges = [];
+					this.state.challenges.forEach((stateChallenge) => {
+						stateChallenge.answered = 'correct';
+						completedChalleges.push(stateChallenge);
+					});
+					this.setState({
+						challenges: completedChalleges,
+						allChallengesAnswered: true
+					});
 				}
 			})
 	}
@@ -77,7 +60,7 @@ class Topic extends React.Component {
 	}
 
 	checkAnswerInput(input, challenge){
-		if(input.toLowerCase() == challenge.Title.toLowerCase()){
+		if(input.toLowerCase() == challenge.attributes.Title.toLowerCase()){
 			const newState = this.state;
 			const challengeIndex = newState.challenges.indexOf(challenge);
 			challenge.answered = 'correct';
@@ -97,7 +80,6 @@ class Topic extends React.Component {
 			axios.post(`/level/${this.props.levelID}/topic/${this.props.topicID}`)
 				.then(res => {
 					if(res.data){
-						// console.log(res.data)
 					}
 				})
 			this.setState({
@@ -122,25 +104,25 @@ class Topic extends React.Component {
 	}
 
 	renderMedia(challenge){
-		if(challenge.FeaturedMedia){
-			if(challenge.FeaturedMedia.length){
-				switch(challenge.FeaturedMedia[0].mime){
+		if(challenge.attributes.FeaturedMedia){
+			if(challenge.attributes.FeaturedMedia.data){
+				switch(challenge.attributes.FeaturedMedia.data.attributes.mime){
 					case 'image/jpeg':
 						return (
 							<div className="img-container">
-								<img src={`${process.env.STRAPI_URL}${challenge.FeaturedMedia[0].url}`}/>
+								<img src={`${process.env.STRAPI_PUBLIC_URL}${challenge.attributes.FeaturedMedia.data.attributes.url}`}/>
 							</div>
 						);
 					case 'video/mp4':
 						return (
 							<video height="225" width="400" controls tabIndex="-1">
-								<source src={`${process.env.STRAPI_URL}${challenge.FeaturedMedia[0].url}`} type="video/mp4"/>
+								<source src={`${process.env.STRAPI_PUBLIC_URL}${challenge.attributes.FeaturedMedia.data.attributes.url}`} type="video/mp4"/>
 							</video>
 						);
 					case 'audio/wav':
 						return (
 							<audio height="225" width="400" controls tabIndex="-1">
-								<source src={`${process.env.STRAPI_URL}${challenge.FeaturedMedia[0].url}`} type="audio/wav"/>
+								<source src={`${process.env.STRAPI_PUBLIC_URL}${challenge.attributes.FeaturedMedia.data.attributes.url}`} type="audio/wav"/>
 							</audio>
 						);
 					default:
@@ -162,15 +144,17 @@ class Topic extends React.Component {
 						</a>
 					</div>
 					<h2 className="text-center pure-u-1">{this.state.topic}</h2>
-					<div className="pad">
-						<button className={`button no-icon flex-vertical-center hamburger hamburger--collapse ${this.state.optionsStatus == 'opened' ? 'is-active' : ''}`} type="button" onClick={this.handleToggleOptions} style={{ display: 'flex' }}>
-							<span className="hamburger-box">
-								<span className="hamburger-inner"></span>
-							</span>
-							<span className="fw-space half">
-				    			Available Answers
-			    			</span>
-						</button>
+					<div className="tablet-hide">
+						<div className="pad">
+							<button className={`button no-icon flex-vertical-center hamburger hamburger--collapse ${this.state.optionsStatus == 'opened' ? 'is-active' : ''}`} type="button" onClick={this.handleToggleOptions} style={{ display: 'flex' }}>
+								<span className="hamburger-box">
+									<span className="hamburger-inner"></span>
+								</span>
+								<span className="fw-space half">
+					    			Available Answers
+				    			</span>
+							</button>
+			    		</div>
 		    		</div>
 	    			{this.state.allChallengesAnswered ?
 						<div className="pure-u-1 flex x-center">
@@ -193,7 +177,7 @@ class Topic extends React.Component {
 				    		<div key={this.state.challenges.indexOf(challenge)}>
 					    		<div className="pad">
 					    			<div className={`challenge-option ${challenge.answered}`}>
-						    			<p>{challenge.Title}</p>
+						    			<p>{challenge.attributes.Title}</p>
 						    			<FontAwesomeIcon icon={faCheckCircle}/>
 					    			</div>
 					    		</div>
@@ -211,29 +195,31 @@ class Topic extends React.Component {
 					    		<div className="challenge">
 						    		<div className="pad">
 						    			<div className={`challenge-input ${challenge.answered}`}>
+							    			<div className="correct-answer desktop-100">{challenge.attributes.Title}</div>
 							    			<div className="field text">
-								    			<label htmlFor={`meaning${challenge.Title}Field`}>Guess meaning</label>
-								    			<input type="text" name={`meaning${challenge.Title}Field`} id={`meaning${challenge.Title}Field`} onChange={(event) => this.checkAnswerInput(event.target.value, challenge)}/>
+								    			<label htmlFor={`meaning${challenge.attributes.Title}Field`}>Guess meaning</label>
+								    			<input type="text" name={`meaning${challenge.attributes.Title}Field`} id={`meaning${challenge.attributes.Title}Field`} onChange={(event) => this.checkAnswerInput(event.target.value, challenge)}/>
 							    			</div>
-							    			<div className="correct-answer">{challenge.Title}</div>
 							    			<div className="input-correct">
 							    				<p>Correct!</p>
 								    			<FontAwesomeIcon icon={faCheckCircle}/>
 							    			</div>
 						    			</div>
-						    			<p>{challenge.Content}</p>
-						    			{challenge.FeaturedMedia.length ?
-						    				this.renderMedia(challenge)
+						    			<p>{challenge.attributes.Content}</p>
+						    			{challenge.attributes.FeaturedMedia.data ?
+						    				<div className="desktop-100">
+							    				{this.renderMedia(challenge)}
+						    				</div>
 						    				:
 						    				''
 						    			}
 						    			{this.state.allChallengesAnswered ?
 							    			<div className="flex x-space-between">
-								    			<a href={`/videos?keywords=${challenge.Title}`} className="button">
+								    			<a href={`/videos?keywords=${challenge.attributes.Title}`} className="button">
 									    			View others
 													<FontAwesomeIcon icon={faSearch}/>
 								    			</a>
-								    			<a href={`/videos/add?challenge=${challenge.Title}`} className="button">
+								    			<a href={`/videos/add?challenge=${challenge.attributes.Title}`} className="button">
 									    			Submit your own
 													<FontAwesomeIcon icon={faPlus}/>
 								    			</a>

@@ -14,51 +14,35 @@ class Level extends React.Component {
 	}
 
 	componentDidMount(){
-		axios.get(`${process.env.STRAPI_URL}/levels/${this.props.levelID}`)
+		axios.get(`${process.env.STRAPI_API_URL}/levels/${this.props.levelID}?populate[topics][populate][0]=FeaturedMedia%2Cchallenges`)
 			.then(res => {
-				this.setState({
-					topics: res.data.topics
-				});
-			})
-
-		axios.get(`${process.env.STRAPI_URL}/challenges`)
-			.then(res => {
-				console.log(res)
-				if(res.data){
-					res.data.forEach((challenge) => {
-						if(challenge.topic){
-							var topics = this.state.topics;
-							topics.forEach((topic) => {
-								if(topic.id === challenge.topic.id){
-									topic.challenges = topic.challenges ? topic.challenges.concat(challenge) : [ challenge ];
-									this.setState({
-										topics
-									});
-								}
-							});
-						}
-					})
-				}
+				const data = res.data;
+				const level = data.data;
+				const topics = level.attributes.topics.data;
+				console.log(topics[0])
+				this.setState({ topics });
 			})
 	}
 
 	renderMedia(topic){
-		if(topic.FeaturedImage){
-			switch(topic.FeaturedImage.mime){
-				case 'image/jpeg':
-					return (
-						<div className="img-container">
-							<img src={`${process.env.STRAPI_URL}${topic.FeaturedImage.url}`}/>
-						</div>
-					);
-				default:
-					return <p>Invalid media</p>
+		if(topic.attributes.FeaturedMedia){
+			if(topic.attributes.FeaturedMedia.data){
+				switch(topic.attributes.FeaturedMedia.data.attributes.mime){
+					case 'image/jpeg':
+						return (
+							<div className="img-container">
+								<img src={`${process.env.STRAPI_PUBLIC_URL}${topic.attributes.FeaturedMedia.data.attributes.url}`}/>
+							</div>
+						);
+					default:
+						return <p>Invalid media</p>
+				}
 			}
 		}
 	}
 
 	randomChallenges(topic){
-		return topic.challenges.sort(() => .5 - Math.random()).slice(0, 5);
+		return topic.attributes.challenges.data.sort(() => .5 - Math.random()).slice(0, 5);
 	}
 
 	render(){
@@ -71,7 +55,7 @@ class Level extends React.Component {
 				    		<div key={this.state.topics.indexOf(topic)} className="topic pure-u-1 pure-u-md-1-3">
 					    		<div className="pad">
 						    		<div className="flex x-space-between">
-							    		<h2 className="pad">{topic.Topic}</h2>
+							    		<h2 className="pad">{topic.attributes.Topic}</h2>
 							    		<a href={`/level/${this.props.levelID}/topic/${topic.id}`} className="button" style={{ alignSelf: 'center' }}>
 								    		View Topic
 								    		<FontAwesomeIcon icon={faLongArrowAltRight}/>
@@ -80,7 +64,7 @@ class Level extends React.Component {
 											{this.renderMedia(topic)}
 							    		</a>
 						    		</div>
-						    		{topic.challenges ?
+						    		{topic.attributes.challenges.data ?
 						    			<div className="challenges">
 								    		<Slider {...{
 												dots: false,
@@ -96,10 +80,10 @@ class Level extends React.Component {
 										    		</div>
 									    		</div>
 								    			{this.randomChallenges(topic).map((challenge) =>
-								    				<div key={topic.challenges.indexOf(challenge)} className="challenge">
+								    				<div key={topic.attributes.challenges.data.indexOf(challenge)} className="challenge">
 									    				<div className="pad">
-										    				<h3>{challenge.Title}</h3>
-									    					<p>{challenge.Content}</p>
+										    				<h3>{challenge.attributes.Title}</h3>
+									    					<p>{challenge.attributes.Content}</p>
 								    					</div>
 							    					</div>
 							    				)}
