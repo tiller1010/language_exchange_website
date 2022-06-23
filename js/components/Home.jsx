@@ -19,7 +19,8 @@ class Home extends React.Component {
 		super();
 		this.state = {
 			recentVideos: [],
-			userLikedVideos: []
+			userLikedVideos: [],
+			loaded: false,
 		}
 		this.currentUserHasLikedVideo = this.currentUserHasLikedVideo.bind(this);
 	}
@@ -54,7 +55,10 @@ class Home extends React.Component {
 			.then(res => {
 				const data = res.data;
 				const levels = data.data;
-				this.setState({ levels });
+				this.setState({
+					levels,
+					loaded: true,
+				});
 			});
 	}
 
@@ -96,6 +100,8 @@ class Home extends React.Component {
 	}
 
 	render(){
+
+		const { loaded } = this.state;
 
 		return (
 			<div>
@@ -253,12 +259,12 @@ class Home extends React.Component {
 						    				)}
 					    				</div>
 					    				:
-					    				<p>No topics</p>
+					    				<>{loaded ? <p>No topics</p> : <div className="lds-facebook"><div></div><div></div><div></div></div>}</>
 						    		}
 					    		</div>
 				    		) 
 					    	:
-					    	<h2>No levels</h2>
+					    	<>{loaded ? <h2>No levels</h2> : <div className="lds-facebook"><div></div><div></div><div></div></div>}</>
 					    }
 
 				    </section>

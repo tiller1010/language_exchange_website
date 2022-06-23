@@ -9,7 +9,8 @@ class Level extends React.Component {
 	constructor(){
 		super();
 		this.state = {
-			topics: []
+			topics: [],
+			loaded: false,
 		}
 	}
 
@@ -19,8 +20,10 @@ class Level extends React.Component {
 				const data = res.data;
 				const level = data.data;
 				const topics = level.attributes.topics.data;
-				console.log(topics[0])
-				this.setState({ topics });
+				this.setState({
+					topics,
+					loaded: true,
+				});
 			})
 	}
 
@@ -46,13 +49,24 @@ class Level extends React.Component {
 	}
 
 	render(){
+
+		const { loaded, topics } = this.state;
+
 		return (
 			<div className="frame">
 				<Navigation/>
-			    {this.state.topics ?
+				<div className="flex x-center">
+					<div className="pad">
+						<a href={`/lessons`} className="button icon-left">
+							<FontAwesomeIcon icon={faLongArrowAltLeft}/>
+							Back to Lessons
+						</a>
+					</div>
+				</div>
+			    {topics.length ?
 			    	<div className="topics pure-u-1 flex x-space-around">
-				    	{this.state.topics.map((topic) => 
-				    		<div key={this.state.topics.indexOf(topic)} className="topic pure-u-1 pure-u-md-1-3">
+				    	{topics.map((topic) => 
+				    		<div key={topics.indexOf(topic)} className="topic pure-u-1 pure-u-md-1-3">
 					    		<div className="pad">
 						    		<div className="flex x-space-between">
 							    		<h2 className="pad">{topic.attributes.Topic}</h2>
@@ -90,14 +104,14 @@ class Level extends React.Component {
 						    				</Slider>
 					    				</div>
 					    				:
-					    				<p>No challenges</p>
+					    				<>{loaded ? <p>No challenges</p> : <div className="lds-facebook"><div></div><div></div><div></div></div>}</>
 						    		}
 					    		</div>
 				    		</div>
 			    		)}
 		    		</div>
 			    	:
-			    	<h2>No topics</h2>
+			    	<>{loaded ? <h2>No topics</h2> : <div className="lds-facebook"><div></div><div></div><div></div></div>}</>
 			    }
 			</div>
 		);

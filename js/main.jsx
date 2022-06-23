@@ -51,7 +51,7 @@ String.prototype.convertTo12HourTime = function(){
 				.then((response) => document.location = response.url);
 			}
 		})
-		.catch((e) => console.log(e));
+		.catch((e) => console.log('No JWT found.'));
 })();
 
 if(document.getElementById('home')){

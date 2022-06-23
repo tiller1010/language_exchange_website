@@ -11,6 +11,7 @@ interface LevelAttributes {
 	createdAt: string;
 	publishedAt: string;
 	updatedAt: string;
+	topics: any;
 }
 
 interface LevelData {
@@ -39,12 +40,14 @@ interface LessonsProps {
 
 interface LessonsState {
 	levels?: LevelData[];
+	loaded: boolean;
 }
 
 class Lessons extends React.Component<LessonsProps, LessonsState> {
 	constructor(props){
 		super(props);
 		this.state = {
+			loaded: false,
 		}
 	}
 
@@ -53,7 +56,10 @@ class Lessons extends React.Component<LessonsProps, LessonsState> {
 			.then(res => {
 				const data: StrapiData = res.data;
 				const levels: LevelData[] = data.data;
-				this.setState({ levels });
+				this.setState({
+					levels,
+					loaded: true
+				});
 			});
 	}
 
@@ -86,12 +92,14 @@ class Lessons extends React.Component<LessonsProps, LessonsState> {
 
 	render(){
 
+		const { levels, loaded } = this.state;
+
 		return (
 			<div className="frame">
 				<Navigation/>
 
-			    {this.state.levels ?
-			    	this.state.levels.map((level) => 
+			    {levels ?
+			    	levels.map((level) => 
 			    		<div key={level.id} className="flex x-center">
 				    		<h2 className="pad">{level.attributes.Level}</h2>
 				    		<a href={`/level/${level.id}`} className="button" style={{ alignSelf: 'center' }}>
@@ -121,12 +129,12 @@ class Lessons extends React.Component<LessonsProps, LessonsState> {
 				    				)}
 			    				</div>
 			    				:
-			    				<p>No topics</p>
+			    				<>{loaded ? <p>No topics</p> : <div className="lds-facebook"><div></div><div></div><div></div></div>}</>
 				    		}
 			    		</div>
 		    		) 
 			    	:
-			    	<h2>No levels</h2>
+			    	<>{loaded ? <h2>No levels</h2> : <div className="lds-facebook"><div></div><div></div><div></div></div>}</>
 			    }
 			</div>
 		);

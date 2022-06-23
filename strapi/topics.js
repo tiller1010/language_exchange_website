@@ -4,6 +4,7 @@ function getTopic(topicID){
 	return axios.get(`${process.env.STRAPI_API_URL}/topics/${topicID}?populate=FeaturedMedia`)
 		.then(res => res.data)
 		.then(data => data.data)
+		.catch((e) => console.log('Connection to Strapi server could not be made.'))
 }
 
 function getTopicChallenges(topicID){
@@ -21,7 +22,9 @@ function getTopicChallenges(topicID){
 				})
 				return challenges;
 			}
-		}).then(challenges => challenges);
+		})
+		.then(challenges => challenges)
+		.catch((e) => console.log('Connection to Strapi server could not be made.'))
 }
 
 module.exports = { getTopic, getTopicChallenges }

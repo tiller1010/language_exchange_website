@@ -101,7 +101,7 @@ app.use(express.json());
 		app.get('/level/:levelID', async (req, res) => {
 			const levelID = req.params.levelID;
 			const level = await getLevel(levelID);
-			const levelName = level.attributes.Level;
+			const levelName = level ? level.attributes.Level : 'Unknown';
 			res.render('level.jsx', {
 				levelName,
 				levelID,
@@ -112,11 +112,11 @@ app.use(express.json());
 		app.get('/level/:levelID/topic/:topicID', async (req, res) => {
 			const levelID = req.params.levelID;
 			const level = await getLevel(levelID);
-			const levelName = level.attributes.Level;
+			const levelName = level ? level.attributes.Level : 'Unknown';
 
 			const topicID = req.params.topicID;
 			const topic = await getTopic(topicID);
-			const topicName = topic.attributes.Topic;
+			const topicName = topic ? topic.attributes.Topic : 'Unknown';
 
 			let completed = false;
 			if(req.user){

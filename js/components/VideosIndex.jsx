@@ -30,7 +30,8 @@ class VideosIndex extends React.Component {
 			videos: [],
 			pages: [],
 			currentPage: 1,
-			userLikedVideos: []
+			userLikedVideos: [],
+			loaded: false,
 		}
 		this.refreshVideos = this.refreshVideos.bind(this);
 		this.pagination = this.pagination.bind(this);
@@ -60,7 +61,8 @@ class VideosIndex extends React.Component {
 			this.setState({
 				videos: newVideos.videos,
 				pages: this.pagination(newVideos.pages),
-				currentPage: page
+				currentPage: page,
+				loaded: true,
 			});
 		}
 	}
@@ -97,6 +99,8 @@ class VideosIndex extends React.Component {
 	}
 
 	render(){
+
+		const { loaded } = this.state;
 
 		var urlParams = new URLSearchParams(window.location.search);
 		var keywords = urlParams.get('keywords') || '';
@@ -204,7 +208,7 @@ class VideosIndex extends React.Component {
 							)}
 						</div>
 						:
-						<p>No videos</p>
+						<>{loaded ? <p>No videos</p> : <div className="lds-facebook"><div></div><div></div><div></div></div>}</>
 					}
 					{this.state.pages.length ?
 						<ul className="pagination flex">

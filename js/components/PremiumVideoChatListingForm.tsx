@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUpload, faLongArrowAltRight, faTrash, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faUpload, faCheck, faTrash, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 const languages = require('language-list')();
 import graphQLFetch from '../graphQLFetch.js';
 // @ts-ignore
@@ -44,6 +44,7 @@ interface PremiumVideoChatListingFormState {
 	thumbnailSrc: string
 	thumbnailFile?: File
 	savedPremiumVideoChatListing?: PremiumVideoChatListingObject
+	savedAllChanges: boolean
 }
 
 interface PremiumVideoChatListingFormProps {
@@ -68,6 +69,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 					completed: false,
 				}
 			],
+			savedAllChanges: true,
 		}
 		this.state = state;
 		this.handleThumbnailChange = this.handleThumbnailChange.bind(this);
@@ -90,7 +92,8 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 		const context = this;
 	    const image = event.target.files[0];
 	    context.setState({
-		    thumbnailFile: image
+		    thumbnailFile: image,
+			savedAllChanges: false,
 	    });
 	    if(image){
 	    	// Set preview
@@ -117,7 +120,8 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 		timeSlot[valueKey] = value;
 		timeSlots[timeSlotIndex] = timeSlot;
 		this.setState({
-			timeSlots
+			timeSlots,
+			savedAllChanges: false,
 		})
 	}
 
@@ -126,7 +130,8 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 		let { timeSlots } = this.state;
 		timeSlots.splice(timeSlotIndex, 1);
 		this.setState({
-			timeSlots
+			timeSlots,
+			savedAllChanges: false,
 		});
 	}
 
@@ -140,6 +145,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 					time: '',
 					booked: false,
 					completed: false,
+					savedAllChanges: false,
 				}
 			]
 		});
@@ -239,7 +245,10 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 				mutationName = 'addPremiumVideoChatListing';
 			}
 			const data = await graphQLFetch(query, variables, thumbnailFile ? true : false);
-			this.setState({ savedPremiumVideoChatListing: data[mutationName] });
+			this.setState({
+				savedPremiumVideoChatListing: data[mutationName],
+				savedAllChanges: true,
+			});
 		}
 
 		// DEBUG UPLOAD
@@ -300,11 +309,11 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 						<div className="desktop-50 phone-100">
 							<div className="field text">
 								<label htmlFor="topicField">Topic</label>
-								<input type="text" name="topic" id="topicField" value={topic} onChange={(event) => this.setState({topic: event.target.value})}/>
+								<input type="text" name="topic" id="topicField" value={topic} onChange={(event) => this.setState({topic: event.target.value, savedAllChanges: false})}/>
 							</div>
 							<div className="field dropdown">
 								<label htmlFor="languageField">Language</label>
-								<select name="language" id="languageField" onChange={(event) => this.setState({language: event.target.value})} value={language}>
+								<select name="language" id="languageField" onChange={(event) => this.setState({language: event.target.value, savedAllChanges: false})} value={language}>
 									<option value="">Select a language</option>
 									<option>ASL</option>
 									{languages.getLanguageCodes().map((langCode) => 
@@ -314,20 +323,20 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 							</div>
 							<div className="field text">
 								<label htmlFor="durationField">Duration</label>
-								<input type="text" name="duration" id="durationField" placeholder="5 minutes" value={duration} onChange={(event) => this.setState({duration: event.target.value})}/>
+								<input type="text" name="duration" id="durationField" placeholder="5 minutes" value={duration} onChange={(event) => this.setState({duration: event.target.value, savedAllChanges: false})}/>
 							</div>
 							<div className="field numeric">
 								<label htmlFor="priceField">Price</label>
-								<input type="number" min="0.50" step="0.01" name="price" id="priceField" value={price} onChange={(event) => this.setState({price: Number(event.target.value)})}/>
+								<input type="number" min="0.50" step="0.01" name="price" id="priceField" value={price} onChange={(event) => this.setState({price: Number(event.target.value), savedAllChanges: false})}/>
 								<p><i>Application fees will be applied</i></p>
 							</div>
 							<div className="field text">
 								<label htmlFor="currencyField">Currency</label>
-								<input type="text" name="currency" id="currencyField" value={currency} onChange={(event) => this.setState({currency: event.target.value})}/>
+								<input type="text" name="currency" id="currencyField" value={currency} onChange={(event) => this.setState({currency: event.target.value, savedAllChanges: false})}/>
 							</div>
 						</div>
 
-						<div className="desktop-20 phone-100">
+						<div className="desktop-20 phone-100" style={{ maxHeight: '385px', overflowY: 'auto' }}>
 							<div className="fw-space">
 								{timeSlots.length ?
 									<>
@@ -367,9 +376,9 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 							</div>
 
 							<div>
-								<button className="button" onClick={this.handleSubmit}>
-									Save
-									<FontAwesomeIcon icon={faLongArrowAltRight}/>
+								<button className="button" onClick={this.handleSubmit} disabled={this.state.savedAllChanges}>
+									{this.state.savedAllChanges ? 'Saved' : 'Save'}
+									<FontAwesomeIcon icon={faCheck}/>
 								</button>
 							</div>
 						</div>

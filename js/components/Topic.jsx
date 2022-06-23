@@ -22,7 +22,9 @@ class Topic extends React.Component {
 		this.state = {
 			challenges: [],
 			optionsStatus: '',
-			allChallengesAnswered: false
+			allChallengesAnswered: false,
+			topic: '',
+			loaded: false,
 		}
 		this.handleToggleOptions = this.handleToggleOptions.bind(this);
 		this.checkAnswerInput = this.checkAnswerInput.bind(this);
@@ -36,7 +38,8 @@ class Topic extends React.Component {
 					const topic = res.data.data.attributes.Topic;
 					this.setState({
 						topic,
-						challenges: res.data.data.attributes.challenges.data
+						challenges: res.data.data.attributes.challenges.data,
+						loaded: true,
 					});
 				}
 				if(this.props.completed){
@@ -133,6 +136,15 @@ class Topic extends React.Component {
 	}
 
 	render(){
+
+		const {
+			challenges,
+			optionsStatus,
+			allChallengesAnswered,
+			topic,
+			loaded,
+		} = this.state;
+
 		return (
 			<div className="frame">
 				<Navigation/>
@@ -143,10 +155,10 @@ class Topic extends React.Component {
 							Back to Level
 						</a>
 					</div>
-					<h2 className="text-center pure-u-1">{this.state.topic}</h2>
+					<h2 className="text-center pure-u-1">{topic}</h2>
 					<div className="tablet-hide">
 						<div className="pad">
-							<button className={`button no-icon flex-vertical-center hamburger hamburger--collapse ${this.state.optionsStatus == 'opened' ? 'is-active' : ''}`} type="button" onClick={this.handleToggleOptions} style={{ display: 'flex' }}>
+							<button className={`button no-icon flex-vertical-center hamburger hamburger--collapse ${optionsStatus == 'opened' ? 'is-active' : ''}`} type="button" onClick={this.handleToggleOptions} style={{ display: 'flex' }}>
 								<span className="hamburger-box">
 									<span className="hamburger-inner"></span>
 								</span>
@@ -156,7 +168,7 @@ class Topic extends React.Component {
 							</button>
 			    		</div>
 		    		</div>
-	    			{this.state.allChallengesAnswered ?
+	    			{allChallengesAnswered ?
 						<div className="pure-u-1 flex x-center">
 							<button className="button" onClick={this.handleResetTopic}>
 								Reset Topic
@@ -170,13 +182,13 @@ class Topic extends React.Component {
 
 
 
-			    {this.state.challenges ?
-			    	<div className={`challenge-options ${this.state.optionsStatus}`} onClick={this.handleToggleOptions}>
+			    {challenges.length ?
+			    	<div className={`challenge-options ${optionsStatus}`} onClick={this.handleToggleOptions}>
 				    	<FontAwesomeIcon icon={faTimes} className="close"/>
-				    	{shuffleArray(this.state.challenges).map((challenge) => 
-				    		<div key={this.state.challenges.indexOf(challenge)}>
+				    	{shuffleArray(challenges).map((challenge) => 
+				    		<div key={challenges.indexOf(challenge)}>
 					    		<div className="pad">
-					    			<div className={`challenge-option ${challenge.answered}`}>
+					    			<div className={`challenge-option ${challenge.answered || ''}`}>
 						    			<p>{challenge.attributes.Title}</p>
 						    			<FontAwesomeIcon icon={faCheckCircle}/>
 					    			</div>
@@ -185,16 +197,16 @@ class Topic extends React.Component {
 			    		)}
 		    		</div>
 			    	:
-			    	<h2>No options</h2>
+			    	''
 			    }
 
-			    {this.state.challenges ?
+			    {challenges.length ?
 			    	<form className="challenges pure-u-1 fw-form flex x-space-around">
-				    	{this.state.challenges.map((challenge) => 
-				    		<div key={this.state.challenges.indexOf(challenge)} className="flex x-center pure-u-1 pure-u-lg-1-2">
+				    	{challenges.map((challenge) => 
+				    		<div key={challenges.indexOf(challenge)} className="flex x-center pure-u-1 pure-u-lg-1-2">
 					    		<div className="challenge">
 						    		<div className="pad">
-						    			<div className={`challenge-input ${challenge.answered}`}>
+						    			<div className={`challenge-input ${challenge.answered || ''}`}>
 							    			<div className="correct-answer desktop-100">{challenge.attributes.Title}</div>
 							    			<div className="field text">
 								    			<label htmlFor={`meaning${challenge.attributes.Title}Field`}>Guess meaning</label>
@@ -213,7 +225,7 @@ class Topic extends React.Component {
 						    				:
 						    				''
 						    			}
-						    			{this.state.allChallengesAnswered ?
+						    			{allChallengesAnswered ?
 							    			<div className="flex x-space-between">
 								    			<a href={`/videos?keywords=${challenge.attributes.Title}`} className="button">
 									    			View others
@@ -233,7 +245,7 @@ class Topic extends React.Component {
 			    		)}
 		    		</form>
 			    	:
-			    	<h2>No challenges</h2>
+			    	<>{loaded ? <h2>No challenges</h2> : <div className="lds-facebook"><div></div><div></div><div></div></div>}</>
 			    }
 			</div>
 		);
