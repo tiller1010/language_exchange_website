@@ -36,7 +36,7 @@ export default function TopicLink(props) {
 
 	return (
 		<div className="flex flex-vertical-center x-space-between">
-			<h3 className="pad no-y no-left">{topic.attributes.Topic}</h3>
+			<h3 className="pad no-y no-left" style={{ margin: 0 }}>{topic.attributes.Topic}</h3>
 			<a href={`/level/${levelID}/topic/${topic.id}`} aria-label={`View challenges on ${topic.attributes.Topic}`} className="button" style={{ alignSelf: 'center' }}>
 				View Topic
 				<FontAwesomeIcon icon={faLongArrowAltRight}/>

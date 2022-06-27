@@ -86,7 +86,7 @@ class Lessons extends React.Component<LessonsProps, LessonsState> {
 			    {levels ?
 			    	levels.map((level) => 
 			    		<div key={level.id} className="flex x-center">
-				    		<h2 className="pad">{level.attributes.Level}</h2>
+				    		<h2 className="pad" style={{ margin: 0 }}>{level.attributes.Level}</h2>
 				    		<a href={`/level/${level.id}`} className="button" style={{ alignSelf: 'center' }}>
 					    		View Level
 					    		<FontAwesomeIcon icon={faLongArrowAltRight}/>

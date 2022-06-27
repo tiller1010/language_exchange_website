@@ -49,7 +49,7 @@ class Level extends React.Component {
 					</div>
 				</div>
 			    {topics.length ?
-			    	<div className="topics pure-u-1 flex x-space-around">
+			    	<div className="topics fw-typography-spacing pure-u-1 flex x-space-around">
 				    	{topics.map((topic) => 
 				    		<div key={topics.indexOf(topic)} className="topic pure-u-1 pure-u-md-1-3">
 					    		<div className="pad">

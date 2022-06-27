@@ -96,6 +96,11 @@
 		flex-direction: row;
 		cursor: unset;
 		text-align: center;
+		.challenge-option {
+			p {
+				white-space: nowrap;
+			}
+		}
 	    svg.close{
 	    	display: none;
 	    }
