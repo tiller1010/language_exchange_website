@@ -5,6 +5,8 @@ import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSlidersH, faStar }
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import Slider from 'react-slick';
 import Navigation from './Navigation.jsx';
+// @ts-ignore
+import TopicLink from './TopicLink.tsx';
 
 interface LevelAttributes {
 	Level: string;
@@ -63,23 +65,6 @@ class Lessons extends React.Component<LessonsProps, LessonsState> {
 			});
 	}
 
-	renderMedia(topic){
-		if(topic.attributes.FeaturedMedia){
-			if(topic.attributes.FeaturedMedia.data){
-				switch(topic.attributes.FeaturedMedia.data.attributes.mime){
-					case 'image/jpeg':
-						return (
-							<div className="img-container">
-								<img src={`${process.env.STRAPI_PUBLIC_URL}${topic.attributes.FeaturedMedia.data.attributes.url}`}/>
-							</div>
-						);
-					default:
-						return <p>Invalid media</p>
-				}
-			}
-		}
-	}
-
 	randomTopics(level){
 		if(level.attributes.topicsRandomized){
 			return level.attributes.topics.data;
@@ -114,16 +99,7 @@ class Lessons extends React.Component<LessonsProps, LessonsState> {
 					    			{this.randomTopics(level).map((topic) =>
 					    				<div className="topic pure-u-1 pure-u-md-1-3" key={topic.id}>
 						    				<div className="pad">
-							    				<div className="flex flex-vertical-center x-space-between">
-							    					<h3 className="pad no-y no-left">{topic.attributes.Topic}</h3>
-							    					<a href={`/level/${level.id}/topic/${topic.id}`} className="button">
-													    View Topic
-													    <FontAwesomeIcon icon={faLongArrowAltRight}/>
-												    </a>
-											    </div>
-						    					<a href={`/level/${level.id}/topic/${topic.id}`}>
-							    					{this.renderMedia(topic)}
-						    					</a>
+							    				<TopicLink topic={topic} levelID={level.id}/>
 					    					</div>
 				    					</div>
 				    				)}

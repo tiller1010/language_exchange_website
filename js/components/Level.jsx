@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome } from '@fortawesome/free-solid-svg-icons';
 import Slider from 'react-slick';
 import Navigation from './Navigation.jsx';
+// @ts-ignore
+import TopicLink from './TopicLink.tsx';
 
 class Level extends React.Component {
 	constructor(){
@@ -25,23 +27,6 @@ class Level extends React.Component {
 					loaded: true,
 				});
 			})
-	}
-
-	renderMedia(topic){
-		if(topic.attributes.FeaturedMedia){
-			if(topic.attributes.FeaturedMedia.data){
-				switch(topic.attributes.FeaturedMedia.data.attributes.mime){
-					case 'image/jpeg':
-						return (
-							<div className="img-container">
-								<img src={`${process.env.STRAPI_PUBLIC_URL}${topic.attributes.FeaturedMedia.data.attributes.url}`}/>
-							</div>
-						);
-					default:
-						return <p>Invalid media</p>
-				}
-			}
-		}
 	}
 
 	randomChallenges(topic){
@@ -68,16 +53,7 @@ class Level extends React.Component {
 				    	{topics.map((topic) => 
 				    		<div key={topics.indexOf(topic)} className="topic pure-u-1 pure-u-md-1-3">
 					    		<div className="pad">
-						    		<div className="flex x-space-between">
-							    		<h2 className="pad">{topic.attributes.Topic}</h2>
-							    		<a href={`/level/${this.props.levelID}/topic/${topic.id}`} className="button" style={{ alignSelf: 'center' }}>
-								    		View Topic
-								    		<FontAwesomeIcon icon={faLongArrowAltRight}/>
-							    		</a>
-							    		<a href={`/level/${this.props.levelID}/topic/${topic.id}`}>
-											{this.renderMedia(topic)}
-							    		</a>
-						    		</div>
+									<TopicLink topic={topic} levelID={this.props.levelID}/>
 						    		{topic.attributes.challenges.data ?
 						    			<div className="challenges">
 								    		<Slider {...{
