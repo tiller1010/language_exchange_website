@@ -54,7 +54,7 @@ class Lessons extends React.Component<LessonsProps, LessonsState> {
 	}
 
 	componentDidMount(){
-		axios.get(`${process.env.STRAPI_API_URL}/levels?populate[topics][populate]=FeaturedMedia`)
+		axios.get(`${process.env.STRAPI_API_URL}/levels?populate[topics][populate]=FeaturedMedia&sort[0]=Level`)
 			.then(res => {
 				const data: StrapiData = res.data;
 				const levels: LevelData[] = data.data;
