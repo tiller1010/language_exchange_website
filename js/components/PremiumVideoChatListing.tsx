@@ -7,7 +7,7 @@ import graphQLFetch from '../graphQLFetch.js';
 interface PremiumVideoChatListingObject {
 	_id: string
 	topic: string;
-	language: string
+	languageOfTopic: string
 	duration: string
 	price: number
 	currency: string
@@ -214,7 +214,7 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 							_id
 							userID
 							topic
-							language
+							languageOfTopic
 							duration
 							thumbnailSrc
 							price
@@ -295,7 +295,7 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 
 		let {
 			topic,
-			language,
+			languageOfTopic,
 			duration,
 			price,
 			currency,
@@ -305,7 +305,7 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 		return(
 			<div>
 				<p>{topic}</p>
-				<p>{language}</p>
+				<p>{languageOfTopic}</p>
 				<p>{duration}</p>
 				<p>{price}</p>
 				<p>{currency}</p>

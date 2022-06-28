@@ -17,7 +17,7 @@ interface User {
 interface PremiumVideoChatListingObject {
 	_id: string;
 	topic: string;
-	language: string
+	languageOfTopic: string
 	duration: string
 	price: number
 	currency: string
@@ -36,7 +36,7 @@ interface VideoChatTimeSlot {
 
 interface PremiumVideoChatListingFormState {
 	topic: string;
-	language: string
+	languageOfTopic: string
 	duration: string
 	price: number
 	currency: string
@@ -56,7 +56,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 		super(props);
 		let state: PremiumVideoChatListingFormState = {
 			topic: '',
-			language: '',
+			languageOfTopic: '',
 			duration: '',
 			price: 0,
 			currency: 'usd',
@@ -161,7 +161,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 
 		let {
 			topic,
-			language,
+			languageOfTopic,
 			duration,
 			price,
 			currency,
@@ -173,7 +173,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 
 		let { user } = this.props;
 
-		if(user && topic && language && duration && thumbnailSrc){
+		if(user && topic && languageOfTopic && duration && thumbnailSrc){
 			let query;
 			let variables;
 			let mutationName;
@@ -183,7 +183,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 					updatePremiumVideoChatListing(listingID: $listingID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){
 						_id
 						topic
-						language
+						languageOfTopic
 						duration
 						price
 						currency
@@ -202,7 +202,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 					listingID: savedPremiumVideoChatListing._id,
 					premiumVideoChatListing: {
 						topic,
-						language,
+						languageOfTopic,
 						duration,
 						price,
 						currency,
@@ -219,7 +219,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 					addPremiumVideoChatListing(userID: $userID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){
 						_id
 						topic
-						language
+						languageOfTopic
 						duration
 						price
 						currency
@@ -238,7 +238,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 					userID: user._id,
 					premiumVideoChatListing: {
 						topic,
-						language,
+						languageOfTopic,
 						duration,
 						price,
 						currency,
@@ -256,7 +256,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 		} else {
 			const missingFields = [
 				{ value: topic, label: 'topic' },
-				{ value: language, label: 'language' },
+				{ value: languageOfTopic, label: 'language' },
 				{ value: duration, label: 'duration' },
 				{ value: thumbnailSrc, label: 'thumbnail' },
 			].filter(field => !field.value);
@@ -289,7 +289,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 		const data = await graphQLFetch(query, variables);
 		const emptyListingObject = {
 			topic: '',
-			language: '',
+			languageOfTopic: '',
 			duration: '',
 			thumbnailSrc: ''
 		}
@@ -303,7 +303,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 
 		let {
 			topic,
-			language,
+			languageOfTopic,
 			duration,
 			price,
 			currency,
@@ -325,8 +325,8 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 								<input type="text" name="topic" id="topicField" value={topic} onChange={(event) => this.setState({topic: event.target.value, savedAllChanges: false})}/>
 							</div>
 							<div className="field dropdown">
-								<label htmlFor="languageField">Language</label>
-								<select name="language" id="languageField" onChange={(event) => this.setState({language: event.target.value, savedAllChanges: false})} value={language}>
+								<label htmlFor="languageOfTopicField">Language</label>
+								<select name="languageOfTopic" id="languageOfTopicField" onChange={(event) => this.setState({languageOfTopic: event.target.value, savedAllChanges: false})} value={languageOfTopic}>
 									<option value="">Select a language</option>
 									<option>ASL</option>
 									{languages.getLanguageCodes().map((langCode) => 

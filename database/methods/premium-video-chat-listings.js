@@ -36,15 +36,15 @@ async function getRecentPremiumVideoChatListings(_){
 	return { listings: purchasablePremiumVideoChatListings };
 }
 
-async function searchPremiumVideoChatListings(_, { topic, language }){
+async function searchPremiumVideoChatListings(_, { topic, languageOfTopic }){
 	const db = getDB();
-	const ListingSearchService = await createSearchService('premium_video_chat_listings', ['topic', 'language']);
+	const ListingSearchService = await createSearchService('premium_video_chat_listings', ['topic', 'languageOfTopic']);
 	let query = {};
 	if(topic){
 		query.topic = { $search: topic };
 	}
-	if(language){
-		query.language = { $search: language };
+	if(languageOfTopic){
+		query.languageOfTopic = { $search: languageOfTopic };
 	}
 	let listings = await ListingSearchService.find({ query });
 

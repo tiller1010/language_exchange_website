@@ -48,7 +48,7 @@ type PremiumVideoChatListing {
 	_id: ID
 	userID: ID
 	topic: String
-	language: String
+	languageOfTopic: String
 	duration: String
 	thumbnailSrc: String
 	price: Float
@@ -76,7 +76,7 @@ input VideoChatTimeSlotInputs {
 
 input PremiumVideoChatListingInputs {
 	topic: String
-	language: String
+	languageOfTopic: String
 	duration: String
 	price: Float
 	currency: String
@@ -90,7 +90,7 @@ type PremiumVideoChatListingFeed {
 type Query {
 	indexVideos: [Video]
 	getRecentPremiumVideoChatListings: PremiumVideoChatListingFeed
-	searchPremiumVideoChatListings(topic: String, language: String): PremiumVideoChatListingFeed
+	searchPremiumVideoChatListings(topic: String, languageOfTopic: String): PremiumVideoChatListingFeed
 	findUserByID(userID: String!): User
 }
 

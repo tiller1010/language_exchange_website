@@ -9,7 +9,7 @@ const languages = require('language-list')();
 
 interface PremiumVideoChatListingObject {
 	topic: string;
-	language: string
+	languageOfTopic: string
 	thumbnailSrc: string
 	userID: string
 	timeSlots: [VideoChatTimeSlot?]
@@ -24,7 +24,7 @@ interface VideoChatTimeSlot {
 
 interface PremiumVideoChatListingFeedState {
 	topic: string;
-	language: string
+	languageOfTopic: string
 	premiumVideoChatListings?: [PremiumVideoChatListingObject?]
 }
 
@@ -38,7 +38,7 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 		super(props);
 		let state: PremiumVideoChatListingFeedState = {
 			topic: '',
-			language: '',
+			languageOfTopic: '',
 			premiumVideoChatListings: [],
 		}
 		this.state = state;
@@ -52,7 +52,7 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 				listings {
 					_id
 					topic
-					language
+					languageOfTopic
 					duration
 					price
 					currency
@@ -84,15 +84,15 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 
 		const {
 			topic,
-			language
+			languageOfTopic
 		} = this.state;
 
-		const query = `query searchPremiumVideoChatListings($topic: String, $language: String){
-			searchPremiumVideoChatListings(topic: $topic, language: $language){
+		const query = `query searchPremiumVideoChatListings($topic: String, $languageOfTopic: String){
+			searchPremiumVideoChatListings(topic: $topic, languageOfTopic: $languageOfTopic){
 				listings {
 					_id
 					topic
-					language
+					languageOfTopic
 					duration
 					price
 					currency
@@ -110,7 +110,7 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 		}`;
 		const data = await graphQLFetch(query, {
 			topic,
-			language,
+			languageOfTopic,
 		});
 		if(data.searchPremiumVideoChatListings){
 			if(data.searchPremiumVideoChatListings.listings){
@@ -128,7 +128,7 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 		let {
 			premiumVideoChatListings,
 			topic,
-			language
+			languageOfTopic
 		} = this.state;
 
 		return(
@@ -140,8 +140,8 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 						<input type="text" name="topic" id="topicField" value={topic} onChange={(event) => this.setState({topic: event.target.value})} className="pure-input-rounded"/>
 					</div>
 					<div className="field dropdown">
-						<label htmlFor="languageField">Language</label>
-						<select name="language" id="languageField" onChange={(event) => this.setState({language: event.target.value})} className="pure-input-rounded" defaultValue={language}>
+						<label htmlFor="languageOfTopicField">Language</label>
+						<select name="languageOfTopic" id="languageOfTopicField" onChange={(event) => this.setState({languageOfTopic: event.target.value})} className="pure-input-rounded" defaultValue={languageOfTopic}>
 							<option value="">Select a language</option>
 							<option>ASL</option>
 							{languages.getLanguageCodes().map((langCode) => 
