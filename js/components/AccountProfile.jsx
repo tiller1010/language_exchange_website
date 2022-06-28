@@ -197,7 +197,7 @@ class AccountProfile extends React.Component {
 							<PremiumVideoChatListingForm user={authenticatedUser}/>
 							<p>
 								{authenticatedUser.connectedStripeAccountID ?
-									<p>Stripe Account ID: {authenticatedUser.connectedStripeAccountID}</p>
+									<p className="desktop-hide">Stripe Account ID: {authenticatedUser.connectedStripeAccountID}</p>
 									:
 									''
 								}

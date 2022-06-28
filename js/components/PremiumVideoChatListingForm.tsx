@@ -149,6 +149,10 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 				}
 			]
 		});
+		// Triggers fw effects for new elements
+		setTimeout(() => {
+			window.dispatchEvent(new Event('load'));
+		}, 100);
 	}
 
 	async handleSubmit(event){
@@ -249,6 +253,15 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 				savedPremiumVideoChatListing: data[mutationName],
 				savedAllChanges: true,
 			});
+		} else {
+			const missingFields = [
+				{ value: topic, label: 'topic' },
+				{ value: language, label: 'language' },
+				{ value: duration, label: 'duration' },
+				{ value: thumbnailSrc, label: 'thumbnail' },
+			].filter(field => !field.value);
+			const missingFieldsString: string = missingFields.map(field => field.label).join(', ');
+			alert('Missing fields: ' + missingFieldsString);
 		}
 
 		// DEBUG UPLOAD
@@ -337,13 +350,19 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 						</div>
 
 						<div className="desktop-20 phone-100" style={{ maxHeight: '385px', overflowY: 'auto' }}>
-							<div className="fw-space">
+							<div className="fw-space notop">
 								{timeSlots.length ?
 									<>
 										{timeSlots.map((timeSlot) => 
 											<div key={timeSlots.indexOf(timeSlot)}>
-												<input type="date" name={`date[${timeSlots.indexOf(timeSlot)}]`} value={timeSlot.date} onChange={(e) => this.handleTimeSlotChange('date', e.target.value, timeSlots.indexOf(timeSlot))}/>
-												<input type="time" name={`time[${timeSlots.indexOf(timeSlot)}]`} value={timeSlot.time} onChange={(e) => this.handleTimeSlotChange('time', e.target.value, timeSlots.indexOf(timeSlot))}/>
+												<div className="field text">
+													<label htmlFor={`date[${timeSlots.indexOf(timeSlot)}]`}>Date</label>
+													<input type="date" name={`date[${timeSlots.indexOf(timeSlot)}]`} id={`date[${timeSlots.indexOf(timeSlot)}]`} value={timeSlot.date} onChange={(e) => this.handleTimeSlotChange('date', e.target.value, timeSlots.indexOf(timeSlot))}/>
+												</div>
+												<div className="field text">
+													<label htmlFor={`time[${timeSlots.indexOf(timeSlot)}]`}>Time</label>
+													<input type="time" name={`time[${timeSlots.indexOf(timeSlot)}]`} id={`time[${timeSlots.indexOf(timeSlot)}]`} value={timeSlot.time} onChange={(e) => this.handleTimeSlotChange('time', e.target.value, timeSlots.indexOf(timeSlot))}/>
+												</div>
 												<button className="button" onClick={(e) => this.handleRemoveTimeSlot(e, timeSlots.indexOf(timeSlot))}>
 													Remove Time
 													<FontAwesomeIcon icon={faTimes}/>

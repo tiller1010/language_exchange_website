@@ -69,7 +69,7 @@ export default class VideoSearchForm extends React.Component<VideoSearchFormProp
 			sort: event.target.value
 		});
 		// This approach triggers the onSubmit handler
-		event.target.form.querySelector('input[type="submit"]').click();
+		event.target.form.querySelector('button[type="submit"]').click();
 	}
 
 	render(){
@@ -80,7 +80,7 @@ export default class VideoSearchForm extends React.Component<VideoSearchFormProp
 			<form action="/videos" method="GET" className="fw-form video-search-form">
 				<div className="flex-container flex-vertical-stretch">
 					<div className="field text">
-						<label htmlFor="keywordsField">Search video submissions</label>
+						<label htmlFor="keywordsField">Search</label>
 						<input type="text" name="keywords" id="keywordsField" value={keywords} onChange={this.handleKeywordsChange}/>
 					</div>
 					<button type="submit" value="Search" className="button">

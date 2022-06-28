@@ -1,11 +1,10 @@
 .upload-container{
 	position: relative;
 	width: max-content;
-    cursor: pointer;
     &:hover{
 		input[type="file"] + label{
-	    	background-color: getThemeProperty(textColorLight);
-	    	color: getThemeProperty(primaryColor);
+			background-color: getThemeProperty(backgroundHoverColor, $component-button-properties);
+			color: getThemeProperty(textHoverColor, $component-button-properties);
 	    }
     }
 	input[type="file"]{
@@ -18,21 +17,18 @@
 	    cursor: pointer;
 		border-radius: 100px;
 		border: none;
+		z-index: 2;
 		&::-webkit-file-upload-button{
 			display: none;
 		}
 		+ label {
 			z-index: 1;
-			display: block;
-			border-radius: 100px;
-			margin: 10px 0;
-			padding: 10px 15px;
-		    background-color: getThemeProperty(primaryColor);
-		    color: getThemeProperty(textColorLight);
-		    transition: background-color .25s ease;
-		    svg{
-		    	padding: 0 4px;
-		    }
+			@include button-input-style;
 		}
+	}
+	svg {
+		position: absolute;
+		right: 15px;
+		top: 11px;
 	}
 }
