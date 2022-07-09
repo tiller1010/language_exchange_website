@@ -156,24 +156,28 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 		switch(this.props.view){
 			case 'owner':
 			return timeSlots.map((timeSlot) => 
-				<div key={timeSlots.indexOf(timeSlot)}>
+				<div key={timeSlots.indexOf(timeSlot)} style={{ margin: '10px 0', borderBottom: '1px dotted black' }}>
 					{timeSlot.customerUserID ? 
 						<div>
-							<div className="field checkbox" style={{ whiteSpace: 'nowrap' }}>
-								{/* @ts-ignore */}
-								<input id={`timeSlot${timeSlots.indexOf(timeSlot)}`} type="checkbox" checked={timeSlot.completed} onClick={(e) => this.handleTimeSlotChange(e.target.checked, timeSlots.indexOf(timeSlot))}/>
-								{/* @ts-ignore */}
-								<label htmlFor={`timeSlot${timeSlots.indexOf(timeSlot)}`}>{timeSlot.date} - {timeSlot.time.convertTo12HourTime()} with User: {timeSlot.customerDisplayName}</label>
-							</div>
+							<p><b>Video Chat with: {timeSlot.customerDisplayName}</b></p>
+							<p><b>{timeSlot.date} - {timeSlot.time.convertTo12HourTime()}</b></p>
 							<a className="button" href={`/video-chat?forUserID=${timeSlot.customerUserID}`}>
 								Go to Video Chat
 								<FontAwesomeIcon icon={faLongArrowAltRight}/>
 							</a>
+							<div className="field checkbox" style={{ whiteSpace: 'nowrap' }}>
+								{/* @ts-ignore */}
+								<input id={`timeSlot${timeSlots.indexOf(timeSlot)}`} type="checkbox" checked={timeSlot.completed} onClick={(e) => this.handleTimeSlotChange(e.target.checked, timeSlots.indexOf(timeSlot))}/>
+								{/* @ts-ignore */}
+								<label htmlFor={`timeSlot${timeSlots.indexOf(timeSlot)}`}>Mark Completed</label>
+							</div>
 						</div>
 						:
 						<>
 							{/* @ts-ignore */}
-							<div>{timeSlot.date} - {timeSlot.time.convertTo12HourTime()} Available</div>
+							<div style={{ margin: '10px 0', minHeight: '36px', display: 'inline-flex', alignItems: 'center' }}>
+								<b>Available</b><span>&nbsp;{timeSlot.date} - {timeSlot.time.convertTo12HourTime()}</span>
+							</div>
 						</>
 					}
 				</div>
@@ -317,7 +321,8 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 					{this.renderTimeSlots()}
 				</div>
 
-				{this.props.view == 'customer' ?
+				{/* Only Show Buy button if customer selected timeslots */}
+				{this.props.view == 'customer' && this.state.timeSlots.filter(timeSlot => timeSlot.tempCustomerUserID).length ?
 					<button className="button" onClick={() => this.handleBuyNow()}>
 						Buy Now
 						<FontAwesomeIcon icon={faPlus}/>

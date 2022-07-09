@@ -49,6 +49,10 @@ $component-form-select-properties:(
 );
 
 $component-form-checkbox-properties:(
+);
+	// checkedIcon: "\f17b",
+
+$component-form-checkbox-properties:(
   backgroundColor: map-get($theme-properties, backgroundColorLight),
 );
 
@@ -56,12 +60,27 @@ $component-form-radio-properties:(
   backgroundColor: map-get($theme-properties, backgroundColorLight),
 );
 
+// Define FontAwesome Webfonts
 @font-face {
-	font-family: 'Font Awesome 5 Solid';
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 900;
 	src: url('https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/webfonts/fa-solid-900.woff2') format('woff2');
 }
-i.fas, .fw-form .field.dropdown:after{
-	font-family: 'Font Awesome 5 Solid' !important;
+@font-face {
+	font-family: 'Font Awesome 5 Free';
+	src: url('https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/webfonts/fa-regular-400.woff2') format('woff2');
+}
+i.fas {
+	font-family: 'Font Awesome 5 Free';
+}
+.fw-form .field.dropdown:after {
+	font-weight: 900;
+}
+
+// Disable IOS styles
+input[type="date"],
+input[type="time"] {
+	-webkit-appearance: none;
 }
 
 @import 'werkbot-framewerk/sass/fw-bundle';

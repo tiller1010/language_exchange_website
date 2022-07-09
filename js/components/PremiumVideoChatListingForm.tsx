@@ -7,6 +7,17 @@ import graphQLFetch from '../graphQLFetch.js';
 import PremiumVideoChatListing from './PremiumVideoChatListing.tsx';
 // @ts-ignore
 import RemoveConfirmationModal from './RemoveConfirmationModal.tsx';
+import { initFramewerk } from 'werkbot-framewerk';
+
+function findInputElement(element) {
+  if (!element) return;
+  let answerElement = element.querySelector('input');
+  if (!answerElement) {
+    return findInputElement(element.parentElement)
+  } else {
+    return answerElement;
+  }
+}
 
 interface User {
 	_id: string;
@@ -72,6 +83,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 			savedAllChanges: true,
 		}
 		this.state = state;
+		this.handlePriceChange = this.handlePriceChange.bind(this);
 		this.handleThumbnailChange = this.handleThumbnailChange.bind(this);
 		this.handleTimeSlotChange = this.handleTimeSlotChange.bind(this);
 		this.handleRemoveTimeSlot = this.handleRemoveTimeSlot.bind(this);
@@ -85,8 +97,26 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 			this.setState({ ...this.props.user.premiumVideoChatListing });
 			this.setState({ savedPremiumVideoChatListing: this.props.user.premiumVideoChatListing });
 		}
+
+		// Make sure generated buttons effect state
+		const numericButtonsCheck = setInterval(() => {
+			const generatedButtons = document.querySelectorAll('.field.numeric > span')
+			if (generatedButtons.length === 2) {
+				clearInterval(numericButtonsCheck)						
+				generatedButtons.forEach((controlIcon) => {
+					controlIcon.addEventListener('click', (e) => {
+						// @ts-ignore
+						const input = findInputElement(e.target.parentElement);
+						this.handlePriceChange({ target: { value: input.value } });
+					});
+				});
+			}
+		}, 100);
 	}
 
+	handlePriceChange(event) {
+		this.setState({price: Number(event.target.value), savedAllChanges: false});
+	}
 
 	handleThumbnailChange(event){
 		const context = this;
@@ -145,7 +175,6 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 					time: '',
 					booked: false,
 					completed: false,
-					savedAllChanges: false,
 				}
 			]
 		});
@@ -340,7 +369,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 							</div>
 							<div className="field numeric">
 								<label htmlFor="priceField">Price</label>
-								<input type="number" min="0.50" step="0.01" name="price" id="priceField" value={price} onChange={(event) => this.setState({price: Number(event.target.value), savedAllChanges: false})}/>
+								<input type="number" min="0.50" step="0.01" name="price" id="priceField" value={price} onChange={this.handlePriceChange}/>
 								<p><i>Application fees will be applied</i></p>
 							</div>
 							<div className="field text">

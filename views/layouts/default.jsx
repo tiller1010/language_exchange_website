@@ -3,7 +3,7 @@ import React from 'react';
 const DefaultLayout = (props) => {
 	return (
 		<html style={{ fontFamily: 'sans-serif' }}>
-			<head><title>Video Lessons</title></head>
+			<head><title>Open Education App</title></head>
 			<meta name="viewport" content="width=device-width, initial-scale=1"/>
 			<script async src={`${props.pathResolver || ''}js/main.js`}></script>
 			<script async src={`${props.pathResolver || ''}js/modal.js`}></script>

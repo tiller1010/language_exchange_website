@@ -296,10 +296,18 @@ app.use(express.json());
 					});
 				}else if(req.user){
 					let user = req.user;
+
+					let stripeAccountPending = true;
+					if (user.connectedStripeAccountID) {
+						const account = await stripe.accounts.retrieve(user.connectedStripeAccountID);
+						stripeAccountPending = !(account.charges_enabled && account.payouts_enabled);
+					}
+
 					return res.render('account-profile', {
 						userID: user._id,
 						authenticatedUserID: req.user._id,
 						isCurrentUser: true,
+						stripeAccountPending,
 					});
 				} else {
 					return res.redirect('/login');

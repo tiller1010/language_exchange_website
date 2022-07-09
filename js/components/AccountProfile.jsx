@@ -197,14 +197,29 @@ class AccountProfile extends React.Component {
 							<PremiumVideoChatListingForm user={authenticatedUser}/>
 							<p>
 								{authenticatedUser.connectedStripeAccountID ?
-									<p className="desktop-hide">Stripe Account ID: {authenticatedUser.connectedStripeAccountID}</p>
+									<>
+									{this.props.stripeAccountPending ?
+										<>
+										<p><b>!! Your Connected Stripe Account still needs to be completed, or is pending verification. !!</b></p>
+										<p>Your video chat listing will not be purchasable until your connected Stripe account is completed and verified.</p>
+										<a href={`/manage-stripe-account/${authenticatedUser.connectedStripeAccountID}`} className="button">
+											 Complete Stripe Account
+											<FontAwesomeIcon icon={faUser}/>
+										</a>
+										</>
+										:
+										<a href={`/manage-stripe-account/${authenticatedUser.connectedStripeAccountID}`} className="button">
+											 Manage Stripe Account
+											<FontAwesomeIcon icon={faUser}/>
+										</a>
+									}
+									</>
 									:
-									''
+									<a href={`/manage-stripe-account/`} className="button">
+										Create Connected Stripe Account
+										<FontAwesomeIcon icon={faUser}/>
+									</a>
 								}
-								<a href={`/manage-stripe-account/${authenticatedUser.connectedStripeAccountID || ''}`} className="button">
-									Manage Stripe Account
-									<FontAwesomeIcon icon={faUser}/>
-								</a>
 							</p>
 						</>
 						:

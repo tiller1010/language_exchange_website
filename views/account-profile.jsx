@@ -11,6 +11,7 @@ class AccountProfile extends React.Component {
 				    userid={this.props.userID}
 				    authenticateduserid={this.props.authenticatedUserID}
 				    iscurrentuser={String(this.props.isCurrentUser)}
+				    stripeaccountpending={String(this.props.stripeAccountPending)}
 				    pathresolver={this.props.pathResolver || ''}>
 			    </div>
 			</DefaultLayout>

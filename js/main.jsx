@@ -89,8 +89,9 @@ if(document.getElementById('account-profile')){
 	var userID = document.getElementById('account-profile').getAttribute('userid');
 	var authenticatedUserID = document.getElementById('account-profile').getAttribute('authenticateduserid');
 	var isCurrentUser = document.getElementById('account-profile').getAttribute('iscurrentuser');
+	var stripeAccountPending = document.getElementById('account-profile').getAttribute('stripeaccountpending');
 	var pathResolver = document.getElementById('account-profile').getAttribute('pathresolver');
-	ReactDOM.render(<AccountProfile userID={userID} authenticatedUserID={authenticatedUserID} isCurrentUser={eval(isCurrentUser)} pathResolver={pathResolver}/>, document.getElementById('account-profile'));
+	ReactDOM.render(<AccountProfile userID={userID} authenticatedUserID={authenticatedUserID} isCurrentUser={eval(isCurrentUser)} stripeAccountPending={eval(stripeAccountPending)} pathResolver={pathResolver}/>, document.getElementById('account-profile'));
 }
 if(document.getElementById('video-chat')){
 	var authenticatedUserID = document.getElementById('video-chat').getAttribute('authenticateduserid');

@@ -292,13 +292,18 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 		});
 	}
 
-	hangup(){
-		const { peerConnection, availableCalls } = this.state;
+	async hangup(){
+		// const { peerConnection } = this.state;
 
-		peerConnection.close();
+		// peerConnection.close();
 
 		this.webcamVideo.current.srcObject = null;
 		this.remoteVideo.current.srcObject = null;
+
+		const localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+		localStream.getTracks().forEach((track) => {
+		  track.stop();
+		});
 
 		this.setState({
 			callID: '',
@@ -361,6 +366,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 				<div className="pure-u-1 pure-u-md-1-2">
 					<div className="pad">
 						<h2>Join a Call</h2>
+						<p>Select the most recent call offer</p>
 						<p>Not seeing the right call? Try clicking refresh.</p>
 						<button className="button" id="refreshButton" onClick={this.refreshCallOffers}>
 							Refresh
@@ -370,10 +376,11 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 							<div className="flex y-center field optionset">
 								{availableCalls ?
 									availableCalls.map((callOffer) =>
-										<div key={availableCalls.indexOf(callOffer)}>
+										<div key={availableCalls.indexOf(callOffer)} style={{ maxWidth: '100%' }}>
+											<p><b>{callOffer.withUserDisplayName}</b></p>
 											<div style={{ whiteSpace: 'nowrap' }}>
 												<input type="radio" id={`callOffer_${callOffer.callID}`} name="callID" onClick={() => this.setState({ callID: callOffer.callID})}/>
-												<label htmlFor={`callOffer_${callOffer.callID}`}>With {callOffer.withUserDisplayName}, created call on {callOffer.createdDate}</label>
+												<label htmlFor={`callOffer_${callOffer.callID}`} style={{ maxWidth: '100%', whiteSpace: 'normal' }}>&nbsp;Call created on {callOffer.createdDate}</label>
 											</div>
 											<button className="button" id="answerButton" disabled={answerButtonDisabled || callID != callOffer.callID} onClick={this.answerCall}>
 												Answer
@@ -417,15 +424,18 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 							</div>
 						</div>
 					</div>
-					<div className="flex x-center pure-u-1">
-						<button className="button" id="webcamButton" disabled={this.state.webcamButtonDisabled} onClick={this.startWebcam}>
-							Start webcam
-							<FontAwesomeIcon icon={faCamera}/>
-						</button>
-					</div>
-					<div className="flex x-center y-center">
-						{this.renderCallControls()}
-					</div>
+					{this.state.webcamButtonDisabled ?
+						<div className="flex x-center y-center">
+							{this.renderCallControls()}
+						</div>
+						:
+						<div className="flex x-center pure-u-1">
+							<button className="button" id="webcamButton" onClick={this.startWebcam}>
+								Start webcam
+								<FontAwesomeIcon icon={faCamera}/>
+							</button>
+						</div>
+					}
 					<div className="flex x-center pure-u-1">
 						<button className="button" id="hangupButton" disabled={this.state.hangupButtonDisabled} onClick={this.hangup}>
 							Hangup

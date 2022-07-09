@@ -62,8 +62,10 @@ export default class Product extends React.Component<ProductProps, ProductState>
 					{timeSlots.length ?
 						timeSlots.map((timeSlot) => 
 							<div key={timeSlots.indexOf(timeSlot)}>
-								<a className="button" href={`/video-chat?withUserID=${productObject.userID}`}>
-									Video Chat with User: {this.state.ownerDisplayName} on {timeSlot.date} - {timeSlot.time.convertTo12HourTime()}
+								<p><b>Video Chat with: {this.state.ownerDisplayName}</b></p>
+								<p><b>{timeSlot.date} - {timeSlot.time.convertTo12HourTime()}</b></p>
+								<a className="button" href={`/video-chat?withUserID=${productObject.userID}`} aria-label={`Go to Video Chat with ${this.state.ownerDisplayName}`}>
+									Go to Video Chat
 									<FontAwesomeIcon icon={faLongArrowAltRight}/>
 								</a>
 							</div>
