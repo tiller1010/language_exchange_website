@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome, faTimes, faCheckCircle, faBars } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faLongArrowAltLeft, faSync, faPlus, faTimes, faCheckCircle, faDumbbell } from '@fortawesome/free-solid-svg-icons';
 import Navigation from './Navigation.jsx';
 
 function shuffleArray(array) {
@@ -22,6 +22,7 @@ class Topic extends React.Component {
 		this.state = {
 			challenges: [],
 			optionsStatus: '',
+			inChallengeMode: false,
 			allChallengesAnswered: false,
 			topic: '',
 			loaded: false,
@@ -29,6 +30,7 @@ class Topic extends React.Component {
 		this.handleToggleOptions = this.handleToggleOptions.bind(this);
 		this.checkAnswerInput = this.checkAnswerInput.bind(this);
 		this.handleResetTopic = this.handleResetTopic.bind(this);
+		this.handleToggleChallengeMode = this.handleToggleChallengeMode.bind(this);
 	}
 
 	componentDidMount(){
@@ -50,7 +52,8 @@ class Topic extends React.Component {
 					});
 					this.setState({
 						challenges: completedChalleges,
-						allChallengesAnswered: true
+						inChallengeMode: true,
+						allChallengesAnswered: true,
 					});
 				}
 			})
@@ -78,8 +81,11 @@ class Topic extends React.Component {
 				allChallengesAnswered = false;
 			}
 		});
-		if(allChallengesAnswered){
-			alert('Congratulations! You have answered each challenge correctly.');
+		if(allChallengesAnswered && !this.state.allChallengesAnswered){
+			// Wait for final input before congratulating with alert.
+			setTimeout(() => {
+				alert('Congratulations! You have answered each challenge correctly.');
+			}, 100);
 			axios.post(`/level/${this.props.levelID}/topic/${this.props.topicID}`)
 				.then(res => {
 					if(res.data){
@@ -92,9 +98,13 @@ class Topic extends React.Component {
 	}
 
 	handleResetTopic(){
-		axios.post(`/level/${this.props.levelID}/topic/${this.props.topicID}/reset`);
+
+		/* Actually removes the topic from the user's completed lessons */
+		// axios.post(`/level/${this.props.levelID}/topic/${this.props.topicID}/reset`);
+
 		this.setState({
-			allChallengesAnswered: false
+			inChallengeMode: false,
+			allChallengesAnswered: false,
 		});
 		let completedChalleges = [];
 		this.state.challenges.forEach((stateChallenge) => {
@@ -104,6 +114,20 @@ class Topic extends React.Component {
 		this.setState({
 			challenges: completedChalleges
 		});
+	}
+
+	handleToggleChallengeMode() {
+		// Currently this only sets "inChallengeMode" to true, as the reset button sets this to false.
+		const { inChallengeMode, challenges } = this.state;
+		this.setState({
+			inChallengeMode: !inChallengeMode,
+			challenges: shuffleArray(challenges),
+		});
+
+		// Trigger fw effect on new inputs
+		setTimeout(() => {
+			window.dispatchEvent(new Event('load'));
+		}, 100);
 	}
 
 	renderMedia(challenge){
@@ -118,14 +142,12 @@ class Topic extends React.Component {
 						);
 					case 'video/mp4':
 						return (
-							<video height="225" width="400" controls tabIndex="-1">
-								<source src={`${process.env.STRAPI_PUBLIC_URL}${challenge.attributes.FeaturedMedia.data.attributes.url}`} type="video/mp4"/>
+							<video height="225" width="400" controls tabIndex="-1" src={`${process.env.STRAPI_PUBLIC_URL}${challenge.attributes.FeaturedMedia.data.attributes.url}`}>
 							</video>
 						);
 					case 'audio/wav':
 						return (
-							<audio height="225" width="400" controls tabIndex="-1">
-								<source src={`${process.env.STRAPI_PUBLIC_URL}${challenge.attributes.FeaturedMedia.data.attributes.url}`} type="audio/wav"/>
+							<audio height="225" width="400" controls tabIndex="-1" src={`${process.env.STRAPI_PUBLIC_URL}${challenge.attributes.FeaturedMedia.data.attributes.url}`}>
 							</audio>
 						);
 					default:
@@ -140,6 +162,7 @@ class Topic extends React.Component {
 		const {
 			challenges,
 			optionsStatus,
+			inChallengeMode,
 			allChallengesAnswered,
 			topic,
 			loaded,
@@ -168,7 +191,7 @@ class Topic extends React.Component {
 							</button>
 			    		</div>
 		    		</div>
-	    			{allChallengesAnswered ?
+					{allChallengesAnswered || inChallengeMode ?
 						<div className="pure-u-1 flex x-center">
 							<button className="button" onClick={this.handleResetTopic}>
 								Reset Topic
@@ -176,7 +199,14 @@ class Topic extends React.Component {
 							</button>
 						</div>
 						:
-						''
+						<div className="desktop-100 flex-container flex-horizontal-center">
+							<div className="pad">
+								<button className="button" onClick={this.handleToggleChallengeMode}>
+									Begin challenge
+									<FontAwesomeIcon icon={faDumbbell}/>
+								</button>
+							</div>
+						</div>
 					}
 				</div>
 
@@ -207,15 +237,21 @@ class Topic extends React.Component {
 					    		<div className="challenge">
 						    		<div className="pad">
 						    			<div className={`challenge-input ${challenge.answered || ''}`}>
-							    			<div className="correct-answer desktop-100">{challenge.attributes.Title}</div>
-							    			<div className="field text">
-								    			<label htmlFor={`meaning${challenge.attributes.Title}Field`}>Guess meaning</label>
-								    			<input type="text" name={`meaning${challenge.attributes.Title}Field`} id={`meaning${challenge.attributes.Title}Field`} onChange={(event) => this.checkAnswerInput(event.target.value, challenge)}/>
-							    			</div>
-							    			<div className="input-correct">
-							    				<p>Correct!</p>
-								    			<FontAwesomeIcon icon={faCheckCircle}/>
-							    			</div>
+							    			<h3 className={`${inChallengeMode ? 'correct-answer' : ''} desktop-100`}>{challenge.attributes.Title}</h3>
+							    			{inChallengeMode ?
+							    				<>
+												<div className="field text">
+													<label htmlFor={`meaning${challenge.attributes.Title}Field`}>Guess meaning</label>
+													<input type="text" name={`meaning${challenge.attributes.Title}Field`} id={`meaning${challenge.attributes.Title}Field`} onChange={(event) => this.checkAnswerInput(event.target.value, challenge)}/>
+												</div>
+												<div className="input-correct">
+													<p>Correct!</p>
+													<FontAwesomeIcon icon={faCheckCircle}/>
+												</div>
+							    				</>
+							    				:
+							    				''
+							    			}
 						    			</div>
 						    			<p>{challenge.attributes.Content}</p>
 						    			{challenge.attributes.FeaturedMedia.data ?
@@ -225,7 +261,7 @@ class Topic extends React.Component {
 						    				:
 						    				''
 						    			}
-						    			{allChallengesAnswered ?
+						    			{allChallengesAnswered || !inChallengeMode ?
 							    			<div className="flex x-space-between">
 								    			<a href={`/videos?keywords=${challenge.attributes.Title}`} className="button">
 									    			View others
@@ -247,6 +283,25 @@ class Topic extends React.Component {
 			    	:
 			    	<>{loaded ? <h2>No challenges</h2> : <div className="lds-facebook"><div></div><div></div><div></div></div>}</>
 			    }
+
+				{allChallengesAnswered || inChallengeMode ?
+					<div className="pure-u-1 flex x-center">
+						<button className="button" onClick={this.handleResetTopic}>
+							Reset Topic
+							<FontAwesomeIcon icon={faSync}/>
+						</button>
+					</div>
+					:
+					<div className="desktop-100 flex-container flex-horizontal-center">
+						<div className="pad">
+							<button className="button" onClick={this.handleToggleChallengeMode}>
+								Begin challenge
+								<FontAwesomeIcon icon={faDumbbell}/>
+							</button>
+						</div>
+					</div>
+				}
+
 			</div>
 		);
 	}

@@ -9,7 +9,6 @@ import PremiumVideoChatListing from './PremiumVideoChatListing.tsx';
 import RemoveConfirmationModal from './RemoveConfirmationModal.tsx';
 // @ts-ignore
 import LanguageSelector from './LanguageSelector.tsx';
-import { initFramewerk } from 'werkbot-framewerk';
 
 function findInputElement(element) {
   if (!element) return;
