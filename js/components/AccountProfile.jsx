@@ -342,6 +342,7 @@ class AccountProfile extends React.Component {
 							    		<VideoPlayer
 											_id={video._id}
 											title={video.title}
+											languageOfTopic={video.languageOfTopic}
 											src={`${this.props.pathResolver}${video.src}`}
 											thumbnailSrc={`${this.props.pathResolver}${video.thumbnailSrc}`}
 											uploadedBy={video.uploadedBy}
@@ -396,6 +397,7 @@ class AccountProfile extends React.Component {
 							    		<VideoPlayer
 											_id={video._id}
 											title={video.title}
+											languageOfTopic={video.languageOfTopic}
 											src={`${this.props.pathResolver}${video.src}`}
 											thumbnailSrc={`${this.props.pathResolver}${video.thumbnailSrc}`}
 											uploadedBy={video.uploadedBy}

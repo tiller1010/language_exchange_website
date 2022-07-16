@@ -20,6 +20,7 @@ interface VideoPlayerState {
 interface VideoPlayerProps {
 	_id: string;
 	title: string;
+	languageOfTopic?: string;
 	src: string;
 	thumbnailSrc: string;
 	uploadedBy: User;
@@ -72,6 +73,7 @@ export default class VideoPlayer extends React.Component<VideoPlayerProps, Video
 			${apiSegment}(userID: $userID, videoID: $videoID){
 				_id
 				title
+ 				languageOfTopic
 				src
 				originalName
 				thumbnailSrc
@@ -108,7 +110,7 @@ export default class VideoPlayer extends React.Component<VideoPlayerProps, Video
 	render(){
 
 		const { likes, likedByCurrentUser } = this.state;
-		const { _id, title, uploadedBy, src, thumbnailSrc } = this.props;
+		const { _id, title, languageOfTopic, uploadedBy, src, thumbnailSrc } = this.props;
 
 		return (
 			<div>
@@ -118,7 +120,7 @@ export default class VideoPlayer extends React.Component<VideoPlayerProps, Video
 							<div style={{ maxWidth: '65%' }}>
 								<ReadMore
 						            fade
-						            minHeight={58}
+						            minHeight={65}
 						            btnStyles={{
 						            	position: 'absolute',
 						            	bottom: '-30px',
@@ -128,9 +130,15 @@ export default class VideoPlayer extends React.Component<VideoPlayerProps, Video
 						            	padding: '5px',
 						            	zIndex: 1,
 						            	cursor: 'pointer',
+						            	whiteSpace: 'nowrap',
 						            }}
 					            >
 									<h3>{title}</h3>
+									{languageOfTopic ?
+										<h4>{languageOfTopic}</h4>
+										:
+										''
+									}
 								</ReadMore>
 							</div>
 							{this.props.handleDeleteVideo ?

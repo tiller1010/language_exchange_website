@@ -10,6 +10,7 @@ type Video {
 	created: String!
 	likes: Int!
 	uploadedBy: User!
+	languageOfTopic: String!
 }
 
 type User {

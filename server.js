@@ -251,6 +251,7 @@ app.use(express.json());
 		app.post('/videos/add', upload.fields([{name: 'video', maxCount: 1}, {name: 'thumbnail', maxCount: 1}]), async (req, res) => {
 			const newVideo = await addVideo({
 				title: req.body.title,
+				languageOfTopic: req.body.languageOfTopic,
 				src: 'assets/' + req.files['video'][0].filename,
 				originalName: req.files['video'][0].originalname,
 				thumbnailSrc: 'assets/' + req.files['thumbnail'][0].filename,

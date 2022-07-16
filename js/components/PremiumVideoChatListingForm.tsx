@@ -7,6 +7,8 @@ import graphQLFetch from '../graphQLFetch.js';
 import PremiumVideoChatListing from './PremiumVideoChatListing.tsx';
 // @ts-ignore
 import RemoveConfirmationModal from './RemoveConfirmationModal.tsx';
+// @ts-ignore
+import LanguageSelector from './LanguageSelector.tsx';
 import { initFramewerk } from 'werkbot-framewerk';
 
 function findInputElement(element) {
@@ -353,16 +355,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 								<label htmlFor="topicField">Topic</label>
 								<input type="text" name="topic" id="topicField" value={topic} onChange={(event) => this.setState({topic: event.target.value, savedAllChanges: false})}/>
 							</div>
-							<div className="field dropdown">
-								<label htmlFor="languageOfTopicField">Language</label>
-								<select name="languageOfTopic" id="languageOfTopicField" onChange={(event) => this.setState({languageOfTopic: event.target.value, savedAllChanges: false})} value={languageOfTopic}>
-									<option value="">Select a language</option>
-									<option>ASL</option>
-									{languages.getLanguageCodes().map((langCode) => 
-										<option key={langCode}>{languages.getLanguageName(langCode)}</option>
-									)}
-								</select>
-							</div>
+							<LanguageSelector name="languageOfTopic" id="languageOfTopicField" onChange={(event) => this.setState({languageOfTopic: event.target.value, savedAllChanges: false})} value={languageOfTopic}/>
 							<div className="field text">
 								<label htmlFor="durationField">Duration</label>
 								<input type="text" name="duration" id="durationField" placeholder="5 minutes" value={duration} onChange={(event) => this.setState({duration: event.target.value, savedAllChanges: false})}/>

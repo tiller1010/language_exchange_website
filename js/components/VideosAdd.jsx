@@ -3,12 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome, faPlay, faUpload } from '@fortawesome/free-solid-svg-icons';
 import Navigation from './Navigation.jsx';
 import MediaRenderer from './MediaRenderer.tsx';
+import LanguageSelector from './LanguageSelector.tsx';
 
 class VideosAdd extends React.Component {
 	constructor(){
 		super();
 		this.state = {
 			title: '',
+			languageOfTopic: '',
 			mediaSource: '',
 			thumbnailSrc: '',
 		}
@@ -84,7 +86,14 @@ class VideosAdd extends React.Component {
 				
 	render(){
 
-		const { video, mediaSource, thumbnail, thumbnailSrc } = this.state;
+		const {
+			title,
+			languageOfTopic,
+			video, // media filename: "example.mp4"
+			mediaSource, // blob link: "blob:https://..."
+			thumbnail, // thumbnail filename: "example.jpg"
+			thumbnailSrc, // encoded image: "data:image/jpeg;base64,/..."
+		} = this.state;
 
 		let fileExtension = '';
 		if (video) {
@@ -125,8 +134,9 @@ class VideosAdd extends React.Component {
 						<form action="/videos/add" method="POST" encType="multipart/form-data" className="flex-col x-end fw-form">
 							<div className="field text" htmlFor="titleField">
 								<label htmlFor="titleField">Title</label>
-								<input type="text" name="title" id="titleField" value={this.state.title} onChange={this.handleTitleChange} aria-label="title" required/>
+								<input type="text" name="title" id="titleField" value={title} onChange={this.handleTitleChange} aria-label="title" required/>
 							</div>
+							<LanguageSelector name="languageOfTopic" id="languageOfTopicField" onChange={(event) => this.setState({ languageOfTopic: event.target.value })} value={languageOfTopic}/>
 							<div className="upload-container">
 								<input type="file" name="video" onChange={this.handleVideoUploadChange} required/>
 								<label htmlFor="video">

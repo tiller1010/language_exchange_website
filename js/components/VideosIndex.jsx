@@ -196,6 +196,7 @@ class VideosIndex extends React.Component {
 										<VideoPlayer
 											_id={video._id}
 											title={video.title}
+											languageOfTopic={video.languageOfTopic}
 											src={video.src}
 											thumbnailSrc={video.thumbnailSrc}
 											uploadedBy={video.uploadedBy}

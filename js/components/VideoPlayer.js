@@ -101,7 +101,7 @@ var VideoPlayer = /** @class */ (function (_super) {
                             return [2 /*return*/];
                         }
                         apiSegment = this.state.likedByCurrentUser ? 'removeLike' : 'addLike';
-                        query = "mutation addLike($userID: ID!, $videoID: ID!){\n\t\t\t".concat(apiSegment, "(userID: $userID, videoID: $videoID){\n\t\t\t\t_id\n\t\t\t\ttitle\n\t\t\t\tsrc\n\t\t\t\toriginalName\n\t\t\t\tthumbnailSrc\n\t\t\t\toriginalThumbnailName\n\t\t\t\tcreated\n\t\t\t\tlikes\n\t\t\t\tuploadedBy {\n\t\t\t\t\t_id\n\t\t\t\t\tdisplayName\n\t\t\t\t}\n\t\t\t}\n\t\t}");
+                        query = "mutation addLike($userID: ID!, $videoID: ID!){\n\t\t\t".concat(apiSegment, "(userID: $userID, videoID: $videoID){\n\t\t\t\t_id\n\t\t\t\ttitle\n \t\t\t\tlanguageOfTopic\n\t\t\t\tsrc\n\t\t\t\toriginalName\n\t\t\t\tthumbnailSrc\n\t\t\t\toriginalThumbnailName\n\t\t\t\tcreated\n\t\t\t\tlikes\n\t\t\t\tuploadedBy {\n\t\t\t\t\t_id\n\t\t\t\t\tdisplayName\n\t\t\t\t}\n\t\t\t}\n\t\t}");
                         return [4 /*yield*/, (0, graphQLFetch_js_1.default)(query, {
                                 userID: this.props.authenticatedUserID,
                                 videoID: videoID
@@ -128,13 +128,13 @@ var VideoPlayer = /** @class */ (function (_super) {
     VideoPlayer.prototype.render = function () {
         var _this = this;
         var _a = this.state, likes = _a.likes, likedByCurrentUser = _a.likedByCurrentUser;
-        var _b = this.props, _id = _b._id, title = _b.title, uploadedBy = _b.uploadedBy, src = _b.src, thumbnailSrc = _b.thumbnailSrc;
+        var _b = this.props, _id = _b._id, title = _b.title, languageOfTopic = _b.languageOfTopic, uploadedBy = _b.uploadedBy, src = _b.src, thumbnailSrc = _b.thumbnailSrc;
         return (React.createElement("div", null,
             React.createElement("div", { className: "flex x-center" },
                 React.createElement("div", { style: { maxWidth: '100%' } },
                     React.createElement("div", { className: "flex x-space-between y-center" },
                         React.createElement("div", { style: { maxWidth: '65%' } },
-                            React.createElement(react_simple_readmore_1.default, { fade: true, minHeight: 58, btnStyles: {
+                            React.createElement(react_simple_readmore_1.default, { fade: true, minHeight: 65, btnStyles: {
                                     position: 'absolute',
                                     bottom: '-30px',
                                     border: '1px solid #000',
@@ -143,8 +143,13 @@ var VideoPlayer = /** @class */ (function (_super) {
                                     padding: '5px',
                                     zIndex: 1,
                                     cursor: 'pointer',
+                                    whiteSpace: 'nowrap',
                                 } },
-                                React.createElement("h3", null, title))),
+                                React.createElement("h3", null, title),
+                                languageOfTopic ?
+                                    React.createElement("h4", null, languageOfTopic)
+                                    :
+                                        '')),
                         this.props.handleDeleteVideo ?
                             React.createElement("form", { action: "/videos/remove", method: "POST", className: "fw-form" },
                                 React.createElement("input", { type: "hidden", name: "videoID", value: this.props._id }),
