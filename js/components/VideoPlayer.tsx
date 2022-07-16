@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import graphQLFetch from '../graphQLFetch.js';
+// @ts-ignore
+import MediaRenderer from './MediaRenderer.tsx';
 
 interface User {
 	_id: string;
@@ -37,7 +39,6 @@ export default class VideoPlayer extends React.Component<VideoPlayerProps, Video
 		}
 		this.state = state;
 		this.toggleLike = this.toggleLike.bind(this);
-		this.renderMedia = this.renderMedia.bind(this);
 	}
 
 	componentDidMount(){
@@ -104,60 +105,10 @@ export default class VideoPlayer extends React.Component<VideoPlayerProps, Video
 		}
 	}
 
-	renderMedia() {
-
-		const { src, thumbnailSrc } = this.props;
-
-		const fileExtension = src.split('.').reverse()[0];
-
-		switch(fileExtension){
-			case 'svg':
-			case 'png':
-			case 'jpg':
-			case 'jpeg':
-				return (
-					<div className="img-container">
-						<img src={fileExtension}/>
-					</div>
-				);
-			case 'mov':
-			case 'mp4':
-				return (
-					<video className="video-preview lozad" height="225" width="400" poster={
-						thumbnailSrc || "/images/videoPlaceholder.png"
-					} controls>
-						<source type="video/mp4" src={src}></source>
-					</video>
-				);
-			case 'mp3':
-			case 'wav':
-				return (
-					<div style={{
-						height: '225px',
-						width: '400px',
-						background: `url('${thumbnailSrc || "/images/videoPlaceholder.png"}')`,
-						backgroundSize: 'cover',
-						display: 'flex',
-						alignItems: 'flex-end',
-						justifyContent: 'center',
-						borderRadius: '25px',
-					    overflow: 'hidden',
-					    maxWidth: '100%',
-					}}>
-						<audio className="lozad" controls>
-							<source type="audio/wav" src={src}></source>
-						</audio>
-					</div>
-				);
-			default:
-				return <p>Invalid media</p>
-		}
-	}
-
 	render(){
 
 		const { likes, likedByCurrentUser } = this.state;
-		const { _id, title, uploadedBy } = this.props;
+		const { _id, title, uploadedBy, src, thumbnailSrc } = this.props;
 
 		return (
 			<div>
@@ -203,7 +154,7 @@ export default class VideoPlayer extends React.Component<VideoPlayerProps, Video
 								</div>
 							}
 						</div>
-						{this.renderMedia()}
+						<MediaRenderer src={src} thumbnailSrc={thumbnailSrc}/>
 					</div>
 				</div>
 				<div className="flex x-space-around y-center">
