@@ -132,7 +132,7 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 		} = this.state;
 
 		return(
-			<div>
+			<section>
 				<form className="pure-u-1 pure-u-md-1-2 fw-form">
 					<h2>Premium video chats</h2>
 					<div className="field text">
@@ -156,7 +156,7 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 						</button>
 					</div>
 				</form>
-				{premiumVideoChatListings ?
+				{premiumVideoChatListings.length ?
 		    		<Slider {...{
 						dots: false,
 						infinite: false,
@@ -181,7 +181,7 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 					:
 					''
 				}
-			</div>
+			</section>
 		);
 	}
 }

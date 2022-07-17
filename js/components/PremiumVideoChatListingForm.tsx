@@ -427,7 +427,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 				</form>
 				<div className="pure-u-1 flex-container flex-horizontal-center">
 					{savedPremiumVideoChatListing ?
-						<div>
+						<div className="desktop-100">
 							<h3>Your saved Video Chat Listing</h3>
 							<PremiumVideoChatListing premiumVideoChatListing={savedPremiumVideoChatListing} authenticatedUserID={user._id} view={user._id == savedPremiumVideoChatListing.userID ? 'owner' : 'customer'}/>
 							<form>
