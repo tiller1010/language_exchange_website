@@ -254,8 +254,8 @@ app.use(express.json());
 				languageOfTopic: req.body.languageOfTopic,
 				src: 'assets/' + req.files['video'][0].filename,
 				originalName: req.files['video'][0].originalname,
-				thumbnailSrc: 'assets/' + req.files['thumbnail'][0].filename,
-				originalThumbnailName: req.files['thumbnail'][0].originalname,
+				thumbnailSrc: req.files.thumbnail ? 'assets/' + req.files.thumbnail[0].filename : '',
+				originalThumbnailName: req.files.thumbnail ? req.files.thumbnail[0].originalname : '',
 				created: new Date(),
 				uploadedBy: req.user ? { _id: req.user._id, displayName: req.user.displayName } : { displayName: 'Guest' }
 			});

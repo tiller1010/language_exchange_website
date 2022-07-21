@@ -145,7 +145,7 @@ class VideosAdd extends React.Component {
 								</label>
 							</div>
 							<div className="upload-container">
-								<input type="file" name="thumbnail" onChange={this.handleThumbnailUploadChange} required/>
+								<input type="file" name="thumbnail" onChange={this.handleThumbnailUploadChange}/>
 								<label htmlFor="thumbnail">Thumbnail
 									<FontAwesomeIcon icon={faUpload}/>
 								</label>
