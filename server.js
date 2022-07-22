@@ -60,7 +60,7 @@ app.use(express.json());
 		app.route('/graphql').post(graphqlUploadExpress());
 		await installHandler(app);
 
-		const VideoSearchService = await createSearchService('videos', ['title']);
+		const VideoSearchService = await createSearchService('videos', ['title', 'languageOfTopic']);
 
 		// Home route
 		app.get('/', (req, res) => {
@@ -163,7 +163,8 @@ app.use(express.json());
 
 		// Index videos route
 		app.get('/videos:format?', async (req, res) => {
-			let keywords = req.query.keywords || false;
+			let keywords = req.query.keywords || '';
+			let languageOfTopic = req.query.languageOfTopic || '';
 			let sort = req.query.sort || false;
 			let videos = null;
 			const page = req.query.page || 1;
@@ -180,17 +181,18 @@ app.use(express.json());
 				sortObject = {title: -1};
 			}
 			// If using search keywords
-			if(keywords){
+			if(keywords || languageOfTopic){
 				const searchPageLength = 3;
 				videos = await VideoSearchService.find({
 					query: {
 						title: { $search: keywords },
+						languageOfTopic: { $search: languageOfTopic },
 						$sort: sortObject,
 						$limit: searchPageLength,
 						$skip: (page - 1) * searchPageLength
 					}
 				});
-				const allVideoResults = await VideoSearchService.find({ query: { title: { $search: keywords } } });
+				const allVideoResults = await VideoSearchService.find({ query: { title: { $search: keywords }, languageOfTopic: { $search: languageOfTopic } } });
 				const pages = Math.ceil(allVideoResults.length / searchPageLength);
 
 			    videos = {

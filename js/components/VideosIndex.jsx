@@ -7,15 +7,19 @@ import VideoSearchForm from './VideoSearchForm.tsx';
 import Slider from 'react-slick';
 import VideoPlayer from './VideoPlayer.tsx';
 
-async function getVideos(){
+function getVideosSearchString(pageNumber = null) {
 	var urlParams = new URLSearchParams(window.location.search);
-	var searchKeywords = urlParams.get('keywords') || '';
-	var page = urlParams.get('page') || '';
+	var keywords = urlParams.get('keywords') || '';
+	var languageOfTopic = urlParams.get('languageOfTopic') || '';
+	var page = pageNumber || urlParams.get('page');
 	var sort = urlParams.get('sort') || '';
-	return fetch(`${document.location.origin}/videos.json?${searchKeywords ? 'keywords=' + searchKeywords + '&' : ''}
-			${page ? 'page=' + page : ''}
-			${sort ? '&sort=' + sort : ''}`
-		, { credentials: 'include' })
+	var search = new URLSearchParams({ keywords, languageOfTopic, page, sort });
+	return search.toLocaleString();
+}
+
+async function getVideos(){
+	var searchString = getVideosSearchString();
+	return fetch(`${document.location.origin}/videos.json?${searchString}`, { credentials: 'include' })
 		.then((response) => response.json());
 }
 
@@ -104,6 +108,7 @@ class VideosIndex extends React.Component {
 
 		var urlParams = new URLSearchParams(window.location.search);
 		var keywords = urlParams.get('keywords') || '';
+		var languageOfTopic = urlParams.get('languageOfTopic') || '';
 		var sort = urlParams.get('sort') || '';
 		var context = this;
 
@@ -121,6 +126,7 @@ class VideosIndex extends React.Component {
 					<h1>Videos</h1>
 					<VideoSearchForm
 						keywords={keywords}
+						languageOfTopic={languageOfTopic}
 						sort={sort}
 					/>
 				    <div className="flex">
@@ -146,8 +152,7 @@ class VideosIndex extends React.Component {
 							{this.state.currentPage > 1 ?
 								<li>
 									<a onClick={this.handleChangePage}
-										href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}
-											${this.state.sort ? '&sort=' + this.state.sort : ''}`}
+										href={`/videos?${getVideosSearchString(Number(this.state.currentPage) - 1)}`}
 										className="button icon-left"
 										aria-label="previous"
 									>
@@ -161,8 +166,7 @@ class VideosIndex extends React.Component {
 							{this.state.pages.map((page) =>
 								<li key={this.state.pages.indexOf(page)}>
 									<a onClick={this.handleChangePage}
-										href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}
-											${this.state.sort ? '&sort=' + this.state.sort : ''}`}
+										href={`/videos?${getVideosSearchString(page.pageNumber)}`}
 										className={`button no-icon ${page.pageNumber == this.state.currentPage ? 'selected' : ''}`}
 										aria-label={`page ${page.pageNumber}`}
 									>
@@ -173,8 +177,7 @@ class VideosIndex extends React.Component {
 							{this.state.currentPage < this.state.pages.length ?
 								<li>
 									<a onClick={this.handleChangePage}
-										href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}
-											${this.state.sort ? '&sort=' + this.state.sort : ''}`}
+										href={`/videos?${getVideosSearchString(Number(this.state.currentPage) + 1)}`}
 										className="button"
 									>
 										Next
@@ -216,8 +219,7 @@ class VideosIndex extends React.Component {
 							{this.state.currentPage > 1 ?
 								<li>
 									<a onClick={this.handleChangePage}
-										href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) - 1}
-											${this.state.sort ? '&sort=' + this.state.sort : ''}`}
+										href={`/videos?${getVideosSearchString(Number(this.state.currentPage) - 1)}`}
 										className="button icon-left"
 										aria-label="previous"
 									>
@@ -231,8 +233,7 @@ class VideosIndex extends React.Component {
 							{this.state.pages.map((page) =>
 								<li key={this.state.pages.indexOf(page)}>
 									<a onClick={this.handleChangePage}
-										href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${page.pageNumber}
-											${this.state.sort ? '&sort=' + this.state.sort : ''}`}
+										href={`/videos?${getVideosSearchString(page.pageNumber)}`}
 										className={`button no-icon ${page.pageNumber == this.state.currentPage ? 'selected' : ''}`}
 										aria-label={`page ${page.pageNumber}`}
 									>
@@ -243,8 +244,7 @@ class VideosIndex extends React.Component {
 							{this.state.currentPage < this.state.pages.length ?
 								<li>
 									<a onClick={this.handleChangePage}
-										href={`/videos?${keywords ? 'keywords=' + keywords + '&' : ''}page=${Number(this.state.currentPage) + 1}
-											${this.state.sort ? '&sort=' + this.state.sort : ''}`}
+										href={`/videos?${getVideosSearchString(Number(this.state.currentPage) + 1)}`}
 										className="button"
 									>
 										Next

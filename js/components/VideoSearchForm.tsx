@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faSlidersH } from '@fortawesome/free-solid-svg-icons';
+import LanguageSelector from './LanguageSelector.tsx';
 
 enum SortControlStatus {
 	open = 'open',
@@ -9,11 +10,13 @@ enum SortControlStatus {
 
 interface VideoSearchFormProps {
 	keywords: string;
+	languageOfTopic: string;
 	sort: string;
 }
 
 interface VideoSearchFormState {
 	keywords: string;
+	languageOfTopic: string;
 	sortControlStatus: SortControlStatus;
 	sort: string;
 }
@@ -23,6 +26,7 @@ export default class VideoSearchForm extends React.Component<VideoSearchFormProp
 		super(props);
 		let state: VideoSearchFormState = {
 			keywords: '',
+			languageOfTopic: '',
 			sortControlStatus: SortControlStatus.closed,
 			sort: ''
 		}
@@ -33,18 +37,20 @@ export default class VideoSearchForm extends React.Component<VideoSearchFormProp
 	}
 
 	componentDidMount(){
-		const { keywords, sort } = this.props;
+		const { keywords, languageOfTopic, sort } = this.props;
 		this.setState({
 			keywords,
+			languageOfTopic,
 			sort
 		});
 	}
 
 	componentDidUpdate(prevProps){
 		if(this.props != prevProps){
-			const { keywords, sort } = this.props;
+			const { keywords, languageOfTopic, sort } = this.props;
 			this.setState({
 				keywords,
+				languageOfTopic,
 				sort
 			});
 		}
@@ -74,20 +80,23 @@ export default class VideoSearchForm extends React.Component<VideoSearchFormProp
 
 	render(){
 
-		const { keywords, sortControlStatus, sort} = this.state;
+		const { keywords, languageOfTopic, sortControlStatus, sort} = this.state;
 
 		return(
 			<form action="/videos" method="GET" className="fw-form video-search-form">
 				<div className="flex-container flex-vertical-stretch">
-					<div className="field text">
+					<div className="field text tablet-100">
 						<label htmlFor="keywordsField">Search</label>
 						<input type="text" name="keywords" id="keywordsField" value={keywords} onChange={this.handleKeywordsChange}/>
 					</div>
-					<button type="submit" value="Search" className="button">
+					<div className="tablet-55">
+						<LanguageSelector name="languageOfTopic" id="languageOfTopicField" onChange={(event) => this.setState({ languageOfTopic: event.target.value })} value={languageOfTopic} required={false}/>
+					</div>
+					<button type="submit" value="Search" className="button tablet-20">
 						Search
 						<FontAwesomeIcon icon={faSearch}/>
 					</button>
-					<div className="sort-controls flex">
+					<div className="sort-controls flex tablet-20">
 						<button className={`button no-icon hamburger hamburger--collapse ${sortControlStatus == 'open' ? 'is-active' : ''}`} type="button" onClick={this.toggleSortControls}>
 							<span className="hamburger-box">
 								<span className="hamburger-inner"></span>

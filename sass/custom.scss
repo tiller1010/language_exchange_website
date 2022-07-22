@@ -77,6 +77,20 @@ i.fas {
 	font-weight: 900;
 }
 
+.fw-form{
+  .field.dropdown{
+    position: relative !important;
+    label{
+      position: absolute !important;
+      transform: translate(20px, 25px) !important;      
+      z-index: 1 !important;
+      &.labelShrunk{
+        transform: scale(.7) translate(30px, 20px) !important;
+      }
+    }
+  }
+ }
+
 // Disable IOS styles
 input[type="date"],
 input[type="time"] {

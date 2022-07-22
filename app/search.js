@@ -16,12 +16,8 @@ async function createSearchService(collection = '', searchIndexes = []){
 		}));
 		// Create search service
 		const SearchService = feathersService.service(collection);
-		// Create searchIndexes
-		searchIndexes.forEach((searchIndex) => {
-			let index = {};
-			index[searchIndex] = 'text';
-			SearchService.Model.createIndex(index)
-		})
+		// Create index
+		SearchService.Model.createIndex({ title: 'text' });
 		// Add search hooks
 		SearchService.hooks({
 			before: {
