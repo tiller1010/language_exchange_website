@@ -9,6 +9,11 @@ class Navigation extends React.Component {
     return (
 		<nav>
 			<div className="flex">
+				<div className="add-content-btn-container flex flex-vertical-center">
+					<a href="/videos/add" title="Add content of your own" className="add-content-btn">
+						<FontAwesomeIcon icon={faPlus}/>
+					</a>
+				</div>
 				<div className="small-pad">
 					<a href="/" className="button">
 						<span>Home</span>
