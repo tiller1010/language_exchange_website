@@ -6,3 +6,4 @@ public/*.eot
 public/*.ttf
 public/*.gif
 .env
+.npmrc

@@ -109,27 +109,25 @@ class VideosAdd extends React.Component {
 			<div className="frame">
 				<Navigation/>
 
-				<div className="video-add-view flex">
-					<div className="pure-u-l pure-u-md-3-4" style={{maxWidth: '100%'}}>
-						<div className="flex">
-							<div className="pure-u-l pure-u-md-1-2" style={{height: '300px'}}>
-								<div className="pad">
-									<h2>Media Preview</h2>
-									<MediaRenderer src={mediaSource} thumbnailSrc={thumbnailSrc} fileExtension={fileExtension}/>
-								</div>
+				<div className="video-add-view flex-container">
+					<div className="desktop-50 tablet-100" style={{maxWidth: '100%'}}>
+						<div className="desktop-100" style={{height: '300px'}}>
+							<div className="fw-space">
+								<h2>Media Preview</h2>
+								<MediaRenderer src={mediaSource} thumbnailSrc={thumbnailSrc} fileExtension={fileExtension}/>
 							</div>
-							<div className="pure-u-l pure-u-md-1-2" style={{ maxWidth: '100%' }}>
-								<div className="pad">
-									<h2>Thumbnail Preview</h2>
-									<div className="thumbnail-preview">
-										<MediaRenderer src={thumbnailSrc} fileExtension={thumbnailFileExtension}/>
-									</div>
+						</div>
+						<div className="desktop-100" style={{ maxWidth: '100%' }}>
+							<div className="fw-space">
+								<h2>Thumbnail Preview</h2>
+								<div className="thumbnail-preview">
+									<MediaRenderer src={thumbnailSrc} fileExtension={thumbnailFileExtension}/>
 								</div>
 							</div>
 						</div>
 					</div>
 
-					<div className="page-form pure-u-1 pure-u-md-1-4 tablet-100">
+					<div className="page-form desktop-50 tablet-100">
 						<h1 style={{ textAlign: 'right' }}>Add a video or sound file</h1>
 						<form action="/videos/add" method="POST" encType="multipart/form-data" className="flex-col x-end fw-form">
 							<div className="field text" htmlFor="titleField">

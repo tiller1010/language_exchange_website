@@ -89,39 +89,41 @@ export default class VideoSearchForm extends React.Component<VideoSearchFormProp
 						<label htmlFor="keywordsField">Search</label>
 						<input type="text" name="keywords" id="keywordsField" value={keywords} onChange={this.handleKeywordsChange}/>
 					</div>
-					<div className="tablet-55">
-						<LanguageSelector name="languageOfTopic" id="languageOfTopicField" onChange={(event) => this.setState({ languageOfTopic: event.target.value })} value={languageOfTopic} required={false}/>
-					</div>
-					<button type="submit" value="Search" className="button tablet-20">
-						Search
-						<FontAwesomeIcon icon={faSearch}/>
-					</button>
-					<div className="sort-controls flex tablet-20">
-						<button className={`button no-icon hamburger hamburger--collapse ${sortControlStatus == 'open' ? 'is-active' : ''}`} type="button" onClick={this.toggleSortControls}>
-							<span className="hamburger-box">
-								<span className="hamburger-inner"></span>
-							</span>
+					<div className="flex-container tablet-100" style={{ flexWrap: 'nowrap' }}>
+						<div className="tablet-100">
+							<LanguageSelector name="languageOfTopic" id="userContent_languageOfTopicField" onChange={(event) => this.setState({ languageOfTopic: event.target.value })} value={languageOfTopic} required={false}/>
+						</div>
+						<button type="submit" value="Search" className="button tablet-20">
+							Search
+							<FontAwesomeIcon icon={faSearch}/>
 						</button>
-						<div className={`sort-options flex pure-u-1 ${sortControlStatus}`}>
-							<div>
-								<label htmlFor="sort-all">All</label>
-								<input type="radio" name="sort" value="" id="sort-all" checked={sort === '' ? true : false} onChange={this.handleSortChange}/>
-							</div>
-							<div>
-								<label htmlFor="sort-oldest">Oldest</label>
-								<input type="radio" name="sort" value="Oldest" id="sort-oldest" checked={sort === 'Oldest' ? true : false} onChange={this.handleSortChange}/>
-							</div>
-							<div>
-								<label htmlFor="sort-recent">Recent</label>
-								<input type="radio" name="sort" value="Recent" id="sort-recent" checked={sort === 'Recent' ? true : false} onChange={this.handleSortChange}/>
-							</div>
-							<div>
-								<label htmlFor="sort-AZ">A-Z</label>
-								<input type="radio" name="sort" value="A-Z" id="sort-AZ" checked={sort === 'A-Z' ? true : false} onChange={this.handleSortChange}/>
-							</div>
-							<div>
-								<label htmlFor="sort-ZA">Z-A</label>
-								<input type="radio" name="sort" value="Z-A" id="sort-ZA" checked={sort === 'Z-A' ? true : false} onChange={this.handleSortChange}/>
+						<div className="sort-controls flex tablet-20">
+							<button className={`button no-icon hamburger hamburger--collapse ${sortControlStatus == 'open' ? 'is-active' : ''}`} type="button" onClick={this.toggleSortControls}>
+								<span className="hamburger-box">
+									<span className="hamburger-inner"></span>
+								</span>
+							</button>
+							<div className={`sort-options flex pure-u-1 ${sortControlStatus}`}>
+								<div>
+									<label htmlFor="sort-all">All</label>
+									<input type="radio" name="sort" value="" id="sort-all" checked={sort === '' ? true : false} onChange={this.handleSortChange}/>
+								</div>
+								<div>
+									<label htmlFor="sort-oldest">Oldest</label>
+									<input type="radio" name="sort" value="Oldest" id="sort-oldest" checked={sort === 'Oldest' ? true : false} onChange={this.handleSortChange}/>
+								</div>
+								<div>
+									<label htmlFor="sort-recent">Recent</label>
+									<input type="radio" name="sort" value="Recent" id="sort-recent" checked={sort === 'Recent' ? true : false} onChange={this.handleSortChange}/>
+								</div>
+								<div>
+									<label htmlFor="sort-AZ">A-Z</label>
+									<input type="radio" name="sort" value="A-Z" id="sort-AZ" checked={sort === 'A-Z' ? true : false} onChange={this.handleSortChange}/>
+								</div>
+								<div>
+									<label htmlFor="sort-ZA">Z-A</label>
+									<input type="radio" name="sort" value="Z-A" id="sort-ZA" checked={sort === 'Z-A' ? true : false} onChange={this.handleSortChange}/>
+								</div>
 							</div>
 						</div>
 					</div>
