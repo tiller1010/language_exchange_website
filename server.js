@@ -250,12 +250,27 @@ app.use(express.json());
 		});
 
 		// Submit new video route
-		app.post('/videos/add', upload.fields([{name: 'video', maxCount: 1}, {name: 'thumbnail', maxCount: 1}]), async (req, res) => {
+		app.post('/videos/add', upload.fields([
+			{name: 'video', maxCount: 1},
+			{name: 'thumbnail', maxCount: 1},
+			{name: 'soundRecording', maxCount: 1},
+		]), async (req, res) => {
+
+			let src = 'assets/';
+			let originalName = '';
+			if (req.body.useSoundRecording) {
+				src += req.files['soundRecording'][0].filename;
+				originalName = 'soundrecording.wav';
+			} else {
+				src += req.files['video'][0].filename;
+				originalName = req.files['video'][0].originalname;
+			}
+
 			const newVideo = await addVideo({
 				title: req.body.title,
 				languageOfTopic: req.body.languageOfTopic,
-				src: 'assets/' + req.files['video'][0].filename,
-				originalName: req.files['video'][0].originalname,
+				src,
+				originalName,
 				thumbnailSrc: req.files.thumbnail ? 'assets/' + req.files.thumbnail[0].filename : '',
 				originalThumbnailName: req.files.thumbnail ? req.files.thumbnail[0].originalname : '',
 				created: new Date(),

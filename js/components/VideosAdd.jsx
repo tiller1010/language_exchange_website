@@ -1,9 +1,10 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome, faPlay, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faUpload, faMicrophone, faStop } from '@fortawesome/free-solid-svg-icons';
 import Navigation from './Navigation.jsx';
 import MediaRenderer from './MediaRenderer.tsx';
 import LanguageSelector from './LanguageSelector.tsx';
+import { ReactMic } from 'react-mic';
 
 class VideosAdd extends React.Component {
 	constructor(){
@@ -13,10 +14,14 @@ class VideosAdd extends React.Component {
 			languageOfTopic: '',
 			mediaSource: '',
 			thumbnailSrc: '',
+			recording: false,
 		}
 		this.handleTitleChange = this.handleTitleChange.bind(this);
 		this.handleThumbnailUploadChange = this.handleThumbnailUploadChange.bind(this);
 		this.handleVideoUploadChange = this.handleVideoUploadChange.bind(this);
+		this.startRecording = this.startRecording.bind(this);
+		this.stopRecording = this.stopRecording.bind(this);
+		this.saveRecording = this.saveRecording.bind(this);
 	}
 
 	componentDidMount(){
@@ -83,6 +88,25 @@ class VideosAdd extends React.Component {
 	    	reader.readAsDataURL(video);
 	    }
 	}
+
+	startRecording() {
+		this.setState({ recording: true });
+	}
+
+	stopRecording() {
+		this.setState({ recording: false });
+	}
+
+	saveRecording(soundRecordingEvent) {
+		const file = new File([soundRecordingEvent.blob], 'soundrecording.wav', {type: 'audio/wav', lastModified: new Date().getTime()});
+		const container = new DataTransfer();
+		container.items.add(file);
+		document.querySelector('input[name="soundRecording"]').files = container.files;
+		this.setState({
+			mediaSource: soundRecordingEvent.blobURL,
+			video: 'soundrecording.wav',
+		});
+	}
 				
 	render(){
 
@@ -93,6 +117,7 @@ class VideosAdd extends React.Component {
 			mediaSource, // blob link: "blob:https://..."
 			thumbnail, // thumbnail filename: "example.jpg"
 			thumbnailSrc, // encoded image: "data:image/jpeg;base64,/..."
+			recording,
 		} = this.state;
 
 		let fileExtension = '';
@@ -135,12 +160,40 @@ class VideosAdd extends React.Component {
 								<input type="text" name="title" id="titleField" value={title} onChange={this.handleTitleChange} aria-label="title" required/>
 							</div>
 							<LanguageSelector name="languageOfTopic" id="languageOfTopicField" onChange={(event) => this.setState({ languageOfTopic: event.target.value })} value={languageOfTopic}/>
-							<div className="upload-container">
-								<input type="file" name="video" onChange={this.handleVideoUploadChange} required/>
-								<label htmlFor="video">
-									Media
-									<FontAwesomeIcon icon={faUpload}/>
-								</label>
+							<div className="flex-container flex-vertical-center">
+								<p><b>Upload</b> a video or sound file here:</p>
+								<span>&nbsp;</span>
+								<div className="upload-container">
+									<input type="file" name="video" onChange={this.handleVideoUploadChange} required={!mediaSource}/>
+									<label htmlFor="video">
+										Media
+										<FontAwesomeIcon icon={faUpload}/>
+									</label>
+								</div>
+							</div>
+							<p><b>OR</b> record sound here:</p>
+							<div className="sound-recording-field">
+								<ReactMic
+									record={recording}
+									onStop={this.saveRecording}
+								/>
+								<div className="flex-container flex-horizontal-right">
+									<button onClick={this.startRecording} className="button" type="button">
+										Start
+										<FontAwesomeIcon icon={faMicrophone}/>
+									</button>
+									<span>&nbsp;</span>
+									<button onClick={this.stopRecording} className="button" type="button">
+										Stop
+										<FontAwesomeIcon icon={faStop}/>
+									</button>
+								</div>
+								<input type="file" name="soundRecording" className="desktop-hide"/>
+								{video == 'soundrecording.wav' ?
+									<input type="hidden" name="useSoundRecording" value={true}/>
+									:
+									''
+								}
 							</div>
 							<div className="upload-container">
 								<input type="file" name="thumbnail" onChange={this.handleThumbnailUploadChange}/>

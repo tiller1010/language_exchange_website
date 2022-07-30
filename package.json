@@ -34,7 +34,6 @@
     "feathers-mongodb": "^6.2.0",
     "feathers-mongodb-fuzzy-search": "^2.0.1",
     "firebase": "^9.6.3",
-    "werkbot-framewerk": "werkbot/framewerk#initFramewerk",
     "graphql": "^15.6.0",
     "graphql-upload": "^12.0.0",
     "hamburgers": "~1.1.3",
@@ -49,9 +48,11 @@
     "passport-local": "^1.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-mic": "^12.4.6",
     "react-slick": "^0.28.0",
     "slick-carousel": "^1.8.1",
-    "stripe": "^8.193.0"
+    "stripe": "^8.193.0",
+    "werkbot-framewerk": "werkbot/framewerk#initFramewerk"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

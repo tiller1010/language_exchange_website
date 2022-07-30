@@ -18,7 +18,8 @@ nav{
 		background-color: getThemeProperty(backgroundColorLight);
 		border: 5px solid getThemeProperty(primaryColor);
 		border-radius: 50%;
-		padding: 10px;
+		width: 54px;
+		height: 54px;
 		&:hover {
 			background-color: getThemeProperty(backgroundColorDark);
 			svg {

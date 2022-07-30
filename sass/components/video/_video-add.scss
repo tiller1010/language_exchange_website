@@ -9,6 +9,12 @@
 		height: 100%;
 	}
 }
+.sound-recording-field {
+	max-width: 400px;
+	canvas {
+		max-width: 100%;
+	}
+}
 @media only screen and (max-width: 815px){
 	.video-add-view{
 		flex-direction: column-reverse;

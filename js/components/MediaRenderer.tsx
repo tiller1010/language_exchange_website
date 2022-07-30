@@ -51,6 +51,11 @@ export default function MediaRenderer(props) {
 		case '':
 			return '';
 		default:
-			return <p>Invalid media</p>
+			return (
+				<video className="video-preview lozad" height="225" width="400" poster={
+					thumbnailSrc || "/images/videoPlaceholder.png"
+				} controls src={src}>
+				</video>
+			);
 	}
 }
