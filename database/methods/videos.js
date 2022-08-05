@@ -14,10 +14,21 @@ async function indexVideos(page = 1, sort = {}){
 	}
 }
 
+async function findVideo(videoID){
+	const db = getDB();
+	return await db.collection('videos').findOne({ _id: new mongo.ObjectID(videoID) });
+}
+
 async function addVideo(video){
 	const db = getDB();
 	const newVideo = await db.collection('videos').insertOne(video);
 	return newVideo.ops[0];
+}
+
+async function updateVideo(video){
+	const db = getDB();
+	const newVideo = await db.collection('videos').updateOne({ _id: new mongo.ObjectID(video.videoID) }, { $set: { ...video } });
+	return;
 }
 
 async function removeVideo(videoID){
@@ -41,4 +52,4 @@ async function getRecent(limit = 6){
 	return {videos};
 }
 
-module.exports = { indexVideos, addVideo, removeVideo, getRecent, addVideoToUsersUploads };
+module.exports = { indexVideos, findVideo, addVideo, updateVideo, removeVideo, getRecent, addVideoToUsersUploads };

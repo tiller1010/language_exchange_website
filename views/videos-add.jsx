@@ -6,8 +6,8 @@ class VideosAdd extends React.Component {
 	render(){
 
 		return (
-			<DefaultLayout pathResolver="../">
-		      <div id="videos-add"></div>
+			<DefaultLayout pathResolver={this.props.pathResolver || '../'}>
+		      <div id="videos-add" video={this.props.video}></div>
 			</DefaultLayout>
 		);
 	}

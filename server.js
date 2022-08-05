@@ -13,7 +13,7 @@ const appPort = process.env.APP_PORT || 3000;
 // Database Methods
 const { addLike, removeLike } = require('./database/methods/likes.js');
 const { addUser, findAndSyncUser, findUserByID, addCompletedTopic, removeCompletedTopic, addStripeAccountIDToUser } = require('./database/methods/users.js');
-const { indexVideos, addVideo, removeVideo, getRecent, addVideoToUsersUploads } = require('./database/methods/videos.js');
+const { indexVideos, findVideo, addVideo, updateVideo, removeVideo, getRecent, addVideoToUsersUploads } = require('./database/methods/videos.js');
 const { completeOrder } = require('./database/methods/products.js');
 
 // Strapi Methods
@@ -260,7 +260,7 @@ app.use(express.json());
 			let originalName = '';
 			if (req.body.useSoundRecording) {
 				src += req.files['soundRecording'][0].filename;
-				originalName = 'soundrecording.wav';
+				originalName = 'soundrecording.webm';
 			} else {
 				src += req.files['video'][0].filename;
 				originalName = req.files['video'][0].originalname;
@@ -285,6 +285,53 @@ app.use(express.json());
 				res.status(200).send('Successful upload');
 			} else {
 				res.redirect(redirectTo);
+			}
+		});
+
+		// Edit video route
+		app.get('/videos/edit/:videoID', async (req, res) => {
+			const video = await findVideo(req.params.videoID);
+			res.render('videos-add', { video: JSON.stringify(video), pathResolver: '../../' });
+		});
+
+		// Submit update video route
+		app.post('/videos/edit/:videoID', upload.fields([
+			{name: 'video', maxCount: 1},
+			{name: 'thumbnail', maxCount: 1},
+			{name: 'soundRecording', maxCount: 1},
+		]), async (req, res) => {
+
+			const video = await findVideo(req.params.videoID);
+
+			let updatedVideo = {
+				videoID: req.params.videoID,
+				title: req.body.title,
+				languageOfTopic: req.body.languageOfTopic,
+			};
+
+			if (req.body.useSoundRecording) {
+				updatedVideo.src = 'assets/' + req.files['soundRecording'][0].filename;
+				updatedVideo.originalName = 'soundrecording.webm';
+			} else if (req.files['video']) {
+				updatedVideo.src = 'assets/' + req.files['video'][0].filename;
+				updatedVideo.originalName = req.files['video'][0].originalname;
+			}
+
+			if (req.files['thumbnail']) {
+				updatedVideo.thumbnailSrc = 'assets/' + req.files['thumbnail'][0].filename;
+				updatedVideo.originalThumbnailName = req.files['thumbnail'][0].originalname;
+			}
+
+			if (req.user) {
+				if (String(req.user._id) == String(video.uploadedBy._id)) {
+					await updateVideo(updatedVideo);
+				}
+			}
+
+			if(req.body.nativeFlag){
+				res.status(200).send('Successful upload');
+			} else {
+				res.redirect('/account-profile');
 			}
 		});
 

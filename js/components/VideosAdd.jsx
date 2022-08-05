@@ -31,6 +31,13 @@ class VideosAdd extends React.Component {
 		this.setState({
 			title: challenge || ''
 		});
+
+		if (this.props.video) {
+			let video = JSON.parse(this.props.video);
+			video.mediaSource = '../../' + video.src;
+			video.thumbnailSrc = '../../' + video.thumbnailSrc;
+			this.setState({ ...video });
+		}
 	}
 
 	handleTitleChange(event){
@@ -76,7 +83,7 @@ class VideosAdd extends React.Component {
 	    	// Set preview
 	    	let reader = new FileReader();
 			reader.addEventListener('load', function () {
-				if(/mp4|quicktime|wav/.test(reader.result.substr(0, 20))){
+				if(/mp4|quicktime|wav|webm/.test(reader.result.substr(0, 20))){
 					  context.setState({
 					  	mediaSource: URL.createObjectURL(video),
 					  });
@@ -97,14 +104,21 @@ class VideosAdd extends React.Component {
 		this.setState({ recording: false });
 	}
 
-	saveRecording(soundRecordingEvent) {
-		const file = new File([soundRecordingEvent.blob], 'soundrecording.wav', {type: 'audio/wav', lastModified: new Date().getTime()});
+	async saveRecording(soundRecordingEvent) {
+		const file = new File([soundRecordingEvent.blob], 'soundrecording.webm', {type: 'audio/webm', lastModified: new Date().getTime()});
 		const container = new DataTransfer();
+
+		// IOS debugging
+		// var debug = document.createElement('p')
+		// console.log(soundRecordingEvent)
+		// debug.innerHTML = soundRecordingEvent.blobURL
+		// document.querySelector('.sound-recording-field').append(debug)
+
 		container.items.add(file);
 		document.querySelector('input[name="soundRecording"]').files = container.files;
 		this.setState({
 			mediaSource: soundRecordingEvent.blobURL,
-			video: 'soundrecording.wav',
+			video: 'soundrecording.webm',
 		});
 	}
 				
@@ -154,7 +168,7 @@ class VideosAdd extends React.Component {
 
 					<div className="page-form desktop-50 tablet-100">
 						<h1 style={{ textAlign: 'right' }}>Add a video or sound file</h1>
-						<form action="/videos/add" method="POST" encType="multipart/form-data" className="flex-col x-end fw-form">
+						<form action={`/videos/${this.state._id ? 'edit/' + this.state._id : 'add'}`} method="POST" encType="multipart/form-data" className="flex-col x-end fw-form">
 							<div className="field text" htmlFor="titleField">
 								<label htmlFor="titleField">Title</label>
 								<input type="text" name="title" id="titleField" value={title} onChange={this.handleTitleChange} aria-label="title" required/>
@@ -189,7 +203,7 @@ class VideosAdd extends React.Component {
 									</button>
 								</div>
 								<input type="file" name="soundRecording" className="desktop-hide"/>
-								{video == 'soundrecording.wav' ?
+								{video == 'soundrecording.webm' ?
 									<input type="hidden" name="useSoundRecording" value={true}/>
 									:
 									''

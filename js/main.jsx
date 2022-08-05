@@ -65,7 +65,8 @@ if(document.getElementById('videos')){
 	ReactDOM.render(<VideosIndex userLikedVideos={userLikedVideos} userID={userID}/>, document.getElementById('videos'));
 }
 if(document.getElementById('videos-add')){
-	ReactDOM.render(<VideosAdd/>, document.getElementById('videos-add'));
+	var video = document.getElementById('videos-add').getAttribute('video');
+	ReactDOM.render(<VideosAdd video={video}/>, document.getElementById('videos-add'));
 }
 if(document.getElementById('level')){
 	var levelID = document.getElementById('level').getAttribute('levelid');

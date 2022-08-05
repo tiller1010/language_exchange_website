@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ReadMore from '@jamespotz/react-simple-readmore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import graphQLFetch from '../graphQLFetch.js';
 // @ts-ignore
@@ -142,13 +142,21 @@ export default class VideoPlayer extends React.Component<VideoPlayerProps, Video
 								</ReadMore>
 							</div>
 							{this.props.handleDeleteVideo ?
+								<>
 								<form action="/videos/remove" method="POST" className="fw-form">
 									<input type="hidden" name="videoID" value={this.props._id}/>
-									<a className="button" href="#remove-video" onClick={(event) => this.props.handleDeleteVideo(event)}>
-										Remove Video
+									<a className="button" href="#remove-video" title="Remove Video" onClick={(event) => this.props.handleDeleteVideo(event)}>
+										Remove
 										<FontAwesomeIcon icon={faTrash}/>
 									</a>
 								</form>
+								<div>
+									<a className="button" href={`/videos/edit/${this.props._id}`} title="Edit Video">
+										Edit
+										<FontAwesomeIcon icon={faEdit}/>
+									</a>
+								</div>
+								</>
 								:
 								''
 							}
