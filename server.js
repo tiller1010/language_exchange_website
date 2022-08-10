@@ -380,6 +380,20 @@ app.use(express.json());
 			}
 		);
 
+		// Edit account profile
+		app.get('/account-profile-edit',
+			async (req, res) => {
+				if(req.user){
+					let user = req.user;
+					return res.render('account-profile-edit', {
+						userID: req.user._id,
+					});
+				} else {
+					return res.redirect('/login');
+				}
+			}
+		);
+
 		// Account login
 		app.get('/login', (req, res) => {
 			if(req.user){

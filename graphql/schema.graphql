@@ -17,6 +17,7 @@ type User {
 	_id: ID
 	email: String
 	displayName: String
+	profilePictureSrc: String
 	firstName: String!
 	lastName: String!
 	passwordHash: String!
@@ -28,6 +29,13 @@ type User {
 	products: [Product!]
 	premiumVideoChatListing: PremiumVideoChatListing
 	connectedStripeAccountID: String
+}
+
+input UserInputs {
+	email: String
+	displayName: String
+	firstName: String
+	lastName: String
 }
 
 # union PossibleProduct = PremiumVideoChatListing | OtherProduct
@@ -103,5 +111,6 @@ type Mutation {
 	addPremiumVideoChatListingThumbnailTest(thumbnailFile: Upload): PremiumVideoChatListing
 	updatePremiumVideoChatListing(listingID: ID!, premiumVideoChatListing: PremiumVideoChatListingInputs, thumbnailFile: Upload): PremiumVideoChatListing
 	removePremiumVideoChatListing(userID: ID!): Boolean
+	updateUser(userID: ID!, user: UserInputs, profilePictureFile: Upload): User
 	createProduct(productObjectCollection: String!, productDescription: String!, productObjectID: ID!, userID: ID!, productObjectUpdateData: String!): Product
 }

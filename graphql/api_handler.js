@@ -25,6 +25,7 @@ const resolvers = {
 		removeLike: likes.removeLike,
 		// Users
 		verifyUser: users.verifyUser,
+		updateUser: users.updateUser,
 		// Premium Video Chat Listings
 		addPremiumVideoChatListing: premiumVideoChatListings.addPremiumVideoChatListing,
 		addPremiumVideoChatListingThumbnailTest: premiumVideoChatListings.addPremiumVideoChatListingThumbnailTest,

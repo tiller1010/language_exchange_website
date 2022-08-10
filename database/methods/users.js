@@ -1,5 +1,18 @@
+const fs = require('fs');
+const path = require('path');
 const { getDB } = require('../db.js');
 const mongo = require('mongodb');
+
+function randomFilename() {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for(var i = 0; i < 40; i++){
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+
+  return text;
+}
 
 async function addUser(user){
 	const db = getDB();
@@ -108,5 +121,32 @@ async function addStripeAccountIDToUser(userID, connectedStripeAccountID){
 	return user;
 }
 
+async function updateUser(_, { userID, user, profilePictureFile }){
+	// Create file from upload
+	if(profilePictureFile){
+		var { createReadStream, filename, mimetype, encoding } = await profilePictureFile;
+		var stream = createReadStream();
+		var fileExtension = mimetype.split('').splice(mimetype.indexOf('/') + 1, mimetype.length).join('');
+		var profilePictureSrc = 'assets/' + randomFilename() + '.' + fileExtension;
+		var out = fs.createWriteStream(path.join(__dirname, '/../../public/') + profilePictureSrc);
+		stream.pipe(out);
+		user.profilePictureSrc = profilePictureSrc;
+	}
 
-module.exports = { addUser, findAndSyncUser, findUserByID, graphql_findUserByID, addCompletedTopic, removeCompletedTopic, verifyUser, addStripeAccountIDToUser };
+	// Write to database
+	const db = getDB();
+
+	user = await db.collection('users').findOneAndUpdate(
+		{ _id: new mongo.ObjectID(userID) },
+		{ $set: { ...user } },
+		{ returnOriginal: false }
+	);
+	user = user.value;
+	await db.collection('users').updateOne({ _id: new mongo.ObjectID(user.userID) }, { $set: { user } });
+	return user;
+
+	return false;
+}
+
+
+module.exports = { addUser, updateUser, findAndSyncUser, findUserByID, graphql_findUserByID, addCompletedTopic, removeCompletedTopic, verifyUser, addStripeAccountIDToUser };

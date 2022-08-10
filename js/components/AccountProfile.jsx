@@ -1,7 +1,7 @@
 import React from 'react';
 import Navigation from './Navigation.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt, faLongArrowAltRight, faUser, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faLongArrowAltRight, faUser, faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 import Slider from 'react-slick';
 import graphQLFetch from '../graphQLFetch.js';
 import VideoPlayer from './VideoPlayer.tsx';
@@ -158,35 +158,60 @@ class AccountProfile extends React.Component {
 				<Navigation/>
 
 				<section className="fw-space double noleft noright">
-					{this.props.isCurrentUser ?
-						<div>
-							<h1>Welcome, {this.state.user.firstName}!</h1>
-							<a href="/logout" className="button" style={{ width: 'max-content' }}>
-								Logout
-								<FontAwesomeIcon icon={faSignOutAlt}/>
-							</a>
-						</div>
-						:
-						<h1>{this.state.user.firstName}</h1>
-					}
-					
-					{authenticatedUserIsAdmin ?
-						<form className="fw-form">
-							{this.state.user.verified ?
-								<div className="field checkbox">
-									<input type="checkbox" name="verifyUser" id="verifyUserField" checked="checked" onChange={(event) => this.verifyUser(!this.state.user.verified)}/>
-									<label htmlFor="verifyUserField">Remove verification for this user?</label>
-								</div>
+					<div className="flex-container">
+						<div className="desktop-75 phone-100">
+							{this.props.isCurrentUser ?
+								<>
+								<h1>Welcome, {this.state.user.firstName}!</h1>
+								<a href="/logout" className="button" style={{ width: 'max-content' }}>
+									Logout
+									<FontAwesomeIcon icon={faSignOutAlt}/>
+								</a>
+								<span>&nbsp;</span>
+								<a href="/account-profile-edit" className="button" style={{ width: 'max-content' }}>
+									Edit Profile
+									<FontAwesomeIcon icon={faEdit}/>
+								</a>
+								</>
 								:
-								<div className="field checkbox">
-									<input type="checkbox" name="verifyUser" id="verifyUserField" onChange={(event) => this.verifyUser(!this.state.user.verified)}/>
-									<label htmlFor="verifyUserField">Verify this user?</label>
-								</div>
+								<h1>{this.state.user.firstName}</h1>
 							}
-						</form>
-						:
-						''
-					}
+				
+							{authenticatedUserIsAdmin ?
+								<form className="fw-form">
+									{this.state.user.verified ?
+										<div className="field checkbox">
+											<input type="checkbox" name="verifyUser" id="verifyUserField" checked="checked" onChange={(event) => this.verifyUser(!this.state.user.verified)}/>
+											<label htmlFor="verifyUserField">Remove verification for this user?</label>
+										</div>
+										:
+										<div className="field checkbox">
+											<input type="checkbox" name="verifyUser" id="verifyUserField" onChange={(event) => this.verifyUser(!this.state.user.verified)}/>
+											<label htmlFor="verifyUserField">Verify this user?</label>
+										</div>
+									}
+								</form>
+								:
+								''
+							}
+
+						</div>
+						{this.state.user.profilePictureSrc ?
+							<div className="desktop-25 phone-100">
+								<div className="img-container">
+									<img src={`${this.props.pathResolver}${this.state.user.profilePictureSrc}`}
+										alt={`Picture of ${this.state.user.displayName}`}
+										style={{
+											maxHeight: '300px',
+											objectPosition: 'top',
+										}}
+									/>
+								</div>
+							</div>
+							:
+							''
+						}
+					</div>
 
 			    </section>
 
