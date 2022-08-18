@@ -48,7 +48,7 @@
     "passport-local": "^1.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-mic": "^12.4.6",
+    "react-mic": "github:tiller1010/react-mic#master",
     "react-slick": "^0.28.0",
     "slick-carousel": "^1.8.1",
     "stripe": "^8.193.0",

@@ -4,7 +4,7 @@ import { faPlus, faUpload, faMicrophone, faStop } from '@fortawesome/free-solid-
 import Navigation from './Navigation.jsx';
 import MediaRenderer from './MediaRenderer.tsx';
 import LanguageSelector from './LanguageSelector.tsx';
-import { ReactMic } from 'react-mic';
+import { ReactMic } from 'react-mic/dist/index.js';
 
 class VideosAdd extends React.Component {
 	constructor(){
@@ -83,7 +83,7 @@ class VideosAdd extends React.Component {
 	    	// Set preview
 	    	let reader = new FileReader();
 			reader.addEventListener('load', function () {
-				if(/mp4|quicktime|wav|webm/.test(reader.result.substr(0, 20))){
+				if(/mp4|quicktime|wav|mp3/.test(reader.result.substr(0, 20))){
 					  context.setState({
 					  	mediaSource: URL.createObjectURL(video),
 					  });
@@ -105,7 +105,7 @@ class VideosAdd extends React.Component {
 	}
 
 	async saveRecording(soundRecordingEvent) {
-		const file = new File([soundRecordingEvent.blob], 'soundrecording.webm', {type: 'audio/webm', lastModified: new Date().getTime()});
+		const file = new File([soundRecordingEvent.blob], 'soundrecording.mp3', {type: 'audio/mp3', lastModified: new Date().getTime()});
 		const container = new DataTransfer();
 
 		// IOS debugging
@@ -118,7 +118,7 @@ class VideosAdd extends React.Component {
 		document.querySelector('input[name="soundRecording"]').files = container.files;
 		this.setState({
 			mediaSource: soundRecordingEvent.blobURL,
-			video: 'soundrecording.webm',
+			video: 'soundrecording.mp3',
 		});
 	}
 				
@@ -203,7 +203,7 @@ class VideosAdd extends React.Component {
 									</button>
 								</div>
 								<input type="file" name="soundRecording" className="desktop-hide"/>
-								{video == 'soundrecording.webm' ?
+								{video == 'soundrecording.mp3' ?
 									<input type="hidden" name="useSoundRecording" value={true}/>
 									:
 									''
