@@ -123,7 +123,7 @@ class VideosIndex extends React.Component {
 			<div className="frame">			
 				<Navigation/>
 				<div className="page-form">
-					<h1>Videos</h1>
+					<h1>User uploads</h1>
 					<VideoSearchForm
 						keywords={keywords}
 						languageOfTopic={languageOfTopic}

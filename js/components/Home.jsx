@@ -87,9 +87,9 @@ class Home extends React.Component {
 									<div className="fw-space">
 										<a href="/videos" className="home-banner-link">
 											<div className="fw-space">
-												<h2>Videos from learners</h2>
+												<h2>Content from learners</h2>
 												<p>
-													Learn from students just like you. Browse videos from language learners around the world.
+													Learn from students just like you. Browse uploads from language learners around the world.
 												</p>
 											</div>
 										</a>
@@ -132,12 +132,12 @@ class Home extends React.Component {
 					<section className="fw-space double noleft noright">
 
 						<div className="fw-space double noleft noright">
-							<h2>Browse videos from language learners around the world.</h2>
+							<h2>Browse uploads from language learners around the world.</h2>
 							<hr/>
 						</div>
 
 						<div className="page-form">
-							<h2>User Submitted Videos</h2>
+							<h2>User Submitted Content</h2>
 							<VideoSearchForm
 								keywords=""
 								sort=""
@@ -146,7 +146,7 @@ class Home extends React.Component {
 
 					    {this.state.recentVideos.length ?
 					    	<div className="pad no-x">
-					    		<h2>Recent Submissions</h2>
+					    		<h2>Recent User Uploads</h2>
 					    		<Slider {...{
 									dots: false,
 									infinite: false,

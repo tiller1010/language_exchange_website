@@ -345,7 +345,7 @@ class AccountProfile extends React.Component {
 
 					{this.state.user.uploadedVideos.length ?
 						<div>
-							<h2 className="text-center">Uploaded Videos</h2>
+							<h2 className="text-center">Uploaded Content</h2>
 							<hr/>
 				    		<Slider {...{
 								dots: false,
@@ -383,13 +383,13 @@ class AccountProfile extends React.Component {
 						</div>
 						:
 						<div>
-							<h2 className="text-center">No Uploaded Videos</h2>
+							<h2 className="text-center">No Uploaded Content</h2>
 							<hr/>
 						</div>
 					}
 				    <div className="small-pad">
 					    <a href="/videos/add" className="button">
-						    <span>Add a video</span>
+						    <span>Upload content</span>
 					        <FontAwesomeIcon icon={faPlus}/>
 					    </a>
 				    </div>
@@ -400,7 +400,7 @@ class AccountProfile extends React.Component {
 
 					{this.state.user.likedVideos.length ?
 						<div>
-							<h2 className="text-center">Liked Videos</h2>
+							<h2 className="text-center">Liked Content</h2>
 							<hr/>
 				    		<Slider {...{
 								dots: false,
@@ -437,7 +437,7 @@ class AccountProfile extends React.Component {
 						</div>
 						:
 						<div>
-							<h2 className="text-center">No Liked Videos</h2>
+							<h2 className="text-center">No Liked Content</h2>
 							<hr/>
 						</div>
 					}
