@@ -113,10 +113,10 @@ export default class VideoPlayer extends React.Component<VideoPlayerProps, Video
 		const { _id, title, languageOfTopic, uploadedBy, src, thumbnailSrc } = this.props;
 
 		return (
-			<div>
+			<div style={{ position: 'relative' }}>
 				<div className="flex x-center">
-					<div style={{ maxWidth: '100%' }}>
-						<div className="flex x-space-between y-center">
+					<div className="desktop-100" style={{ maxWidth: '400px' }}>
+						<div className="flex x-space-between y-center" style={{ flexWrap: 'nowrap' }}>
 							<div style={{ maxWidth: '65%' }}>
 								<ReadMore
 						            fade
@@ -145,14 +145,12 @@ export default class VideoPlayer extends React.Component<VideoPlayerProps, Video
 								<>
 								<form action="/videos/remove" method="POST" className="fw-form">
 									<input type="hidden" name="videoID" value={this.props._id}/>
-									<a className="button" href="#remove-video" title="Remove Video" onClick={(event) => this.props.handleDeleteVideo(event)}>
-										Remove
+									<a className="button" style={{ position: 'absolute', right: '-10px', bottom: '150px', height: '36px' }} href="#remove-video" title="Remove Video" onClick={(event) => this.props.handleDeleteVideo(event)}>
 										<FontAwesomeIcon icon={faTrash}/>
 									</a>
 								</form>
 								<div>
-									<a className="button" href={`/videos/edit/${this.props._id}`} title="Edit Video">
-										Edit
+									<a className="button" style={{ position: 'absolute', right: '-10px', bottom: '190px', height: '36px' }} href={`/videos/edit/${this.props._id}`} title="Edit Video">
 										<FontAwesomeIcon icon={faEdit}/>
 									</a>
 								</div>

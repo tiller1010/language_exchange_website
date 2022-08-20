@@ -431,7 +431,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 							<h3>Your saved Video Chat Listing</h3>
 							<PremiumVideoChatListing premiumVideoChatListing={savedPremiumVideoChatListing} authenticatedUserID={user._id} view={user._id == savedPremiumVideoChatListing.userID ? 'owner' : 'customer'}/>
 							<form>
-								<a className="button" href="#remove-listing" style={{ width: 'max-content' }}>
+								<a className="button" href="#remove-listing" style={{ display: 'block', marginLeft: 'auto', width: 'max-content' }}>
 									Remove Listing
 									<FontAwesomeIcon icon={faTrash}/>
 								</a>

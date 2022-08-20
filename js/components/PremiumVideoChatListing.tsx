@@ -317,7 +317,8 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 					<img style={{ height: '100%', width: '100%', objectFit: 'cover' }} src={thumbnailSrc} alt={thumbnailSrc}/>
 				</div>
 
-				<div className="fw-form">
+				<h4 style={{ margin: '35px 0 10px 0', fontSize: '1.5em' }}>Timeslots</h4>
+				<div className="fw-form" style={{ maxHeight: '250px', overflowY: 'auto' }}>
 					{this.renderTimeSlots()}
 				</div>
 

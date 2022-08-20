@@ -185,7 +185,7 @@ class Topic extends React.Component {
 								<span className="hamburger-box">
 									<span className="hamburger-inner"></span>
 								</span>
-								<span className="fw-space half">
+								<span style={{ padding: '10px' }}>
 					    			Available Answers
 				    			</span>
 							</button>

@@ -195,7 +195,7 @@ class VideosIndex extends React.Component {
 			    		<div className="flex">
 							{this.state.videos.map((video) => 
 								<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
-									<div className="fw-space half notop nobottom">
+									<div style={{ padding: '0 10px' }}>
 										<VideoPlayer
 											_id={video._id}
 											title={video.title}

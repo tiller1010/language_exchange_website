@@ -169,11 +169,11 @@ class VideosAdd extends React.Component {
 					<div className="page-form desktop-50 tablet-100">
 						<h1 style={{ textAlign: 'right' }}>Add a video or sound file</h1>
 						<form action={`/videos/${this.state._id ? 'edit/' + this.state._id : 'add'}`} method="POST" encType="multipart/form-data" className="flex-col x-end fw-form">
-							<div className="field text" htmlFor="titleField">
+							<div className="field text desktop-100" htmlFor="titleField">
 								<label htmlFor="titleField">Title</label>
 								<input type="text" name="title" id="titleField" value={title} onChange={this.handleTitleChange} aria-label="title" required/>
 							</div>
-							<LanguageSelector name="languageOfTopic" id="languageOfTopicField" onChange={(event) => this.setState({ languageOfTopic: event.target.value })} value={languageOfTopic}/>
+							<LanguageSelector name="languageOfTopic" id="languageOfTopicField" className="desktop-100" onChange={(event) => this.setState({ languageOfTopic: event.target.value })} value={languageOfTopic}/>
 							<div className="flex-container flex-vertical-center">
 								<p><b>Upload</b> a video or sound file here:</p>
 								<span>&nbsp;</span>

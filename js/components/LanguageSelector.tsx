@@ -48,7 +48,7 @@ export default function LanguageSelector(props) {
 	languagesArray = languagesArray.sort((a, b) => a.languageName.localeCompare(b.languageName));
 
 	return (
-		<div className="field dropdown">
+		<div className={`field dropdown ${props.className || ''}`}>
 			<label htmlFor={id}>Language</label>
 			<select name={name} id={id} onChange={onChange} value={value} required={required}>
 				<option value="">Select a language</option>
