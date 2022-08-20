@@ -140,7 +140,7 @@ class Home extends React.Component {
 							<h2>User Submitted Content</h2>
 							<VideoSearchForm
 								keywords=""
-								sort=""
+								sort="Recent"
 							/>
 						</div>
 

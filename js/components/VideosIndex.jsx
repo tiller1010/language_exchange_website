@@ -12,7 +12,7 @@ function getVideosSearchString(pageNumber = null) {
 	var keywords = urlParams.get('keywords') || '';
 	var languageOfTopic = urlParams.get('languageOfTopic') || '';
 	var page = pageNumber || urlParams.get('page');
-	var sort = urlParams.get('sort') || '';
+	var sort = urlParams.get('sort') || 'Recent';
 	var search = new URLSearchParams({ keywords, languageOfTopic, page, sort });
 	return search.toLocaleString();
 }
@@ -109,7 +109,7 @@ class VideosIndex extends React.Component {
 		var urlParams = new URLSearchParams(window.location.search);
 		var keywords = urlParams.get('keywords') || '';
 		var languageOfTopic = urlParams.get('languageOfTopic') || '';
-		var sort = urlParams.get('sort') || '';
+		var sort = urlParams.get('sort') || 'Recent';
 		var context = this;
 
 		// When using back or forward buttons in browser

@@ -165,7 +165,7 @@ app.use(express.json());
 		app.get('/videos:format?', async (req, res) => {
 			let keywords = req.query.keywords || '';
 			let languageOfTopic = req.query.languageOfTopic || '';
-			let sort = req.query.sort || false;
+			let sort = req.query.sort || 'Recent';
 			let videos = null;
 			const page = req.query.page || 1;
 

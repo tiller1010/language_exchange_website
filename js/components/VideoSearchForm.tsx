@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faSlidersH } from '@fortawesome/free-solid-svg-icons';
+// @ts-ignore
 import LanguageSelector from './LanguageSelector.tsx';
 
 enum SortControlStatus {
@@ -28,7 +29,7 @@ export default class VideoSearchForm extends React.Component<VideoSearchFormProp
 			keywords: '',
 			languageOfTopic: '',
 			sortControlStatus: SortControlStatus.closed,
-			sort: ''
+			sort: 'Recent'
 		}
 		this.state = state;
 		this.toggleSortControls = this.toggleSortControls.bind(this);
@@ -105,16 +106,12 @@ export default class VideoSearchForm extends React.Component<VideoSearchFormProp
 							</button>
 							<div className={`sort-options flex pure-u-1 ${sortControlStatus}`}>
 								<div>
-									<label htmlFor="sort-all">All</label>
-									<input type="radio" name="sort" value="" id="sort-all" checked={sort === '' ? true : false} onChange={this.handleSortChange}/>
+									<label htmlFor="sort-recent">Recent</label>
+									<input type="radio" name="sort" value="Recent" id="sort-recent" checked={sort === 'Recent' ? true : false} onChange={this.handleSortChange}/>
 								</div>
 								<div>
 									<label htmlFor="sort-oldest">Oldest</label>
 									<input type="radio" name="sort" value="Oldest" id="sort-oldest" checked={sort === 'Oldest' ? true : false} onChange={this.handleSortChange}/>
-								</div>
-								<div>
-									<label htmlFor="sort-recent">Recent</label>
-									<input type="radio" name="sort" value="Recent" id="sort-recent" checked={sort === 'Recent' ? true : false} onChange={this.handleSortChange}/>
 								</div>
 								<div>
 									<label htmlFor="sort-AZ">A-Z</label>
