@@ -2,6 +2,9 @@
 	.field.text, .field.dropdown{
 		margin: 10px 0;
 	}
+	.field.dropdown{
+		min-width: 260px;
+	}
 	.button{
 		border-radius: 0;
 		border-left: 1px solid getThemeProperty(textColorLight);
@@ -10,6 +13,14 @@
 		}
 		svg.fa-search{
 			top: 25px;
+		}
+	}
+}
+
+@media only screen and (max-width: 815px){
+	.video-search-form {
+		.field.dropdown{
+			min-width: unset;
 		}
 	}
 }
