@@ -126,39 +126,16 @@ export default class ProfileEditForm extends React.Component<ProfileEditProps, P
 					variables.file = profilePictureFile;
 				}
 				mutationName = 'updateUser';
-			} else {
-				// If adding new
-				query = `mutation addUser($userID: ID!, $user: UserInputs, $file: Upload){
-					addUser(userID: $userID, user: $user, profilePictureFile: $file){
-						_id
-						email
-						displayName
-						firstName
-						lastName
-						profilePictureSrc
-					}
-				}`;
-				variables = {
-					userID: savedUser._id,
-					user: {
-						email,
-						displayName,
-						firstName,
-						lastName,
-					},
-					file: profilePictureFile
-				};
-				mutationName = 'addUser';
+				var data = await graphQLFetch(query, variables, profilePictureFile ? true : false);
+				this.setState({
+					savedUser: data[mutationName],
+					savedAllChanges: true,
+				});
 			}
-			const data = await graphQLFetch(query, variables, profilePictureFile ? true : false);
-			this.setState({
-				savedUser: data[mutationName],
-				savedAllChanges: true,
-			});
 		} else {
 			const missingFields = [
 				{ value: email, label: 'email' },
-				{ value: displayName, label: 'language' },
+				{ value: displayName, label: 'displayName' },
 				{ value: firstName, label: 'firstName' },
 				{ value: profilePictureSrc, label: 'profilePicture' },
 			].filter(field => !field.value);
