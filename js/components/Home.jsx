@@ -70,8 +70,17 @@ class Home extends React.Component {
 			<div>
 				<Navigation/>
 
-				<div className="home-banner flex-container fw-typography-spacing" style={{background: 'url("https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwallup.net%2Fwp-content%2Fuploads%2F2016%2F01%2F296416-landscape-nature-mountain-lake-trees-snow-clouds-forest.jpg&f=1&nofb=1") no-repeat center center/cover'}}>
-					<div className="desktop-100 home-banner-content">
+				<div className="home-banner flex-container fw-typography-spacing" style={{background: 'url("/images/glacier-landscape.jpeg") no-repeat center center/cover'}}>
+					<div style={{
+						position: 'absolute',
+						width: '100%',
+						height: '100%',
+						background: 'linear-gradient(to bottom, #747de8, #9f74e4)',
+						opacity: '.1',
+						top: '0',
+						left: '0',
+					}}></div>
+					<div className="desktop-100 home-banner-content" style={{ position: 'relative' }}>
 						<div className="fw-container">
 							<div className="fw-space">
 								<h1>Learn languages from everyone</h1>
@@ -79,7 +88,7 @@ class Home extends React.Component {
 							</div>
 						</div>
 					</div>
-					<div className="desktop-100 fw-container flex-container flex-vertical-bottom">
+					<div className="desktop-100 fw-container flex-container flex-vertical-bottom" style={{ position: 'relative' }}>
 						<div className="fw-space">
 							<div className="flex-container flex-vertical-stretch">
 
