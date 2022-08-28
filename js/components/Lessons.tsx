@@ -7,6 +7,8 @@ import Slider from 'react-slick';
 import Navigation from './Navigation.jsx';
 // @ts-ignore
 import TopicLink from './TopicLink.tsx';
+// @ts-ignore
+import LessonSearchForm from './LessonSearchForm.tsx';
 
 interface LevelAttributes {
 	Level: string;
@@ -51,6 +53,7 @@ class Lessons extends React.Component<LessonsProps, LessonsState> {
 		this.state = {
 			loaded: false,
 		}
+		this.onSeachSubmitCallback = this.onSeachSubmitCallback.bind(this);
 	}
 
 	componentDidMount(){
@@ -75,6 +78,16 @@ class Lessons extends React.Component<LessonsProps, LessonsState> {
 		}
 	}
 
+	onSeachSubmitCallback(data){
+		if(data.searchLessons){
+			if(data.searchLessons.levels){
+				this.setState({
+					levels: data.searchLessons.levels
+				});
+			}
+		}
+	}
+
 	render(){
 
 		const { levels, loaded } = this.state;
@@ -82,6 +95,13 @@ class Lessons extends React.Component<LessonsProps, LessonsState> {
 		return (
 			<div className="frame">
 				<Navigation/>
+
+				<div className="page-form" style={{ marginBottom: '60px' }}>
+					<h1>Free Lessons and Challenges</h1>
+					<LessonSearchForm
+						onSubmit={this.onSeachSubmitCallback}
+					/>
+				</div>
 
 			    {levels ?
 			    	levels.map((level) => 

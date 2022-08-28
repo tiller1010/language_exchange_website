@@ -1,5 +1,6 @@
 scalar Upload
 
+# User Content Schema
 type Video {
 	_id: ID!
 	title: String!
@@ -41,6 +42,7 @@ input UserInputs {
 # union PossibleProduct = PremiumVideoChatListing | OtherProduct
 union PossibleProduct = PremiumVideoChatListing
 
+# Premium Video Chat Schema
 type Product {
 	_id: ID
 	userID: ID
@@ -96,13 +98,57 @@ type PremiumVideoChatListingFeed {
 	listings: [PremiumVideoChatListing]
 }
 
+# Strapi Schema
+# Level Schema
+type Level {
+	id: String
+	attributes: LevelAttributes
+}
+type LevelAttributes {
+	Level: String
+	topics: TopicsData
+}
+type TopicsData {
+	data: [Topic]
+}
+
+# Topic Schema
+type Topic {
+	id: String
+	attributes: TopicAttributes
+}
+type TopicAttributes {
+	Topic: String
+	FeaturedMedia: StrapiMedia
+}
+
+# Strapi Media Schema
+type StrapiMedia {
+	data: StrapiMediaData
+}
+type StrapiMediaData {
+	attributes: StrapiMediaDataAttributes
+}
+type StrapiMediaDataAttributes {
+	mime: String
+	url: String
+	alternativeText: String
+}
+
+type LevelFeed {
+	levels: [Level]
+}
+
+# Queries
 type Query {
 	indexVideos: [Video]
 	getRecentPremiumVideoChatListings: PremiumVideoChatListingFeed
 	searchPremiumVideoChatListings(topic: String, languageOfTopic: String): PremiumVideoChatListingFeed
+	searchLessons(topicQuery: String, languageOfTopic: String): LevelFeed
 	findUserByID(userID: String!): User
 }
 
+# Mutations
 type Mutation {
 	addLike(userID: ID!, videoID: ID!): Video
 	removeLike(userID: ID!, videoID: ID!): Video
