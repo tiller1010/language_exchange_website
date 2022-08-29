@@ -84,7 +84,7 @@ export default class LessonSearchForm extends React.Component<LessonSearchFormPr
 		const { topicQuery, languageOfTopic } = this.state;
 
 		return(
-			<form className="fw-form video-search-form">
+			<form className="fw-form search-form">
 				<div className="flex-container flex-vertical-stretch">
 					<div className="field text tablet-100">
 						<label htmlFor="topicQueryField">Search</label>

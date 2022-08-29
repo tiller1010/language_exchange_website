@@ -84,7 +84,7 @@ export default class VideoSearchForm extends React.Component<VideoSearchFormProp
 		const { keywords, languageOfTopic, sortControlStatus, sort} = this.state;
 
 		return(
-			<form action="/videos" method="GET" className="fw-form video-search-form">
+			<form action="/videos" method="GET" className="fw-form search-form">
 				<div className="flex-container flex-vertical-stretch">
 					<div className="field text tablet-100">
 						<label htmlFor="keywordsField">Search</label>

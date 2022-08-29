@@ -1,4 +1,4 @@
-.video-search-form{
+.search-form{
 	.field.text, .field.dropdown{
 		margin: 10px 0;
 	}
@@ -18,7 +18,7 @@
 }
 
 @media only screen and (max-width: 815px){
-	.video-search-form {
+	.search-form {
 		.field.dropdown{
 			min-width: unset;
 		}

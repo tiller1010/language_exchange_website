@@ -2,30 +2,32 @@ import * as React from 'react';
 // @ts-ignore
 import PremiumVideoChatListing from './PremiumVideoChatListing.tsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import graphQLFetch from '../graphQLFetch.js';
 import Slider from 'react-slick';
-const languages = require('language-list')();
+// @ts-ignore
+import LanguageSelector from './LanguageSelector.tsx';
 
 interface PremiumVideoChatListingObject {
 	topic: string;
-	languageOfTopic: string
-	thumbnailSrc: string
-	userID: string
-	timeSlots: [VideoChatTimeSlot?]
+	languageOfTopic: string;
+	thumbnailSrc: string;
+	userID: string;
+	timeSlots: [VideoChatTimeSlot?];
 }
 
 interface VideoChatTimeSlot {
-	customerUserID?: string
-	time: string
-	booked?: boolean
-	completed?: boolean
+	customerUserID?: string;
+	time: string;
+	booked?: boolean;
+	completed?: boolean;
 }
 
 interface PremiumVideoChatListingFeedState {
 	topic: string;
-	languageOfTopic: string
-	premiumVideoChatListings?: [PremiumVideoChatListingObject?]
+	languageOfTopic: string;
+	premiumVideoChatListings?: [PremiumVideoChatListingObject?];
+	loaded: boolean;
 }
 
 interface PremiumVideoChatListingFeedProps {
@@ -40,6 +42,7 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 			topic: '',
 			languageOfTopic: '',
 			premiumVideoChatListings: [],
+			loaded: false,
 		}
 		this.state = state;
 		this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
@@ -72,7 +75,8 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 		if(data.getRecentPremiumVideoChatListings){
 			if(data.getRecentPremiumVideoChatListings.listings){
 				this.setState({
-					premiumVideoChatListings: data.getRecentPremiumVideoChatListings.listings
+					premiumVideoChatListings: data.getRecentPremiumVideoChatListings.listings,
+					loaded: true,
 				});
 			}
 		}
@@ -128,34 +132,30 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 		let {
 			premiumVideoChatListings,
 			topic,
-			languageOfTopic
+			languageOfTopic,
+			loaded,
 		} = this.state;
 
 		return(
 			<section>
-				<form className="pure-u-1 pure-u-md-1-2 fw-form">
-					<h2>Premium video chats</h2>
-					<div className="field text">
-						<label htmlFor="topicField">Topic</label>
-						<input type="text" name="topic" id="topicField" value={topic} onChange={(event) => this.setState({topic: event.target.value})} className="pure-input-rounded"/>
-					</div>
-					<div className="field dropdown">
-						<label htmlFor="languageOfTopicField">Language</label>
-						<select name="languageOfTopic" id="languageOfTopicField" onChange={(event) => this.setState({languageOfTopic: event.target.value})} className="pure-input-rounded" defaultValue={languageOfTopic}>
-							<option value="">Select a language</option>
-							<option>ASL</option>
-							{languages.getLanguageCodes().map((langCode) => 
-								<option key={langCode}>{languages.getLanguageName(langCode)}</option>
-							)}
-						</select>
-					</div>
-					<div>
-						<button className="button" onClick={this.handleSearchSubmit}>
-							Submit
-							<FontAwesomeIcon icon={faLongArrowAltRight}/>
-						</button>
-					</div>
-				</form>
+				<div className="page-form" style={{ marginBottom: '60px' }}>
+					<h2>Practice with a native speaker</h2>
+					<form className="fw-form search-form">
+						<div className="flex-container flex-vertical-stretch">
+							<div className="field text">
+								<label htmlFor="topicField">Topic</label>
+								<input type="text" name="topic" id="topicField" value={topic} onChange={(event) => this.setState({topic: event.target.value})}/>
+							</div>
+							<div className="flex-container tablet-100" style={{ flexWrap: 'nowrap' }}>
+								<LanguageSelector name="languageOfTopic" id="videoChat_languageOfTopicField" onChange={(event) => this.setState({ languageOfTopic: event.target.value })} value={languageOfTopic} required={false}/>
+								<button value="Search" className="button tablet-20" onClick={this.handleSearchSubmit}>
+									Search
+									<FontAwesomeIcon icon={faSearch}/>
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
 				{premiumVideoChatListings.length ?
 		    		<Slider {...{
 						dots: false,
@@ -179,7 +179,7 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 						)}
 					</Slider>
 					:
-					''
+					<>{loaded ? <p>No videos</p> : <div className="lds-facebook"><div></div><div></div><div></div></div>}</>
 				}
 			</section>
 		);
