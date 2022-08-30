@@ -37,10 +37,11 @@ export default class LessonSearchForm extends React.Component<LessonSearchFormPr
 	async handleSearchSubmit(event) {
 		event.preventDefault();
 
-		const {
+		let {
 			topicQuery,
 			languageOfTopic
 		} = this.state;
+		topicQuery = topicQuery.replace(/\s$/, '');
 
 		const query = `query searchLessons($topicQuery: String, $languageOfTopic: String){
 			searchLessons(topicQuery: $topicQuery, languageOfTopic: $languageOfTopic){
@@ -94,7 +95,7 @@ export default class LessonSearchForm extends React.Component<LessonSearchFormPr
 						<div className="tablet-100">
 							<LanguageSelector name="languageOfTopic" id="lessonContent_languageOfTopicField" onChange={(event) => this.setState({ languageOfTopic: event.target.value })} value={languageOfTopic} required={false}/>
 						</div>
-						<button value="Search" className="button tablet-20" onClick={this.handleSearchSubmit}>
+						<button value="Search" className="button tablet-20" onClick={this.handleSearchSubmit} style={{ borderRadius: '0 5px 5px 0' }}>
 							Search
 							<FontAwesomeIcon icon={faSearch}/>
 						</button>

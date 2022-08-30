@@ -123,7 +123,7 @@ class VideosIndex extends React.Component {
 			<div className="frame">			
 				<Navigation/>
 				<div className="page-form">
-					<h1>User uploads</h1>
+					<h1 style={{ textAlign: 'right' }}>User uploads</h1>
 					<VideoSearchForm
 						keywords={keywords}
 						languageOfTopic={languageOfTopic}
@@ -212,7 +212,7 @@ class VideosIndex extends React.Component {
 							)}
 						</div>
 						:
-						<>{loaded ? <p>No videos</p> : <div className="lds-facebook"><div></div><div></div><div></div></div>}</>
+						<>{loaded ? <p>No user uploads found</p> : <div className="lds-facebook"><div></div><div></div><div></div></div>}</>
 					}
 					{this.state.pages.length ?
 						<ul className="pagination flex">

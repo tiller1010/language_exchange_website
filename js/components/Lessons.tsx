@@ -1,8 +1,7 @@
 import * as React from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSlidersH, faStar } from '@fortawesome/free-solid-svg-icons';
-import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
+import { faLongArrowAltRight, faBan } from '@fortawesome/free-solid-svg-icons';
 import Slider from 'react-slick';
 import Navigation from './Navigation.jsx';
 // @ts-ignore
@@ -43,7 +42,7 @@ interface LessonsProps {
 }
 
 interface LessonsState {
-	levels?: LevelData[];
+	levels: LevelData[];
 	loaded: boolean;
 }
 
@@ -51,6 +50,7 @@ class Lessons extends React.Component<LessonsProps, LessonsState> {
 	constructor(props){
 		super(props);
 		this.state = {
+			levels: [],
 			loaded: false,
 		}
 		this.onSeachSubmitCallback = this.onSeachSubmitCallback.bind(this);
@@ -97,13 +97,19 @@ class Lessons extends React.Component<LessonsProps, LessonsState> {
 				<Navigation/>
 
 				<div className="page-form" style={{ marginBottom: '60px' }}>
-					<h1>Free Lessons and Challenges</h1>
+					<h1 style={{ textAlign: 'right' }}>Free Lessons and Challenges</h1>
 					<LessonSearchForm
 						onSubmit={this.onSeachSubmitCallback}
 					/>
+					<div>
+						<a href="/lessons" aria-label="Clear filters" className="button">
+							Clear filters
+							<FontAwesomeIcon icon={faBan}/>
+						</a>
+					</div>
 				</div>
 
-			    {levels ?
+			    {levels.length ?
 			    	levels.map((level) => 
 			    		<div key={level.id} className="flex x-center">
 				    		<h2 className="pad" style={{ margin: 0 }}>{level.attributes.Level}</h2>
@@ -130,7 +136,7 @@ class Lessons extends React.Component<LessonsProps, LessonsState> {
 			    		</div>
 		    		) 
 			    	:
-			    	<>{loaded ? <h2>No levels</h2> : <div className="lds-facebook"><div></div><div></div><div></div></div>}</>
+			    	<>{loaded ? <p>No levels</p> : <div className="lds-facebook"><div></div><div></div><div></div></div>}</>
 			    }
 			</div>
 		);

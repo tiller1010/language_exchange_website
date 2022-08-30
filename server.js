@@ -164,6 +164,7 @@ app.use(express.json());
 		// Index videos route
 		app.get('/videos:format?', async (req, res) => {
 			let keywords = req.query.keywords || '';
+			keywords = keywords.replace(/\s$/, '');
 			let languageOfTopic = req.query.languageOfTopic || '';
 			let sort = req.query.sort || 'Recent';
 			let videos = null;

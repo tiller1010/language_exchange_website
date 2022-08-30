@@ -2,7 +2,7 @@ import * as React from 'react';
 // @ts-ignore
 import PremiumVideoChatListing from './PremiumVideoChatListing.tsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faBan } from '@fortawesome/free-solid-svg-icons';
 import graphQLFetch from '../graphQLFetch.js';
 import Slider from 'react-slick';
 // @ts-ignore
@@ -86,10 +86,11 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 
 		event.preventDefault();
 
-		const {
+		let {
 			topic,
 			languageOfTopic
 		} = this.state;
+		topic = topic.replace(/\s$/, '');
 
 		const query = `query searchPremiumVideoChatListings($topic: String, $languageOfTopic: String){
 			searchPremiumVideoChatListings(topic: $topic, languageOfTopic: $languageOfTopic){
@@ -139,25 +140,33 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 		return(
 			<section>
 				<div className="page-form" style={{ marginBottom: '60px' }}>
-					<h2>Practice with a native speaker</h2>
+					<h1 style={{ textAlign: 'right' }}>Practice with a native speaker</h1>
 					<form className="fw-form search-form">
 						<div className="flex-container flex-vertical-stretch">
-							<div className="field text">
+							<div className="field text tablet-100">
 								<label htmlFor="topicField">Topic</label>
 								<input type="text" name="topic" id="topicField" value={topic} onChange={(event) => this.setState({topic: event.target.value})}/>
 							</div>
 							<div className="flex-container tablet-100" style={{ flexWrap: 'nowrap' }}>
-								<LanguageSelector name="languageOfTopic" id="videoChat_languageOfTopicField" onChange={(event) => this.setState({ languageOfTopic: event.target.value })} value={languageOfTopic} required={false}/>
-								<button value="Search" className="button tablet-20" onClick={this.handleSearchSubmit}>
+								<div className="tablet-100">
+									<LanguageSelector name="languageOfTopic" id="videoChat_languageOfTopicField" onChange={(event) => this.setState({ languageOfTopic: event.target.value })} value={languageOfTopic} required={false}/>
+								</div>
+								<button value="Search" className="button tablet-20" onClick={this.handleSearchSubmit} style={{ borderRadius: '0 5px 5px 0' }}>
 									Search
 									<FontAwesomeIcon icon={faSearch}/>
 								</button>
 							</div>
 						</div>
 					</form>
+					<div>
+						<a href="/chats" aria-label="Clear filters" className="button">
+							Clear filters
+							<FontAwesomeIcon icon={faBan}/>
+						</a>
+					</div>
 				</div>
 				{premiumVideoChatListings.length ?
-		    		<Slider {...{
+					<Slider {...{
 						dots: false,
 						infinite: false,
 						speed: 500,
@@ -179,7 +188,7 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 						)}
 					</Slider>
 					:
-					<>{loaded ? <p>No videos</p> : <div className="lds-facebook"><div></div><div></div><div></div></div>}</>
+					<>{loaded ? <p>No video chats found</p> : <div className="lds-facebook"><div></div><div></div><div></div></div>}</>
 				}
 			</section>
 		);
