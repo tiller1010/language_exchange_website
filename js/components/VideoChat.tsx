@@ -405,7 +405,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 		const { availableCalls } = this.state;
 
 		return (
-			<div className="frame">
+			<div className="frame fw-container">
 				<Navigation/>
 				<div className="pure-u-g">
 

@@ -21,15 +21,15 @@ class Navigation extends React.Component {
 					</a>
 				</div>
 				<div className="small-pad">
-					<a href="/videos" className="button">
-						<span>Videos</span>
-						<FontAwesomeIcon icon={faPlay}/>
-					</a>
-				</div>
-				<div className="small-pad">
 					<a href="/lessons" className="button">
 						<span>Lessons</span>
 						<FontAwesomeIcon icon={faBook}/>
+					</a>
+				</div>
+				<div className="small-pad">
+					<a href="/videos" className="button">
+						<span>Videos</span>
+						<FontAwesomeIcon icon={faPlay}/>
 					</a>
 				</div>
 				<div className="small-pad">

@@ -22,7 +22,7 @@ class Login extends React.Component {
 
 	render(){
 		return (
-			<div className="frame">
+			<div className="frame fw-container">
 				<Navigation/>
 
 				<div className="page-form">

@@ -154,142 +154,155 @@ class AccountProfile extends React.Component {
 		});
 
 		return (
-			<div className="frame fw-typography-spacing">
+			<div className="fw-typography-spacing">
 				<Navigation/>
 
-				<section className="fw-space double noleft noright">
-					<div className="flex-container">
-						<div className="desktop-75 phone-100">
-							{this.props.isCurrentUser ?
-								<>
-								<h1>Welcome, {this.state.user.firstName}!</h1>
-								<a href="/logout" className="button" style={{ width: 'max-content' }}>
-									Logout
-									<FontAwesomeIcon icon={faSignOutAlt}/>
-								</a>
-								<span>&nbsp;</span>
-								<a href="/account-profile-edit" className="button" style={{ width: 'max-content' }}>
-									Edit Profile
-									<FontAwesomeIcon icon={faEdit}/>
-								</a>
-								</>
-								:
-								<h1>{this.state.user.firstName}</h1>
-							}
-				
-							{authenticatedUserIsAdmin ?
-								<form className="fw-form">
-									{this.state.user.verified ?
-										<div className="field checkbox">
-											<input type="checkbox" name="verifyUser" id="verifyUserField" checked="checked" onChange={(event) => this.verifyUser(!this.state.user.verified)}/>
-											<label htmlFor="verifyUserField">Remove verification for this user?</label>
-										</div>
+				<section>
+					<div className="fw-container">
+						<div className="frame normalbottom">
+
+							<div className="flex-container">
+								<div className="desktop-75 phone-100">
+									{this.props.isCurrentUser ?
+										<>
+										<h1>Welcome, {this.state.user.firstName}!</h1>
+										<a href="/logout" className="button" style={{ width: 'max-content' }}>
+											Logout
+											<FontAwesomeIcon icon={faSignOutAlt}/>
+										</a>
+										<span>&nbsp;</span>
+										<a href="/account-profile-edit" className="button" style={{ width: 'max-content' }}>
+											Edit Profile
+											<FontAwesomeIcon icon={faEdit}/>
+										</a>
+										</>
 										:
-										<div className="field checkbox">
-											<input type="checkbox" name="verifyUser" id="verifyUserField" onChange={(event) => this.verifyUser(!this.state.user.verified)}/>
-											<label htmlFor="verifyUserField">Verify this user?</label>
-										</div>
+										<h1>{this.state.user.firstName}</h1>
 									}
-								</form>
+						
+									{authenticatedUserIsAdmin ?
+										<form className="fw-form">
+											{this.state.user.verified ?
+												<div className="field checkbox">
+													<input type="checkbox" name="verifyUser" id="verifyUserField" checked="checked" onChange={(event) => this.verifyUser(!this.state.user.verified)}/>
+													<label htmlFor="verifyUserField">Remove verification for this user?</label>
+												</div>
+												:
+												<div className="field checkbox">
+													<input type="checkbox" name="verifyUser" id="verifyUserField" onChange={(event) => this.verifyUser(!this.state.user.verified)}/>
+													<label htmlFor="verifyUserField">Verify this user?</label>
+												</div>
+											}
+										</form>
+										:
+										''
+									}
+
+								</div>
+								{this.state.user.profilePictureSrc ?
+									<div className="desktop-25 phone-100">
+										<div className="img-container">
+											<img src={`${this.props.pathResolver}${this.state.user.profilePictureSrc}`}
+												alt={`Picture of ${this.state.user.displayName}`}
+												style={{
+													maxHeight: '300px',
+													objectPosition: 'top',
+												}}
+											/>
+										</div>
+									</div>
+									:
+									''
+								}
+							</div>
+
+						</div>
+					</div>
+			    </section>
+
+				<section>
+					<div className="fw-container">
+						<div className="fw-space">
+
+							{authenticatedUserIsVerified && this.props.isCurrentUser ?
+								<>
+									<PremiumVideoChatListingForm user={authenticatedUser}/>
+									<p>
+										{authenticatedUser.connectedStripeAccountID ?
+											<>
+											{this.props.stripeAccountPending ?
+												<>
+												<p><b>!! Your Connected Stripe Account still needs to be completed, or is pending verification. !!</b></p>
+												<p>Your video chat listing will not be purchasable until your connected Stripe account is completed and verified.</p>
+												<a href={`/manage-stripe-account/${authenticatedUser.connectedStripeAccountID}`} className="button" style={{ display: 'block', margin: 'auto' }}>
+													 Complete Stripe Account
+													<FontAwesomeIcon icon={faUser}/>
+												</a>
+												</>
+												:
+												<a href={`/manage-stripe-account/${authenticatedUser.connectedStripeAccountID}`} className="button" style={{ display: 'block', margin: 'auto' }}>
+													 Manage Stripe Account
+													<FontAwesomeIcon icon={faUser}/>
+												</a>
+											}
+											</>
+											:
+											<a href={`/manage-stripe-account/`} className="button" style={{ display: 'block', margin: 'auto' }}>
+												Create Connected Stripe Account
+												<FontAwesomeIcon icon={faUser}/>
+											</a>
+										}
+									</p>
+								</>
 								:
 								''
 							}
 
 						</div>
-						{this.state.user.profilePictureSrc ?
-							<div className="desktop-25 phone-100">
-								<div className="img-container">
-									<img src={`${this.props.pathResolver}${this.state.user.profilePictureSrc}`}
-										alt={`Picture of ${this.state.user.displayName}`}
-										style={{
-											maxHeight: '300px',
-											objectPosition: 'top',
-										}}
-									/>
-								</div>
-							</div>
-							:
-							''
-						}
 					</div>
-
-			    </section>
-
-				<section className="fw-space double noleft noright">
-
-					{authenticatedUserIsVerified && this.props.isCurrentUser ?
-						<>
-							<PremiumVideoChatListingForm user={authenticatedUser}/>
-							<p>
-								{authenticatedUser.connectedStripeAccountID ?
-									<>
-									{this.props.stripeAccountPending ?
-										<>
-										<p><b>!! Your Connected Stripe Account still needs to be completed, or is pending verification. !!</b></p>
-										<p>Your video chat listing will not be purchasable until your connected Stripe account is completed and verified.</p>
-										<a href={`/manage-stripe-account/${authenticatedUser.connectedStripeAccountID}`} className="button" style={{ display: 'block', margin: 'auto' }}>
-											 Complete Stripe Account
-											<FontAwesomeIcon icon={faUser}/>
-										</a>
-										</>
-										:
-										<a href={`/manage-stripe-account/${authenticatedUser.connectedStripeAccountID}`} className="button" style={{ display: 'block', margin: 'auto' }}>
-											 Manage Stripe Account
-											<FontAwesomeIcon icon={faUser}/>
-										</a>
-									}
-									</>
-									:
-									<a href={`/manage-stripe-account/`} className="button" style={{ display: 'block', margin: 'auto' }}>
-										Create Connected Stripe Account
-										<FontAwesomeIcon icon={faUser}/>
-									</a>
-								}
-							</p>
-						</>
-						:
-						''
-					}
-
 				</section>
 
-				<section className="fw-space double noleft noright">
+				<section className="grey-section">
+					<div className="fw-container">
+						<div className="fw-space">
 
-					{this.state.user.completedTopics.length ?
-						<div className="topics">
-							<h2 className="text-center">Completed Topics</h2>
-							<hr/>
-				    		<Slider {...{
-								dots: false,
-								infinite: false,
-								speed: 500,
-								slidesToShow: 3,
-								slidesToScroll: 1,
-								responsive: [
-									{
-										breakpoint: 1024,
-										settings: {
-											slidesToShow: 1.5
+							{this.state.user.completedTopics.length ?
+							<div className="topics">
+								<h2 className="text-center">Completed Topics</h2>
+								<hr/>
+								<Slider {...{
+									dots: false,
+									infinite: false,
+									speed: 500,
+									slidesToShow: 3,
+									slidesToScroll: 1,
+									responsive: [
+										{
+											breakpoint: 1024,
+											settings: {
+												slidesToShow: 1.5
+											}
 										}
-									}
-								]
-				    		}}>
-								{this.state.user.completedTopics.map((topic) => 
-				    				<div className="topic pure-u-1 pure-u-md-11-24" key={topic.id}>
-					    				<div className="pad">
-											<TopicLink topic={topic} levelID={topic.levelID}/>
-				    					</div>
-			    					</div>
-								)}
-							</Slider>
-						</div>
-						:
-						<div>
-							<h2 className="text-center">No Completed Topics</h2>
-							<hr/>
-						</div>
-					}
+									]
+								}}>
+									{this.state.user.completedTopics.map((topic) => 
+										<div className="topic pure-u-1 pure-u-md-11-24" key={topic.id}>
+											<div className="pad">
+												<TopicLink topic={topic} levelID={topic.levelID}/>
+											</div>
+										</div>
+									)}
+								</Slider>
+							</div>
+							:
+							<div>
+								<h2 className="text-center">No Completed Topics</h2>
+								<hr/>
+							</div>
+							}
 
+						</div>
+					</div>
 				</section>
 
 				{this.props.isCurrentUser ?
@@ -304,145 +317,155 @@ class AccountProfile extends React.Component {
 					''
 				}
 
-				<section className="fw-space double noleft noright">
+				<section>
+					<div className="fw-container">
+						<div className="fw-space">
 
-					{products.length && this.props.isCurrentUser ?
-						<div>
-							<h2 className="text-center">Products</h2>
-							<hr/>
-				    		<Slider {...{
-								dots: false,
-								infinite: false,
-								speed: 500,
-								slidesToShow: 3,
-								slidesToScroll: 1,
-								responsive: [
-									{
-										breakpoint: 1024,
-										settings: {
-											slidesToShow: 1.5
-										}
-									}
-								]
-				    		}}>
-								{this.state.user.products.reverse().map((product) => 
-									<div key={product._id} className="pure-u-1 pure-u-lg-1-3">
-										<Product product={product}/>
-									</div>
-								)}
-							</Slider>
-						</div>
-						:
-						<div>
-							<h2 className="text-center">No Purchased Products</h2>
-							<hr/>
-						</div>
-					}
+							{products.length && this.props.isCurrentUser ?
+								<div>
+									<h2 className="text-center">Products</h2>
+									<hr/>
+									<Slider {...{
+										dots: false,
+										infinite: false,
+										speed: 500,
+										slidesToShow: 3,
+										slidesToScroll: 1,
+										responsive: [
+											{
+												breakpoint: 1024,
+												settings: {
+													slidesToShow: 1.5
+												}
+											}
+										]
+									}}>
+										{this.state.user.products.reverse().map((product) => 
+											<div key={product._id} className="pure-u-1 pure-u-lg-1-3">
+												<Product product={product}/>
+											</div>
+										)}
+									</Slider>
+								</div>
+								:
+								<div>
+									<h2 className="text-center">No Purchased Products</h2>
+									<hr/>
+								</div>
+							}
 
+						</div>
+					</div>
 				</section>
 
-				<section className="fw-space double noleft noright">
+				<section className="grey-section">
+					<div className="fw-container">
+						<div className="fw-space">
 
-					{this.state.user.uploadedVideos.length ?
-						<div>
-							<h2 className="text-center">Uploaded Content</h2>
-							<hr/>
-				    		<Slider {...{
-								dots: false,
-								infinite: false,
-								speed: 500,
-								slidesToShow: 3,
-								slidesToScroll: 1,
-								responsive: [
-									{
-										breakpoint: 1024,
-										settings: {
-											slidesToShow: 1.5
-										}
-									}
-								]
-				    		}}>
-								{this.state.user.uploadedVideos.map((video) => 
-									<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
-							    		<VideoPlayer
-											_id={video._id}
-											title={video.title}
-											languageOfTopic={video.languageOfTopic}
-											src={`${this.props.pathResolver}${video.src}`}
-											thumbnailSrc={`${this.props.pathResolver}${video.thumbnailSrc}`}
-											uploadedBy={video.uploadedBy}
-											likes={video.likes}
-											likedByCurrentUser={video.likedByCurrentUser}
-											authenticatedUserID={authenticatedUser ? authenticatedUser._id : null}
-											handleDeleteVideo={this.props.isCurrentUser ? this.handleDeleteVideo : null}
-											afterToggleLike={this.afterToggleLike}
-							    		/>
-									</div>
-								)}
-							</Slider>
+							{this.state.user.uploadedVideos.length ?
+								<div>
+									<h2 className="text-center">Uploaded Content</h2>
+									<hr/>
+									<Slider {...{
+										dots: false,
+										infinite: false,
+										speed: 500,
+										slidesToShow: 3,
+										slidesToScroll: 1,
+										responsive: [
+											{
+												breakpoint: 1024,
+												settings: {
+													slidesToShow: 1.5
+												}
+											}
+										]
+									}}>
+										{this.state.user.uploadedVideos.map((video) => 
+											<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
+												<VideoPlayer
+													_id={video._id}
+													title={video.title}
+													languageOfTopic={video.languageOfTopic}
+													src={`${this.props.pathResolver}${video.src}`}
+													thumbnailSrc={`${this.props.pathResolver}${video.thumbnailSrc}`}
+													uploadedBy={video.uploadedBy}
+													likes={video.likes}
+													likedByCurrentUser={video.likedByCurrentUser}
+													authenticatedUserID={authenticatedUser ? authenticatedUser._id : null}
+													handleDeleteVideo={this.props.isCurrentUser ? this.handleDeleteVideo : null}
+													afterToggleLike={this.afterToggleLike}
+												/>
+											</div>
+										)}
+									</Slider>
+								</div>
+								:
+								<div>
+									<h2 className="text-center">No Uploaded Content</h2>
+									<hr/>
+								</div>
+							}
+							<a href="/videos/add" className="button" style={{ display: 'block', margin: 'auto' }}>
+								<span>Upload content</span>
+								<FontAwesomeIcon icon={faPlus}/>
+							</a>
+
 						</div>
-						:
-						<div>
-							<h2 className="text-center">No Uploaded Content</h2>
-							<hr/>
+					</div>
+				</section>
+
+				<section>
+					<div className="fw-container">
+						<div className="frame normaltop">
+
+							{this.state.user.likedVideos.length ?
+								<div>
+									<h2 className="text-center">Liked Content</h2>
+									<hr/>
+									<Slider {...{
+										dots: false,
+										infinite: false,
+										speed: 500,
+										slidesToShow: 3,
+										slidesToScroll: 1,
+										responsive: [
+											{
+												breakpoint: 1024,
+												settings: {
+													slidesToShow: 1.5
+												}
+											}
+										]
+									}}>
+										{this.state.user.likedVideos.map((video) => 
+											<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
+												<VideoPlayer
+													_id={video._id}
+													title={video.title}
+													languageOfTopic={video.languageOfTopic}
+													src={`${this.props.pathResolver}${video.src}`}
+													thumbnailSrc={`${this.props.pathResolver}${video.thumbnailSrc}`}
+													uploadedBy={video.uploadedBy}
+													likes={video.likes}
+													likedByCurrentUser={video.likedByCurrentUser}
+													authenticatedUserID={authenticatedUser ? authenticatedUser._id : null}
+													afterToggleLike={this.afterToggleLike}
+												/>
+											</div>
+										)}
+									</Slider>
+								</div>
+								:
+								<div>
+									<h2 className="text-center">No Liked Content</h2>
+									<hr/>
+								</div>
+							}
+
 						</div>
-					}
-				    <div className="small-pad">
-					    <a href="/videos/add" className="button">
-						    <span>Upload content</span>
-					        <FontAwesomeIcon icon={faPlus}/>
-					    </a>
-				    </div>
-
-			    </section>
-
-				<section className="fw-space double noleft noright">
-
-					{this.state.user.likedVideos.length ?
-						<div>
-							<h2 className="text-center">Liked Content</h2>
-							<hr/>
-				    		<Slider {...{
-								dots: false,
-								infinite: false,
-								speed: 500,
-								slidesToShow: 3,
-								slidesToScroll: 1,
-								responsive: [
-									{
-										breakpoint: 1024,
-										settings: {
-											slidesToShow: 1.5
-										}
-									}
-								]
-				    		}}>
-								{this.state.user.likedVideos.map((video) => 
-									<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
-							    		<VideoPlayer
-											_id={video._id}
-											title={video.title}
-											languageOfTopic={video.languageOfTopic}
-											src={`${this.props.pathResolver}${video.src}`}
-											thumbnailSrc={`${this.props.pathResolver}${video.thumbnailSrc}`}
-											uploadedBy={video.uploadedBy}
-											likes={video.likes}
-											likedByCurrentUser={video.likedByCurrentUser}
-											authenticatedUserID={authenticatedUser ? authenticatedUser._id : null}
-											afterToggleLike={this.afterToggleLike}
-							    		/>
-									</div>
-								)}
-							</Slider>
-						</div>
-						:
-						<div>
-							<h2 className="text-center">No Liked Content</h2>
-							<hr/>
-						</div>
-					}
-
-			    </section>
+					</div>
+				</section>
 
 			</div>
 		);

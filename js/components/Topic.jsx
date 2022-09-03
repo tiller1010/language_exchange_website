@@ -169,7 +169,7 @@ class Topic extends React.Component {
 		} = this.state;
 
 		return (
-			<div className="frame">
+			<div className="frame fw-container">
 				<Navigation/>
 				<div className="flex x-center">
 					<div className="pad">

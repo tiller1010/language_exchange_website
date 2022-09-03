@@ -56,7 +56,7 @@ class VideosAdd extends React.Component {
 			this.setState(newState);
 
 	    	// Set preview
-	    	let reader = new FileReader();
+			let reader = new FileReader();
 			reader.addEventListener('load', function () {
 				if(/jpeg|jpg|png/.test(reader.result.substr(0, 20))){
 					context.setState({
@@ -67,7 +67,7 @@ class VideosAdd extends React.Component {
 				}
 
 			}, false);
-	    	reader.readAsDataURL(image);
+			reader.readAsDataURL(image);
 	    }
 	}
 
@@ -145,20 +145,20 @@ class VideosAdd extends React.Component {
 		}
 
 		return (
-			<div className="frame">
+			<div className="frame fw-container">
 				<Navigation/>
 
 				<div className="video-add-view flex-container">
 					<div className="desktop-50 tablet-100" style={{maxWidth: '100%'}}>
 						<div className="desktop-100" style={{height: '300px'}}>
 							<div className="fw-space">
-								<h2>Media Preview</h2>
+								<h2 style={{ marginBottom: '5px' }}>Upload Preview</h2>
 								<MediaRenderer src={mediaSource} thumbnailSrc={thumbnailSrc} fileExtension={fileExtension}/>
 							</div>
 						</div>
 						<div className="desktop-100" style={{ maxWidth: '100%' }}>
 							<div className="fw-space">
-								<h2>Thumbnail Preview</h2>
+								<h2 style={{ marginBottom: '5px' }}>Thumbnail Preview</h2>
 								<div className="thumbnail-preview">
 									<MediaRenderer src={thumbnailSrc} fileExtension={thumbnailFileExtension}/>
 								</div>
@@ -167,7 +167,8 @@ class VideosAdd extends React.Component {
 					</div>
 
 					<div className="page-form desktop-50 tablet-100">
-						<h1 style={{ textAlign: 'right' }}>Add a video or sound file</h1>
+						<h1 style={{ textAlign: 'right', marginBottom: '5px' }}>Share what you have learned</h1>
+						<h2 style={{ fontSize: '1.5em' }}>Add a video or sound file</h2>
 						<form action={`/videos/${this.state._id ? 'edit/' + this.state._id : 'add'}`} method="POST" encType="multipart/form-data" className="flex-col x-end fw-form">
 							<div className="field text desktop-100" htmlFor="titleField">
 								<label htmlFor="titleField">Title</label>

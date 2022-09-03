@@ -6,10 +6,9 @@ import Navigation from './Navigation.jsx';
 import VideoSearchForm from './VideoSearchForm.tsx';
 import VideoPlayer from './VideoPlayer.tsx';
 import PremiumVideoChatListingFeed from './PremiumVideoChatListingFeed.tsx';
-// @ts-ignore
 import TopicLink from './TopicLink.tsx';
-// @ts-ignore
 import Lessons from './Lessons.tsx';
+import HomepageBanner from './HomepageBanner.tsx';
 
 // Enable lazy loading
 const lozadObserver = lozad();
@@ -70,155 +69,102 @@ class Home extends React.Component {
 			<div>
 				<Navigation/>
 
-				<div className="home-banner flex-container fw-typography-spacing" style={{background: 'url("/images/glacier-landscape.jpeg") no-repeat center center/cover'}}>
-					<div style={{
-						position: 'absolute',
-						width: '100%',
-						height: '100%',
-						background: 'linear-gradient(to bottom, #747de8, #9f74e4)',
-						opacity: '.1',
-						top: '0',
-						left: '0',
-					}}></div>
-					<div className="desktop-100 home-banner-content" style={{ position: 'relative' }}>
+				<HomepageBanner/>
+
+				<div className="pure-u-g fw-typography-spacing">
+
+					<section>
 						<div className="fw-container">
 							<div className="fw-space">
-								<h1>Learn languages from everyone</h1>
-								<p>Language is fastest learned when used. Why not start speaking the language you want to learn today?</p>
-							</div>
-						</div>
-					</div>
-					<div className="desktop-100 fw-container flex-container flex-vertical-bottom" style={{ position: 'relative' }}>
-						<div className="fw-space">
-							<div className="flex-container flex-vertical-stretch">
 
-								<div className="desktop-33 tablet-100">
-									<div className="fw-space">
-										<a href="/videos" className="home-banner-link">
-											<div className="fw-space">
-												<h2>Content from learners</h2>
-												<p>
-													Learn from students just like you. Browse uploads from language learners around the world.
-												</p>
-											</div>
-										</a>
-									</div>
+								<div className="fw-space double noleft noright">
+									<h2>Complete challenges and sharpen your skills.</h2>
+									<hr/>
 								</div>
 
-								<div className="desktop-33 tablet-100">
-									<div className="fw-space">
-										<a href="/lessons" className="home-banner-link">
-											<div className="fw-space">
-												<h2>Improve your skills</h2>
-												<p>
-													Complete challenges and sharpen your skills.
-												</p>
-											</div>
-										</a>
-									</div>
-								</div>
-
-								<div className="desktop-33 tablet-100">
-									<div className="fw-space">
-										<a href="/chats" className="home-banner-link">
-											<div className="fw-space">
-												<h2>Schedule practice time</h2>
-												<p>
-													Set a time to practice with a native speaker.
-												</p>
-											</div>
-										</a>
-									</div>
-								</div>
+								<Lessons/>
 
 							</div>
 						</div>
-					</div>
+					</section>
+
+					<section className="grey-section">
+						<div className="fw-container">
+							<div className="fw-space">
+
+								<div className="fw-space double noleft noright">
+									<h2>Browse uploads from language learners around the world.</h2>
+									<hr/>
+								</div>
+
+								<div className="page-form">
+									<VideoSearchForm
+										keywords=""
+										sort="Recent"
+									/>
+								</div>
+
+								{this.state.recentVideos.length ?
+									<div className="pad no-x">
+										<h2>Recent User Uploads</h2>
+										<Slider {...{
+											dots: false,
+											infinite: false,
+											speed: 500,
+											slidesToShow: 3,
+											slidesToScroll: 1,
+											responsive: [
+												{
+													breakpoint: 1024,
+													settings: {
+														slidesToShow: 1.5
+													}
+												}
+											]
+										}}>
+											{this.state.recentVideos.map((video) => 
+												<div key={video._id}>
+													<VideoPlayer
+														_id={video._id}
+														title={video.title}
+														languageOfTopic={video.languageOfTopic}
+														src={video.src}
+														thumbnailSrc={video.thumbnailSrc}
+														uploadedBy={video.uploadedBy}
+														likes={video.likes}
+														likedByCurrentUser={this.currentUserHasLikedVideo(video)}
+														authenticatedUserID={this.props.userID}
+													/>
+												</div>
+											)}
+										</Slider>
+									</div>
+									:
+									''
+								}
+
+							</div>
+						</div>
+					</section>
+
+					<section>
+						<div className="fw-container">
+							<div className="frame normaltop">
+
+								<div className="fw-space double noleft noright">
+									<h2>Use the language you are learning.</h2>
+									<hr/>
+								</div>
+
+								<div className="desktop-100">
+									<PremiumVideoChatListingFeed authenticatedUserID={this.props.userID}/>
+								</div>
+
+							</div>
+						</div>
+					</section>
+
 				</div>
-
-				<div className="pure-u-g fw-typography-spacing frame">
-
-					<section className="fw-space double noleft noright">
-
-						<div className="fw-space double noleft noright">
-							<h2>Browse uploads from language learners around the world.</h2>
-							<hr/>
-						</div>
-
-						<div className="page-form">
-							<h2>User Submitted Content</h2>
-							<VideoSearchForm
-								keywords=""
-								sort="Recent"
-							/>
-						</div>
-
-					    {this.state.recentVideos.length ?
-					    	<div className="pad no-x">
-					    		<h2>Recent User Uploads</h2>
-					    		<Slider {...{
-									dots: false,
-									infinite: false,
-									speed: 500,
-									slidesToShow: 3,
-									slidesToScroll: 1,
-									responsive: [
-										{
-											breakpoint: 1024,
-											settings: {
-												slidesToShow: 1.5
-											}
-										}
-									]
-					    		}}>
-							    	{this.state.recentVideos.map((video) => 
-							    		<div key={video._id}>
-								    		<VideoPlayer
-												_id={video._id}
-												title={video.title}
-												languageOfTopic={video.languageOfTopic}
-												src={video.src}
-												thumbnailSrc={video.thumbnailSrc}
-												uploadedBy={video.uploadedBy}
-												likes={video.likes}
-												likedByCurrentUser={this.currentUserHasLikedVideo(video)}
-												authenticatedUserID={this.props.userID}
-								    		/>
-										</div>
-						    		)}
-					    		</Slider>
-					    	</div>
-					    	:
-					    	''
-					    }
-
-				    </section>
-
-				    <section className="fw-space double noleft noright">
-
-						<div className="fw-space double noleft noright">
-							<h2>Complete challenges and sharpen your skills.</h2>
-							<hr/>
-						</div>
-
-					    <Lessons/>
-
-				    </section>
-
-				    <section className="fw-space double noleft noright">
-
-						<div className="fw-space double noleft noright">
-							<h2>Support teachers.</h2>
-							<hr/>
-						</div>
-
-						<div className="desktop-100">
-							<PremiumVideoChatListingFeed authenticatedUserID={this.props.userID}/>
-						</div>
-
-				    </section>
-
-			    </div>
 
 			</div>
 		);

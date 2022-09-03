@@ -189,7 +189,7 @@ export default class ProfileEditForm extends React.Component<ProfileEditProps, P
 
 		return(
 
-			<div className="frame fw-typography-spacing">
+			<div className="frame fw-container fw-typography-spacing">
 				<Navigation/>
 
 				<section className="fw-space double noleft noright">

@@ -120,10 +120,10 @@ class VideosIndex extends React.Component {
 		}); 
 
 		return (
-			<div className="frame">			
+			<div className="frame fw-container">			
 				<Navigation/>
 				<div className="page-form">
-					<h1 style={{ textAlign: 'right' }}>User uploads</h1>
+					<h1 style={{ textAlign: 'right' }}>Uploads from other learners</h1>
 					<VideoSearchForm
 						keywords={keywords}
 						languageOfTopic={languageOfTopic}

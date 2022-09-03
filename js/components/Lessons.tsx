@@ -93,11 +93,11 @@ class Lessons extends React.Component<LessonsProps, LessonsState> {
 		const { levels, loaded } = this.state;
 
 		return (
-			<div className="frame">
+			<div className="frame fw-container">
 				<Navigation/>
 
 				<div className="page-form" style={{ marginBottom: '60px' }}>
-					<h1 style={{ textAlign: 'right' }}>Free Lessons and Challenges</h1>
+					<h1 style={{ textAlign: 'right' }}>Free lessons and challenges</h1>
 					<LessonSearchForm
 						onSubmit={this.onSeachSubmitCallback}
 					/>
