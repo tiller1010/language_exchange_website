@@ -33,6 +33,8 @@ interface PremiumVideoChatListingFeedState {
 interface PremiumVideoChatListingFeedProps {
 	initialPremiumVideoChatListings?: [PremiumVideoChatListingObject?]
 	authenticatedUserID?: string
+	SearchFormHeading?: string;
+	HideClearFilters?: boolean;
 }
 
 export default class PremiumVideoChatListingFeed extends React.Component<PremiumVideoChatListingFeedProps, PremiumVideoChatListingFeedState>{
@@ -140,7 +142,7 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 		return(
 			<section>
 				<div className="page-form" style={{ marginBottom: '60px' }}>
-					<h1 style={{ textAlign: 'right' }}>Practice with a native speaker</h1>
+					{ this.props.SearchFormHeading ? <h1 style={{ textAlign: 'right' }}>{this.props.SearchFormHeading}</h1> : '' }
 					<form className="fw-form search-form">
 						<div className="flex-container flex-vertical-stretch">
 							<div className="field text tablet-100">
@@ -158,12 +160,16 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 							</div>
 						</div>
 					</form>
-					<div>
-						<a href="/chats" aria-label="Clear filters" className="button">
-							Clear filters
-							<FontAwesomeIcon icon={faBan}/>
-						</a>
-					</div>
+					{!this.props.HideClearFilters ?
+						<div>
+							<a href="/chats" aria-label="Clear filters" className="button">
+								Clear filters
+								<FontAwesomeIcon icon={faBan}/>
+							</a>
+						</div>
+						:
+						''
+					}
 				</div>
 				{premiumVideoChatListings.length ?
 					<Slider {...{

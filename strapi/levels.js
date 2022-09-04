@@ -8,7 +8,6 @@ function getLevel(levelID){
 }
 
 function searchLessons(_, { topicQuery, languageOfTopic }){
-	// let levels = axios.get(`${process.env.STRAPI_API_URL}/levels?populate[topics][populate]=FeaturedMedia&sort[0]=Level`)
 	let levels = axios.get(`${process.env.STRAPI_API_URL}/levels?populate[topics][populate]=FeaturedMedia&sort[0]=Level&filters[topics][Topic][$contains]=${encodeURIComponent(topicQuery)}&filters[Level][$contains]=${encodeURIComponent(languageOfTopic)}`)
 		.then(res => res.data)
 		.catch((e) => console.log('Connection to Strapi server could not be made.'))

@@ -1,5 +1,6 @@
 import React from 'react';
 import DefaultLayout from './layouts/default';
+import SSRView from './components/SSRView';
 
 class Register extends React.Component {
 
@@ -7,7 +8,9 @@ class Register extends React.Component {
 
 		return (
 			<DefaultLayout>
-			    <div id="register" errors={JSON.stringify(this.props.errors)}></div>
+			    <div id="register" errors={JSON.stringify(this.props.errors)}>
+					<SSRView/>
+			    </div>
 			</DefaultLayout>
 		);
 	}

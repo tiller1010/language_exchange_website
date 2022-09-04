@@ -1,5 +1,6 @@
 import React from 'react';
 import DefaultLayout from './layouts/default';
+import SSRView from './components/SSRView';
 
 class AccountProfile extends React.Component {
 
@@ -13,6 +14,7 @@ class AccountProfile extends React.Component {
 				    iscurrentuser={String(this.props.isCurrentUser)}
 				    stripeaccountpending={String(this.props.stripeAccountPending)}
 				    pathresolver={this.props.pathResolver || ''}>
+					<SSRView/>
 			    </div>
 			</DefaultLayout>
 		);

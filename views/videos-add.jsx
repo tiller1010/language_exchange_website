@@ -1,5 +1,6 @@
 import React from 'react';
 import DefaultLayout from './layouts/default';
+import SSRView from './components/SSRView';
 
 class VideosAdd extends React.Component {
 
@@ -7,7 +8,9 @@ class VideosAdd extends React.Component {
 
 		return (
 			<DefaultLayout pathResolver={this.props.pathResolver || '../'}>
-		      <div id="videos-add" video={this.props.video}></div>
+		      <div id="videos-add" video={this.props.video}>
+				<SSRView/>
+		      </div>
 			</DefaultLayout>
 		);
 	}

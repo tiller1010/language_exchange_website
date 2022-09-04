@@ -1,5 +1,6 @@
 import React from 'react';
 import DefaultLayout from './layouts/default';
+import SSRView from './components/SSRView';
 
 class AccountProfile extends React.Component {
 
@@ -10,6 +11,7 @@ class AccountProfile extends React.Component {
 			    <div id="account-profile-edit"
 				    userid={this.props.userID}
 				    pathresolver={this.props.pathResolver || ''}>
+					<SSRView/>
 			    </div>
 			</DefaultLayout>
 		);

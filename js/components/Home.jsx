@@ -7,7 +7,7 @@ import VideoSearchForm from './VideoSearchForm.tsx';
 import VideoPlayer from './VideoPlayer.tsx';
 import PremiumVideoChatListingFeed from './PremiumVideoChatListingFeed.tsx';
 import TopicLink from './TopicLink.tsx';
-import Lessons from './Lessons.tsx';
+import LessonsFeed from './LessonsFeed.tsx';
 import HomepageBanner from './HomepageBanner.tsx';
 
 // Enable lazy loading
@@ -82,7 +82,7 @@ class Home extends React.Component {
 									<hr/>
 								</div>
 
-								<Lessons/>
+								<LessonsFeed HideClearFilters={true}/>
 
 							</div>
 						</div>
@@ -157,7 +157,7 @@ class Home extends React.Component {
 								</div>
 
 								<div className="desktop-100">
-									<PremiumVideoChatListingFeed authenticatedUserID={this.props.userID}/>
+									<PremiumVideoChatListingFeed authenticatedUserID={this.props.userID} HideClearFilters={true}/>
 								</div>
 
 							</div>
