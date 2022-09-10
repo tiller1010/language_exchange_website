@@ -3,7 +3,11 @@ import React from 'react';
 const DefaultLayout = (props) => {
 	return (
 		<html style={{ fontFamily: 'sans-serif' }}>
-			<head><title>Open Education App</title></head>
+			<head>
+				<title>Open Education App</title>
+				<meta name="description"
+				content="Language can only be learned if it is used. Why not start using the language you want to learn today? Complete free lessons and challenges to sharpen your skills. Practice your new skills with language learners around the world. Schedule a time to get real practice with a native speaker."></meta>
+			</head>
 			<meta name="viewport" content="width=device-width, initial-scale=1"/>
 			<script async src={`${props.pathResolver || ''}js/main.js`}></script>
 			<script async src={`${props.pathResolver || ''}js/modal.js`}></script>

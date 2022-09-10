@@ -35,12 +35,14 @@ export default function TopicLink(props) {
 	}
 
 	return (
-		<div className="flex flex-vertical-center x-space-between">
-			<h3 className="pad no-y no-left" style={{ margin: 0 }}>{topic.attributes.Topic}</h3>
-			<a href={`/level/${levelID}/topic/${topic.id}`} aria-label={`View challenges on ${topic.attributes.Topic}`} className="button" style={{ alignSelf: 'center' }}>
-				View Topic
-				<FontAwesomeIcon icon={faLongArrowAltRight}/>
-			</a>
+		<div>
+			<div className="flex x-space-between y-center" style={{ flexWrap: 'nowrap' }}>
+				<h3 className="pad no-y no-left" style={{ margin: 0 }}>{topic.attributes.Topic}</h3>
+				<a href={`/level/${levelID}/topic/${topic.id}`} aria-label={`View challenges on ${topic.attributes.Topic}`} className="button" style={{ alignSelf: 'center' }}>
+					View Topic
+					<FontAwesomeIcon icon={faLongArrowAltRight}/>
+				</a>
+			</div>
 			<a href={`/level/${levelID}/topic/${topic.id}`} aria-label={`View challenges on ${topic.attributes.Topic}`} className="desktop-100">
 				{renderMedia(topic.attributes.FeaturedMedia)}
 			</a>
