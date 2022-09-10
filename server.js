@@ -407,6 +407,12 @@ app.use(express.json());
 		app.post('/login', async (req, res) => {
 			// Set JWT cookie to stay signed in
 			const { displayName, password } = req.body;
+
+			let passportConfig = {
+				failureRedirect: '/login',
+				failureFlash: true,
+			}
+
 			if((displayName && password) && !req.cookies.jwt){
 				const user = await findAndSyncUser(displayName, 'local');
 				if(user && bcrypt.compareSync(password, user.passwordHash)){
@@ -423,13 +429,13 @@ app.use(express.json());
 					} else {
 						res.cookie('jwt', token, { httpOnly: true });
 					}
+
+					passportConfig.successRedirect = '/account-profile';
 				}
+			} else if (req.cookies.jwt && req.body.backURL) {
+				passportConfig.successRedirect = req.body.backURL;
 			}
-			passport.authenticate('local-login', {
-				successRedirect: '/account-profile',
-				failureRedirect: '/login',
-				failureFlash: true 
-			})(req, res);
+			passport.authenticate('local-login', passportConfig)(req, res);
 		});
 		// Submit login form from react native
 		app.post('/react-native-login', passport.authenticate('local-login'), async (req, res) => {

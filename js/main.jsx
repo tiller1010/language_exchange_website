@@ -47,6 +47,7 @@ String.prototype.convertTo12HourTime = function(){
 					body: JSON.stringify({
 						displayName: 'JWT_DISPLAYNAME',
 						password: 'JWT_PASSWORD',
+						backURL: document.location.pathname,
 					})
 				})
 				.then((response) => document.location = response.url);
