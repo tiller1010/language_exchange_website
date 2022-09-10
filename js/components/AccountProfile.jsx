@@ -285,7 +285,7 @@ class AccountProfile extends React.Component {
 										}
 									]
 								}}>
-									{this.state.user.completedTopics.map((topic) => 
+									{this.state.user.completedTopics.reverse().map((topic) => 
 										<div className="topic pure-u-1 pure-u-md-11-24" key={topic.id}>
 											<div className="pad">
 												<TopicLink topic={topic} levelID={topic.levelID}/>
@@ -340,7 +340,7 @@ class AccountProfile extends React.Component {
 											}
 										]
 									}}>
-										{this.state.user.products.reverse().map((product) => 
+										{this.state.user.products.reverse().reverse().map((product) => 
 											<div key={product._id} className="pure-u-1 pure-u-lg-1-3">
 												<Product product={product}/>
 											</div>
@@ -381,7 +381,7 @@ class AccountProfile extends React.Component {
 											}
 										]
 									}}>
-										{this.state.user.uploadedVideos.map((video) => 
+										{this.state.user.uploadedVideos.reverse().map((video) => 
 											<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
 												<VideoPlayer
 													_id={video._id}
@@ -438,7 +438,7 @@ class AccountProfile extends React.Component {
 											}
 										]
 									}}>
-										{this.state.user.likedVideos.map((video) => 
+										{this.state.user.likedVideos.reverse().map((video) => 
 											<div key={video._id} className="pure-u-1 pure-u-lg-1-3">
 												<VideoPlayer
 													_id={video._id}
