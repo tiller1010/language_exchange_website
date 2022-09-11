@@ -16,7 +16,7 @@ const DefaultLayout = (props) => {
 				{props.children}
 				<footer className="flex-container flex-horizontal-center grey-section">
 					<div className="fw-container">
-						<div className="fw-space">
+						<div className="fw-space" style={{ paddingBottom: '150px' }}>
 							<p>&copy; {(new Date()).getFullYear()} Copyright Tyler Trout</p>
 						</div>
 					</div>
