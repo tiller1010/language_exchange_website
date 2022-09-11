@@ -37,6 +37,7 @@ input UserInputs {
 	displayName: String
 	firstName: String
 	lastName: String
+	password: String
 }
 
 # union PossibleProduct = PremiumVideoChatListing | OtherProduct

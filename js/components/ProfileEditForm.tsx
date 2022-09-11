@@ -12,6 +12,7 @@ interface User {
 	displayName: string
 	firstName: string
 	lastName: string
+	password: string
 }
 
 interface ProfileEditState {
@@ -19,6 +20,8 @@ interface ProfileEditState {
 	displayName: string
 	firstName: string
 	lastName: string
+	password: string
+	confirmPassword: string
 	profilePictureSrc: string
 	profilePictureFile?: File
 	savedUser?: User
@@ -37,6 +40,8 @@ export default class ProfileEditForm extends React.Component<ProfileEditProps, P
 			displayName: '',
 			firstName: '',
 			lastName: '',
+			password: '',
+			confirmPassword: '',
 			profilePictureSrc: '',
 			savedAllChanges: true,
 		}
@@ -92,10 +97,16 @@ export default class ProfileEditForm extends React.Component<ProfileEditProps, P
 			displayName,
 			firstName,
 			lastName,
+			password,
+			confirmPassword,
 			profilePictureSrc,
 			profilePictureFile,
 			savedUser
 		} = this.state;
+
+		if (password != '' && password != confirmPassword) {
+			return alert('Passwords do not match.');
+		}
 
 		if(email && displayName && firstName){
 			let query;
@@ -120,6 +131,7 @@ export default class ProfileEditForm extends React.Component<ProfileEditProps, P
 						displayName,
 						firstName,
 						lastName,
+						password,
 					}
 				};
 				if(profilePictureFile){
@@ -183,6 +195,8 @@ export default class ProfileEditForm extends React.Component<ProfileEditProps, P
 			displayName,
 			firstName,
 			lastName,
+			password,
+			confirmPassword,
 			profilePictureSrc,
 			savedUser
 		} = this.state;
@@ -214,6 +228,14 @@ export default class ProfileEditForm extends React.Component<ProfileEditProps, P
 									<div className="field text">
 										<label htmlFor="lastNameField">Last Name</label>
 										<input type="text" name="lastName" id="lastNameField" value={lastName} onChange={(event) => this.setState({lastName: event.target.value, savedAllChanges: false})}/>
+									</div>
+									<div className="field text">
+										<label htmlFor="passwordField">Password</label>
+										<input type="password" name="password" id="passwordField" value={password} onChange={(event) => this.setState({password: event.target.value, savedAllChanges: false})}/>
+									</div>
+									<div className="field text">
+										<label htmlFor="confirmPasswordField">Confirm password</label>
+										<input type="password" name="confirmPassword" id="confirmPasswordField" value={confirmPassword} onChange={(event) => this.setState({confirmPassword: event.target.value, savedAllChanges: false})}/>
 									</div>
 
 									<div className="upload-container">

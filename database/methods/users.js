@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { getDB } = require('../db.js');
 const mongo = require('mongodb');
+const bcrypt = require('bcrypt');
 
 function randomFilename() {
   var text = "";
@@ -135,6 +136,13 @@ async function updateUser(_, { userID, user, profilePictureFile }){
 
 	// Write to database
 	const db = getDB();
+
+	// Encrypt updated password
+	if (user.password != '') {
+		user.passwordHash = bcrypt.hashSync(user.password, 10);
+	}
+	delete user.password;
+
 
 	user = await db.collection('users').findOneAndUpdate(
 		{ _id: new mongo.ObjectID(userID) },
