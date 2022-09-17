@@ -11,6 +11,7 @@ import AccountProfile from './components/AccountProfile.jsx';
 import ProfileEditForm from './components/ProfileEditForm.tsx';
 import VideoChat from './components/VideoChat.tsx';
 import Chats from './components/Chats.jsx';
+import UserFeed from './components/UserFeed.tsx';
 import Lessons from './components/Lessons.tsx';
 
 import 'purecss/build/pure-min.css';
@@ -100,6 +101,10 @@ if(document.getElementById('account-profile-edit')){
 	var userID = document.getElementById('account-profile-edit').getAttribute('userid');
 	var pathResolver = document.getElementById('account-profile-edit').getAttribute('pathresolver');
 	ReactDOM.render(<ProfileEditForm userID={userID} pathResolver={pathResolver}/>, document.getElementById('account-profile-edit'));
+}
+if(document.getElementById('find-users')){
+	var authenticatedUserID = document.getElementById('find-users').getAttribute('authenticateduserid');
+	ReactDOM.render(<UserFeed authenticatedUserID={authenticatedUserID} SearchFormHeading="Find friends"/>, document.getElementById('find-users'));
 }
 if(document.getElementById('video-chat')){
 	var authenticatedUserID = document.getElementById('video-chat').getAttribute('authenticateduserid');

@@ -16,6 +16,8 @@ const resolvers = {
 		indexVideos: videos.indexVideos,
 		// Users
 		findUserByID: users.graphql_findUserByID,
+		getRecentUsers: users.getRecentUsers,
+		searchUsers: users.searchUsers,
 		// Premium Video Chat Listings
 		getRecentPremiumVideoChatListings: premiumVideoChatListings.getRecentPremiumVideoChatListings,
 		searchPremiumVideoChatListings: premiumVideoChatListings.searchPremiumVideoChatListings,

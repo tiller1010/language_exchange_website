@@ -525,6 +525,15 @@ app.use(express.json());
 			}
 		});
 
+		// Find users route
+		app.get('/find-users', (req, res) => {
+			let userID = null;
+			if(req.user){
+				userID = req.user._id;
+			}
+			res.render('find-users', { userID });
+		});
+
 		// Stripe account creation
 		app.get('/manage-stripe-account/:accountID?', async (req, res) => {
 			if(req.user){

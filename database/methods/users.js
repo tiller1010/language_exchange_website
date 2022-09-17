@@ -3,6 +3,7 @@ const path = require('path');
 const { getDB } = require('../db.js');
 const mongo = require('mongodb');
 const bcrypt = require('bcrypt');
+const createSearchService = require('../../app/search.js');
 
 function randomFilename() {
   var text = "";
@@ -156,5 +157,38 @@ async function updateUser(_, { userID, user, profilePictureFile }){
 	return false;
 }
 
+async function getRecentUsers(_){
+	const db = getDB();
+	let users = await db.collection('users').find({}).sort({created: -1}).limit(5).toArray();
 
-module.exports = { addUser, updateUser, findAndSyncUser, findUserByID, graphql_findUserByID, addCompletedTopic, removeCompletedTopic, verifyUser, addStripeAccountIDToUser };
+	return { users };
+}
+
+async function searchUsers(_, { searchQuery }){
+	const db = getDB();
+	let users = await db.collection('users').find({}).sort({created: -1}).limit(5).toArray();
+	const UserSearchService = await createSearchService('users', ['displayName', 'firstName', 'lastName']);
+	let query = {};
+	if(searchQuery){
+		var usersByDisplayName = await UserSearchService.find({ query: { displayName: { $search: searchQuery } } });
+		var usersByFirstName = await UserSearchService.find({ query: { firstName: { $search: searchQuery } } });
+		var usersByLastName = await UserSearchService.find({ query: { lastName: { $search: searchQuery } } });
+		users = new Set(usersByDisplayName.concat(usersByFirstName).concat(usersByLastName));
+	}
+
+	return { users };
+}
+
+module.exports = {
+	addUser,
+	updateUser,
+	findAndSyncUser,
+	findUserByID,
+	graphql_findUserByID,
+	addCompletedTopic,
+	removeCompletedTopic,
+	verifyUser,
+	addStripeAccountIDToUser,
+	getRecentUsers,
+	searchUsers,
+};

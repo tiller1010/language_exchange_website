@@ -40,6 +40,10 @@ input UserInputs {
 	password: String
 }
 
+type UserFeed {
+	users: [User]
+}
+
 # union PossibleProduct = PremiumVideoChatListing | OtherProduct
 union PossibleProduct = PremiumVideoChatListing
 
@@ -147,6 +151,8 @@ type Query {
 	searchPremiumVideoChatListings(topic: String, languageOfTopic: String): PremiumVideoChatListingFeed
 	searchLessons(topicQuery: String, languageOfTopic: String): LevelFeed
 	findUserByID(userID: String!): User
+	getRecentUsers: UserFeed
+	searchUsers(searchQuery: String): UserFeed
 }
 
 # Mutations

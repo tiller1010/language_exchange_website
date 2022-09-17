@@ -1,7 +1,7 @@
 import React from 'react';
 import Navigation from './Navigation.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt, faLongArrowAltRight, faUser, faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faSearch, faUser, faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 import Slider from 'react-slick';
 import graphQLFetch from '../graphQLFetch.js';
 import VideoPlayer from './VideoPlayer.tsx';
@@ -174,6 +174,11 @@ class AccountProfile extends React.Component {
 										<a href="/account-profile-edit" className="button" style={{ width: 'max-content' }}>
 											Edit Profile
 											<FontAwesomeIcon icon={faEdit}/>
+										</a>
+										<span>&nbsp;</span>
+										<a href="/find-users" className="button" style={{ width: 'max-content' }}>
+											Find friends
+											<FontAwesomeIcon icon={faSearch}/>
 										</a>
 										</>
 										:
