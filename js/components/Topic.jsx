@@ -146,6 +146,8 @@ class Topic extends React.Component {
 							</video>
 						);
 					case 'audio/wav':
+					case 'audio/mp3':
+					case 'audio/mpeg':
 						return (
 							<audio height="225" width="400" controls tabIndex="-1" src={`${process.env.STRAPI_PUBLIC_URL}${challenge.attributes.FeaturedMedia.data.attributes.url}`}>
 							</audio>
