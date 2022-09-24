@@ -63,11 +63,29 @@ export default class LessonSearchForm extends React.Component<LessonSearchFormPr
 											}
 										}
 									}
+									challenges {
+										data {
+											attributes {
+												Title
+												Content
+												FeaturedMedia {
+													data {
+														attributes {
+															mime
+															url
+															alternativeText
+														}
+													}
+												}
+											}
+										}
+									}
 								}
 							}
 						}
 					}
 				}
+				showChallenge
 			}
 		}`;
 		const data = await graphQLFetch(query, {

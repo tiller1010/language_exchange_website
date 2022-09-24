@@ -46,6 +46,7 @@ interface LessonsProps {
 interface LessonsState {
 	levels: LevelData[];
 	loaded: boolean;
+	showChallenge: boolean;
 }
 
 class LessonsFeed extends React.Component<LessonsProps, LessonsState> {
@@ -54,12 +55,17 @@ class LessonsFeed extends React.Component<LessonsProps, LessonsState> {
 		this.state = {
 			levels: [],
 			loaded: false,
+			showChallenge: false,
 		}
 		this.onSeachSubmitCallback = this.onSeachSubmitCallback.bind(this);
 	}
 
 	componentDidMount(){
-		axios.get(`${process.env.STRAPI_API_URL}/levels?populate[topics][populate]=FeaturedMedia&sort[0]=Level&filters[Level][$contains]=1`)
+		axios.get(`${process.env.STRAPI_API_URL}/levels\
+?populate[topics][populate]=FeaturedMedia\
+&sort[0]=Level\
+&filters[Level][$contains]=1\
+`)
 			.then(res => {
 				const data: StrapiData = res.data;
 				const levels: LevelData[] = data.data;
@@ -84,7 +90,8 @@ class LessonsFeed extends React.Component<LessonsProps, LessonsState> {
 		if(data.searchLessons){
 			if(data.searchLessons.levels){
 				this.setState({
-					levels: data.searchLessons.levels
+					levels: data.searchLessons.levels,
+					showChallenge: data.searchLessons.showChallenge,
 				});
 			}
 		}
@@ -92,7 +99,7 @@ class LessonsFeed extends React.Component<LessonsProps, LessonsState> {
 
 	render(){
 
-		const { levels, loaded } = this.state;
+		const { levels, loaded, showChallenge } = this.state;
 
 		return (
 			<div className="fw-container">
@@ -115,35 +122,36 @@ class LessonsFeed extends React.Component<LessonsProps, LessonsState> {
 					}
 				</div>
 
-			    {levels.length ?
-			    	levels.map((level) => 
-			    		<div key={level.id} className="flex x-center">
-				    		<h2 className="pad" style={{ margin: 0 }}>{level.attributes.Level}</h2>
-				    		<a href={`/level/${level.id}`} className="button" style={{ alignSelf: 'center' }}>
-					    		View Level
-					    		<FontAwesomeIcon icon={faLongArrowAltRight}/>
-				    		</a>
-				    		<div className="pure-u-1">
-					    		<hr/>
-				    		</div>
-				    		{level.attributes.topics.data ?
-				    			<div className="topics pure-u-1 flex x-space-around">
-					    			{this.randomTopics(level).map((topic) =>
-					    				<div className="topic pure-u-1 pure-u-md-1-3" key={topic.id}>
-						    				<div className="pad">
-							    				<TopicLink topic={topic} levelID={level.id}/>
-					    					</div>
-				    					</div>
-				    				)}
-			    				</div>
-			    				:
-			    				<>{loaded ? <p>No topics</p> : <div className="lds-facebook"><div></div><div></div><div></div></div>}</>
-				    		}
-			    		</div>
-		    		) 
-			    	:
-			    	<>{loaded ? <p>No levels</p> : <div className="lds-facebook"><div></div><div></div><div></div></div>}</>
-			    }
+				{levels.length ?
+					levels.map((level) => 
+						<div key={level.id} className="flex x-center">
+							<h2 className="pad" style={{ margin: 0 }}>{level.attributes.Level}</h2>
+							<a href={`/level/${level.id}`} className="button" style={{ alignSelf: 'center' }}>
+								View Level
+								<FontAwesomeIcon icon={faLongArrowAltRight}/>
+							</a>
+							<div className="pure-u-1">
+								<hr/>
+							</div>
+							{level.attributes.topics.data ?
+								<div className="topics pure-u-1 flex x-space-around">
+									{this.randomTopics(level).map((topic) =>
+										<div className="topic pure-u-1 pure-u-md-1-3" key={topic.id}>
+											<div className="pad">
+												<TopicLink topic={topic} levelID={level.id} showChallenge={showChallenge}/>
+											</div>
+										</div>
+									)}
+								</div>
+								:
+								<>{loaded ? <p>No topics</p> : <div className="lds-facebook"><div></div><div></div><div></div></div>}</>
+							}
+						</div>
+					) 
+					:
+					<>{loaded ? <p>No levels</p> : <div className="lds-facebook"><div></div><div></div><div></div></div>}</>
+				}
+
 			</div>
 		);
 	}

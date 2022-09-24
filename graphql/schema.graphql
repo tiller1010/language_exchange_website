@@ -125,6 +125,21 @@ type Topic {
 type TopicAttributes {
 	Topic: String
 	FeaturedMedia: StrapiMedia
+	challenges: ChallengeData
+}
+type ChallengeData {
+	data: [Challenge]
+}
+
+# Challenge Schema
+type Challenge {
+	id: String
+	attributes: ChallengeAttributes
+}
+type ChallengeAttributes {
+	Title: String
+	Content: String
+	FeaturedMedia: StrapiMedia
 }
 
 # Strapi Media Schema
@@ -142,6 +157,7 @@ type StrapiMediaDataAttributes {
 
 type LevelFeed {
 	levels: [Level]
+	showChallenge: Boolean
 }
 
 # Queries

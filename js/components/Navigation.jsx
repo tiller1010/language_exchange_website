@@ -22,13 +22,13 @@ class Navigation extends React.Component {
 				</div>
 				<div className="small-pad">
 					<a href="/lessons" className="button">
-						<span>Lessons</span>
+						<span>Learn</span>
 						<FontAwesomeIcon icon={faBook}/>
 					</a>
 				</div>
 				<div className="small-pad">
 					<a href="/videos" className="button">
-						<span>Videos</span>
+						<span>Share</span>
 						<FontAwesomeIcon icon={faPlay}/>
 					</a>
 				</div>
