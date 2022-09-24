@@ -173,7 +173,11 @@ async function searchUsers(_, { searchQuery }){
 		var usersByDisplayName = await UserSearchService.find({ query: { displayName: { $search: searchQuery } } });
 		var usersByFirstName = await UserSearchService.find({ query: { firstName: { $search: searchQuery } } });
 		var usersByLastName = await UserSearchService.find({ query: { lastName: { $search: searchQuery } } });
-		users = new Set(usersByDisplayName.concat(usersByFirstName).concat(usersByLastName));
+		users = usersByDisplayName.concat(usersByFirstName).concat(usersByLastName);
+		// Remove duplicate items
+		users = users.reduce((accumulator, currentValue) =>
+			accumulator.concat(accumulator.find(accumulatorItem => String(accumulatorItem._id) == String(currentValue._id)) ? [] : [currentValue])
+		, []);
 	}
 
 	return { users };
