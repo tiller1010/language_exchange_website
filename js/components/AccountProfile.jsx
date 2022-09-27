@@ -206,12 +206,13 @@ class AccountProfile extends React.Component {
 								</div>
 								{this.state.user.profilePictureSrc ?
 									<div className="desktop-25 phone-100">
-										<div className="img-container">
+										<div className="img-container" style={{ background: '#999999' }}>
 											<img src={`${this.props.pathResolver}${this.state.user.profilePictureSrc}`}
 												alt={`Picture of ${this.state.user.displayName}`}
 												style={{
 													maxHeight: '300px',
 													objectPosition: 'top',
+													objectFit: 'contain',
 												}}
 											/>
 										</div>

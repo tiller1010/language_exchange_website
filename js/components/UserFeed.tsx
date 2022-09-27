@@ -118,7 +118,7 @@ export default class UserFeed extends React.Component<UserFeedProps, UserFeedSta
 						<form className="fw-form search-form">
 							<div className="flex-container flex-vertical-stretch" style={{ flexWrap: 'nowrap' }}>
 								<div className="field text tablet-100">
-									<label htmlFor="searchQueryField">Search Query</label>
+									<label htmlFor="searchQueryField">Search</label>
 									<input type="text" name="searchQuery" id="searchQueryField" value={searchQuery} onChange={(event) => this.setState({searchQuery: event.target.value})}/>
 								</div>
 								<button value="Search" className="button tablet-20" onClick={this.handleSearchSubmit} style={{ borderRadius: '0 5px 5px 0' }}>
@@ -166,7 +166,7 @@ export default class UserFeed extends React.Component<UserFeedProps, UserFeedSta
 							</tbody>
 						</table>
 						:
-						<>{loaded ? <p>No video chats found</p> : <div className="lds-facebook"><div></div><div></div><div></div></div>}</>
+						<>{loaded ? <p>No users found</p> : <div className="lds-facebook"><div></div><div></div><div></div></div>}</>
 					}
 				</section>
 			</div>
