@@ -8,7 +8,8 @@ function getLevel(levelID){
 }
 
 async function searchLessons(_, { topicQuery, languageOfTopic }){
-	const endpoint = `${process.env.STRAPI_API_URL}/levels/\
+	if (topicQuery) {
+		const endpoint = `${process.env.STRAPI_API_URL}/levels/\
 ?populate[topics][filters][challenges][Title][$contains]=${encodeURIComponent(topicQuery)}\
 &populate[topics][populate][0]=FeaturedMedia\
 &populate[topics][populate][FeaturedMedia][populate]=*\
@@ -19,12 +20,13 @@ async function searchLessons(_, { topicQuery, languageOfTopic }){
 &filters[topics][challenges][Title][$contains]=${encodeURIComponent(topicQuery)}\
 &filters[topics][Topic][$contains]=${encodeURIComponent(languageOfTopic)}\
 `;
-	let topicChallenges = axios.get(endpoint)
-		.then(res => res.data)
-		.catch((e) => console.log('Connection to Strapi server could not be made.'))
-	topicChallenges = await topicChallenges.then(data => data ? data.data : null);
-	if (topicChallenges.length) {
-		return { levels: topicChallenges, showChallenge: true };
+		let topicChallenges = axios.get(endpoint)
+			.then(res => res.data)
+			.catch((e) => console.log('Connection to Strapi server could not be made.'))
+		topicChallenges = await topicChallenges.then(data => data ? data.data : null);
+		if (topicChallenges.length) {
+			return { levels: topicChallenges, showChallenge: true };
+		}
 	}
 
 	let levels = axios.get(`${process.env.STRAPI_API_URL}/levels\

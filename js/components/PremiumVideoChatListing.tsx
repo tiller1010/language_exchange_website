@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faLongArrowAltRight, faClock, faFlag } from '@fortawesome/free-solid-svg-icons';
 import graphQLFetch from '../graphQLFetch.js';
 
 interface PremiumVideoChatListingObject {
@@ -308,11 +308,12 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 
 		return(
 			<div>
-				<p>{topic}</p>
-				<p>{languageOfTopic}</p>
-				<p>{duration}</p>
-				<p>{price}</p>
-				<p>{currency}</p>
+				<div className="fw-typography-spacing">
+					<h4>{topic}</h4>
+					<p><b><FontAwesomeIcon icon={faFlag}/>&nbsp;{languageOfTopic}</b></p>
+					<p><b><FontAwesomeIcon icon={faClock}/>&nbsp;{duration}</b></p>
+					<p><b>{price}&nbsp;{currency}</b></p>
+				</div>
 				<div className="thumbnail-preview img-container">
 					<img style={{ height: '100%', width: '100%', objectFit: 'cover' }} src={thumbnailSrc} alt={thumbnailSrc}/>
 				</div>

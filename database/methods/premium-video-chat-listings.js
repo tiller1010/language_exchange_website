@@ -25,10 +25,12 @@ async function getRecentPremiumVideoChatListings(_){
 	let purchasablePremiumVideoChatListings = [];
 	for(listing of premiumVideoChatListings){
 		const user = await findUserByID(listing.userID);
-		if(user.connectedStripeAccountID){
-			const account = await stripe.accounts.retrieve(user.connectedStripeAccountID);
-			if(account.charges_enabled && account.payouts_enabled){
-				purchasablePremiumVideoChatListings.push(listing);
+		if(user){
+			if(user.connectedStripeAccountID){
+				const account = await stripe.accounts.retrieve(user.connectedStripeAccountID);
+				if(account.charges_enabled && account.payouts_enabled){
+					purchasablePremiumVideoChatListings.push(listing);
+				}
 			}
 		}
 	}
