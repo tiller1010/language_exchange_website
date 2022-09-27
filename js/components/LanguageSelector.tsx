@@ -26,6 +26,7 @@ export default function LanguageSelector(props) {
 		'Spanish',
 		'French',
 		'German',
+		'Italian',
 		'Japanese',
 		'Korean',
 		'Russian',
