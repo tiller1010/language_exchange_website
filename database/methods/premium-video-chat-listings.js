@@ -54,10 +54,12 @@ async function searchPremiumVideoChatListings(_, { topic, languageOfTopic }){
 	let purchasablePremiumVideoChatListings = [];
 	for(listing of listings){
 		const user = await findUserByID(listing.userID);
-		if(user.connectedStripeAccountID){
-			const account = await stripe.accounts.retrieve(user.connectedStripeAccountID);
-			if(account.charges_enabled && account.payouts_enabled){
-				purchasablePremiumVideoChatListings.push(listing);
+		if (user) {
+			if(user.connectedStripeAccountID){
+				const account = await stripe.accounts.retrieve(user.connectedStripeAccountID);
+				if(account.charges_enabled && account.payouts_enabled){
+					purchasablePremiumVideoChatListings.push(listing);
+				}
 			}
 		}
 	}

@@ -346,7 +346,7 @@ class AccountProfile extends React.Component {
 											}
 										]
 									}}>
-										{this.state.user.products.reverse().reverse().map((product) => 
+										{this.state.user.products.reverse().map((product) => 
 											<div key={product._id} className="pure-u-1 pure-u-lg-1-3">
 												<Product product={product}/>
 											</div>

@@ -79,6 +79,7 @@ type VideoChatTimeSlot {
 	time: String
 	booked: Boolean
 	completed: Boolean
+	paid: Boolean
 }
 
 input VideoChatTimeSlotInputs {
@@ -88,6 +89,8 @@ input VideoChatTimeSlotInputs {
 	time: String
 	booked: Boolean
 	completed: Boolean
+	paid: Boolean
+	productID: String
 }
 
 input PremiumVideoChatListingInputs {

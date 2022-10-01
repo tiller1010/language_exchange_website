@@ -21,13 +21,16 @@ interface VideoChatTimeSlot {
 	customerDisplayName?: string
 	customerUserID?: string
 	tempCustomerUserID?: string
+	productID?: string
 	date: string
 	time: string
-	booked?: boolean
 	completed?: boolean
+	booked?: boolean
+	paid?: boolean
 }
 
 interface PremiumVideoChatListingState {
+	ownerDisplayName?: string
 	timeSlots: VideoChatTimeSlot[]
 }
 
@@ -41,6 +44,7 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 	constructor(props: PremiumVideoChatListingProps){
 		super(props);
 		let state: PremiumVideoChatListingState = {
+			ownerDisplayName: '',
 			timeSlots: [],
 		}
 		this.state = state;
@@ -51,6 +55,10 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 	}
 
 	async componentWillMount(){
+		let ownerDisplayName = '';
+		if(this.props.premiumVideoChatListing.userID){
+			ownerDisplayName = await this.getUserNameByID(this.props.premiumVideoChatListing.userID);
+		}
 		let propTimeSlots = this.props.premiumVideoChatListing.timeSlots;
 		let newTimeSlots = [];
 		for(let timeSlot of propTimeSlots){
@@ -63,6 +71,7 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 			newTimeSlots.push(newTimeSlot);
 		}
 		this.setState({
+			ownerDisplayName,
 			timeSlots: newTimeSlots,
 		});
 	}
@@ -75,8 +84,9 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 			for(let timeSlot of propTimeSlots){
 				let newTimeSlot = {
 					...timeSlot,
-					booked: stateTimeSlots[propTimeSlots.indexOf(timeSlot)] ? stateTimeSlots[propTimeSlots.indexOf(timeSlot)].booked : timeSlot.booked,
 					completed: stateTimeSlots[propTimeSlots.indexOf(timeSlot)] ? stateTimeSlots[propTimeSlots.indexOf(timeSlot)].completed : timeSlot.completed,
+					booked: stateTimeSlots[propTimeSlots.indexOf(timeSlot)] ? stateTimeSlots[propTimeSlots.indexOf(timeSlot)].booked : timeSlot.booked,
+					paid: stateTimeSlots[propTimeSlots.indexOf(timeSlot)] ? stateTimeSlots[propTimeSlots.indexOf(timeSlot)].paid : timeSlot.paid,
 				};
 				let customerDisplayName = '';
 				if(timeSlot.customerUserID){
@@ -104,7 +114,12 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 				query = `mutation updatePremiumVideoChatListing($listingID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){
 					updatePremiumVideoChatListing(listingID: $listingID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){
 						timeSlots {
+							customerUserID
+							date
+							time
 							completed
+							booked
+							paid
 						}
 					}
 				}`;
@@ -115,7 +130,7 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 			timeSlots[timeSlotIndex] = timeSlot;
 
 			this.setState({
-				timeSlots
+				timeSlots,
 			});
 
 			if(query){
@@ -126,8 +141,9 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 						customerUserID: timeSlotData.customerUserID,
 						date: timeSlotData.date,
 						time: timeSlotData.time,
-						booked: timeSlotData.booked,
 						completed: timeSlotData.completed,
+						booked: timeSlotData.booked,
+						paid: timeSlotData.paid,
 					});
 				});
 				const data = await graphQLFetch(query, {
@@ -146,7 +162,10 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 	async getUserNameByID(userID){
 		const user = await fetch(`/user/${userID}`)
 			.then((response) => response.json());
-		return user.displayName;
+		if (user) {
+			return user.displayName;
+		}
+		return '';
 	}
 
 	renderTimeSlots(){
@@ -161,13 +180,27 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 						<div>
 							<p><b>Video Chat with: {timeSlot.customerDisplayName}</b></p>
 							<p><b>{timeSlot.date} - {timeSlot.time.convertTo12HourTime()}</b></p>
+							{timeSlot.booked && !timeSlot.paid ?
+								<div><b>!! CUSTOMER HAS NOT COMPLETED THIS PURCHASE !!</b></div>
+								:
+								''
+							}
 							<a className="button" href={`/video-chat?forUserID=${timeSlot.customerUserID}`}>
 								Go to Video Chat
 								<FontAwesomeIcon icon={faLongArrowAltRight}/>
 							</a>
 							<div className="field checkbox" style={{ whiteSpace: 'nowrap' }}>
-								{/* @ts-ignore */}
-								<input id={`timeSlot${timeSlots.indexOf(timeSlot)}`} type="checkbox" checked={timeSlot.completed} onClick={(e) => this.handleTimeSlotChange(e.target.checked, timeSlots.indexOf(timeSlot))}/>
+								{timeSlot.completed ?
+									<>
+									{/* @ts-ignore */}
+									<input id={`timeSlot${timeSlots.indexOf(timeSlot)}`} type="checkbox" defaultChecked onClick={(e) => this.handleTimeSlotChange(e.target.checked, timeSlots.indexOf(timeSlot))}/>
+									</>
+									:
+									<>
+									{/* @ts-ignore */}
+									<input id={`timeSlot${timeSlots.indexOf(timeSlot)}`} type="checkbox" onClick={(e) => this.handleTimeSlotChange(e.target.checked, timeSlots.indexOf(timeSlot))}/>
+									</>
+								}
 								{/* @ts-ignore */}
 								<label htmlFor={`timeSlot${timeSlots.indexOf(timeSlot)}`}>Mark Completed</label>
 							</div>
@@ -189,8 +222,17 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 						''
 						:
 						<div className="field checkbox" style={{ whiteSpace: 'nowrap' }}>
-							{/* @ts-ignore */}
-							<input id={`timeSlot${timeSlots.indexOf(timeSlot)}`} type="checkbox" checked={timeSlot.booked} onClick={(e) => this.handleTimeSlotChange(e.target.checked,  timeSlots.indexOf(timeSlot))}/>
+							{timeSlot.booked ?
+								<>
+								{/* @ts-ignore */}
+								<input id={`timeSlot${timeSlots.indexOf(timeSlot)}`} type="checkbox" defaultChecked onClick={(e) => this.handleTimeSlotChange(e.target.checked, timeSlots.indexOf(timeSlot))}/>
+								</>
+								:
+								<>
+								{/* @ts-ignore */}
+								<input id={`timeSlot${timeSlots.indexOf(timeSlot)}`} type="checkbox" onClick={(e) => this.handleTimeSlotChange(e.target.checked, timeSlots.indexOf(timeSlot))}/>
+								</>
+							}
 							{/* @ts-ignore */}
 							<label htmlFor={`timeSlot${timeSlots.indexOf(timeSlot)}`}>{timeSlot.date} - {timeSlot.time.convertTo12HourTime()}</label>
 						</div>
@@ -200,7 +242,15 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 		}
 	}
 
-	async handleBuyNow(){
+	async handleBuyNow(e){
+
+		// Mock submit for fw-form-process-event effect
+		// const mockForm = document.createElement('form');
+		// document.querySelector('.fw-form-process-event').append(mockForm);
+		// let submitEvent = new Event('submit');
+		// submitEvent.submitter = e.target;
+		// mockForm.dispatchEvent(submitEvent);
+		e.target.parentElement.parentElement.append((new DOMParser()).parseFromString('<div class="lds-facebook"><div></div><div></div><div></div></div>', 'text/html').body);
 
 		const { premiumVideoChatListing, authenticatedUserID } = this.props;
 		const { timeSlots } = this.state;
@@ -234,8 +284,9 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 					date: timeSlot.date,
 					time: timeSlot.time,
 					customerUserID: timeSlot.customerUserID,
-					booked: timeSlot.booked,
 					completed: timeSlot.completed,
+					booked: timeSlot.booked,
+					paid: timeSlot.paid,
 					shouldAddProductID: false,
 				}
 				if(timeSlot.tempCustomerUserID){
@@ -265,27 +316,27 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 						const stripe = await loadStripe(process.env.STRIPE_PUBLIC_KEY || '');
 
 						fetch('/create-checkout-session', {
-						    method: 'POST',
-						    headers: { 'Content-Type': 'application/json' },
-						    body: JSON.stringify({
-						      priceID: data.createProduct.priceID,
-						      connectedStripeAccountID: productUser.connectedStripeAccountID,
-						    })
-						  })
-						  .then(function(response) {
-						    return response.json();
-						  })
-						  .then(function(session) {
-						    return stripe.redirectToCheckout({ sessionId: session.id });
-						  })
-						  .then(function(result) {
-						    // If `redirectToCheckout` fails due to a browser or network
-						    // error, you should display the localized error message to your
-						    // customer using `error.message`.
-						    if (result.error) {
-						      alert(result.error.message);
-						    }
-						  });
+							method: 'POST',
+							headers: { 'Content-Type': 'application/json' },
+							body: JSON.stringify({
+								priceID: data.createProduct.priceID,
+								connectedStripeAccountID: productUser.connectedStripeAccountID,
+							})
+						})
+						.then(function(response) {
+							return response.json();
+						})
+						.then(function(session) {
+							return stripe.redirectToCheckout({ sessionId: session.id });
+						})
+						.then(function(result) {
+							// If `redirectToCheckout` fails due to a browser or network
+							// error, you should display the localized error message to your
+							// customer using `error.message`.
+							if (result.error) {
+								alert(result.error.message);
+							}
+						});
 					}
 
 				}
@@ -296,6 +347,8 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 	}
 
 	render(){
+
+		const { ownerDisplayName } = this.state;
 
 		let {
 			topic,
@@ -309,6 +362,7 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 		return(
 			<div>
 				<div className="fw-typography-spacing">
+					<h3>{ownerDisplayName}</h3>
 					<h4>{topic}</h4>
 					<p><b><FontAwesomeIcon icon={faFlag}/>&nbsp;{languageOfTopic}</b></p>
 					<p><b><FontAwesomeIcon icon={faClock}/>&nbsp;{duration}</b></p>
@@ -319,13 +373,13 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
 				</div>
 
 				<h4 style={{ margin: '35px 0 10px 0', fontSize: '1.5em' }}>Timeslots</h4>
-				<div className="fw-form" style={{ maxHeight: '250px', overflowY: 'auto' }}>
+				<div className="fw-form fw-form-process-event" style={{ maxHeight: '250px', overflowY: 'auto' }}>
 					{this.renderTimeSlots()}
 				</div>
 
 				{/* Only Show Buy button if customer selected timeslots */}
 				{this.props.view == 'customer' && this.state.timeSlots.filter(timeSlot => timeSlot.tempCustomerUserID).length ?
-					<button className="button" onClick={() => this.handleBuyNow()}>
+					<button className="button" onClick={this.handleBuyNow}>
 						Buy Now
 						<FontAwesomeIcon icon={faPlus}/>
 					</button>

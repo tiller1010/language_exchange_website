@@ -42,8 +42,9 @@ interface VideoChatTimeSlot {
 	customerUserID?: string
 	date: string
 	time: string
-	booked?: boolean
 	completed?: boolean
+	booked?: boolean
+	paid?: boolean
 }
 
 interface PremiumVideoChatListingFormState {
@@ -77,8 +78,9 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 				{
 					date: '',
 					time: '',
-					booked: false,
 					completed: false,
+					booked: false,
+					paid: false,
 				}
 			],
 			savedAllChanges: true,
@@ -174,8 +176,9 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 				{
 					date: '',
 					time: '',
-					booked: false,
 					completed: false,
+					booked: false,
+					paid: false,
 				}
 			]
 		});
@@ -225,6 +228,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 							customerUserID
 							completed
 							booked
+							paid
 						}
 					}
 				}`;
@@ -261,6 +265,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 							customerUserID
 							completed
 							booked
+							paid
 						}
 					}
 				}`;

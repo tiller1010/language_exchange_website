@@ -27,8 +27,9 @@ async function createProduct(_, { productObjectCollection, productDescription, p
 						date: timeSlot.date,
 						time: timeSlot.time,
 						customerUserID: timeSlot.customerUserID,
-						booked: timeSlot.booked,
 						completed: timeSlot.completed,
+						booked: timeSlot.booked,
+						paid: timeSlot.paid,
 					}
 					if(timeSlot.shouldAddProductID){
 						// Insert productID, and drop shouldAddProductID flag
@@ -111,9 +112,44 @@ async function completeOrder(userID, priceID){
 	let user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
 	if(user.products){
 		let userProducts = user.products;
-		userProducts.forEach((product) => {
-			if(product.priceID == priceID){
-				product.status = 'Paid';
+		userProducts.forEach( async (userProduct) => {
+			if(userProduct.priceID == priceID){
+				userProduct.status = 'Paid';
+				var product = await db.collection('products').findOneAndUpdate(
+					{ _id: userProduct._id },
+					{ $set: { ...userProduct } },
+					{ returnOriginal: false }
+				);
+				product = product.value;
+
+				// Pre-process update data
+				let productObject = await db.collection(product.productObjectCollection).findOne({ _id: new mongo.ObjectID(product.productObject._id) });
+				let newProductObject = { ...productObject };
+				switch (product.productObjectCollection) {
+					case 'premium_video_chat_listings':
+						newProductObject.timeSlots.forEach((timeSlot) => {
+							if (String(timeSlot.productID) == String(userProduct._id)) {
+								timeSlot.paid = true;
+							}
+						});
+					break;
+				}
+
+				// Update and return product.productObject source
+				productObject = await db.collection(product.productObjectCollection).findOneAndUpdate(
+					{ _id: new mongo.ObjectID(product.productObject._id) },
+					{ $set: { ...newProductObject } },
+					{ returnOriginal: false }
+				);
+				productObject = productObject.value;
+
+				// Post-process update data
+				switch (product.productObjectCollection) {
+					case 'premium_video_chat_listings':
+						// Update the owner user document
+						await db.collection('users').updateOne({ _id: new mongo.ObjectID(productObject.userID) }, { $set: { premiumVideoChatListing: productObject } });
+					break;
+				}
 			}
 		});
 		await db.collection('users').updateOne({ _id: new mongo.ObjectID(userID) }, { $set: { products: userProducts } });

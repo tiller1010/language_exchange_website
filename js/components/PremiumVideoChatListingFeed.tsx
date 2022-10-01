@@ -19,8 +19,9 @@ interface PremiumVideoChatListingObject {
 interface VideoChatTimeSlot {
 	customerUserID?: string;
 	time: string;
-	booked?: boolean;
 	completed?: boolean;
+	booked?: boolean;
+	paid?: boolean;
 }
 
 interface PremiumVideoChatListingFeedState {
@@ -47,6 +48,7 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 			loaded: false,
 		}
 		this.state = state;
+		this.handleLanguageChange = this.handleLanguageChange.bind(this);
 		this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
 	}
 
@@ -69,6 +71,7 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 						customerUserID
 						completed
 						booked
+						paid
 					}
 				}
 			}
@@ -82,6 +85,16 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 				});
 			}
 		}
+	}
+
+	handleLanguageChange(event) {
+		this.setState({ languageOfTopic: event.target.value });
+		// const searchButton = event.target.form.querySelector('button[value="Search"]');
+		// searchButton.contentEditable = true; // Trick browser to use ":focus-within" for outline effect
+		// searchButton.focus();
+		// setTimeout(() => {
+		// 	searchButton.contentEditable = false;
+		// }, 1)
 	}
 
 	async handleSearchSubmit(event){
@@ -111,6 +124,7 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 						customerUserID
 						completed
 						booked
+						paid
 					}
 				}
 			}
@@ -151,7 +165,7 @@ export default class PremiumVideoChatListingFeed extends React.Component<Premium
 							</div>
 							<div className="flex-container tablet-100" style={{ flexWrap: 'nowrap' }}>
 								<div className="tablet-100">
-									<LanguageSelector name="languageOfTopic" id="videoChat_languageOfTopicField" onChange={(event) => this.setState({ languageOfTopic: event.target.value })} value={languageOfTopic} required={false}/>
+									<LanguageSelector name="languageOfTopic" id="videoChat_languageOfTopicField" onChange={this.handleLanguageChange} value={languageOfTopic} required={false}/>
 								</div>
 								<button value="Search" className="button tablet-20" onClick={this.handleSearchSubmit} style={{ borderRadius: '0 5px 5px 0' }}>
 									Search

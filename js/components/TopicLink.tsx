@@ -1,6 +1,11 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
+import lozad from 'lozad';
+
+// Enable lazy loading
+// const lozadObserver = lozad();
+// lozadObserver.observe();
 
 function renderTopicMedia(FeaturedMedia) {
 	if (FeaturedMedia) {
@@ -11,6 +16,7 @@ function renderTopicMedia(FeaturedMedia) {
 						<div className="img-container desktop-100">
 							<img src={`${process.env.STRAPI_PUBLIC_URL}${FeaturedMedia.data.attributes.url}`}
 								alt={FeaturedMedia.data.attributes.alternativeText}
+								className="lozad"
 							/>
 						</div>
 					);

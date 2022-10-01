@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { loadStripe } from '@stripe/stripe-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
 
@@ -28,6 +29,7 @@ export default class Product extends React.Component<ProductProps, ProductState>
 			ownerDisplayName: '',
 		}
 		this.state = state;
+		this.handleCompletePurchase = this.handleCompletePurchase.bind(this);
 		this.renderProduct = this.renderProduct.bind(this);
 	}
 
@@ -44,6 +46,51 @@ export default class Product extends React.Component<ProductProps, ProductState>
 		return user.displayName;
 	}
 
+	async handleCompletePurchase(e) {
+
+		// Mock submit for fw-form-process-event effect
+		// const mockForm = document.createElement('form');
+		// document.querySelector('.fw-form-process-event').append(mockForm);
+		// let submitEvent = new Event('submit');
+		// submitEvent.submitter = e.target;
+		// mockForm.dispatchEvent(submitEvent);
+		e.target.parentElement.parentElement.append((new DOMParser()).parseFromString('<div class="lds-facebook"><div></div><div></div><div></div></div>', 'text/html').body);
+
+		const { product } = this.props;
+
+		// Get the user that made the product
+		const productUser = await fetch(`/user/${product.productObject.userID}`)
+			.then((response) => response.json());
+
+		if(productUser.connectedStripeAccountID){
+
+			const stripe = await loadStripe(process.env.STRIPE_PUBLIC_KEY || '');
+
+			fetch('/create-checkout-session', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					priceID: product.priceID,
+					connectedStripeAccountID: productUser.connectedStripeAccountID,
+				})
+			})
+			.then(function(response) {
+				return response.json();
+			})
+			.then(function(session) {
+				return stripe.redirectToCheckout({ sessionId: session.id });
+			})
+			.then(function(result) {
+				// If `redirectToCheckout` fails due to a browser or network
+				// error, you should display the localized error message to your
+				// customer using `error.message`.
+				if (result.error) {
+					alert(result.error.message);
+				}
+			});
+		}
+	}
+
 	renderProduct(product){
 		const productObject = product.productObject;
 		switch(product.productObjectCollection){
@@ -57,8 +104,10 @@ export default class Product extends React.Component<ProductProps, ProductState>
 					<div className="thumbnail-preview img-container">
 						<img style={{ height: '100%', width: '100%', objectFit: 'cover' }} src={productObject.thumbnailSrc} alt={productObject.thumbnailSrc}/>
 					</div>
-					<p>Topic: {productObject.topic}</p>
-					<p>Language: {productObject.language}</p>
+					<div className="fw-space noleft noright">
+						<h3 style={{ marginBottom: '5px' }}>Topic: {productObject.topic}</h3>
+						<h4>Language: {productObject.language}</h4>
+					</div>
 					{timeSlots.length ?
 						<div style={{ maxHeight: '250px', overflowY: 'auto' }}>
 							{timeSlots.map((timeSlot) => 
@@ -85,11 +134,22 @@ export default class Product extends React.Component<ProductProps, ProductState>
 		const { product } = this.props;
 
 		return (
-			<div>
+			<div className="fw-form fw-form-process-event">
 				{this.renderProduct(product)}
 				<p>Cost: {product.cost} {product.currency}</p>
 				<p>Ordered on: {product.orderedOn}</p>
-				<p>Status: {product.status}</p>
+				{product.status == 'Unpaid' ?
+
+					<p>
+						Status: <b>{product.status}:</b>&nbsp;
+						<button className="button" onClick={this.handleCompletePurchase}>
+							Complete Purchase
+							<FontAwesomeIcon icon={faLongArrowAltRight}/>
+						</button>
+					</p>
+					:
+					<p>Status: {product.status}</p>
+				}
 			</div>
 		);
 	}

@@ -60,6 +60,13 @@ $component-form-radio-properties:(
   backgroundColor: map-get($theme-properties, backgroundColorLight),
 );
 
+.field {
+	&.checkbox, &.radio {
+		width: 95%;
+		margin: 10px auto !important;
+	}
+}
+
 // Define FontAwesome Webfonts
 @font-face {
 	font-family: 'Font Awesome 6 Free';
