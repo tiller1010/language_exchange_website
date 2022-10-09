@@ -30,7 +30,7 @@ export default class LessonSearchForm extends React.Component<LessonSearchFormPr
 	}
 
 	componentDidMount() {
-		if (this.props.languageOfTopic != this.state.languageOfTopic) {
+		if (this.props.languageOfTopic != this.state.languageOfTopic && this.props.languageOfTopic) {
 			var context = this;
 			this.setState({ languageOfTopic: this.props.languageOfTopic}, () => {
 				context.handleSearchSubmit((new Event('submit')));
@@ -39,7 +39,7 @@ export default class LessonSearchForm extends React.Component<LessonSearchFormPr
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if (prevProps.languageOfTopic != this.props.languageOfTopic) {
+		if (prevProps.languageOfTopic != this.props.languageOfTopic && this.props.languageOfTopic) {
 			var context = this;
 			this.setState({ languageOfTopic: this.props.languageOfTopic}, () => {
 				context.handleSearchSubmit((new Event('submit')));

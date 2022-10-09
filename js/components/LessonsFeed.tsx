@@ -161,7 +161,7 @@ class LessonsFeed extends React.Component<LessonsProps, LessonsState> {
 					{ this.props.SearchFormHeading ? <h1 style={{ textAlign: 'right' }}>{this.props.SearchFormHeading}</h1> : '' }
 					<LessonSearchForm
 						onSubmit={this.onSeachSubmitCallback}
-						languageOfTopic={languageOfTopic}
+						languageOfTopic={languageOfTopic || null}
 					/>
 					{!this.props.HideClearFilters ?
 						<div>
