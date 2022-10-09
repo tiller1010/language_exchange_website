@@ -25,13 +25,36 @@ export default class LessonSearchForm extends React.Component<LessonSearchFormPr
 		}
 		this.state = state;
 		this.handleTopicQueryChange = this.handleTopicQueryChange.bind(this);
+		this.handleLanguageChange = this.handleLanguageChange.bind(this);
 		this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
+	}
+
+	componentDidMount() {
+		if (this.props.languageOfTopic != this.state.languageOfTopic) {
+			var context = this;
+			this.setState({ languageOfTopic: this.props.languageOfTopic}, () => {
+				context.handleSearchSubmit((new Event('submit')));
+			});
+		}
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if (prevProps.languageOfTopic != this.props.languageOfTopic) {
+			var context = this;
+			this.setState({ languageOfTopic: this.props.languageOfTopic}, () => {
+				context.handleSearchSubmit((new Event('submit')));
+			});
+		}
 	}
 
 	handleTopicQueryChange(event){
 		this.setState({
 			topicQuery: event.target.value
 		});
+	}
+
+	handleLanguageChange(event) {
+		this.setState({ languageOfTopic: event.target.value });
 	}
 
 	async handleSearchSubmit(event) {
@@ -93,6 +116,8 @@ export default class LessonSearchForm extends React.Component<LessonSearchFormPr
 			languageOfTopic,
 		});
 
+		data.lessonLanguageFilter = languageOfTopic;
+
 		if (this.props.onSubmit) {
 			this.props.onSubmit(data);
 		}
@@ -111,7 +136,7 @@ export default class LessonSearchForm extends React.Component<LessonSearchFormPr
 					</div>
 					<div className="flex-container tablet-100" style={{ flexWrap: 'nowrap' }}>
 						<div className="tablet-100">
-							<LanguageSelector name="languageOfTopic" id="lessonContent_languageOfTopicField" onChange={(event) => this.setState({ languageOfTopic: event.target.value })} value={languageOfTopic} required={false}/>
+							<LanguageSelector name="languageOfTopic" id="lessonContent_languageOfTopicField" onChange={this.handleLanguageChange} value={languageOfTopic} required={false}/>
 						</div>
 						<button value="Search" className="button tablet-20" onClick={this.handleSearchSubmit} style={{ borderRadius: '0 5px 5px 0' }}>
 							Search
