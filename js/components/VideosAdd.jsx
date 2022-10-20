@@ -167,7 +167,7 @@ class VideosAdd extends React.Component {
 					</div>
 
 					<div className="page-form desktop-50 tablet-100">
-						<h1 style={{ textAlign: 'right', marginBottom: '5px' }}>Share what you have learned</h1>
+						<h1 style={{ textAlign: 'right', marginBottom: '5px' }}>Share what you know</h1>
 						<h2 style={{ fontSize: '1.5em' }}>Add a video or sound file</h2>
 						<form action={`/videos/${this.state._id ? 'edit/' + this.state._id : 'add'}`} method="POST" encType="multipart/form-data" className="flex-col x-end fw-form">
 							<div className="field text desktop-100" htmlFor="titleField">

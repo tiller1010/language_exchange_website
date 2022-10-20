@@ -262,7 +262,7 @@ class VideosIndex extends React.Component {
 
 			    <div className="small-pad">
 				    <a href="/videos/add" className="button">
-					    <span>Add a video</span>
+					    <span>Upload a word or phrase</span>
 				        <FontAwesomeIcon icon={faPlus}/>
 				    </a>
 			    </div>

@@ -113,21 +113,25 @@ class LessonsFeed extends React.Component<LessonsProps, LessonsState> {
 		return (
 			levels.map((level) => 
 				<div key={level.id} className="flex x-center">
-					<h2 className="pad" style={{ margin: 0 }}>{level.attributes.Level}</h2>
 					{initialLoadView ?
+						<>
+						<h2 className="pad" style={{ margin: 0 }}>{level.attributes.Level.replace(/\d|\s/g, '')}</h2>
 						<div className="desktop-100">
 							<button className="button" onClick={() => this.setState({ languageOfTopic: level.attributes.Level.replace(/\d|\s/g, '') })}>
-								Load more topics in this language
+								Load more {level.attributes.Level.replace(/\d|\s/g, '')}
 								<FontAwesomeIcon icon={faLongArrowAltRight}/>
 							</button>
 						</div>
+						</>
 						:
-						''
+						<>
+						<h2 className="pad" style={{ margin: 0 }}>{level.attributes.Level}</h2>
+						<a href={`/level/${level.id}`} className="button" style={{ alignSelf: 'center' }}>
+							View Level
+							<FontAwesomeIcon icon={faLongArrowAltRight}/>
+						</a>
+						</>
 					}
-					<a href={`/level/${level.id}`} className="button" style={{ alignSelf: 'center' }}>
-						View Level
-						<FontAwesomeIcon icon={faLongArrowAltRight}/>
-					</a>
 					<div className="pure-u-1">
 						<hr/>
 					</div>
