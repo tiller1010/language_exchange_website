@@ -27,7 +27,7 @@ import { initFramewerk } from 'werkbot-framewerk';
 setTimeout(() => {
 	initFramewerk(false);
 	window.dispatchEvent(new Event('load'));
-}, 500);
+}, 1000);
 
 // Add a string method to convert times to AM/PM format
 String.prototype.convertTo12HourTime = function(){

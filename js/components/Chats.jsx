@@ -20,7 +20,7 @@ class Chats extends React.Component {
 				<div className="pure-u-g">
 
 					<div className="desktop-100">
-						<PremiumVideoChatListingFeed authenticatedUserID={this.props.authenticatedUserID} SearchFormHeading="Practice with a native speaker"/>
+						<PremiumVideoChatListingFeed authenticatedUserID={this.props.authenticatedUserID} SearchFormHeading="Chats with native speakers"/>
 					</div>
 
 			    </div>

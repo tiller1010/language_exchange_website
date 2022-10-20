@@ -45,6 +45,7 @@ interface VideoChatState {
 	forUserDisplayName?: string;
 	withUserID?: string;
 	availableCalls?: CallOffer[];
+	answered: boolean;
 }
 
 export default class VideoChat extends React.Component<VideoChatProps, VideoChatState> {
@@ -63,6 +64,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 			forUserID: '',
 			forUserDisplayName: '',
 			withUserID: '',
+			answered: false,
 		}
 		this.state = state;
 		this.startWebcam = this.startWebcam.bind(this);
@@ -70,6 +72,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 		this.answerCall = this.answerCall.bind(this);
 		this.hangup = this.hangup.bind(this);
 		this.refreshCallOffers = this.refreshCallOffers.bind(this);
+		this.renderCallControls = this.renderCallControls.bind(this);
 
 		this.webcamVideo = React.createRef();
 		this.remoteVideo = React.createRef();
@@ -196,6 +199,8 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 
 	async createCall(){
 
+		const context = this;
+
 		const { peerConnection, firestore, forUserID } = this.state;
 
 		// Reference Firestore collections for signaling
@@ -244,6 +249,8 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 					peerConnection.addIceCandidate(candidate);
 				}
 			});
+
+			context.setState({ answered: true });
 		});
 
 		this.setState({
@@ -252,6 +259,8 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 	}
 
 	async answerCall(){
+
+		const context = this;
 
 		const { peerConnection, firestore } = this.state;
 
@@ -289,6 +298,8 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 					peerConnection.addIceCandidate(new RTCIceCandidate(data));
 				}
 			});
+
+			context.setState({ answered: true });
 		});
 	}
 
@@ -311,30 +322,40 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 			callButtonDisabled: true,
 			answerButtonDisabled: true,
 			hangupButtonDisabled: true,
+			answered: false,
 		});
 	}
 
 	async refreshCallOffers(){
 
-		const { firestore, withUserID } = this.state; // The video chat owner ID, used by a customer to answer calls with this ID
+		// Manually refresh the page, works best when customer tries to answer old call
+		window.location = window.location;
 
-		if(withUserID){
-			const withUserDisplayName = await this.getUserNameByID(withUserID);
-			const callsCollection = query(collection(firestore, 'calls'), where('offer.forUserID', '==', this.props.authenticatedUserID));
-			let callDocs = await getDocs(callsCollection)
-			let callDocsArray = [];
-			callDocs.forEach((doc) => {
-				if(doc.id){
-					let call = doc.data();
-					call.offer.withUserDisplayName = withUserDisplayName;
-					callDocsArray.push(call.offer);
-				}
-			});
-			callDocsArray.sort((a, b) => Date.parse(b.createdDate) - Date.parse(a.createdDate));
-			this.setState({
-				availableCalls: callDocsArray,
-			});
-		}
+
+		/* load more calls, but a little broken */
+
+		// const { firestore, withUserID } = this.state; // The video chat owner ID, used by a customer to answer calls with this ID
+
+		// if(withUserID){
+		// 	const withUserDisplayName = await this.getUserNameByID(withUserID);
+		// 	const callsCollection = query(collection(firestore, 'calls'), where('offer.forUserID', '==', this.props.authenticatedUserID));
+		// 	let callDocs = await getDocs(callsCollection)
+		// 	let callDocsArray = [];
+		// 	callDocs.forEach((doc) => {
+		// 		if(doc.id){
+		// 			let call = doc.data();
+		// 			call.offer.withUserDisplayName = withUserDisplayName;
+		// 			if (call.offer.forUserID == this.props.authenticatedUserID) {
+		// 				callDocsArray.push(call.offer);
+		// 			}
+		// 		}
+		// 	});
+		// 	callDocsArray.sort((a, b) => Date.parse(b.createdDate) - Date.parse(a.createdDate));
+		// 	callDocsArray = callDocsArray.slice(0, 2);
+		// 	this.setState({
+		// 		availableCalls: callDocsArray,
+		// 	});
+		// }
 	}
 
 	renderCallControls(){
@@ -347,6 +368,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 			callButtonDisabled,
 			answerButtonDisabled,
 			callID,
+			answered,
 		} = this.state;
 
 		if(forUserID){
@@ -361,7 +383,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 					</div>
 				</div>
 			);
-		} else if(withUserID){
+		} else if(withUserID && !answered){
 			return(
 				<div className="pure-u-1 pure-u-md-1-2">
 					<div className="pad">
@@ -414,13 +436,13 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 						<div className="pure-u-1 pure-u-md-1-2">
 							<div className="pad">
 								<h3>Local Stream</h3>
-								<video id="webcamVideo" autoPlay playsInline muted ref={this.webcamVideo}></video>
+								<video id="webcamVideo" className="desktop-100" autoPlay playsInline muted ref={this.webcamVideo}></video>
 							</div>
 						</div>
 						<div className="pure-u-1 pure-u-md-1-2">
 							<div className="pad">
 								<h3>Remote Stream</h3>
-								<video id="remoteVideo" autoPlay playsInline ref={this.remoteVideo}></video>
+								<video id="remoteVideo" className="desktop-100" autoPlay playsInline ref={this.remoteVideo}></video>
 							</div>
 						</div>
 					</div>

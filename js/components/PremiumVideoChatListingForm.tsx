@@ -192,6 +192,8 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 
 		event.preventDefault();
 
+		event.target.parentElement.parentElement.append((new DOMParser()).parseFromString('<div class="lds-facebook"><div></div><div></div><div></div></div>', 'text/html').body);
+
 		let {
 			topic,
 			languageOfTopic,
@@ -288,6 +290,9 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 				savedPremiumVideoChatListing: data[mutationName],
 				savedAllChanges: true,
 			});
+
+			document.querySelector('.lds-facebook').remove();
+
 		} else {
 			const missingFields = [
 				{ value: topic, label: 'topic' },
@@ -351,7 +356,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 
 		return(
 			<div className="pure-g">
-				<h2 className="pure-u-1">Premium video chat listing</h2>
+				<h2 className="pure-u-1">Video chat listing</h2>
 				<form className="pure-u-1 fw-form">
 					<div className="flex-container desktop-100">
 						<div className="desktop-50 phone-100">

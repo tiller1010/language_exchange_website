@@ -30,7 +30,7 @@ export default function HomepageBanner(): JSX.Element {
 									<div className="fw-space">
 										<h2 style={{ marginBottom: '5px' }}>Improve your skills</h2>
 										<p>
-											Complete free lessons and challenges to sharpen your skills.
+											Learn from free resources and challenges to sharpen your skills.
 										</p>
 									</div>
 								</a>
@@ -41,9 +41,9 @@ export default function HomepageBanner(): JSX.Element {
 							<div className="fw-space">
 								<a href="/videos" className="home-banner-link">
 									<div className="fw-space">
-										<h2 style={{ marginBottom: '5px' }}>Share what you have learned</h2>
+										<h2 style={{ marginBottom: '5px' }}>Share what you know</h2>
 										<p>
-											Practice your new skills with language learners around the world.
+											Browse words and phrases uploaded by users around the world.
 										</p>
 									</div>
 								</a>
@@ -56,7 +56,7 @@ export default function HomepageBanner(): JSX.Element {
 									<div className="fw-space">
 										<h2 style={{ marginBottom: '5px' }}>Practice with a native speaker</h2>
 										<p>
-											Schedule a time to get real practice with a native speaker.
+											Schedule a time to have a real chat with a native speaker.
 										</p>
 									</div>
 								</a>

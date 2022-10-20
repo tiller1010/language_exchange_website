@@ -19,7 +19,8 @@ function randomFilename() {
 
 async function getRecentPremiumVideoChatListings(_){
 	const db = getDB();
-	let premiumVideoChatListings = await db.collection('premium_video_chat_listings').find({}).sort({created: -1}).limit(5).toArray();
+	let premiumVideoChatListings = await db.collection('premium_video_chat_listings').find({}).toArray();
+	premiumVideoChatListings = premiumVideoChatListings.reverse().slice(0, 10);
 
 	// Only show purchasable listings
 	let purchasablePremiumVideoChatListings = [];

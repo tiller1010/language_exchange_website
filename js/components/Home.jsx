@@ -78,7 +78,7 @@ class Home extends React.Component {
 							<div className="fw-space">
 
 								<div className="fw-space double noleft noright">
-									<h2>Complete challenges and sharpen your skills.</h2>
+									<h2>Learn from free resources and challenges.</h2>
 									<hr/>
 								</div>
 
@@ -93,7 +93,7 @@ class Home extends React.Component {
 							<div className="fw-space">
 
 								<div className="fw-space double noleft noright">
-									<h2>Browse uploads from language learners around the world.</h2>
+									<h2>Browse and upload words and phrases.</h2>
 									<hr/>
 								</div>
 
@@ -152,7 +152,7 @@ class Home extends React.Component {
 							<div className="frame normaltop">
 
 								<div className="fw-space double noleft noright">
-									<h2>Use the language you are learning.</h2>
+									<h2>Chat with a native speaker.</h2>
 									<hr/>
 								</div>
 
