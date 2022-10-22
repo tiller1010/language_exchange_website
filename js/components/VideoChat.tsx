@@ -67,6 +67,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 			answered: false,
 		}
 		this.state = state;
+		this.startPeerConnection = this.startPeerConnection.bind(this);
 		this.startWebcam = this.startWebcam.bind(this);
 		this.createCall = this.createCall.bind(this);
 		this.answerCall = this.answerCall.bind(this);
@@ -96,20 +97,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 		}
 		const firestore = getFirestore(firebaseApp);
 
-		const servers = {
-			iceServers: [
-				{
-					urls: ['stun:stun1.l.google.com:19302', 'stun:stun2.l.google.com:19302'],
-				},
-			],
-			iceCandidatePoolSize: 10,
-		};
-
-		// Global State
-		const peerConnection = new RTCPeerConnection(servers);
-
 		this.setState({
-			peerConnection,
 			firestore,
 		});
 
@@ -160,9 +148,23 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 		}
 	}
 
+	startPeerConnection() {
+		const servers = {
+			iceServers: [
+				{
+					urls: ['stun:stun1.l.google.com:19302', 'stun:stun2.l.google.com:19302'],
+				},
+			],
+			iceCandidatePoolSize: 10,
+		};
+
+		return new RTCPeerConnection(servers);
+	}
+
 	async startWebcam(){
 
-		const { peerConnection } = this.state;
+		const peerConnection = this.startPeerConnection();
+		this.setState({ peerConnection });
 
 		const localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
 		const remoteStream = new MediaStream();
@@ -227,7 +229,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 			sdp: offerDescription.sdp,
 			type: offerDescription.type,
 			forUserID,
-			createdDate: (new Date()).toString()
+			createdDate: (new Date()).toString().split(' ').slice(0, 5).join(' '),
 		}: CallOffer;
 
 		await setDoc(callDoc, ({ offer }));
@@ -247,10 +249,10 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 				if (change.type === 'added') {
 					const candidate = new RTCIceCandidate(change.doc.data());
 					peerConnection.addIceCandidate(candidate);
+					context.setState({ answered: true });
 				}
 			});
 
-			context.setState({ answered: true });
 		});
 
 		this.setState({
@@ -273,6 +275,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 		peerConnection.onicecandidate = async (event) => {
 			if(event.candidate){
 				await addDoc(answerCandidates, event.candidate.toJSON());
+				context.setState({ answered: true });
 			}
 		};
 
@@ -299,14 +302,13 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 				}
 			});
 
-			context.setState({ answered: true });
 		});
 	}
 
 	async hangup(){
-		// const { peerConnection } = this.state;
 
-		// peerConnection.close();
+		const { peerConnection } = this.state;
+		peerConnection.close();
 
 		this.webcamVideo.current.srcObject = null;
 		this.remoteVideo.current.srcObject = null;
@@ -328,34 +330,28 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 
 	async refreshCallOffers(){
 
-		// Manually refresh the page, works best when customer tries to answer old call
-		window.location = window.location;
+		const { firestore, withUserID } = this.state; // The video chat owner ID, used by a customer to answer calls with this ID
 
-
-		/* load more calls, but a little broken */
-
-		// const { firestore, withUserID } = this.state; // The video chat owner ID, used by a customer to answer calls with this ID
-
-		// if(withUserID){
-		// 	const withUserDisplayName = await this.getUserNameByID(withUserID);
-		// 	const callsCollection = query(collection(firestore, 'calls'), where('offer.forUserID', '==', this.props.authenticatedUserID));
-		// 	let callDocs = await getDocs(callsCollection)
-		// 	let callDocsArray = [];
-		// 	callDocs.forEach((doc) => {
-		// 		if(doc.id){
-		// 			let call = doc.data();
-		// 			call.offer.withUserDisplayName = withUserDisplayName;
-		// 			if (call.offer.forUserID == this.props.authenticatedUserID) {
-		// 				callDocsArray.push(call.offer);
-		// 			}
-		// 		}
-		// 	});
-		// 	callDocsArray.sort((a, b) => Date.parse(b.createdDate) - Date.parse(a.createdDate));
-		// 	callDocsArray = callDocsArray.slice(0, 2);
-		// 	this.setState({
-		// 		availableCalls: callDocsArray,
-		// 	});
-		// }
+		if(withUserID){
+			const withUserDisplayName = await this.getUserNameByID(withUserID);
+			const callsCollection = query(collection(firestore, 'calls'), where('offer.forUserID', '==', this.props.authenticatedUserID));
+			let callDocs = await getDocs(callsCollection)
+			let callDocsArray = [];
+			callDocs.forEach((doc) => {
+				if(doc.id){
+					let call = doc.data();
+					call.offer.withUserDisplayName = withUserDisplayName;
+					if (call.offer.forUserID == this.props.authenticatedUserID) {
+						callDocsArray.push(call.offer);
+					}
+				}
+			});
+			callDocsArray.sort((a, b) => Date.parse(b.createdDate) - Date.parse(a.createdDate));
+			callDocsArray = callDocsArray.slice(0, 2);
+			this.setState({
+				availableCalls: callDocsArray,
+			});
+		}
 	}
 
 	renderCallControls(){
@@ -368,14 +364,13 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 			callButtonDisabled,
 			answerButtonDisabled,
 			callID,
-			answered,
 		} = this.state;
 
 		if(forUserID){
 			return(
 				<div className="pure-u-1 pure-u-md-1-2">
 					<div className="pad">
-						<h2>Create a new Call for {forUserDisplayName}</h2>
+						<h2>Call {forUserDisplayName}</h2>
 						<button className="button" id="callButton" disabled={callButtonDisabled} onClick={this.createCall}>
 							{callID ? 'Dialed' : 'Create Call'}
 							<FontAwesomeIcon icon={faPhone}/>
@@ -383,7 +378,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 					</div>
 				</div>
 			);
-		} else if(withUserID && !answered){
+		} else if(withUserID){
 			return(
 				<div className="pure-u-1 pure-u-md-1-2">
 					<div className="pad">
@@ -394,20 +389,32 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 							Refresh
 							<FontAwesomeIcon icon={faSync}/>
 						</button>
+						<>&nbsp;</>
+						<button className="button" id="hardRefreshButton" onClick={() => window.location = window.location}>
+							Hard Refresh
+							<FontAwesomeIcon icon={faSync}/>
+						</button>
 						<div className="fw-form">
 							<div className="flex y-center field optionset">
 								{availableCalls ?
 									availableCalls.map((callOffer) =>
 										<div key={availableCalls.indexOf(callOffer)} style={{ maxWidth: '100%' }}>
-											<p><b>{callOffer.withUserDisplayName}</b></p>
-											<div style={{ whiteSpace: 'nowrap' }}>
-												<input type="radio" id={`callOffer_${callOffer.callID}`} name="callID" onClick={() => this.setState({ callID: callOffer.callID})}/>
-												<label htmlFor={`callOffer_${callOffer.callID}`} style={{ maxWidth: '100%', whiteSpace: 'normal' }}>&nbsp;Call created on {callOffer.createdDate}</label>
+											<div className="fw-space" style={availableCalls.indexOf(callOffer) == 0 ? { boxShadow: '0 0 3px #9f74e4' } : {}}>
+												{availableCalls.indexOf(callOffer) == 0 ?
+													<h4>Most Recent</h4>
+													:
+													''
+												}
+												<p><b>{callOffer.withUserDisplayName}</b></p>
+												<div style={{ whiteSpace: 'nowrap' }}>
+													<input type="radio" id={`callOffer_${callOffer.callID}`} name="callID" onClick={() => this.setState({ callID: callOffer.callID})}/>
+													<label htmlFor={`callOffer_${callOffer.callID}`} style={{ maxWidth: '100%', whiteSpace: 'normal' }}>&nbsp;Call created on {callOffer.createdDate}</label>
+												</div>
+												<button className="button" id="answerButton" disabled={answerButtonDisabled || callID != callOffer.callID} onClick={this.answerCall}>
+													Answer
+													<FontAwesomeIcon icon={faPhone}/>
+												</button>
 											</div>
-											<button className="button" id="answerButton" disabled={answerButtonDisabled || callID != callOffer.callID} onClick={this.answerCall}>
-												Answer
-												<FontAwesomeIcon icon={faPhone}/>
-											</button>
 										</div>
 									)
 									:
@@ -424,31 +431,35 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 
 	render(){
 
-		const { availableCalls } = this.state;
+		const { availableCalls, answered } = this.state;
 
 		return (
 			<div className="frame fw-container">
 				<Navigation/>
-				<div className="pure-u-g">
+				<div className="fw-typography-spacing pure-u-g">
 
-					<h2>Start your Webcam</h2>
+					<h2>Your video chat</h2>
 					<div className="flex x-center">
 						<div className="pure-u-1 pure-u-md-1-2">
 							<div className="pad">
-								<h3>Local Stream</h3>
-								<video id="webcamVideo" className="desktop-100" autoPlay playsInline muted ref={this.webcamVideo}></video>
+								<h3>Your feed</h3>
+								<video id="webcamVideo" className="desktop-100" style={{ maxHeight: '310px' }} autoPlay playsInline muted ref={this.webcamVideo}></video>
 							</div>
 						</div>
 						<div className="pure-u-1 pure-u-md-1-2">
 							<div className="pad">
-								<h3>Remote Stream</h3>
-								<video id="remoteVideo" className="desktop-100" autoPlay playsInline ref={this.remoteVideo}></video>
+								<h3>Chat feed</h3>
+								<video id="remoteVideo" className="desktop-100" style={{ maxHeight: '310px' }} autoPlay playsInline ref={this.remoteVideo}></video>
 							</div>
 						</div>
 					</div>
 					{this.state.webcamButtonDisabled ?
 						<div className="flex x-center y-center">
-							{this.renderCallControls()}
+							{!answered ?
+								this.renderCallControls()
+								:
+								''
+							}
 						</div>
 						:
 						<div className="flex x-center pure-u-1">

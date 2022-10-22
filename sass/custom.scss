@@ -37,6 +37,10 @@ $component-hamburger-properties:(
   hamburger-active-layer-color: map-get($theme-properties, textColorLight),
 );
 
+$component-typography-properties: (
+	HeadingMargin: 0 0 10px 0
+);
+
 $component-form-properties:(
   fieldSpacing: 5px,
 );
