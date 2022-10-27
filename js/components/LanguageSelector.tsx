@@ -44,6 +44,10 @@ export default function LanguageSelector(props) {
 		languageName: 'ASL',
 		langCode: 'ASL',
 	});
+	languagesArray.push({
+		languageName: 'Ukrainian',
+		langCode: 'Ukrainian',
+	});
 
 	// Sort langauges by name
 	languagesArray = languagesArray.sort((a, b) => a.languageName.localeCompare(b.languageName));
