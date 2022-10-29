@@ -37,24 +37,27 @@ String.prototype.convertTo12HourTime = function(){
 
 // Attempt Login with JWT
 (async function(){
-	await fetch('/do-jwt-login')
-		.then((response) => response.json())
-		.then((data) => data)
-		.then(async (doJWTLogin) => {
-			if(doJWTLogin){
-				await fetch('/login', {
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({
-						displayName: 'JWT_DISPLAYNAME',
-						password: 'JWT_PASSWORD',
-						backURL: document.location.pathname,
+	if (!sessionStorage.getItem('didJWTLogin')) {
+		sessionStorage.setItem('didJWTLogin', true);
+		await fetch('/do-jwt-login')
+			.then((response) => response.json())
+			.then((data) => data)
+			.then(async (doJWTLogin) => {
+				if(doJWTLogin){
+					await fetch('/login', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							displayName: 'JWT_DISPLAYNAME',
+							password: 'JWT_PASSWORD',
+							backURL: document.location.pathname,
+						})
 					})
-				})
-				.then((response) => document.location = response.url);
-			}
-		})
-		.catch((e) => console.log('No JWT found.'));
+					.then((response) => document.location = response.url);
+				}
+			})
+			.catch((e) => console.log('No JWT found.'));
+	}
 })();
 
 if(document.getElementById('home')){

@@ -41,6 +41,38 @@ $component-typography-properties: (
 	HeadingMargin: 0 0 10px 0
 );
 
+$element-h1-properties:(
+    fontSizes: (
+        desktop: (2.5em, 1),
+        tablet: (2.2em, 1),
+        phone: (1.7em, 1)
+    )
+);
+
+$element-h2-properties:(
+    fontSizes: (
+        desktop: (2.250em, 1),
+        tablet: (2em, 1),
+        phone: (1.5em, 1)
+    )
+);
+
+$element-h3-properties:(
+    fontSizes: (
+        desktop: (1.5em, 1),
+        tablet: (1.5em, 1),
+        phone: (1em, 1)
+    )
+);
+
+$element-h4-properties:(
+    fontSizes: (
+        desktop: (1.313em, 1),
+        tablet: (1em, 1),
+        phone: (1em, 1)
+    )
+);
+
 $component-form-properties:(
   fieldSpacing: 5px,
 );
