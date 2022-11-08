@@ -4,6 +4,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const { addUser, findAndSyncUser } = require('../database/methods/users.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { sendEmail } = require('./email.js');
 
 let { JWT_SECRET } = process.env;
 
@@ -66,6 +67,7 @@ passport.use('local-signup', new LocalStrategy({
 					likedVideos: []
 				}
 				let user = await addUser(newUser);
+				await sendEmail(newUser.email, 'Openeducationapp.com Registration', "<b>Thank you for registering</b>");
 				return done(null, newUser);
 			}
 		} catch(error) {
