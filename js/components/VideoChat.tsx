@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Navigation from './Navigation.jsx';
+import { sendEmailToUser } from '../emailFetch.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faCamera, faSync } from '@fortawesome/free-solid-svg-icons';
 import * as firebase from 'firebase/app';
@@ -233,6 +234,8 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 		}: CallOffer;
 
 		await setDoc(callDoc, ({ offer }));
+
+		const emailResponse = await sendEmailToUser(forUserID, `Call Created`, "<b>The student has been notified.</b>");
 
 		// Listen for remote answer
 		onSnapshot(callDoc, (snapshot) => {

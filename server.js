@@ -26,6 +26,7 @@ const bcrypt = require('bcrypt');
 const createSearchService = require('./app/search.js');
 const upload = require('./app/upload.js')();
 const stripe = require('stripe')(process.env.STRIPE_SECRET || '');
+const { sendEmail } = require('./app/email.js');
 
 // GraphQL
 const { installHandler } = require('./graphql/api_handler.js');
@@ -618,6 +619,7 @@ app.use(express.json());
 		app.get('/complete-order/:priceID', async (req, res) => {
 			if(req.user && req.params.priceID){
 				await completeOrder(req.user._id, req.params.priceID);
+				await sendEmail(req.user.email, `${process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL}> Chat Order`, "<b>Thank you for your order. Go to your account products on the time of the chat.</b>");
 				return res.redirect('/account-profile');
 			}
 		});
@@ -636,6 +638,14 @@ app.use(express.json());
 				authDomain: process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL || 'localhost',
 			};
 			return res.json(firebaseConfig);
+		});
+
+		app.post('/send-email-to-user', async (req, res) => {
+			const { subject, content, forUserID } = req.body;
+			if (req.user && forUserID && subject && content) {
+				const user = await findUserByID(forUserID);
+				const emailResponse = await sendEmail(user.email, subject, content, (account) => res.json(account));
+			}
 		});
 
 		const httpsOptions = {

@@ -67,7 +67,7 @@ passport.use('local-signup', new LocalStrategy({
 					likedVideos: []
 				}
 				let user = await addUser(newUser);
-				await sendEmail(newUser.email, 'Openeducationapp.com Registration', "<b>Thank you for registering</b>");
+				await sendEmail(newUser.email, `${process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL}> Registration`, "<b>Thank you for registering</b>");
 				return done(null, newUser);
 			}
 		} catch(error) {
@@ -97,6 +97,7 @@ passport.use(new GoogleStrategy({
 
 		try {
 			let user = await findAndSyncUser(profile.id, 'google');
+			await sendEmail(newUser.email, `${process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL}> Registration`, "<b>Thank you for registering</b>");
 
 			if(user){
 				return done(null, user);

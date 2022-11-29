@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-function sendEmail(toEmail, subject, content) {
+async function sendEmail(toEmail, subject, content, localTestingCallback = false) {
 	// If Live
 	if (process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL && process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL != 'localhost') {
 		(async function() {
@@ -24,7 +24,6 @@ function sendEmail(toEmail, subject, content) {
 		})();
 	} else {
 		nodemailer.createTestAccount(async (err, account) => {
-			console.log(account)
 			var transporter = nodemailer.createTransport({
 				host: "smtp.ethereal.email",
 				port: 587,
@@ -37,7 +36,7 @@ function sendEmail(toEmail, subject, content) {
 
 			try {
 				var info = await transporter.sendMail({
-					from: '"Openeducationapp" <noreply@openeducationapp.com>', // sender address
+					from: `"Openeducationapp" <noreply@${process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL}>`, // sender address
 					to: toEmail,
 					subject,
 					html: content,
@@ -47,6 +46,9 @@ function sendEmail(toEmail, subject, content) {
 				console.log(error);
 			}
 
+			if (localTestingCallback) {
+				localTestingCallback(account);
+			}
 		});
 	}
 }
