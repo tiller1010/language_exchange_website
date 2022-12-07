@@ -2,7 +2,7 @@ import React from 'react';
  
 const DefaultLayout = (props) => {
 	return (
-		<html style={{ fontFamily: 'sans-serif' }}>
+		<html style={{ fontFamily: 'sans-serif' }} translate="yes">
 			<head>
 				<title>Open Education App</title>
 				<meta name="description"

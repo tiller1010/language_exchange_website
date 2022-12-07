@@ -58,7 +58,7 @@ export default function LanguageSelector(props) {
 			<select name={name} id={id} onChange={onChange} value={value} required={required}>
 				<option value="">Select a language</option>
 				{languagesArray.map((lang) =>
-					<option key={lang.langCode}>{lang.languageName}</option>
+					<option key={lang.langCode} value={lang.languageName}>{lang.languageName}</option>
 				)}
 			</select>
 		</div>

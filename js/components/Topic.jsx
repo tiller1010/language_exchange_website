@@ -65,8 +65,13 @@ class Topic extends React.Component {
 		})
 	}
 
-	checkAnswerInput(input, challenge){
-		if(input.toLowerCase() == challenge.attributes.Title.toLowerCase()){
+	checkAnswerInput(inputElement, challenge){
+		var correctAnswer = challenge.attributes.Title.toLowerCase();
+		var translatedCorrectAnswer = inputElement.parentElement.parentElement.querySelector('.correct-answer');
+		if (translatedCorrectAnswer) {
+			correctAnswer = translatedCorrectAnswer.innerHTML.toLowerCase();
+		}
+		if(inputElement.value.toLowerCase() == correctAnswer){
 			const newState = this.state;
 			const challengeIndex = newState.challenges.indexOf(challenge);
 			challenge.answered = 'correct';
@@ -244,7 +249,7 @@ class Topic extends React.Component {
 							    				<>
 												<div className="field text">
 													<label htmlFor={`meaning${challenge.attributes.Title}Field`}>Guess meaning</label>
-													<input type="text" name={`meaning${challenge.attributes.Title}Field`} id={`meaning${challenge.attributes.Title}Field`} onChange={(event) => this.checkAnswerInput(event.target.value, challenge)}/>
+													<input type="text" name={`meaning${challenge.attributes.Title}Field`} id={`meaning${challenge.attributes.Title}Field`} onChange={(event) => this.checkAnswerInput(event.target, challenge)}/>
 												</div>
 												<div className="input-correct">
 													<p>Correct!</p>
@@ -255,7 +260,7 @@ class Topic extends React.Component {
 							    				''
 							    			}
 						    			</div>
-						    			<p>{challenge.attributes.Content}</p>
+						    			<p translate="no" className="notranslate">{challenge.attributes.Content}</p>
 						    			{challenge.attributes.FeaturedMedia.data ?
 						    				<div className="desktop-100">
 							    				{this.renderMedia(challenge)}

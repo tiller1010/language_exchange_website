@@ -235,7 +235,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 
 		await setDoc(callDoc, ({ offer }));
 
-		const emailResponse = await sendEmailToUser(forUserID, `Call Created`, "<b>The student has been notified.</b>");
+		const emailResponse = await sendEmailToUser(forUserID, `Call Started`, "<b>Your video call has started. Go to your account profile, and click the video chat link under your purchase.</b>");
 
 		// Listen for remote answer
 		onSnapshot(callDoc, (snapshot) => {
@@ -267,7 +267,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 
 		const context = this;
 
-		const { peerConnection, firestore } = this.state;
+		const { peerConnection, firestore, withUserID } = this.state;
 
 		const { callID } = this.state;
 		const callDocs = collection(firestore, 'calls');
@@ -296,6 +296,10 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 		};
 
 		await updateDoc(callDoc, { answer });
+
+		if (withUserID) {
+			const emailResponse = await sendEmailToUser(withUserID, `Call Answered`, "<b>The video call has started. The customer has answered your call.</b>");
+		}
 
 		onSnapshot(offerCandidates, (snapshot) => {
 			snapshot.docChanges().forEach((change) => {
