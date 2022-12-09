@@ -80,8 +80,13 @@ if(document.getElementById('videos-add')){
 	ReactDOM.render(<VideosAdd video={video}/>, document.getElementById('videos-add'));
 }
 if(document.getElementById('level')){
-	var levelID = document.getElementById('level').getAttribute('levelid');
-	ReactDOM.render(<Level levelID={levelID}/>, document.getElementById('level'));
+	if (window.isLive) {
+		var p = document.getElementById('level').getAttribute('p');
+		ReactDOM.render(<Level p={p} isLive={isLive}/>, document.getElementById('level'));
+	} else {
+		var levelID = document.getElementById('level').getAttribute('levelid');
+		ReactDOM.render(<Level levelID={levelID} isLive={isLive}/>, document.getElementById('level'));
+	}
 }
 if(document.getElementById('topic')){
 	var levelID = document.getElementById('topic').getAttribute('levelid');
@@ -98,12 +103,17 @@ if(document.getElementById('register')){
 	ReactDOM.render(<Register errors={errors}/>, document.getElementById('register'));
 }
 if(document.getElementById('account-profile')){
-	var userID = document.getElementById('account-profile').getAttribute('userid');
-	var authenticatedUserID = document.getElementById('account-profile').getAttribute('authenticateduserid');
-	var isCurrentUser = document.getElementById('account-profile').getAttribute('iscurrentuser');
-	var stripeAccountPending = document.getElementById('account-profile').getAttribute('stripeaccountpending');
-	var pathResolver = document.getElementById('account-profile').getAttribute('pathresolver');
-	ReactDOM.render(<AccountProfile userID={userID} authenticatedUserID={authenticatedUserID} isCurrentUser={eval(isCurrentUser)} stripeAccountPending={eval(stripeAccountPending)} pathResolver={pathResolver}/>, document.getElementById('account-profile'));
+	if (window.isLive) {
+		var p = document.getElementById('account-profile').getAttribute('p');
+		ReactDOM.render(<AccountProfile p={p} isLive={isLive}/>, document.getElementById('account-profile'));
+	} else {
+		var userID = document.getElementById('account-profile').getAttribute('userid');
+		var authenticatedUserID = document.getElementById('account-profile').getAttribute('authenticateduserid');
+		var isCurrentUser = document.getElementById('account-profile').getAttribute('iscurrentuser');
+		var stripeAccountPending = document.getElementById('account-profile').getAttribute('stripeaccountpending');
+		var pathResolver = document.getElementById('account-profile').getAttribute('pathresolver');
+		ReactDOM.render(<AccountProfile userID={userID} authenticatedUserID={authenticatedUserID} isCurrentUser={eval(isCurrentUser)} stripeAccountPending={eval(stripeAccountPending)} pathResolver={pathResolver} isLive={isLive}/>, document.getElementById('account-profile'));
+	}
 }
 if(document.getElementById('account-profile-edit')){
 	var userID = document.getElementById('account-profile-edit').getAttribute('userid');

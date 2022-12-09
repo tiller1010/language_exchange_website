@@ -10,6 +10,7 @@ import PremiumVideoChatListingForm from './PremiumVideoChatListingForm.tsx';
 import RemoveConfirmationModal from './RemoveConfirmationModal.tsx';
 // @ts-ignore
 import TopicLink from './TopicLink.tsx';
+import decipher from '../decipher.js';
 
 class AccountProfile extends React.Component {
 	constructor(props){
@@ -32,17 +33,38 @@ class AccountProfile extends React.Component {
 	}
 
 	async componentDidMount(){
-		if(this.props.userID){
-			this.findAndSyncUser();
+		const myDecipher = decipher(process.env.PROP_SALT);
+
+		if (this.props.isLive) {
+			let encryptedProps = myDecipher(this.props.p);
+			encryptedProps = JSON.parse(encryptedProps);
+			var newState = {
+				userID: encryptedProps.userID,
+				authenticatedUserID: encryptedProps.authenticatedUserID,
+				isCurrentUser: encryptedProps.isCurrentUser,
+				pathResolver: encryptedProps.pathResolver,
+				stripeAccountPending: encryptedProps.stripeAccountPending,
+			}
+		} else {
+			var newState = {
+				userID: this.props.userID,
+				authenticatedUserID: this.props.authenticatedUserID,
+				isCurrentUser: this.props.isCurrentUser,
+				pathResolver: this.props.pathResolver,
+				stripeAccountPending: this.props.stripeAccountPending,
+			}
 		}
+		this.setState(newState, () => {
+			this.findAndSyncUser();
+		});
 	}
 
 	async findAndSyncUser(){
-		let userProfile = await fetch(`/user/${this.props.userID}`)
+		let userProfile = await fetch(`/user/${this.state.userID}`)
 			.then((response) => response.json());
 		let authenticatedUser;
-		if(this.props.authenticatedUserID){
-			authenticatedUser = await fetch(`/user/${this.props.authenticatedUserID}`)
+		if(this.state.authenticatedUserID){
+			authenticatedUser = await fetch(`/user/${this.state.authenticatedUserID}`)
 				.then((response) => response.json());
 		}
 		if(userProfile && authenticatedUser){
@@ -74,7 +96,7 @@ class AccountProfile extends React.Component {
 	}
 
 	async verifyUser(verificationStatus){
-		if(this.props.userID){
+		if(this.state.userID){
 			const query = `mutation verifyUser($userID: ID!, $verificationStatus: Boolean!){
 				verifyUser(userID: $userID, verificationStatus: $verificationStatus){
 					verified
@@ -103,7 +125,7 @@ class AccountProfile extends React.Component {
 				updatedUser.likedVideos[updatedUser.likedVideos.indexOf(userLikedVideo)] = newVideo;
 			}
 		});
-		if(!videoAlreadyLiked && this.props.isCurrentUser){
+		if(!videoAlreadyLiked && this.state.isCurrentUser){
 			// If user likes their own video, add to liked videos
 			updatedUser.likedVideos.push(newVideo);
 		}
@@ -163,7 +185,7 @@ class AccountProfile extends React.Component {
 
 							<div className="flex-container">
 								<div className="desktop-75 phone-100">
-									{this.props.isCurrentUser ?
+									{this.state.isCurrentUser ?
 										<>
 										<h1>Welcome, {this.state.user.firstName}!</h1>
 										<a href="/logout" className="button" style={{ width: 'max-content' }}>
@@ -207,7 +229,7 @@ class AccountProfile extends React.Component {
 								{this.state.user.profilePictureSrc ?
 									<div className="desktop-25 phone-100">
 										<div className="img-container" style={{ background: '#999999' }}>
-											<img src={`${this.props.pathResolver}${this.state.user.profilePictureSrc}`}
+											<img src={`${this.state.pathResolver}${this.state.user.profilePictureSrc}`}
 												alt={`Picture of ${this.state.user.displayName}`}
 												style={{
 													maxHeight: '300px',
@@ -230,13 +252,13 @@ class AccountProfile extends React.Component {
 					<div className="fw-container">
 						<div className="fw-space">
 
-							{authenticatedUserIsVerified && this.props.isCurrentUser ?
+							{authenticatedUserIsVerified && this.state.isCurrentUser ?
 								<>
 									<PremiumVideoChatListingForm user={authenticatedUser}/>
 									<p>
 										{authenticatedUser.connectedStripeAccountID ?
 											<>
-											{this.props.stripeAccountPending ?
+											{this.state.stripeAccountPending ?
 												<>
 												<p><b>!! Your Connected Stripe Account still needs to be completed, or is pending verification. !!</b></p>
 												<p>Your video chat listing will not be purchasable until your connected Stripe account is completed and verified.</p>
@@ -311,7 +333,7 @@ class AccountProfile extends React.Component {
 					</div>
 				</section>
 
-				{this.props.isCurrentUser ?
+				{this.state.isCurrentUser ?
 					<RemoveConfirmationModal
 						buttonText="Remove Video"
 						buttonAnchor="remove-video"
@@ -327,7 +349,7 @@ class AccountProfile extends React.Component {
 					<div className="fw-container">
 						<div className="fw-space">
 
-							{products.length && this.props.isCurrentUser ?
+							{products.length && this.state.isCurrentUser ?
 								<div>
 									<h2 className="text-center">Products</h2>
 									<hr/>
@@ -393,13 +415,13 @@ class AccountProfile extends React.Component {
 													_id={video._id}
 													title={video.title}
 													languageOfTopic={video.languageOfTopic}
-													src={`${this.props.pathResolver}${video.src}`}
-													thumbnailSrc={`${this.props.pathResolver}${video.thumbnailSrc}`}
+													src={`${this.state.pathResolver}${video.src}`}
+													thumbnailSrc={`${this.state.pathResolver}${video.thumbnailSrc}`}
 													uploadedBy={video.uploadedBy}
 													likes={video.likes}
 													likedByCurrentUser={video.likedByCurrentUser}
 													authenticatedUserID={authenticatedUser ? authenticatedUser._id : null}
-													handleDeleteVideo={this.props.isCurrentUser ? this.handleDeleteVideo : null}
+													handleDeleteVideo={this.state.isCurrentUser ? this.handleDeleteVideo : null}
 													afterToggleLike={this.afterToggleLike}
 												/>
 											</div>
@@ -450,8 +472,8 @@ class AccountProfile extends React.Component {
 													_id={video._id}
 													title={video.title}
 													languageOfTopic={video.languageOfTopic}
-													src={`${this.props.pathResolver}${video.src}`}
-													thumbnailSrc={`${this.props.pathResolver}${video.thumbnailSrc}`}
+													src={`${this.state.pathResolver}${video.src}`}
+													thumbnailSrc={`${this.state.pathResolver}${video.thumbnailSrc}`}
 													uploadedBy={video.uploadedBy}
 													likes={video.likes}
 													likedByCurrentUser={video.likedByCurrentUser}

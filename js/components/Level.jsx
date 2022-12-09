@@ -6,6 +6,7 @@ import Slider from 'react-slick';
 import Navigation from './Navigation.jsx';
 // @ts-ignore
 import TopicLink from './TopicLink.tsx';
+import decipher from '../decipher.js';
 
 class Level extends React.Component {
 	constructor(){
@@ -17,7 +18,22 @@ class Level extends React.Component {
 	}
 
 	componentDidMount(){
-		axios.get(`${process.env.STRAPI_API_URL}/levels/${this.props.levelID}?populate[topics][populate][0]=FeaturedMedia%2Cchallenges`)
+		const myDecipher = decipher(process.env.PROP_SALT);
+
+		let userLikedVideos = [];
+		if (this.props.isLive) {
+			let encryptedProps = myDecipher(this.props.p);
+			encryptedProps = JSON.parse(encryptedProps);
+			this.setState({
+				levelID: encryptedProps.levelID,
+			});
+		} else {
+			this.setState({
+				levelID: this.props.levelID,
+			});
+		}
+
+		axios.get(`${process.env.STRAPI_API_URL}/levels/${this.state.levelID}?populate[topics][populate][0]=FeaturedMedia%2Cchallenges`)
 			.then(res => {
 				const data = res.data;
 				const level = data.data;
@@ -53,7 +69,7 @@ class Level extends React.Component {
 				    	{topics.map((topic) => 
 				    		<div key={topics.indexOf(topic)} className="topic pure-u-1 pure-u-md-1-3">
 					    		<div className="pad">
-									<TopicLink topic={topic} levelID={this.props.levelID}/>
+									<TopicLink topic={topic} levelID={this.state.levelID}/>
 						    		{topic.attributes.challenges.data ?
 						    			<div className="challenges">
 								    		<Slider {...{

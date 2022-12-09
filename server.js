@@ -34,6 +34,8 @@ const { graphqlUploadExpress } = require('graphql-upload');
 
 // Routes
 const { defineHomeRoutes } = require('./routes/home.js');
+const { defineLessonRoutes } = require('./routes/lessons.js');
+const { defineAccountProfileRoutes } = require('./routes/accountProfile.js');
 
 // Configure Server
 const app = express();
@@ -69,14 +71,11 @@ app.use(express.json());
 		// Home route
 		defineHomeRoutes(app);
 
-		// Lessons route
-		app.get('/lessons', (req, res) => {
-			let userID = null;
-			if(req.user){
-				userID = req.user._id;
-			}
-			res.render('lessons', { userID });
-		});
+		// Lessons routes
+		defineLessonRoutes(app);
+
+		// Account Profile routes
+		defineAccountProfileRoutes(app);
 
 		// Chats route
 		app.get('/chats', (req, res) => {
@@ -91,69 +90,6 @@ app.use(express.json());
 		app.get('/recent-videos', async (req, res) => {
 			const videos = await getRecent();
 			res.send(JSON.stringify(videos));
-		});
-
-		// Levels route
-		app.get('/level/:levelID', async (req, res) => {
-			const levelID = req.params.levelID;
-			const level = await getLevel(levelID);
-			const levelName = level ? level.attributes.Level : 'Unknown';
-			res.render('level.jsx', {
-				levelName,
-				levelID,
-			});
-		});
-
-		// Topics route
-		app.get('/level/:levelID/topic/:topicID', async (req, res) => {
-			const levelID = req.params.levelID;
-			const level = await getLevel(levelID);
-			const levelName = level ? level.attributes.Level : 'Unknown';
-
-			const topicID = req.params.topicID;
-			const topic = await getTopic(topicID);
-			const topicName = topic ? topic.attributes.Topic : 'Unknown';
-
-			let completed = false;
-			if(req.user){
-				let completedTopics = req.user.completedTopics || [];
-				completedTopics.forEach((topic) => {
-					if(topic.id == topicID){
-						completed = true;
-					} else if (topic.data) {
-						if(topic.data.id == topicID){
-							completed = true;
-						}
-					}
-				});
-			}
-			res.render('topic.jsx', {
-				levelID,
-				levelName,
-				topicID,
-				topicName,
-				completed,
-			});
-		});
-		app.post('/level/:levelID/topic/:topicID', async (req, res) => {
-			if(req.user && req.params.levelID && req.params.topicID){
-				const topicData = await getTopic(req.params.topicID);
-				const challenges = await getTopicChallenges(req.params.topicID);
-				const topic = {
-					levelID: req.params.levelID,
-					topicID: req.params.topicID,
-					...topicData,
-					challenges
-				}
-				addCompletedTopic(req.user._id, topic);
-				res.send('success');
-			}
-		});
-		app.post('/level/:levelID/topic/:topicID/reset', async (req, res) => {
-			if(req.user && req.params.topicID){
-				removeCompletedTopic(req.user._id, req.params.topicID);
-				res.send('reset');
-			}
 		});
 
 
@@ -343,53 +279,6 @@ app.use(express.json());
 				res.redirect('/account-profile');
 			}
 		});
-
-		// Account profile
-		app.get('/account-profile/:viewOtherUserID?',
-			async (req, res) => {
-				if(req.params.viewOtherUserID){
-					let user = await findAndSyncUser(req.params.viewOtherUserID, 'id');
-					let isCurrentUser = req.user ? String(req.user._id) == String(user._id) : false;
-					return res.render('account-profile', {
-						userID: user._id,
-						authenticatedUserID: req.user ? req.user._id : null,
-						isCurrentUser,
-						pathResolver: '../',
-					});
-				}else if(req.user){
-					let user = req.user;
-
-					let stripeAccountPending = true;
-					if (user.connectedStripeAccountID) {
-						const account = await stripe.accounts.retrieve(user.connectedStripeAccountID);
-						stripeAccountPending = !(account.charges_enabled && account.payouts_enabled);
-					}
-
-					return res.render('account-profile', {
-						userID: user._id,
-						authenticatedUserID: req.user._id,
-						isCurrentUser: true,
-						stripeAccountPending,
-					});
-				} else {
-					return res.redirect('/login');
-				}
-			}
-		);
-
-		// Edit account profile
-		app.get('/account-profile-edit',
-			async (req, res) => {
-				if(req.user){
-					let user = req.user;
-					return res.render('account-profile-edit', {
-						userID: req.user._id,
-					});
-				} else {
-					return res.redirect('/login');
-				}
-			}
-		);
 
 		// Account login
 		app.get('/login', (req, res) => {

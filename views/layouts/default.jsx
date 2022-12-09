@@ -10,7 +10,7 @@ const DefaultLayout = (props) => {
 				content="Language can only be learned if it is used. Why not start using the language you want to learn today? Complete free lessons and challenges to sharpen your skills. Practice your new skills with language learners around the world. Schedule a time to get real practice with a native speaker."></meta>
 				<script src={`${props.pathResolver || ''}js/main.js`}></script>
 				<script type="text/javascript">{"window.isLive = " + props.isLive}</script>
-				{props.isLive ?
+				{false ?
 					<DisableDevtools />
 					:
 					''
