@@ -31,11 +31,9 @@ export default function LanguageSelector(props) {
 		'Korean',
 		'Russian',
 		'Chinese',
-		'Portugese',
 		'Swedish',
 		'Finnish',
 		'Arabic',
-		'Hebrew',
 	];
 	languagesArray = languagesArray.filter((lang) => validLanguages.indexOf(lang.languageName) != -1);
 
