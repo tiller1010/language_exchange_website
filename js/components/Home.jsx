@@ -9,6 +9,7 @@ import PremiumVideoChatListingFeed from './PremiumVideoChatListingFeed.tsx';
 import TopicLink from './TopicLink.tsx';
 import LessonsFeed from './LessonsFeed.tsx';
 import HomepageBanner from './HomepageBanner.tsx';
+import decipher from '../decipher.js';
 
 // Enable lazy loading
 const lozadObserver = lozad();
@@ -26,6 +27,22 @@ class Home extends React.Component {
 	}
 
 	componentDidMount(){
+		const myDecipher = decipher(process.env.PROP_SALT);
+
+		let userLikedVideos = [];
+		if (this.props.isLive) {
+			let encryptedProps = myDecipher(this.props.p);
+			encryptedProps = JSON.parse(encryptedProps);
+			userLikedVideos = encryptedProps.userLikedVideos;
+			this.setState({
+				userID: encryptedProps.userID,
+			});
+		} else {
+			userLikedVideos = JSON.parse(this.props.userLikedVideos);
+			this.setState({
+				userID: this.props.userID,
+			});
+		}
 
 		// Get recent videos
 		axios.get(`${document.location.origin}/recent-videos`)
@@ -34,9 +51,9 @@ class Home extends React.Component {
 					recentVideos: res.data.videos
 				}, () => {// Check if the current user has liked each video
 					let likedRecentVideos = [];
-					if(this.props.userLikedVideos){
+					if(userLikedVideos){
 						this.setState({
-							userLikedVideos: JSON.parse(this.props.userLikedVideos)
+							userLikedVideos,
 						}, () => {
 							this.state.recentVideos.forEach((video) => {
 								video.likedByCurrentUser = this.currentUserHasLikedVideo(video);
@@ -133,7 +150,7 @@ class Home extends React.Component {
 														uploadedBy={video.uploadedBy}
 														likes={video.likes}
 														likedByCurrentUser={this.currentUserHasLikedVideo(video)}
-														authenticatedUserID={this.props.userID}
+														authenticatedUserID={this.state.userID}
 													/>
 												</div>
 											)}
@@ -157,7 +174,7 @@ class Home extends React.Component {
 								</div>
 
 								<div className="desktop-100">
-									<PremiumVideoChatListingFeed authenticatedUserID={this.props.userID} HideClearFilters={true}/>
+									<PremiumVideoChatListingFeed authenticatedUserID={this.state.userID} HideClearFilters={true}/>
 								</div>
 
 							</div>

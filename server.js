@@ -32,6 +32,9 @@ const { sendEmail } = require('./app/email.js');
 const { installHandler } = require('./graphql/api_handler.js');
 const { graphqlUploadExpress } = require('graphql-upload');
 
+// Routes
+const { defineHomeRoutes } = require('./routes/home.js');
+
 // Configure Server
 const app = express();
 app.set('views', __dirname + '/views');
@@ -64,15 +67,7 @@ app.use(express.json());
 		const VideoSearchService = await createSearchService('videos', ['title', 'languageOfTopic']);
 
 		// Home route
-		app.get('/', (req, res) => {
-			let userLikedVideos = [];
-			let userID = null;
-			if(req.user){
-				userLikedVideos = req.user.likedVideos || [];
-				userID = req.user._id;
-			}
-			res.render('home', { userLikedVideos, userID });
-		});
+		defineHomeRoutes(app);
 
 		// Lessons route
 		app.get('/lessons', (req, res) => {

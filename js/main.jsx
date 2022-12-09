@@ -61,9 +61,14 @@ String.prototype.convertTo12HourTime = function(){
 })();
 
 if(document.getElementById('home')){
-	var userLikedVideos = document.getElementById('home').getAttribute('userlikedvideos');
-	var userID = document.getElementById('home').getAttribute('userid');
-	ReactDOM.render(<Home userLikedVideos={userLikedVideos} userID={userID}/>, document.getElementById('home'));
+	if (window.isLive) {
+		var p = document.getElementById('home').getAttribute('p');
+		ReactDOM.render(<Home p={p} isLive={isLive}/>, document.getElementById('home'));
+	} else {
+		var userLikedVideos = document.getElementById('home').getAttribute('userlikedvideos');
+		var userID = document.getElementById('home').getAttribute('userid');
+		ReactDOM.render(<Home userLikedVideos={userLikedVideos} userID={userID} isLive={isLive}/>, document.getElementById('home'));
+	}
 }
 if(document.getElementById('videos')){
 	var userLikedVideos = document.getElementById('videos').getAttribute('userlikedvideos');
