@@ -8,6 +8,7 @@ const users = require('../database/methods/users.js');
 const premiumVideoChatListings = require('../database/methods/premium-video-chat-listings.js');
 const products = require('../database/methods/products.js');
 const levels = require('../strapi/levels.js');
+// const { ApolloServerPluginLandingPageDisabled } require('@apollo/server/plugin/disabled');
 
 const resolvers = {
 	Upload: GraphQLUpload,
@@ -41,9 +42,15 @@ const resolvers = {
 	}
 }
 
+var plugins = [];
+// if (process.env.APP_ENV == 'production') {
+// 	plugins = [ApolloServerPluginLandingPageDisabled()];
+// }
+
 const server = new ApolloServer({
 	typeDefs: fs.readFileSync(path.join(__dirname, 'schema.graphql'), 'utf-8'),
-	resolvers
+	resolvers,
+	plugins,
 });
 
 async function installHandler(app){

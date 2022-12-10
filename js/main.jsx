@@ -71,9 +71,14 @@ if(document.getElementById('home')){
 	}
 }
 if(document.getElementById('videos')){
-	var userLikedVideos = document.getElementById('videos').getAttribute('userlikedvideos');
-	var userID = document.getElementById('videos').getAttribute('userid');
-	ReactDOM.render(<VideosIndex userLikedVideos={userLikedVideos} userID={userID}/>, document.getElementById('videos'));
+	if (window.isLive) {
+		var p = document.getElementById('videos').getAttribute('p');
+		ReactDOM.render(<VideosIndex p={p} isLive={isLive}/>, document.getElementById('videos'));
+	} else {
+		var userLikedVideos = document.getElementById('videos').getAttribute('userlikedvideos');
+		var userID = document.getElementById('videos').getAttribute('userid');
+		ReactDOM.render(<VideosIndex userLikedVideos={userLikedVideos} userID={userID} isLive={isLive}/>, document.getElementById('videos'));
+	}
 }
 if(document.getElementById('videos-add')){
 	var video = document.getElementById('videos-add').getAttribute('video');

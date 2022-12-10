@@ -6,6 +6,7 @@ import Navigation from './Navigation.jsx';
 import VideoSearchForm from './VideoSearchForm.tsx';
 import Slider from 'react-slick';
 import VideoPlayer from './VideoPlayer.tsx';
+import decipher from '../decipher.js';
 
 function getVideosSearchString(pageNumber = null) {
 	var urlParams = new URLSearchParams(window.location.search);
@@ -45,9 +46,26 @@ class VideosIndex extends React.Component {
 	}
 
 	async componentDidMount(){
+		const myDecipher = decipher(process.env.PROP_SALT);
+
+		let userLikedVideos = [];
+		if (this.props.isLive) {
+			let encryptedProps = myDecipher(this.props.p);
+			encryptedProps = JSON.parse(encryptedProps);
+			userLikedVideos = encryptedProps.userLikedVideos;
+			this.setState({
+				userID: encryptedProps.userID,
+			});
+		} else {
+			userLikedVideos = JSON.parse(this.props.userLikedVideos);
+			this.setState({
+				userID: this.props.userID,
+			});
+		}
+
 		this.refreshVideos();
 		this.setState({
-			userLikedVideos: JSON.parse(this.props.userLikedVideos)
+			userLikedVideos,
 		});
 	}
 
@@ -205,7 +223,7 @@ class VideosIndex extends React.Component {
 											uploadedBy={video.uploadedBy}
 											likes={video.likes}
 											likedByCurrentUser={this.currentUserHasLikedVideo(video)}
-											authenticatedUserID={this.props.userID}
+											authenticatedUserID={this.state.userID}
 										/>
 									</div>
 								</div>
