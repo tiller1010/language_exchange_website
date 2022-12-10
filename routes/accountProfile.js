@@ -57,9 +57,15 @@ module.exports.defineAccountProfileRoutes = function(app) {
 		async (req, res) => {
 			if(req.user){
 				let user = req.user;
-				return res.render('account-profile-edit', {
+
+				const props = {
 					userID: req.user._id,
-				});
+				};
+				if (isLive) {
+					res.render('account-profile-edit', { p: myCipher(JSON.stringify(props)), isLive });
+				} else {
+					return res.render('account-profile-edit', props);
+				}
 			} else {
 				return res.redirect('/login');
 			}

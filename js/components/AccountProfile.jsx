@@ -35,10 +35,11 @@ class AccountProfile extends React.Component {
 	async componentDidMount(){
 		const myDecipher = decipher(process.env.PROP_SALT);
 
+		let newState = {};
 		if (this.props.isLive) {
 			let encryptedProps = myDecipher(this.props.p);
 			encryptedProps = JSON.parse(encryptedProps);
-			var newState = {
+			newState = {
 				userID: encryptedProps.userID,
 				authenticatedUserID: encryptedProps.authenticatedUserID,
 				isCurrentUser: encryptedProps.isCurrentUser,
@@ -46,7 +47,7 @@ class AccountProfile extends React.Component {
 				stripeAccountPending: encryptedProps.stripeAccountPending,
 			}
 		} else {
-			var newState = {
+			newState = {
 				userID: this.props.userID,
 				authenticatedUserID: this.props.authenticatedUserID,
 				isCurrentUser: this.props.isCurrentUser,

@@ -5,6 +5,7 @@ import graphQLFetch from '../graphQLFetch.js';
 // @ts-ignore
 import RemoveConfirmationModal from './RemoveConfirmationModal.tsx';
 import Navigation from './Navigation.jsx';
+import decipher from '../decipher.js';
 
 interface User {
 	_id: string;
@@ -26,10 +27,13 @@ interface ProfileEditState {
 	profilePictureFile?: File
 	savedUser?: User
 	savedAllChanges: boolean
+	userID?: string
 }
 
 interface ProfileEditProps {
-	userID: string
+	userID?: string
+	p?: string // Encrypted props
+	isLive?: boolean
 }
 
 export default class ProfileEditForm extends React.Component<ProfileEditProps, ProfileEditState>{
@@ -52,14 +56,31 @@ export default class ProfileEditForm extends React.Component<ProfileEditProps, P
 	}
 
 	async componentDidMount(){
-		let user = await fetch(`/user/${this.props.userID}`)
-			.then((response) => response.json());
+		const myDecipher = decipher(process.env.PROP_SALT);
 
-		if(user){
-			// @ts-ignore
-			this.setState({ ...user });
-			this.setState({ savedUser: user });
+		let newState = {};
+		if (this.props.isLive) {
+			let encryptedProps = myDecipher(this.props.p);
+			encryptedProps = JSON.parse(encryptedProps);
+			newState = {
+				userID: encryptedProps.userID,
+			}
+		} else {
+			newState = {
+				userID: this.props.userID,
+			}
 		}
+
+		this.setState(newState, async () => {
+			let user = await fetch(`/user/${this.state.userID}`)
+				.then((response) => response.json());
+
+			if(user){
+				// @ts-ignore
+				this.setState({ ...user });
+				this.setState({ savedUser: user });
+			}
+		});
 	}
 
 	handleProfilePictureChange(event){
@@ -173,7 +194,7 @@ export default class ProfileEditForm extends React.Component<ProfileEditProps, P
 			removeUser(userID: $userID)
 		}`;
 		const variables = {
-			userID: this.props.userID
+			userID: this.state.userID
 		};
 		const data = await graphQLFetch(query, variables);
 		const emptyUserObject = {
