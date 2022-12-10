@@ -6,8 +6,8 @@ class VideoChat extends React.Component {
 
   render(){
     return (
-      <DefaultLayout pathResolver="../">
-          <div id="video-chat" authenticateduserid={this.props.authenticatedUserID}>
+      <DefaultLayout pathResolver="../" isLive={this.props.isLive}>
+          <div id="video-chat" authenticateduserid={this.props.authenticatedUserID} p={this.props.p}>
             <SSRView/>
           </div>
       </DefaultLayout>

@@ -4,8 +4,8 @@ import SSRView from './components/SSRView';
 
 const Chats = (props) => {
   return (
-		<DefaultLayout>
-			<div id="chats" authenticateduserid={props.userID}>
+		<DefaultLayout isLive={props.isLive}>
+			<div id="chats" authenticateduserid={props.userID} p={props.p}>
 				<SSRView/>
 			</div>
 		</DefaultLayout>

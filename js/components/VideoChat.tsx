@@ -18,6 +18,7 @@ import {
 	deleteDoc,
 	onSnapshot
 } from 'firebase/firestore';
+import decipher from '../decipher.js';
 
 interface CallOffer {
 	callID: string;
@@ -31,7 +32,9 @@ interface CallOffer {
 }
 
 interface VideoChatProps {
-	authenticatedUserID: string;
+	authenticatedUserID?: string;
+	p?: string // Encrypted props
+	isLive?: boolean
 }
 
 interface VideoChatState {
@@ -47,6 +50,7 @@ interface VideoChatState {
 	withUserID?: string;
 	availableCalls?: CallOffer[];
 	answered: boolean;
+	authenticatedUserID?: string
 }
 
 export default class VideoChat extends React.Component<VideoChatProps, VideoChatState> {
@@ -82,70 +86,87 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 
 	async componentDidMount(){
 
-		const firebaseConfig = await fetch('/video-chat-tokens', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-			})
-		})
-		.then((response) => response.json())
-		.catch((e) => console.log(e));
+		const myDecipher = decipher(process.env.PROP_SALT);
 
-		let firebaseApp;
-		// @ts-ignore
-		if (!firebase.apps) {
-			firebaseApp = firebase.initializeApp(firebaseConfig);
+		let newState = {};
+		if (this.props.isLive) {
+			let encryptedProps = myDecipher(this.props.p);
+			encryptedProps = JSON.parse(encryptedProps);
+			newState = {
+				authenticatedUserID: encryptedProps.authenticatedUserID,
+			}
+		} else {
+			newState = {
+				authenticatedUserID: this.props.authenticatedUserID,
+			}
 		}
-		const firestore = getFirestore(firebaseApp);
+		this.setState(newState, async () => {
 
-		this.setState({
-			firestore,
-		});
+			const firebaseConfig = await fetch('/video-chat-tokens', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+				})
+			})
+			.then((response) => response.json())
+			.catch((e) => console.log(e));
 
-		const urlParams = new URLSearchParams(window.location.search);
-		const forUserID = urlParams.get('forUserID'); // The customer ID, used by the owner to create calls for the customer ID
-		const withUserID = urlParams.get('withUserID'); // The video chat owner ID, used by a customer to answer calls with this ID
-
-		if(forUserID){
-			const forUserDisplayName = await this.getUserNameByID(forUserID);
-			this.setState({
-				forUserID,
-				forUserDisplayName,
-			});
-		} else if(withUserID){
-			const withUserDisplayName = await this.getUserNameByID(withUserID);
-			const callsCollection = collection(firestore, 'calls');
-			const filteredCallsCollection = query(callsCollection, where('offer.forUserID', '==', this.props.authenticatedUserID));
-			let callDocs = await getDocs(filteredCallsCollection)
-
-			// Format call docs into array
-			let callDocsArray = [];
-			callDocs.forEach(async (doc) => {
-				if(doc.id){
-					let call = doc.data();
-					call.offer.withUserDisplayName = withUserDisplayName;
-					callDocsArray.push(call.offer);
-				}
-			});
-
-			// Only show one call offer, and delete old call offers from database
-			let availableCalls = [];
-			callDocsArray.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
-			callDocsArray.forEach(async (callDoc) => {
-				if(availableCalls.length == 5){
-					let oldDoc = await doc(callsCollection, callDoc.callID);
-					deleteDoc(oldDoc);
-				} else if (availableCalls.length) {
-					// Do nothing
-				} else {
-					availableCalls.push(callDoc);
-				}
-			});
+			let firebaseApp;
+			// @ts-ignore
+			if (!firebase.apps) {
+				firebaseApp = firebase.initializeApp(firebaseConfig);
+			}
+			const firestore = getFirestore(firebaseApp);
 
 			this.setState({
-				withUserID,
-				availableCalls,
+				firestore,
 			});
+
+			const urlParams = new URLSearchParams(window.location.search);
+			const forUserID = urlParams.get('forUserID'); // The customer ID, used by the owner to create calls for the customer ID
+			const withUserID = urlParams.get('withUserID'); // The video chat owner ID, used by a customer to answer calls with this ID
+
+			if(forUserID){
+				const forUserDisplayName = await this.getUserNameByID(forUserID);
+				this.setState({
+					forUserID,
+					forUserDisplayName,
+				});
+			} else if(withUserID){
+				const withUserDisplayName = await this.getUserNameByID(withUserID);
+				const callsCollection = collection(firestore, 'calls');
+				const filteredCallsCollection = query(callsCollection, where('offer.forUserID', '==', this.state.authenticatedUserID));
+				let callDocs = await getDocs(filteredCallsCollection)
+
+				// Format call docs into array
+				let callDocsArray = [];
+				callDocs.forEach(async (doc) => {
+					if(doc.id){
+						let call = doc.data();
+						call.offer.withUserDisplayName = withUserDisplayName;
+						callDocsArray.push(call.offer);
+					}
+				});
+
+				// Only show one call offer, and delete old call offers from database
+				let availableCalls = [];
+				callDocsArray.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
+				callDocsArray.forEach(async (callDoc) => {
+					if(availableCalls.length == 5){
+						let oldDoc = await doc(callsCollection, callDoc.callID);
+						deleteDoc(oldDoc);
+					} else if (availableCalls.length) {
+						// Do nothing
+					} else {
+						availableCalls.push(callDoc);
+					}
+				});
+
+				this.setState({
+					withUserID,
+					availableCalls,
+				});
+			}
 		}
 	}
 
@@ -341,14 +362,14 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 
 		if(withUserID){
 			const withUserDisplayName = await this.getUserNameByID(withUserID);
-			const callsCollection = query(collection(firestore, 'calls'), where('offer.forUserID', '==', this.props.authenticatedUserID));
+			const callsCollection = query(collection(firestore, 'calls'), where('offer.forUserID', '==', this.state.authenticatedUserID));
 			let callDocs = await getDocs(callsCollection)
 			let callDocsArray = [];
 			callDocs.forEach((doc) => {
 				if(doc.id){
 					let call = doc.data();
 					call.offer.withUserDisplayName = withUserDisplayName;
-					if (call.offer.forUserID == this.props.authenticatedUserID) {
+					if (call.offer.forUserID == this.state.authenticatedUserID) {
 						callDocsArray.push(call.offer);
 					}
 				}

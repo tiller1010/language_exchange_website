@@ -1,3 +1,9 @@
+// Strapi Methods
+const { getLevel } = require('../strapi/levels.js');
+const { getTopic, getTopicChallenges } = require('../strapi/topics.js');
+
+const { addCompletedTopic, removeCompletedTopic } = require('../database/methods/users.js');
+
 const { myCipher } = require('../app/cipher.js');
 
 const isLive = process.env.APP_ENV == 'production';
@@ -10,7 +16,12 @@ module.exports.defineLessonRoutes = function(app) {
 		if(req.user){
 			userID = req.user._id;
 		}
-		res.render('lessons', { userID });
+		const props = { userID };
+		if (isLive) {
+			res.render('lessons', { p: myCipher(JSON.stringify(props)), isLive });
+		} else {
+			res.render('lessons', props);
+		}
 	});
 
 	// Levels route
@@ -18,14 +29,14 @@ module.exports.defineLessonRoutes = function(app) {
 		const levelID = req.params.levelID;
 		const level = await getLevel(levelID);
 		const levelName = level ? level.attributes.Level : 'Unknown';
+		const props = {
+			levelName,
+			levelID,
+		};
 		if (isLive) {
-			res.render('level', { p: myCipher(JSON.stringify({ levelName, levelID })), isLive });
+			res.render('level', { p: myCipher(JSON.stringify(props)), isLive });
 		} else {
-			res.render('level', {
-				levelName,
-				levelID,
-				isLive,
-			});
+			res.render('level', props);
 		}
 	});
 

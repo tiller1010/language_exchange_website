@@ -20,29 +20,31 @@ class Level extends React.Component {
 	componentDidMount(){
 		const myDecipher = decipher(process.env.PROP_SALT);
 
-		let userLikedVideos = [];
+		let newState = {};
 		if (this.props.isLive) {
 			let encryptedProps = myDecipher(this.props.p);
 			encryptedProps = JSON.parse(encryptedProps);
-			this.setState({
+			newState = {
 				levelID: encryptedProps.levelID,
-			});
+			};
 		} else {
-			this.setState({
+			newState = {
 				levelID: this.props.levelID,
-			});
+			};
 		}
 
-		axios.get(`${process.env.STRAPI_API_URL}/levels/${this.state.levelID}?populate[topics][populate][0]=FeaturedMedia%2Cchallenges`)
-			.then(res => {
-				const data = res.data;
-				const level = data.data;
-				const topics = level.attributes.topics.data;
-				this.setState({
-					topics,
-					loaded: true,
-				});
-			})
+		this.setState(newState, () => {
+			axios.get(`${process.env.STRAPI_API_URL}/levels/${this.state.levelID}?populate[topics][populate][0]=FeaturedMedia%2Cchallenges`)
+				.then(res => {
+					const data = res.data;
+					const level = data.data;
+					const topics = level.attributes.topics.data;
+					this.setState({
+						topics,
+						loaded: true,
+					});
+				})
+		})
 	}
 
 	randomChallenges(topic){

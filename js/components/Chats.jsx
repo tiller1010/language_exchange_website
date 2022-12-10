@@ -1,6 +1,7 @@
 import React from 'react';
 import PremiumVideoChatListingFeed from './PremiumVideoChatListingFeed.tsx';
 import Navigation from './Navigation.jsx';
+import decipher from '../decipher.js';
 
 class Chats extends React.Component {
 	constructor(props){
@@ -9,7 +10,23 @@ class Chats extends React.Component {
 		}
 	}
 
-	componentDidMount(){
+	componentDidMount() {
+
+		const myDecipher = decipher(process.env.PROP_SALT);
+
+		let newState = {};
+		if (this.props.isLive) {
+			let encryptedProps = myDecipher(this.props.p);
+			encryptedProps = JSON.parse(encryptedProps);
+			newState = {
+				authenticatedUserID: encryptedProps.authenticatedUserID,
+			}
+		} else {
+			newState = {
+				authenticatedUserID: this.props.authenticatedUserID,
+			}
+		}
+		this.setState(newState)
 	}
 
 	render(){
@@ -20,7 +37,7 @@ class Chats extends React.Component {
 				<div className="pure-u-g">
 
 					<div className="desktop-100">
-						<PremiumVideoChatListingFeed authenticatedUserID={this.props.authenticatedUserID} SearchFormHeading="Chats with native speakers"/>
+						<PremiumVideoChatListingFeed authenticatedUserID={this.state.authenticatedUserID} SearchFormHeading="Chats with native speakers"/>
 					</div>
 
 			    </div>

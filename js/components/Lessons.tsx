@@ -1,4 +1,5 @@
 import * as React from 'react';
+// @ts-ignore
 import LessonsFeed from './LessonsFeed.tsx';
 import Navigation from './Navigation.jsx';
 

@@ -1,3 +1,4 @@
+const { findAndSyncUser } = require('../database/methods/users.js');
 const { myCipher } = require('../app/cipher.js');
 const stripe = require('stripe')(process.env.STRIPE_SECRET || '');
 
@@ -18,7 +19,7 @@ module.exports.defineAccountProfileRoutes = function(app) {
 					pathResolver: '../',
 				};
 				if (isLive) {
-					return res.render('account-profile', { p: myCipher(JSON.stringify(props)), isLive });
+					return res.render('account-profile', { p: myCipher(JSON.stringify(props)), isLive, pathResolver: props.pathResolver });
 				} else {
 					return res.render('account-profile', props);
 				}
@@ -39,10 +40,11 @@ module.exports.defineAccountProfileRoutes = function(app) {
 					authenticatedUserID: req.user._id,
 					isCurrentUser: true,
 					stripeAccountPending,
+					pathResolver: ''
 				}
 
 				if (isLive) {
-					res.render('account-profile', { p: myCipher(JSON.stringify(props)), isLive });
+					res.render('account-profile', { p: myCipher(JSON.stringify(props)), isLive, pathResolver: props.pathResolver });
 				} else {
 					return res.render('account-profile', props);
 				}

@@ -377,10 +377,13 @@ class AccountProfile extends React.Component {
 									</Slider>
 								</div>
 								:
-								<div>
-									<h2 className="text-center">No Purchased Products</h2>
-									<hr/>
-								</div>
+								this.state.isCurrentUser ?
+									<div>
+										<h2 className="text-center">No Purchased Products</h2>
+										<hr/>
+									</div>
+									:
+									''
 							}
 
 						</div>

@@ -4,8 +4,8 @@ import SSRView from './components/SSRView';
 
 const Lessons = (props) => {
   return (
-		<DefaultLayout>
-			<div id="lessons" authenticateduserid={props.userID}>
+		<DefaultLayout isLive={props.isLive}>
+			<div id="lessons" authenticateduserid={props.userID} p={props.p}>
 				<SSRView/>
 			</div>
 		</DefaultLayout>

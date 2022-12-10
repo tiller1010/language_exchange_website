@@ -150,24 +150,38 @@ if(accountProfileEditElement){
 
 var findUsersElement = document.getElementById('find-users');
 if(findUsersElement){
-	var authenticatedUserID = findUsersElement.getAttribute('authenticateduserid');
-	ReactDOM.render(<UserFeed authenticatedUserID={authenticatedUserID} SearchFormHeading="Find friends"/>, findUsersElement);
+	ReactDOM.render(<UserFeed SearchFormHeading="Find friends"/>, findUsersElement);
 }
 
 var videoChatElement = document.getElementById('video-chat');
 if(videoChatElement){
-	var authenticatedUserID = videoChatElement.getAttribute('authenticateduserid');
-	ReactDOM.render(<VideoChat authenticatedUserID={authenticatedUserID}/>, videoChatElement);
+	if (window.isLive) {
+		var p = videoChatElement.getAttribute('p');
+		ReactDOM.render(<VideoChat p={p} isLive={isLive}/>, videoChatElement);
+	} else {
+		var authenticatedUserID = videoChatElement.getAttribute('authenticateduserid');
+		ReactDOM.render(<VideoChat authenticatedUserID={authenticatedUserID} isLive={isLive}/>, videoChatElement);
+	}
 }
 
 var chatsElement = document.getElementById('chats');
 if(chatsElement){
-	var authenticatedUserID = chatsElement.getAttribute('authenticateduserid');
-	ReactDOM.render(<Chats authenticatedUserID={authenticatedUserID}/>, chatsElement);
+	if (window.isLive) {
+		var p = chatsElement.getAttribute('p');
+		ReactDOM.render(<Chats p={p} isLive={isLive}/>, chatsElement);
+	} else {
+		var authenticatedUserID = chatsElement.getAttribute('authenticateduserid');
+		ReactDOM.render(<Chats authenticatedUserID={authenticatedUserID} isLive={isLive}/>, chatsElement);
+	}
 }
 
 var lessonsElement = document.getElementById('lessons');
 if(lessonsElement){
-	var authenticatedUserID = lessonsElement.getAttribute('authenticateduserid');
-	ReactDOM.render(<Lessons authenticatedUserID={authenticatedUserID}/>, lessonsElement);
+	if (window.isLive) {
+		var p = lessonsElement.getAttribute('p');
+		ReactDOM.render(<Lessons p={p} isLive={isLive}/>, lessonsElement);
+	} else {
+		var authenticatedUserID = lessonsElement.getAttribute('authenticateduserid');
+		ReactDOM.render(<Lessons authenticatedUserID={authenticatedUserID} isLive={isLive}/>, lessonsElement);
+	}
 }

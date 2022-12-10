@@ -23,7 +23,6 @@ interface UserFeedState {
 
 interface UserFeedProps {
 	initialUsers?: [UserObject?]
-	authenticatedUserID?: string
 	SearchFormHeading?: string;
 	HideClearFilters?: boolean;
 }
@@ -99,8 +98,6 @@ export default class UserFeed extends React.Component<UserFeedProps, UserFeedSta
 	}
 
 	render(){
-
-		const { authenticatedUserID } = this.props;
 
 		let {
 			users,

@@ -11,12 +11,8 @@ const jwt = require('jsonwebtoken');
 const appPort = process.env.APP_PORT || 3000;
 
 // Database Methods
-const { addUser, findAndSyncUser, findUserByID, addCompletedTopic, removeCompletedTopic, addStripeAccountIDToUser } = require('./database/methods/users.js');
+const { findAndSyncUser, findUserByID, addStripeAccountIDToUser } = require('./database/methods/users.js');
 const { completeOrder } = require('./database/methods/products.js');
-
-// Strapi Methods
-const { getLevel } = require('./strapi/levels.js');
-const { getTopic, getTopicChallenges } = require('./strapi/topics.js');
 
 // App Services
 const { passport } = require('./app/passport.js');
@@ -35,6 +31,7 @@ const { defineLessonRoutes } = require('./routes/lessons.js');
 const { defineAccountProfileRoutes } = require('./routes/accountProfile.js');
 const { defineVideoRoutes } = require('./routes/videos.js');
 const { defineLikeRoutes } = require('./routes/likes.js');
+const { defineVideoChatRoutes } = require('./routes/videoChat.js');
 
 // Configure Server
 const app = express();
@@ -82,14 +79,8 @@ app.use(express.json());
 		// Account Profile routes
 		defineAccountProfileRoutes(app);
 
-		// Chats route
-		app.get('/chats', (req, res) => {
-			let userID = null;
-			if(req.user){
-				userID = req.user._id;
-			}
-			res.render('chats', { userID });
-		});
+		// Video Chat routes
+		defineVideoChatRoutes(app);
 
 		// Account login
 		app.get('/login', (req, res) => {
@@ -317,22 +308,6 @@ app.use(express.json());
 				await sendEmail(req.user.email, `${process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL}> Chat Order`, "<b>Thank you for your order. Go to your account products on the time of the chat.</b>");
 				return res.redirect('/account-profile');
 			}
-		});
-
-		app.get('/video-chat', async (req, res) => {
-			let userID = null;
-			if(req.user){
-				userID = req.user._id;
-			}
-			return res.render('video-chat', { authenticatedUserID: userID });
-		});
-		app.post('/video-chat-tokens', async (req, res) => {
-			const firebaseConfig = {
-				projectId: process.env.FIREBASE_PROJECT_ID,
-				apiKey: process.env.FIREBASE_API_KEY,
-				authDomain: process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL || 'localhost',
-			};
-			return res.json(firebaseConfig);
 		});
 
 		app.post('/send-email-to-user', async (req, res) => {
