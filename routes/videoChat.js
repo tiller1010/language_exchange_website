@@ -7,11 +7,11 @@ module.exports.defineVideoChatRoutes = function(app) {
 
 	// Chats route
 	app.get('/chats', (req, res) => {
-		let userID = null;
+		let authenticatedUserID = null;
 		if(req.user){
-			userID = req.user._id;
+			authenticatedUserID = req.user._id;
 		}
-		const props = { userID };
+		const props = { authenticatedUserID };
 		if (isLive) {
 			return res.render('chats', { p: myCipher(JSON.stringify(props)), isLive });
 		} else {
