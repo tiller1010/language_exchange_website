@@ -166,7 +166,7 @@ module.exports.defineVideoRoutes = function(app, VideoSearchService) {
 		}
 
 		if (req.user) {
-			if (String(req.user._id) == String(video.uploadedBy._id)) {
+			if (String(req.user._id) == String(video.uploadedBy._id) || req.user.isAdmin) {
 				await updateVideo(updatedVideo);
 			}
 		}

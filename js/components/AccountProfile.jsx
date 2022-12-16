@@ -334,7 +334,7 @@ class AccountProfile extends React.Component {
 					</div>
 				</section>
 
-				{this.state.isCurrentUser ?
+				{this.state.isCurrentUser || authenticatedUserIsAdmin ?
 					<RemoveConfirmationModal
 						buttonText="Remove Video"
 						buttonAnchor="remove-video"
@@ -425,7 +425,7 @@ class AccountProfile extends React.Component {
 													likes={video.likes}
 													likedByCurrentUser={video.likedByCurrentUser}
 													authenticatedUserID={authenticatedUser ? authenticatedUser._id : null}
-													handleDeleteVideo={this.state.isCurrentUser ? this.handleDeleteVideo : null}
+													handleDeleteVideo={this.state.isCurrentUser || authenticatedUserIsAdmin ? this.handleDeleteVideo : null}
 													afterToggleLike={this.afterToggleLike}
 												/>
 											</div>

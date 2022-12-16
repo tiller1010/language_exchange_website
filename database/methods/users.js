@@ -159,7 +159,7 @@ async function updateUser(_, { userID, user, profilePictureFile }){
 
 async function getRecentUsers(_){
 	const db = getDB();
-	let users = await db.collection('users').find({}).sort({created: -1}).limit(5).toArray();
+	let users = await db.collection('users').find({}).sort({created: -1}).limit(10).toArray();
 
 	return { users };
 }
