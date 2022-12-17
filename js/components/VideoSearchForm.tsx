@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-// @ts-ignore
-import LanguageSelector from './LanguageSelector.tsx';
+import LanguageSelector from './LanguageSelector.js';
 
 enum SortControlStatus {
 	open = 'open',

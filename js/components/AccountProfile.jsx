@@ -4,12 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt, faSearch, faUser, faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 import Slider from 'react-slick';
 import graphQLFetch from '../graphQLFetch.js';
-import VideoPlayer from './VideoPlayer.tsx';
-import Product from './Product.tsx';
-import PremiumVideoChatListingForm from './PremiumVideoChatListingForm.tsx';
-import RemoveConfirmationModal from './RemoveConfirmationModal.tsx';
-// @ts-ignore
-import TopicLink from './TopicLink.tsx';
+import VideoPlayer from './VideoPlayer.js';
+import Product from './Product.js';
+import PremiumVideoChatListingForm from './PremiumVideoChatListingForm.js';
+import RemoveConfirmationModal from './RemoveConfirmationModal.js';
+import TopicLink from './TopicLink.js';
 import decipher from '../decipher.js';
 
 class AccountProfile extends React.Component {

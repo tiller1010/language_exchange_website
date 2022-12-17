@@ -1,6 +1,5 @@
 import * as React from 'react';
-// @ts-ignore
-import LessonsFeed from './LessonsFeed.tsx';
+import LessonsFeed from './LessonsFeed.js';
 import Navigation from './Navigation.jsx';
 
 class Lessons extends React.Component {

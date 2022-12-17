@@ -4,10 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLongArrowAltRight, faBan } from '@fortawesome/free-solid-svg-icons';
 import Slider from 'react-slick';
 import Navigation from './Navigation.jsx';
-// @ts-ignore
-import TopicLink from './TopicLink.tsx';
-// @ts-ignore
-import LessonSearchForm from './LessonSearchForm.tsx';
+import TopicLink from './TopicLink.js';
+import LessonSearchForm from './LessonSearchForm.js';
 
 interface LevelAttributes {
 	Level: string;

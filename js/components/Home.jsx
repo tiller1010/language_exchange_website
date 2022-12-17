@@ -3,12 +3,12 @@ import axios from 'axios';
 import lozad from 'lozad';
 import Slider from 'react-slick';
 import Navigation from './Navigation.jsx';
-import VideoSearchForm from './VideoSearchForm.tsx';
-import VideoPlayer from './VideoPlayer.tsx';
-import PremiumVideoChatListingFeed from './PremiumVideoChatListingFeed.tsx';
-import TopicLink from './TopicLink.tsx';
-import LessonsFeed from './LessonsFeed.tsx';
-import HomepageBanner from './HomepageBanner.tsx';
+import VideoSearchForm from './VideoSearchForm.js';
+import VideoPlayer from './VideoPlayer.js';
+import PremiumVideoChatListingFeed from './PremiumVideoChatListingFeed.js';
+import TopicLink from './TopicLink.js';
+import LessonsFeed from './LessonsFeed.js';
+import HomepageBanner from './HomepageBanner.js';
 import decipher from '../decipher.js';
 
 // Enable lazy loading

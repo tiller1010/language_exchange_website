@@ -2,8 +2,7 @@ import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faCheck, faTrash, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import graphQLFetch from '../graphQLFetch.js';
-// @ts-ignore
-import RemoveConfirmationModal from './RemoveConfirmationModal.tsx';
+import RemoveConfirmationModal from './RemoveConfirmationModal.js';
 import Navigation from './Navigation.jsx';
 import decipher from '../decipher.js';
 

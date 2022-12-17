@@ -2,8 +2,8 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faUpload, faMicrophone, faStop } from '@fortawesome/free-solid-svg-icons';
 import Navigation from './Navigation.jsx';
-import MediaRenderer from './MediaRenderer.tsx';
-import LanguageSelector from './LanguageSelector.tsx';
+import MediaRenderer from './MediaRenderer.js';
+import LanguageSelector from './LanguageSelector.js';
 import { ReactMic } from 'react-mic/dist/index.js';
 
 class VideosAdd extends React.Component {

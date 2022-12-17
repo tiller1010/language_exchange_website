@@ -4,8 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome } from '@fortawesome/free-solid-svg-icons';
 import Slider from 'react-slick';
 import Navigation from './Navigation.jsx';
-// @ts-ignore
-import TopicLink from './TopicLink.tsx';
+import TopicLink from './TopicLink.js';
 import decipher from '../decipher.js';
 
 class Level extends React.Component {

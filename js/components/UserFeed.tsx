@@ -1,11 +1,9 @@
 import * as React from 'react';
-// @ts-ignore
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faBan } from '@fortawesome/free-solid-svg-icons';
 import graphQLFetch from '../graphQLFetch.js';
 import Navigation from './Navigation.jsx';
-// @ts-ignore
-import MediaRenderer from './MediaRenderer.tsx';
+import MediaRenderer from './MediaRenderer.js';
 
 interface UserObject {
 	_id: string;

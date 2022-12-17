@@ -1,12 +1,10 @@
 import * as React from 'react';
-// @ts-ignore
-import PremiumVideoChatListing from './PremiumVideoChatListing.tsx';
+import PremiumVideoChatListing from './PremiumVideoChatListing.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faBan } from '@fortawesome/free-solid-svg-icons';
 import graphQLFetch from '../graphQLFetch.js';
 import Slider from 'react-slick';
-// @ts-ignore
-import LanguageSelector from './LanguageSelector.tsx';
+import LanguageSelector from './LanguageSelector.js';
 
 interface PremiumVideoChatListingObject {
 	topic: string;

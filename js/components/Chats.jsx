@@ -1,5 +1,5 @@
 import React from 'react';
-import PremiumVideoChatListingFeed from './PremiumVideoChatListingFeed.tsx';
+import PremiumVideoChatListingFeed from './PremiumVideoChatListingFeed.js';
 import Navigation from './Navigation.jsx';
 import decipher from '../decipher.js';
 

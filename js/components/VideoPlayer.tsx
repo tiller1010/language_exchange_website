@@ -4,8 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import graphQLFetch from '../graphQLFetch.js';
-// @ts-ignore
-import MediaRenderer from './MediaRenderer.tsx';
+import MediaRenderer from './MediaRenderer.js';
 
 interface User {
 	_id: string;

@@ -2,8 +2,7 @@ import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import graphQLFetch from '../graphQLFetch.js';
-// @ts-ignore
-import LanguageSelector from './LanguageSelector.tsx';
+import LanguageSelector from './LanguageSelector.js';
 
 interface LessonSearchFormProps {
 	topicQuery: string;

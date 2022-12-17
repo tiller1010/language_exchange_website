@@ -3,9 +3,9 @@ import lozad from 'lozad';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faLongArrowAltRight, faLongArrowAltLeft, faSync, faPlus, faHome, faSlidersH, faBan } from '@fortawesome/free-solid-svg-icons';
 import Navigation from './Navigation.jsx';
-import VideoSearchForm from './VideoSearchForm.tsx';
+import VideoSearchForm from './VideoSearchForm.js';
 import Slider from 'react-slick';
-import VideoPlayer from './VideoPlayer.tsx';
+import VideoPlayer from './VideoPlayer.js';
 import decipher from '../decipher.js';
 
 function getVideosSearchString(pageNumber = null) {

@@ -3,12 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faCheck, faTrash, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 const languages = require('language-list')();
 import graphQLFetch from '../graphQLFetch.js';
-// @ts-ignore
-import PremiumVideoChatListing from './PremiumVideoChatListing.tsx';
-// @ts-ignore
-import RemoveConfirmationModal from './RemoveConfirmationModal.tsx';
-// @ts-ignore
-import LanguageSelector from './LanguageSelector.tsx';
+import PremiumVideoChatListing from './PremiumVideoChatListing.js';
+import RemoveConfirmationModal from './RemoveConfirmationModal.js';
+import LanguageSelector from './LanguageSelector.js';
 
 function findInputElement(element) {
   if (!element) return;
