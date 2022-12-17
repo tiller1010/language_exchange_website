@@ -1,0 +1,142 @@
+const { findAndSyncUser, findUserByID } = require('../database/methods/users.js');
+const { passport } = require('../app/passport.js');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
+module.exports.defineAuthenticationRoutes = function(app) {
+
+	// Account login
+	app.get('/login', (req, res) => {
+		if(req.user){
+			return res.redirect('/account-profile');
+		}
+		const errors = req.flash().error || [];
+		res.render('login', { errors });
+	});
+
+	// Submit login form
+	app.post('/login', async (req, res) => {
+		// Set JWT cookie to stay signed in
+		const { displayName, password } = req.body;
+
+		let passportConfig = {
+			failureRedirect: '/login',
+			failureFlash: true,
+		}
+
+		if((displayName && password) && !req.cookies.jwt){
+			const user = await findAndSyncUser(displayName, 'local');
+			if(user && bcrypt.compareSync(password, user.passwordHash)){
+				const { JWT_SECRET } = process.env;
+				const credentials = {
+					identifier: displayName,
+					strategy: 'local',
+				};
+				const token = jwt.sign(credentials, JWT_SECRET);
+				const domain = process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL || 'localhost';
+
+				if(domain){
+					res.cookie('jwt', token, { httpOnly: true, domain });
+				} else {
+					res.cookie('jwt', token, { httpOnly: true });
+				}
+
+				passportConfig.successRedirect = '/account-profile';
+			}
+		} else if (req.cookies.jwt && req.body.backURL) {
+			passportConfig.successRedirect = req.body.backURL;
+		}
+		passport.authenticate('local-login', passportConfig)(req, res);
+	});
+
+	// Submit login form from react native
+	app.post('/react-native-login', passport.authenticate('local-login'), async (req, res) => {
+		if(req.body.nativeFlag && req.user){
+			res.status(200).json(req.user);
+		}
+	});
+
+	// Check if should perform JWT login
+	app.get('/do-jwt-login', (req, res) => {
+		return res.status(200).json(req.cookies.jwt && (!req.user));
+	});
+
+	// Google login
+	let googleNativeFlag = false;
+	app.get('/auth/google', (req, res, next) => {
+		if(req.query.nativeFlag){
+			googleNativeFlag = true;
+		}
+		next();
+	}, passport.authenticate('google', { scope: [ 'https://www.googleapis.com/auth/plus.login', 'email' ] }));
+	app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
+
+		if(req.user && !req.cookies.jwt){
+			const { JWT_SECRET } = process.env;
+			const credentials = {
+				identifier: req.user.googleID,
+				strategy: 'google',
+			};
+			const token = jwt.sign(credentials, JWT_SECRET);
+			const domain = process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL || 'localhost';
+
+			if(domain){
+				res.cookie('jwt', token, { httpOnly: true, domain });
+			} else {
+				res.cookie('jwt', token, { httpOnly: true });
+			}
+		}
+
+		if(googleNativeFlag && req.user){
+			googleNativeFlag = false;
+			res.redirect(process.env.REACT_NATIVE_APP_URL + '?userID=' + String(req.user._id));
+			return;
+		} else {
+			res.redirect('/account-profile');
+			return;
+		}
+	});
+
+	// Account register
+	app.get('/register', (req, res) => {
+		if(req.user){
+			return res.redirect('/account-profile');
+		}
+		const errors = req.flash().error || [];
+		res.render('register', { errors });
+	});
+
+	// Submit register form
+	app.post('/register', passport.authenticate('local-signup', {
+			successRedirect: '/account-profile',
+			failureRedirect: '/register',
+			failureFlash: true,
+			successFlash: {
+				type: 'messageSuccess',
+				message: 'Successfully signed up.'
+			}
+		})
+	);
+
+	// Submit register form from react native
+	app.post('/react-native-register', passport.authenticate('local-signup'), async (req, res) => {
+		if(req.body.nativeFlag && req.user){
+			res.status(200).json(req.user);
+		}
+	});
+
+	// Account logout
+	app.get('/logout', (req, res) => {
+		res.clearCookie('jwt', { domain: process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL });
+		req.logout();
+		res.redirect('/login');
+	});
+
+	// Find user api for react native
+	app.get('/user/:id', async (req, res) => {
+		if(req.params.id){
+			let user = await findUserByID(req.params.id);
+			res.status(200).json(user);
+		}
+	});
+}

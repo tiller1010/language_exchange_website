@@ -8,11 +8,11 @@ import Topic from './components/Topic.jsx';
 import Login from './components/Login.jsx';
 import Register from './components/Register.jsx';
 import AccountProfile from './components/AccountProfile.jsx';
-import ProfileEditForm from './components/ProfileEditForm.tsx';
-import VideoChat from './components/VideoChat.tsx';
+import ProfileEditForm from './components/ProfileEditForm.js';
+import VideoChat from './components/VideoChat.js';
 import Chats from './components/Chats.jsx';
-import UserFeed from './components/UserFeed.tsx';
-import Lessons from './components/Lessons.tsx';
+import UserFeed from './components/UserFeed.js';
+import Lessons from './components/Lessons.js';
 
 import 'purecss/build/pure-min.css';
 import 'purecss/build/grids-responsive-min.css';
