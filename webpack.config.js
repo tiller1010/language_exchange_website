@@ -18,10 +18,13 @@ module.exports = {
 		filename: 'js/main.js',
 		path: path.resolve(__dirname, 'public')
 	},
-	mode: 'development',
-	// mode: process.env.APP_ENV ? process.env.APP_ENV : 'development',
-	devtool: 'source-map',
-	// devtool: process.env.APP_ENV != 'production' ? 'source-map' : false,
+	/* Actual Values */
+	mode: process.env.APP_ENV ? process.env.APP_ENV : 'development',
+	devtool: process.env.APP_ENV != 'production' ? 'source-map' : false,
+
+	/* Test Production Locally Values */
+	// mode: 'development',
+	// devtool: 'source-map',
 	module: {
 		rules: [
 			{
