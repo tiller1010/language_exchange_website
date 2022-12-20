@@ -66,7 +66,7 @@ app.use(express.json());
 
 		// Video routes
 		const VideoSearchService = await createSearchService('videos', ['title', 'languageOfTopic']);
-		defineVideoRoutes(app);
+		defineVideoRoutes(app, VideoSearchService);
 
 		// Like routes
 		defineLikeRoutes(app);
