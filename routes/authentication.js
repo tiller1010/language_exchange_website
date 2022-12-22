@@ -52,6 +52,11 @@ module.exports.defineAuthenticationRoutes = function(app) {
 	// Submit login form from react native
 	app.post('/react-native-login', passport.authenticate('local-login'), async (req, res) => {
 		if(req.body.nativeFlag && req.user){
+			if ((new RegExp(req.ip)).test(process.env.REACT_NATIVE_APP_URL)) {
+				res.header('Access-Control-Allow-Origin', process.env.REACT_NATIVE_APP_URL);
+			} else if ((new RegExp(req.hostname)).test(process.env.REACT_NATIVE_WEB_APP_URL)) {
+				res.header('Access-Control-Allow-Origin', process.env.REACT_NATIVE_WEB_APP_URL);
+			}
 			res.status(200).json(req.user);
 		}
 	});
