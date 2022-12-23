@@ -1,4 +1,4 @@
-const { findAndSyncUser, findUserByID } = require('../database/methods/users.js');
+const { findAndSyncUser } = require('../database/methods/users.js');
 const { passport } = require('../app/passport.js');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -135,13 +135,5 @@ module.exports.defineAuthenticationRoutes = function(app) {
 		res.clearCookie('jwt', { domain: process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL });
 		req.logout();
 		res.redirect('/login');
-	});
-
-	// Find user api for react native
-	app.get('/user/:id', async (req, res) => {
-		if(req.params.id){
-			let user = await findUserByID(req.params.id);
-			res.status(200).json(user);
-		}
 	});
 }

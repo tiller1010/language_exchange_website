@@ -21,5 +21,18 @@ module.exports.defineUserRoutes = function(app) {
 		}
 	});
 
+
+	// Find user api for react native
+	app.get('/user/:id', async (req, res) => {
+		if(req.params.id){
+			let user = await findUserByID(req.params.id);
+			if ((new RegExp(req.ip)).test(process.env.REACT_NATIVE_APP_URL)) {
+				res.header('Access-Control-Allow-Origin', process.env.REACT_NATIVE_APP_URL);
+			} else if ((new RegExp(req.hostname)).test(process.env.REACT_NATIVE_WEB_APP_URL)) {
+				res.header('Access-Control-Allow-Origin', process.env.REACT_NATIVE_WEB_APP_URL);
+			}
+			res.status(200).json(user);
+		}
+	});
 }
 
