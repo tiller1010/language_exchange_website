@@ -72,6 +72,11 @@ module.exports.defineVideoRoutes = function(app, VideoSearchService) {
 		if(req.params.format){
 			res.format({
 				json: function(){
+					if ((new RegExp(req.ip)).test(process.env.REACT_NATIVE_APP_URL)) {
+						res.header('Access-Control-Allow-Origin', process.env.REACT_NATIVE_APP_URL);
+					} else if ((new RegExp(req.hostname)).test(process.env.REACT_NATIVE_WEB_APP_URL)) {
+						res.header('Access-Control-Allow-Origin', process.env.REACT_NATIVE_WEB_APP_URL);
+					}
 					res.send(JSON.stringify(videos))
 				}
 			})
