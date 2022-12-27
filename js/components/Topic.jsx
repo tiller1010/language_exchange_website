@@ -69,7 +69,7 @@ class Topic extends React.Component {
 		var correctAnswer = challenge.attributes.Title.toLowerCase();
 		var translatedCorrectAnswer = inputElement.parentElement.parentElement.querySelector('.correct-answer');
 		if (translatedCorrectAnswer) {
-			correctAnswer = translatedCorrectAnswer.innerHTML.toLowerCase();
+			correctAnswer = translatedCorrectAnswer.textContent.toLowerCase();
 		}
 		if(inputElement.value.toLowerCase() == correctAnswer){
 			const newState = this.state;
