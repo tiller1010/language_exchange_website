@@ -265,13 +265,13 @@ var VideoChat = /** @class */ (function (_super) {
     };
     VideoChat.prototype.createCall = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var context, _a, peerConnection, firestore, forUserID, callDocs, callDoc, offerCandidates, answerCandidates, offerDescription, offer, CallOffer, emailResponse;
+            var context, _a, peerConnection, firestore, forUserID, authenticatedUserID, callDocs, callDoc, offerCandidates, answerCandidates, offerDescription, offer, CallOffer, emailResponse;
             var _this = this;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         context = this;
-                        _a = this.state, peerConnection = _a.peerConnection, firestore = _a.firestore, forUserID = _a.forUserID;
+                        _a = this.state, peerConnection = _a.peerConnection, firestore = _a.firestore, forUserID = _a.forUserID, authenticatedUserID = _a.authenticatedUserID;
                         callDocs = (0, firestore_1.collection)(firestore, 'calls');
                         return [4 /*yield*/, (0, firestore_1.addDoc)(callDocs, {})];
                     case 1:
@@ -309,7 +309,7 @@ var VideoChat = /** @class */ (function (_super) {
                         return [4 /*yield*/, (0, firestore_1.setDoc)(callDoc, ({ offer: offer }))];
                     case 4:
                         _b.sent();
-                        return [4 /*yield*/, (0, emailFetch_js_1.sendEmailToUser)(forUserID, "Call Started", "<b>Your video call has started. Go to your account profile, and click the video chat link under your purchase.</b>")];
+                        return [4 /*yield*/, (0, emailFetch_js_1.sendEmailToUser)(forUserID, "Call Started", "<p><b>Your video call has started. <a href=\"".concat(process.env.SECURED_DOMAIN_WITH_PROTOCOL, "/video-chat?withUserID=").concat(authenticatedUserID, ">Use this link to go to your video call</a></p>\t\t\t<p><b>Go to your account profile, and click the video chat link under your purchase.</b>"))];
                     case 5:
                         emailResponse = _b.sent();
                         // Listen for remote answer

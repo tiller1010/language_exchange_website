@@ -225,7 +225,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 
 		const context = this;
 
-		const { peerConnection, firestore, forUserID } = this.state;
+		const { peerConnection, firestore, forUserID, authenticatedUserID } = this.state;
 
 		// Reference Firestore collections for signaling
 		const callDocs = collection(firestore, 'calls');
@@ -256,7 +256,13 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 
 		await setDoc(callDoc, ({ offer }));
 
-		const emailResponse = await sendEmailToUser(forUserID, `Call Started`, "<b>Your video call has started. Go to your account profile, and click the video chat link under your purchase.</b>");
+		const emailResponse = await sendEmailToUser(
+			forUserID,
+			`Call Started`,
+			`<p><b>Your video call has started. <a href="${process.env.SECURED_DOMAIN_WITH_PROTOCOL}/video-chat?withUserID=${authenticatedUserID}>Use this link to go to your video call.</a></p>\
+			<br>\
+			<p><b>Or go to your account profile and click the video chat link under your purchase.</b>`
+		);
 
 		// Listen for remote answer
 		onSnapshot(callDoc, (snapshot) => {
@@ -288,7 +294,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 
 		const context = this;
 
-		const { peerConnection, firestore, withUserID } = this.state;
+		const { peerConnection, firestore, withUserID, authenticatedUserID } = this.state;
 
 		const { callID } = this.state;
 		const callDocs = collection(firestore, 'calls');
@@ -319,7 +325,13 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 		await updateDoc(callDoc, { answer });
 
 		if (withUserID) {
-			const emailResponse = await sendEmailToUser(withUserID, `Call Answered`, "<b>The video call has started. The customer has answered your call.</b>");
+			const emailResponse = await sendEmailToUser(
+				withUserID,
+				`Call Answered`,
+				`<p><b>The video call has started. The customer has answered your call.</p>\
+				<p></p>\
+				<p><a href="${process.env.SECURED_DOMAIN_WITH_PROTOCOL}/video-chat?forUserID=${authenticatedUserID}>Use this link to go to your video call.</a></b></p>`
+			);
 		}
 
 		onSnapshot(offerCandidates, (snapshot) => {
