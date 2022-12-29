@@ -21,6 +21,9 @@ class Login extends React.Component {
 	}
 
 	render(){
+		const urlParams = new URLSearchParams(window.location.search);
+		const backURL = urlParams.get('backURL');
+
 		return (
 			<div className="frame fw-container">
 				<Navigation/>
@@ -49,6 +52,13 @@ class Login extends React.Component {
 							<label htmlFor="passwordField">Password</label>
 							<input type="password" name="password" id="passwordField" aria-label="password"/>
 						</div>
+
+						{backURL ?
+							<input type="hidden" name="backURL" value={backURL}/>
+							:
+							''
+						}
+
 						<div className="small-pad no-x">
 							<button className="button" type="submit">
 								Login

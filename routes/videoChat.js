@@ -23,6 +23,8 @@ module.exports.defineVideoChatRoutes = function(app) {
 		let userID = null;
 		if(req.user){
 			userID = req.user._id;
+		} else {
+			return res.redirect(`/login?backURL=${req.originalUrl}`);
 		}
 		const props = { authenticatedUserID: userID };
 		if (isLive) {

@@ -41,7 +41,7 @@ module.exports.defineAuthenticationRoutes = function(app) {
 					res.cookie('jwt', token, { httpOnly: true });
 				}
 
-				passportConfig.successRedirect = '/account-profile';
+				passportConfig.successRedirect = req.body.backURL ? req.body.backURL : '/account-profile';
 			}
 		} else if (req.cookies.jwt && req.body.backURL) {
 			passportConfig.successRedirect = req.body.backURL;
