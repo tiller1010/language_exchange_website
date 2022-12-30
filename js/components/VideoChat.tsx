@@ -257,10 +257,15 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 
 		await setDoc(callDoc, ({ offer }));
 
+		try {
+			var host = process.env.SECURED_DOMAIN_WITH_PROTOCOL;
+		} catch(e) {
+			var host = 'https://localhost';
+		}
 		const emailResponse = await sendEmailToUser(
 			forUserID,
 			`Call Started`,
-			`<p><b>Your video call has started. <a href="${process.env.SECURED_DOMAIN_WITH_PROTOCOL}/video-chat?withUserID=${authenticatedUserID}">Use this link to go to your video call.</a></p>\
+			`<p><b>Your video call has started. <a href="${host}/video-chat?withUserID=${authenticatedUserID}">Use this link to go to your video call.</a></p>\
 			<br>\
 			<p><b>Or go to your account profile and click the video chat link under your purchase.</b>`
 		);
@@ -325,13 +330,18 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 
 		await updateDoc(callDoc, { answer });
 
+		try {
+			var host = process.env.SECURED_DOMAIN_WITH_PROTOCOL;
+		} catch(e) {
+			var host = 'https://localhost';
+		}
 		if (withUserID) {
 			const emailResponse = await sendEmailToUser(
 				withUserID,
 				`Call Answered`,
 				`<p><b>The video call has started. The customer has answered your call.</p>\
 				<p></p>\
-				<p><a href="${process.env.SECURED_DOMAIN_WITH_PROTOCOL}/video-chat?forUserID=${authenticatedUserID}">Use this link to go to your video call.</a></b></p>`
+				<p><a href="${host}/video-chat?forUserID=${authenticatedUserID}">Use this link to go to your video call.</a></b></p>`
 			);
 		}
 

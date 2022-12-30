@@ -166,6 +166,7 @@ var VideoChat = /** @class */ (function (_super) {
                                     });
                                 }); });
                                 availableCalls_1 = [];
+                                // @ts-ignore
                                 callDocsArray_1.sort(function (a, b) { return new Date(b.createdDate) - new Date(a.createdDate); });
                                 callDocsArray_1.forEach(function (callDoc) { return __awaiter(_this, void 0, void 0, function () {
                                     var oldDoc;
@@ -265,7 +266,7 @@ var VideoChat = /** @class */ (function (_super) {
     };
     VideoChat.prototype.createCall = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var context, _a, peerConnection, firestore, forUserID, authenticatedUserID, callDocs, callDoc, offerCandidates, answerCandidates, offerDescription, offer, CallOffer, emailResponse;
+            var context, _a, peerConnection, firestore, forUserID, authenticatedUserID, callDocs, callDoc, offerCandidates, answerCandidates, offerDescription, offer, CallOffer, host, host, emailResponse;
             var _this = this;
             return __generator(this, function (_b) {
                 switch (_b.label) {
@@ -309,7 +310,13 @@ var VideoChat = /** @class */ (function (_super) {
                         return [4 /*yield*/, (0, firestore_1.setDoc)(callDoc, ({ offer: offer }))];
                     case 4:
                         _b.sent();
-                        return [4 /*yield*/, (0, emailFetch_js_1.sendEmailToUser)(forUserID, "Call Started", "<p><b>Your video call has started. <a href=\"".concat(process.env.SECURED_DOMAIN_WITH_PROTOCOL, "/video-chat?withUserID=").concat(authenticatedUserID, ">Use this link to go to your video call</a></p>\t\t\t<p><b>Go to your account profile, and click the video chat link under your purchase.</b>"))];
+                        try {
+                            host = process.env.SECURED_DOMAIN_WITH_PROTOCOL;
+                        }
+                        catch (e) {
+                            host = 'https://localhost';
+                        }
+                        return [4 /*yield*/, (0, emailFetch_js_1.sendEmailToUser)(forUserID, "Call Started", "<p><b>Your video call has started. <a href=\"".concat(host, "/video-chat?withUserID=").concat(authenticatedUserID, "\">Use this link to go to your video call.</a></p>\t\t\t<br>\t\t\t<p><b>Or go to your account profile and click the video chat link under your purchase.</b>"))];
                     case 5:
                         emailResponse = _b.sent();
                         // Listen for remote answer
@@ -340,13 +347,13 @@ var VideoChat = /** @class */ (function (_super) {
     };
     VideoChat.prototype.answerCall = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var context, _a, peerConnection, firestore, withUserID, callID, callDocs, callDoc, offerCandidates, answerCandidates, callData, offerDescription, answerDescription, answer, emailResponse;
+            var context, _a, peerConnection, firestore, withUserID, authenticatedUserID, callID, callDocs, callDoc, offerCandidates, answerCandidates, callData, offerDescription, answerDescription, answer, host, host, emailResponse;
             var _this = this;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         context = this;
-                        _a = this.state, peerConnection = _a.peerConnection, firestore = _a.firestore, withUserID = _a.withUserID;
+                        _a = this.state, peerConnection = _a.peerConnection, firestore = _a.firestore, withUserID = _a.withUserID, authenticatedUserID = _a.authenticatedUserID;
                         callID = this.state.callID;
                         callDocs = (0, firestore_1.collection)(firestore, 'calls');
                         return [4 /*yield*/, (0, firestore_1.doc)(callDocs, callID)];
@@ -388,8 +395,14 @@ var VideoChat = /** @class */ (function (_super) {
                         return [4 /*yield*/, (0, firestore_1.updateDoc)(callDoc, { answer: answer })];
                     case 6:
                         _b.sent();
+                        try {
+                            host = process.env.SECURED_DOMAIN_WITH_PROTOCOL;
+                        }
+                        catch (e) {
+                            host = 'https://localhost';
+                        }
                         if (!withUserID) return [3 /*break*/, 8];
-                        return [4 /*yield*/, (0, emailFetch_js_1.sendEmailToUser)(withUserID, "Call Answered", "<b>The video call has started. The customer has answered your call.</b>")];
+                        return [4 /*yield*/, (0, emailFetch_js_1.sendEmailToUser)(withUserID, "Call Answered", "<p><b>The video call has started. The customer has answered your call.</p>\t\t\t\t<p></p>\t\t\t\t<p><a href=\"".concat(host, "/video-chat?forUserID=").concat(authenticatedUserID, "\">Use this link to go to your video call.</a></b></p>"))];
                     case 7:
                         emailResponse = _b.sent();
                         _b.label = 8;

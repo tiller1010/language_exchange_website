@@ -22,7 +22,7 @@ module.exports = {
 	mode: process.env.APP_ENV ? process.env.APP_ENV : 'development',
 	devtool: process.env.APP_ENV != 'production' ? 'source-map' : false,
 
-	/* Test Production Locally Values */
+	/* Test "Production" Locally Values */
 	// mode: 'development',
 	// devtool: 'source-map',
 	module: {
