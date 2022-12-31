@@ -316,7 +316,7 @@ var VideoChat = /** @class */ (function (_super) {
                         catch (e) {
                             host = 'https://localhost';
                         }
-                        return [4 /*yield*/, (0, emailFetch_js_1.sendEmailToUser)(forUserID, "Call Started", "<p><b>Your video call has started. <a href=\"".concat(host, "/video-chat?withUserID=").concat(authenticatedUserID, "\">Use this link to go to your video call.</a></p>\t\t\t<br>\t\t\t<p><b>Or go to your account profile and click the video chat link under your purchase.</b>"))];
+                        return [4 /*yield*/, (0, emailFetch_js_1.sendEmailToUser)(forUserID, "Call Started", "<p><b>Your video call has started. <a href=\"".concat(host, "/video-chat?withUserID=").concat(authenticatedUserID, "\">Use this link to go to your video call.</a><b></p>\t\t\t<br>\t\t\t<p><b>Or go to your account profile and click the video chat link under your purchase.</b></p>"))];
                     case 5:
                         emailResponse = _b.sent();
                         // Listen for remote answer
@@ -402,7 +402,7 @@ var VideoChat = /** @class */ (function (_super) {
                             host = 'https://localhost';
                         }
                         if (!withUserID) return [3 /*break*/, 8];
-                        return [4 /*yield*/, (0, emailFetch_js_1.sendEmailToUser)(withUserID, "Call Answered", "<p><b>The video call has started. The customer has answered your call.</p>\t\t\t\t<p></p>\t\t\t\t<p><a href=\"".concat(host, "/video-chat?forUserID=").concat(authenticatedUserID, "\">Use this link to go to your video call.</a></b></p>"))];
+                        return [4 /*yield*/, (0, emailFetch_js_1.sendEmailToUser)(withUserID, "Call Answered", "<p><b>The video call has started. The customer has answered your call.</b></p>\t\t\t\t<br>\t\t\t\t<p><b><a href=\"".concat(host, "/video-chat?forUserID=").concat(authenticatedUserID, "\">Use this link to go to your video call.</a></b></p>"))];
                     case 7:
                         emailResponse = _b.sent();
                         _b.label = 8;

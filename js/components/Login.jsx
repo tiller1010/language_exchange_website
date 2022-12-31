@@ -71,7 +71,7 @@ class Login extends React.Component {
 					    Register
 					    <FontAwesomeIcon icon={faLongArrowAltRight}/>
 				    </a>
-				    <a href="/auth/google" className="button">
+				    <a href={`/auth/google?backURL=${backURL}`} className="button">
 					    Login with Google
 					    <FontAwesomeIcon icon={faGoogle}/>
 				    </a>

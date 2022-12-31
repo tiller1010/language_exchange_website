@@ -69,7 +69,8 @@ module.exports.defineAuthenticationRoutes = function(app) {
 	// Google login
 	let googleNativeFlag = false;
 	app.get('/auth/google', (req, res, next) => {
-		if(req.query.nativeFlag){
+		const { backURL, nativeFlag } = req.query;
+		if(nativeFlag){
 			googleNativeFlag = true;
 		}
 		next();
@@ -97,7 +98,8 @@ module.exports.defineAuthenticationRoutes = function(app) {
 			res.redirect(process.env.REACT_NATIVE_APP_URL + '?userID=' + String(req.user._id));
 			return;
 		} else {
-			res.redirect('/account-profile');
+			const successRedirect = backURL ? backURL : '/account-profile';
+			res.redirect(successRedirect);
 			return;
 		}
 	});

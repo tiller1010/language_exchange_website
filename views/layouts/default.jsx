@@ -1,3 +1,4 @@
+
 import React from 'react';
 import DisableDevtools from '../components/DisableDevtools';
  
@@ -21,7 +22,9 @@ const DefaultLayout = (props) => {
 			<script async src={`${props.pathResolver || ''}js/modal.js`}></script>
 			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css"/>
 			<body style={{ backgroundColor: '#eee' }}>
-				{props.children}
+				<div style={{ minHeight: '100vh' }}>
+					{props.children}
+				</div>
 				<footer className="flex-container flex-horizontal-center grey-section">
 					<div className="fw-container">
 						<div className="fw-space" style={{ paddingBottom: '150px' }}>
