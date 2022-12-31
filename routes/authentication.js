@@ -68,13 +68,16 @@ module.exports.defineAuthenticationRoutes = function(app) {
 
 	// Google login
 	let googleNativeFlag = false;
+	let googleBackURL = '';
 	app.get('/auth/google', (req, res, next) => {
 		const { backURL, nativeFlag } = req.query;
-		if(nativeFlag){
+		if (nativeFlag) {
 			googleNativeFlag = true;
 		}
+		googleBackURL = backURL || '';
 		next();
 	}, passport.authenticate('google', { scope: [ 'https://www.googleapis.com/auth/plus.login', 'email' ] }));
+
 	app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
 
 		if(req.user && !req.cookies.jwt){
@@ -98,7 +101,8 @@ module.exports.defineAuthenticationRoutes = function(app) {
 			res.redirect(process.env.REACT_NATIVE_APP_URL + '?userID=' + String(req.user._id));
 			return;
 		} else {
-			const successRedirect = backURL ? backURL : '/account-profile';
+			const successRedirect = googleBackURL ? googleBackURL : '/account-profile';
+			googleBackURL = '';
 			res.redirect(successRedirect);
 			return;
 		}

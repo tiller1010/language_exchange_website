@@ -97,12 +97,12 @@ passport.use(new GoogleStrategy({
 
 		try {
 			let user = await findAndSyncUser(profile.id, 'google');
-			await sendEmail(newUser.email, `${process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL}> Registration`, "<b>Thank you for registering</b>");
 
-			if(user){
+			if (user) {
 				return done(null, user);
 			} else {
 				let user = await addUser(newUser);
+				await sendEmail(newUser.email, `${process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL}> Registration`, "<b>Thank you for registering</b>");
 				return done(null, newUser);
 			}
 		} catch(error) {
