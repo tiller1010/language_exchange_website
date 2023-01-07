@@ -90,7 +90,7 @@ var PremiumVideoChatListingFeed = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        query = "query getRecentPremiumVideoChatListings{\n\t\t\tgetRecentPremiumVideoChatListings{\n\t\t\t\tlistings {\n\t\t\t\t\t_id\n\t\t\t\t\ttopic\n\t\t\t\t\tlanguageOfTopic\n\t\t\t\t\tduration\n\t\t\t\t\tprice\n\t\t\t\t\tcurrency\n\t\t\t\t\tthumbnailSrc\n\t\t\t\t\tuserID\n\t\t\t\t\ttimeSlots {\n\t\t\t\t\t\tdate\n\t\t\t\t\t\ttime\n\t\t\t\t\t\tcustomerUserID\n\t\t\t\t\t\tcompleted\n\t\t\t\t\t\tbooked\n\t\t\t\t\t\tpaid\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}";
+                        query = "query getRecentPremiumVideoChatListings{\n      getRecentPremiumVideoChatListings{\n        listings {\n          _id\n          topic\n          languageOfTopic\n          duration\n          price\n          currency\n          thumbnailSrc\n          userID\n          timeSlots {\n            date\n            time\n            customerUserID\n            completed\n            booked\n            paid\n          }\n        }\n      }\n    }";
                         return [4 /*yield*/, (0, graphQLFetch_js_1.default)(query)];
                     case 1:
                         data = _a.sent();
@@ -113,7 +113,7 @@ var PremiumVideoChatListingFeed = /** @class */ (function (_super) {
         // searchButton.contentEditable = true; // Trick browser to use ":focus-within" for outline effect
         // searchButton.focus();
         // setTimeout(() => {
-        // 	searchButton.contentEditable = false;
+        //   searchButton.contentEditable = false;
         // }, 1)
     };
     PremiumVideoChatListingFeed.prototype.handleSearchSubmit = function (event) {
@@ -125,7 +125,7 @@ var PremiumVideoChatListingFeed = /** @class */ (function (_super) {
                         event.preventDefault();
                         _a = this.state, topic = _a.topic, languageOfTopic = _a.languageOfTopic;
                         topic = topic.replace(/\s$/, '');
-                        query = "query searchPremiumVideoChatListings($topic: String, $languageOfTopic: String){\n\t\t\tsearchPremiumVideoChatListings(topic: $topic, languageOfTopic: $languageOfTopic){\n\t\t\t\tlistings {\n\t\t\t\t\t_id\n\t\t\t\t\ttopic\n\t\t\t\t\tlanguageOfTopic\n\t\t\t\t\tduration\n\t\t\t\t\tprice\n\t\t\t\t\tcurrency\n\t\t\t\t\tthumbnailSrc\n\t\t\t\t\tuserID\n\t\t\t\t\ttimeSlots {\n\t\t\t\t\t\tdate\n\t\t\t\t\t\ttime\n\t\t\t\t\t\tcustomerUserID\n\t\t\t\t\t\tcompleted\n\t\t\t\t\t\tbooked\n\t\t\t\t\t\tpaid\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}";
+                        query = "query searchPremiumVideoChatListings($topic: String, $languageOfTopic: String){\n      searchPremiumVideoChatListings(topic: $topic, languageOfTopic: $languageOfTopic){\n        listings {\n          _id\n          topic\n          languageOfTopic\n          duration\n          price\n          currency\n          thumbnailSrc\n          userID\n          timeSlots {\n            date\n            time\n            customerUserID\n            completed\n            booked\n            paid\n          }\n        }\n      }\n    }";
                         return [4 /*yield*/, (0, graphQLFetch_js_1.default)(query, {
                                 topic: topic,
                                 languageOfTopic: languageOfTopic,

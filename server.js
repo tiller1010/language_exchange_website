@@ -1,12 +1,14 @@
 // Server
 require('dotenv').config();
 const express = require('express');
+const http = require('http')
 const https = require('https')
 const fs = require('fs')
 const path = require('path');
 const session = require('express-session');
 const flash = require('connect-flash');
 const cookieParser = require('cookie-parser');
+const socketio = require('socket.io');
 const appPort = process.env.APP_PORT || 3000;
 
 // App Services
@@ -36,9 +38,9 @@ app.engine('jsx', require('express-react-views').createEngine());
 
 // For login sessions
 app.use(session({
-	secret: 'supersecret',
-	resave: true,
-	saveUninitialized: true
+  secret: 'supersecret',
+  resave: true,
+  saveUninitialized: true
 }));
 app.use(flash());
 app.use(cookieParser());
@@ -51,59 +53,101 @@ app.use(express.json());
 
 
 (async function start(){
-	try{
+  try{
 
-		// Install GraphQL API Handler
-		app.route('/graphql').post(graphqlUploadExpress());
-		await installHandler(app);
+    // Install GraphQL API Handler
+    app.route('/graphql').post(graphqlUploadExpress());
+    await installHandler(app);
 
 
-		// Home route
-		defineHomeRoutes(app);
+    // Home route
+    defineHomeRoutes(app);
 
-		// Lessons routes
-		defineLessonRoutes(app);
+    // Lessons routes
+    defineLessonRoutes(app);
 
-		// Video routes
-		const VideoSearchService = await createSearchService('videos', ['title', 'languageOfTopic']);
-		defineVideoRoutes(app, VideoSearchService);
+    // Video routes
+    const VideoSearchService = await createSearchService('videos', ['title', 'languageOfTopic']);
+    defineVideoRoutes(app, VideoSearchService);
 
-		// Like routes
-		defineLikeRoutes(app);
+    // Like routes
+    defineLikeRoutes(app);
 
-		// Account Profile routes
-		defineAccountProfileRoutes(app);
+    // Account Profile routes
+    defineAccountProfileRoutes(app);
 
-		// Video Chat routes
-		defineVideoChatRoutes(app);
+    // Video Chat routes
+    defineVideoChatRoutes(app);
 
-		// Authentication routes
-		defineAuthenticationRoutes(app);
+    // Authentication routes
+    defineAuthenticationRoutes(app);
 
-		// User routes
-		defineUserRoutes(app);
+    // User routes
+    defineUserRoutes(app);
 
-		// Stripe routes
-		defineStripeRoutes(app);
+    // Stripe routes
+    defineStripeRoutes(app);
 
-		const httpsOptions = {
-			key: fs.readFileSync('./security/cert.key'),
-			cert: fs.readFileSync('./security/cert.pem')
-		}
+    const httpsOptions = {
+      key: fs.readFileSync('./security/cert.key'),
+      cert: fs.readFileSync('./security/cert.pem')
+    }
 
-		// Start app
-		if(appPort == 443){
-			https.createServer(httpsOptions, app)
-				.listen(appPort, () => {
-					console.log(`App up on port ${appPort}`);
-				});
-		} else {
-			app.listen(appPort, () => {
-				console.log(`App up on port ${appPort}`);
-			});
-		}
+    let server;
+    if(appPort == 443){
+      server = https.createServer(httpsOptions, app);
+    } else {
+      server = http.createServer(app);
+    }
 
-	} catch(err){
-		console.log(`Error: ${err}`);
-	}
+    // Start app
+    server.listen(appPort, () => {
+      console.log(`App up on port ${appPort}`);
+    });
+
+    const io = socketio(server);
+    let socketUsers = [];
+    io.on('connection', (socket) => {
+
+      socket.emit('Hello Client');
+
+      socket.on('disconnect', () => {
+        let newSocketUsers = [];
+        for (let user of socketUsers) {
+          if (!user.socketID == socket.id) {
+            newSocketUsers.push(user);
+          }
+        }
+        socketUsers = newSocketUsers;
+      });
+
+      socket.on('Hello Server', (userID) => {
+        console.log('Hello Server');
+        for (let user of socketUsers) {
+          if (user.userID == userID) {
+            user.socketID = socket.id;
+            return;
+          }
+        }
+        socketUsers.push({
+          socketID: socket.id,
+          userID,
+        });
+      });
+
+      socket.on('Call Sent', (forUserID, content) => {
+        console.log('Server received call.');
+        // console.log(socketUsers)
+        for (let user of socketUsers) {
+          if (user.userID == forUserID) {
+            socket.to(user.socketID).emit('Call Incoming', { content, from: socket.id });
+          }
+        }
+      });
+
+    });
+
+  } catch(err){
+    console.log(`Error: ${err}`);
+  }
 })();

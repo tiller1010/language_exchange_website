@@ -171,7 +171,7 @@ var ProfileEditForm = /** @class */ (function (_super) {
                         mutationName = void 0;
                         if (!savedUser) return [3 /*break*/, 2];
                         // If updating existing
-                        query = "mutation updateUser($userID: ID!, $user: UserInputs, $file: Upload){\n\t\t\t\t\tupdateUser(userID: $userID, user: $user, profilePictureFile: $file){\n\t\t\t\t\t\t_id\n\t\t\t\t\t\temail\n\t\t\t\t\t\tdisplayName\n\t\t\t\t\t\tfirstName\n\t\t\t\t\t\tlastName\n\t\t\t\t\t\tprofilePictureSrc\n\t\t\t\t\t}\n\t\t\t\t}";
+                        query = "mutation updateUser($userID: ID!, $user: UserInputs, $file: Upload){\n          updateUser(userID: $userID, user: $user, profilePictureFile: $file){\n            _id\n            email\n            displayName\n            firstName\n            lastName\n            profilePictureSrc\n          }\n        }";
                         variables = {
                             userID: savedUser._id,
                             user: {
@@ -216,7 +216,7 @@ var ProfileEditForm = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        query = "mutation removeUser($userID: ID!){\n\t\t\tremoveUser(userID: $userID)\n\t\t}";
+                        query = "mutation removeUser($userID: ID!){\n      removeUser(userID: $userID)\n    }";
                         variables = {
                             userID: this.state.userID
                         };

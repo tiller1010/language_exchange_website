@@ -53,8 +53,8 @@ function renderChallengeMedia(FeaturedMedia) {
 function TopicLink(props) {
     var topic = props.topic, levelID = props.levelID, showChallenge = props.showChallenge;
     /*
-        If topic was completed and saved with Strapi 3,
-        format like Strapi 4 API
+      If topic was completed and saved with Strapi 3,
+      format like Strapi 4 API
     */
     if (!topic.attributes) {
         topic.attributes = __assign({}, topic);

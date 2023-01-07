@@ -225,7 +225,7 @@ var PremiumVideoChatListingForm = /** @class */ (function (_super) {
                         mutationName = void 0;
                         if (savedPremiumVideoChatListing) {
                             // If updating existing
-                            query = "mutation updatePremiumVideoChatListing($listingID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){\n\t\t\t\t\tupdatePremiumVideoChatListing(listingID: $listingID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){\n\t\t\t\t\t\t_id\n\t\t\t\t\t\ttopic\n\t\t\t\t\t\tlanguageOfTopic\n\t\t\t\t\t\tduration\n\t\t\t\t\t\tprice\n\t\t\t\t\t\tcurrency\n\t\t\t\t\t\tthumbnailSrc\n\t\t\t\t\t\tuserID\n\t\t\t\t\t\ttimeSlots {\n\t\t\t\t\t\t\tdate\n\t\t\t\t\t\t\ttime\n\t\t\t\t\t\t\tcustomerUserID\n\t\t\t\t\t\t\tcompleted\n\t\t\t\t\t\t\tbooked\n\t\t\t\t\t\t\tpaid\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}";
+                            query = "mutation updatePremiumVideoChatListing($listingID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){\n          updatePremiumVideoChatListing(listingID: $listingID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){\n            _id\n            topic\n            languageOfTopic\n            duration\n            price\n            currency\n            thumbnailSrc\n            userID\n            timeSlots {\n              date\n              time\n              customerUserID\n              completed\n              booked\n              paid\n            }\n          }\n        }";
                             variables = {
                                 listingID: savedPremiumVideoChatListing._id,
                                 premiumVideoChatListing: {
@@ -244,7 +244,7 @@ var PremiumVideoChatListingForm = /** @class */ (function (_super) {
                         }
                         else {
                             // If adding new
-                            query = "mutation addPremiumVideoChatListing($userID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){\n\t\t\t\t\taddPremiumVideoChatListing(userID: $userID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){\n\t\t\t\t\t\t_id\n\t\t\t\t\t\ttopic\n\t\t\t\t\t\tlanguageOfTopic\n\t\t\t\t\t\tduration\n\t\t\t\t\t\tprice\n\t\t\t\t\t\tcurrency\n\t\t\t\t\t\tthumbnailSrc\n\t\t\t\t\t\tuserID\n\t\t\t\t\t\ttimeSlots {\n\t\t\t\t\t\t\tdate\n\t\t\t\t\t\t\ttime\n\t\t\t\t\t\t\tcustomerUserID\n\t\t\t\t\t\t\tcompleted\n\t\t\t\t\t\t\tbooked\n\t\t\t\t\t\t\tpaid\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}";
+                            query = "mutation addPremiumVideoChatListing($userID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){\n          addPremiumVideoChatListing(userID: $userID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){\n            _id\n            topic\n            languageOfTopic\n            duration\n            price\n            currency\n            thumbnailSrc\n            userID\n            timeSlots {\n              date\n              time\n              customerUserID\n              completed\n              booked\n              paid\n            }\n          }\n        }";
                             variables = {
                                 userID: user._id,
                                 premiumVideoChatListing: {
@@ -290,7 +290,7 @@ var PremiumVideoChatListingForm = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         user = this.props.user;
-                        query = "mutation removePremiumVideoChatListing($userID: ID!){\n\t\t\tremovePremiumVideoChatListing(userID: $userID)\n\t\t}";
+                        query = "mutation removePremiumVideoChatListing($userID: ID!){\n      removePremiumVideoChatListing(userID: $userID)\n    }";
                         variables = {
                             userID: user._id
                         };
