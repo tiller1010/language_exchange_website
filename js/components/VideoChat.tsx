@@ -258,7 +258,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
     await setDoc(callDoc, ({ offer }));
 
     try {
-      var host = `https://${process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL}:${process.env.APP_PORT}`;
+      var host = `https://${process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL}`;
     } catch(e) {
       try {
         var host = `https://localhost:${process.env.APP_PORT}`;
@@ -342,7 +342,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
     await updateDoc(callDoc, { answer });
 
     try {
-      var host = `https://${process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL}:${process.env.APP_PORT}`;
+      var host = `https://${process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL}`;
     } catch(e) {
       try {
         var host = `https://localhost:${process.env.APP_PORT}`;

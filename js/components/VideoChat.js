@@ -311,7 +311,7 @@ var VideoChat = /** @class */ (function (_super) {
                     case 4:
                         _b.sent();
                         try {
-                            host = "https://".concat(process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL, ":").concat(process.env.APP_PORT);
+                            host = "https://".concat(process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL);
                         }
                         catch (e) {
                             try {
@@ -403,7 +403,7 @@ var VideoChat = /** @class */ (function (_super) {
                     case 6:
                         _b.sent();
                         try {
-                            host = "https://".concat(process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL, ":").concat(process.env.APP_PORT);
+                            host = "https://".concat(process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL);
                         }
                         catch (e) {
                             try {

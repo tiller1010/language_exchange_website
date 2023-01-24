@@ -196,7 +196,7 @@ if(lessonsElement){
 
 /* Uses Webpack Plugin. "process.env" is not a real variable */
 try {
-  var socketHost = `https://${process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL}:${process.env.APP_PORT}`;
+  var socketHost = `https://${process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL}`;
 } catch(e) {
   try {
     var socketHost = `https://localhost:${process.env.APP_PORT}`;
