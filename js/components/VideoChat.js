@@ -321,9 +321,7 @@ var VideoChat = /** @class */ (function (_super) {
                                 host = 'https://localhost:3000';
                             }
                         }
-                        return [4 /*yield*/, (0, emailFetch_js_1.sendEmailToUser)(forUserID, "Call Started", "<p><b>Your video call has started. <a href=\"".concat(host, "/video-chat?withUserID=").concat(authenticatedUserID, "\">Use this link to go to your video call.</a></p>      <br>      <p><b>Or go to your account profile and click the video chat link under your purchase.</b>"))];
-                    case 5:
-                        emailResponse = _b.sent();
+                        emailResponse = (0, emailFetch_js_1.sendEmailToUser)(forUserID, "Call Started", "<p><b>Your video call has started. <a href=\"".concat(host, "/video-chat?withUserID=").concat(authenticatedUserID, "\">Use this link to go to your video call.</a></p>      <br>      <p><b>Or go to your account profile and click the video chat link under your purchase.</b>"));
                         // @ts-ignore
                         window.socket.emit('Call Sent', forUserID, "<p><b>Your video call has started. <a href=\"/video-chat?withUserID=".concat(authenticatedUserID, "\">Use this link to go to your video call.</a></p>      <br>      <p><b>Or go to your account profile and click the video chat link under your purchase.</b>"));
                         // Listen for remote answer
@@ -413,12 +411,9 @@ var VideoChat = /** @class */ (function (_super) {
                                 host = 'https://localhost:3000';
                             }
                         }
-                        if (!withUserID) return [3 /*break*/, 8];
-                        return [4 /*yield*/, (0, emailFetch_js_1.sendEmailToUser)(withUserID, "Call Answered", "<p><b>The video call has started. The customer has answered your call.</p>        <p></p>        <p><a href=\"".concat(host, "/video-chat?forUserID=").concat(authenticatedUserID, "\">Use this link to go to your video call.</a></b></p>"))];
-                    case 7:
-                        emailResponse = _b.sent();
-                        _b.label = 8;
-                    case 8:
+                        if (withUserID) {
+                            emailResponse = (0, emailFetch_js_1.sendEmailToUser)(withUserID, "Call Answered", "<p><b>The video call has started. The customer has answered your call.</p>        <p></p>        <p><a href=\"".concat(host, "/video-chat?forUserID=").concat(authenticatedUserID, "\">Use this link to go to your video call.</a></b></p>"));
+                        }
                         (0, firestore_1.onSnapshot)(offerCandidates, function (snapshot) {
                             snapshot.docChanges().forEach(function (change) {
                                 if (change.type === 'added') {

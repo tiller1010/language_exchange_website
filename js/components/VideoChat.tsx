@@ -266,7 +266,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
         var host = 'https://localhost:3000';
       }
     }
-    const emailResponse = await sendEmailToUser(
+    const emailResponse = sendEmailToUser(
       forUserID,
       `Call Started`,
       `<p><b>Your video call has started. <a href="${host}/video-chat?withUserID=${authenticatedUserID}">Use this link to go to your video call.</a></p>\
@@ -351,7 +351,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
       }
     }
     if (withUserID) {
-      const emailResponse = await sendEmailToUser(
+      const emailResponse = sendEmailToUser(
         withUserID,
         `Call Answered`,
         `<p><b>The video call has started. The customer has answered your call.</p>\
