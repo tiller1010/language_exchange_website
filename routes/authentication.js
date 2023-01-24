@@ -15,11 +15,12 @@ module.exports.defineAuthenticationRoutes = function(app) {
 	});
 
 	// Submit login form
-	app.post('/login', async (req, res) => {
+	app.post('/login', async (req, res, next) => {
 		// Set JWT cookie to stay signed in
 		const { displayName, password } = req.body;
 
 		let passportConfig = {
+      successRedirect: '/account-profile',
 			failureRedirect: '/login',
 			failureFlash: true,
 		}
@@ -46,7 +47,7 @@ module.exports.defineAuthenticationRoutes = function(app) {
 		} else if (req.cookies.jwt && req.body.backURL) {
 			passportConfig.successRedirect = req.body.backURL;
 		}
-		passport.authenticate('local-login', passportConfig)(req, res);
+		passport.authenticate('local-login', passportConfig)(req, res, next);
 	});
 
 	// Submit login form from react native

@@ -3,30 +3,30 @@ import LessonsFeed from './LessonsFeed.js';
 import Navigation from './Navigation.jsx';
 
 class Lessons extends React.Component {
-	constructor(props){
-		super(props);
-		this.state = {
-		}
-	}
+  constructor(props){
+    super(props);
+    this.state = {
+    }
+  }
 
-	componentDidMount(){
-	}
+  componentDidMount(){
+  }
 
-	render(){
+  render(){
 
-		return (
-			<div className="frame fw-container">
-				<Navigation/>
-				<div className="pure-u-g">
+    return (
+      <div className="frame fw-container">
+        <Navigation/>
+        <div className="pure-u-g">
 
-					<div className="desktop-100">
-						<LessonsFeed SearchFormHeading="Free lessons and challenges"/>
-					</div>
+          <div className="desktop-100">
+            <LessonsFeed SearchFormHeading="Free lessons and challenges"/>
+          </div>
 
-			    </div>
-			</div>
-		);
-	}
+          </div>
+      </div>
+    );
+  }
 }
 
 export default Lessons;

@@ -100,7 +100,7 @@ var VideoPlayer = /** @class */ (function (_super) {
                             return [2 /*return*/];
                         }
                         apiSegment = this.state.likedByCurrentUser ? 'removeLike' : 'addLike';
-                        query = "mutation addLike($userID: ID!, $videoID: ID!){\n\t\t\t".concat(apiSegment, "(userID: $userID, videoID: $videoID){\n\t\t\t\t_id\n\t\t\t\ttitle\n \t\t\t\tlanguageOfTopic\n\t\t\t\tsrc\n\t\t\t\toriginalName\n\t\t\t\tthumbnailSrc\n\t\t\t\toriginalThumbnailName\n\t\t\t\tcreated\n\t\t\t\tlikes\n\t\t\t\tuploadedBy {\n\t\t\t\t\t_id\n\t\t\t\t\tdisplayName\n\t\t\t\t}\n\t\t\t}\n\t\t}");
+                        query = "mutation addLike($userID: ID!, $videoID: ID!){\n      ".concat(apiSegment, "(userID: $userID, videoID: $videoID){\n        _id\n        title\n         languageOfTopic\n        src\n        originalName\n        thumbnailSrc\n        originalThumbnailName\n        created\n        likes\n        uploadedBy {\n          _id\n          displayName\n        }\n      }\n    }");
                         return [4 /*yield*/, (0, graphQLFetch_js_1.default)(query, {
                                 userID: this.props.authenticatedUserID,
                                 videoID: videoID

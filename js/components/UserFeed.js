@@ -76,7 +76,7 @@ var UserFeed = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        query = "query getRecentUsers{\n\t\t\tgetRecentUsers{\n\t\t\t\tusers {\n\t\t\t\t\t_id\n\t\t\t\t\tdisplayName\n\t\t\t\t\tfirstName\n\t\t\t\t\tlastName\n\t\t\t\t\tprofilePictureSrc\n\t\t\t\t}\n\t\t\t}\n\t\t}";
+                        query = "query getRecentUsers{\n      getRecentUsers{\n        users {\n          _id\n          displayName\n          firstName\n          lastName\n          profilePictureSrc\n        }\n      }\n    }";
                         return [4 /*yield*/, (0, graphQLFetch_js_1.default)(query)];
                     case 1:
                         data = _a.sent();
@@ -104,7 +104,7 @@ var UserFeed = /** @class */ (function (_super) {
                         event.preventDefault();
                         searchQuery = this.state.searchQuery;
                         searchQuery = searchQuery.replace(/\s$/, '');
-                        query = "query searchUsers($searchQuery: String){\n\t\t\tsearchUsers(searchQuery: $searchQuery){\n\t\t\t\tusers {\n\t\t\t\t\t_id\n\t\t\t\t\tdisplayName\n\t\t\t\t\tfirstName\n\t\t\t\t\tlastName\n\t\t\t\t\tprofilePictureSrc\n\t\t\t\t}\n\t\t\t}\n\t\t}";
+                        query = "query searchUsers($searchQuery: String){\n      searchUsers(searchQuery: $searchQuery){\n        users {\n          _id\n          displayName\n          firstName\n          lastName\n          profilePictureSrc\n        }\n      }\n    }";
                         return [4 /*yield*/, (0, graphQLFetch_js_1.default)(query, {
                                 searchQuery: searchQuery,
                             })];

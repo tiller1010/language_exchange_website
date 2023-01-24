@@ -179,7 +179,7 @@ var PremiumVideoChatListing = /** @class */ (function (_super) {
                         query = '';
                         if (this.props.view == 'owner') {
                             timeSlot.completed = checked;
-                            query = "mutation updatePremiumVideoChatListing($listingID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){\n\t\t\t\t\tupdatePremiumVideoChatListing(listingID: $listingID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){\n\t\t\t\t\t\ttimeSlots {\n\t\t\t\t\t\t\tcustomerUserID\n\t\t\t\t\t\t\tdate\n\t\t\t\t\t\t\ttime\n\t\t\t\t\t\t\tcompleted\n\t\t\t\t\t\t\tbooked\n\t\t\t\t\t\t\tpaid\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}";
+                            query = "mutation updatePremiumVideoChatListing($listingID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){\n          updatePremiumVideoChatListing(listingID: $listingID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){\n            timeSlots {\n              customerUserID\n              date\n              time\n              completed\n              booked\n              paid\n            }\n          }\n        }";
                         }
                         else {
                             timeSlot.booked = checked;
@@ -314,7 +314,7 @@ var PremiumVideoChatListing = /** @class */ (function (_super) {
                         _a = this.props, premiumVideoChatListing = _a.premiumVideoChatListing, authenticatedUserID = _a.authenticatedUserID;
                         timeSlots = this.state.timeSlots;
                         if (!authenticatedUserID) return [3 /*break*/, 5];
-                        query = "mutation createProduct($productObjectCollection: String!, $productDescription: String!, $productObjectID: ID!, $userID: ID!, $productObjectUpdateData: String!){\n\t\t\t\tcreateProduct(productObjectCollection: $productObjectCollection, productDescription: $productDescription, productObjectID: $productObjectID, userID: $userID, productObjectUpdateData: $productObjectUpdateData){\n\t\t\t\t\t_id\n\t\t\t\t\tuserID\n\t\t\t\t\tcost\n\t\t\t\t\tcurrency\n\t\t\t\t\torderedOn\n\t\t\t\t\tproductObject {\n\t\t\t\t\t\t... on PremiumVideoChatListing{\n\t\t\t\t\t\t\t_id\n\t\t\t\t\t\t\tuserID\n\t\t\t\t\t\t\ttopic\n\t\t\t\t\t\t\tlanguageOfTopic\n\t\t\t\t\t\t\tduration\n\t\t\t\t\t\t\tthumbnailSrc\n\t\t\t\t\t\t\tprice\n\t\t\t\t\t\t\tcurrency\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\tpriceID\n\t\t\t\t}\n\t\t\t}";
+                        query = "mutation createProduct($productObjectCollection: String!, $productDescription: String!, $productObjectID: ID!, $userID: ID!, $productObjectUpdateData: String!){\n        createProduct(productObjectCollection: $productObjectCollection, productDescription: $productDescription, productObjectID: $productObjectID, userID: $userID, productObjectUpdateData: $productObjectUpdateData){\n          _id\n          userID\n          cost\n          currency\n          orderedOn\n          productObject {\n            ... on PremiumVideoChatListing{\n              _id\n              userID\n              topic\n              languageOfTopic\n              duration\n              thumbnailSrc\n              price\n              currency\n            }\n          }\n          priceID\n        }\n      }";
                         newTimeSlots_1 = [];
                         timeSlots.forEach(function (timeSlot) {
                             var newTimeSlot = {
