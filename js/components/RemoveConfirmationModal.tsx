@@ -4,6 +4,8 @@ import { faUpload, faLongArrowAltRight, faTrash, faTimes } from '@fortawesome/fr
 
 const RemoveConfirmationModal = (props) => {
 
+  let [forceClosed, setForceClosed] = React.useState(false);
+
   let {
     buttonText,
     buttonAnchor,
@@ -13,7 +15,7 @@ const RemoveConfirmationModal = (props) => {
   } = props;
 
   return (
-    <section className="modal--show" id={buttonAnchor} tabIndex={-1} role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+    <section className="modal--show" id={buttonAnchor} tabIndex={-1} role="dialog" aria-labelledby="modal-label" aria-hidden="true" style={forceClosed ? { display: 'none' } : {}}>
       <div className="modal-inner">
         <header id="modal-label">
           <h2>{ modalTitle }</h2>
@@ -26,13 +28,13 @@ const RemoveConfirmationModal = (props) => {
             { buttonText }
             <FontAwesomeIcon icon={faTrash}/>
           </a>
-          <a href="#!" className="button">
+          <a href="#!" onClick={() => setForceClosed(true)} className="button">
             Close
             <FontAwesomeIcon icon={faTimes}/>
           </a>
         </footer>
       </div>
-      <a href="#!" className="modal-close" title="Close this modal" data-close="Close" data-dismiss="modal">?</a>
+      <a href="#!" onClick={() => setForceClosed(true)} className="modal-close" title="Close this modal" data-close="Close" data-dismiss="modal">?</a>
     </section>
   );
 }
