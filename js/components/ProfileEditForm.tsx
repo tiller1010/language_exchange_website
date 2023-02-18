@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUpload, faCheck, faTrash, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faUpload, faCheck, faTrash, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import graphQLFetch from '../graphQLFetch.js';
 import RemoveConfirmationModal from './RemoveConfirmationModal.js';
 import Navigation from './Navigation.jsx';
 import decipher from '../decipher.js';
+import { sendEmailToUser } from '../emailFetch.js';
 
 interface User {
   _id: string;
@@ -13,6 +14,7 @@ interface User {
   firstName: string
   lastName: string
   password: string
+  verifiedEmail: boolean
 }
 
 interface ProfileEditState {
@@ -27,6 +29,7 @@ interface ProfileEditState {
   savedUser?: User
   savedAllChanges: boolean
   userID?: string
+  emailVerificationSent: boolean
 }
 
 interface ProfileEditProps {
@@ -47,11 +50,13 @@ export default class ProfileEditForm extends React.Component<ProfileEditProps, P
       confirmPassword: '',
       profilePictureSrc: '',
       savedAllChanges: true,
+      emailVerificationSent: false,
     }
     this.state = state;
     this.handleProfilePictureChange = this.handleProfilePictureChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDeleteUser = this.handleDeleteUser.bind(this);
+    this.handleSendEmailVerification = this.handleSendEmailVerification.bind(this);
   }
 
   async componentDidMount(){
@@ -108,7 +113,7 @@ export default class ProfileEditForm extends React.Component<ProfileEditProps, P
       }
   }
 
-  async handleSubmit(event){
+  async handleSubmit(event) {
 
     event.preventDefault();
 
@@ -128,11 +133,11 @@ export default class ProfileEditForm extends React.Component<ProfileEditProps, P
       return alert('Passwords do not match.');
     }
 
-    if(email && displayName && firstName){
+    if (email && displayName && firstName) {
       let query;
       let variables;
       let mutationName;
-      if(savedUser){
+      if (savedUser) {
         // If updating existing
         query = `mutation updateUser($userID: ID!, $user: UserInputs, $file: Upload){
           updateUser(userID: $userID, user: $user, profilePictureFile: $file){
@@ -142,6 +147,7 @@ export default class ProfileEditForm extends React.Component<ProfileEditProps, P
             firstName
             lastName
             profilePictureSrc
+            verifiedEmail
           }
         }`;
         variables = {
@@ -208,6 +214,27 @@ export default class ProfileEditForm extends React.Component<ProfileEditProps, P
     });
   }
 
+  async handleSendEmailVerification() {
+
+    this.setState({ emailVerificationSent: true });
+
+    const user = this.state.savedUser;
+    try {
+      var host = `https://${process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL}`;
+    } catch(e) {
+      try {
+        var host = `https://localhost:${process.env.APP_PORT}`;
+      } catch(e) {
+        var host = 'https://localhost:3000';
+      }
+    }
+    const emailResponse = await sendEmailToUser(
+      user._id,
+      'Email Verification',
+      `<p><a href="${host}/verify-email?email=${encodeURIComponent(user.email)}&userID=${user._id}">Verify this email address</a></p>`
+    );
+  }
+
   render(){
 
     let {
@@ -218,8 +245,15 @@ export default class ProfileEditForm extends React.Component<ProfileEditProps, P
       password,
       confirmPassword,
       profilePictureSrc,
-      savedUser
+      savedUser,
+      savedAllChanges,
+      emailVerificationSent,
     } = this.state;
+
+    let verifiedEmail = false;
+    if (savedUser) {
+      verifiedEmail = savedUser.verifiedEmail;
+    }
 
     return(
 
@@ -230,29 +264,45 @@ export default class ProfileEditForm extends React.Component<ProfileEditProps, P
 
           <div className="pure-g">
             <h2 className="pure-u-1">User Profile</h2>
+
+            {!verifiedEmail && savedAllChanges ?
+              <button className="button" onClick={this.handleSendEmailVerification}>
+                {emailVerificationSent ? 'Email Verification Sent' : 'Verify this email'}
+                <FontAwesomeIcon icon={faEnvelope}/>
+              </button>
+              :
+              ''
+            }
+
             <form className="pure-u-1 fw-form">
               <div className="flex-container desktop-100">
                 <div className="desktop-50 phone-100">
+
                   <div className="field text">
                     <label htmlFor="emailField">Email</label>
                     <input type="email" name="email" id="emailField" value={email} onChange={(event) => this.setState({email: event.target.value, savedAllChanges: false})}/>
                   </div>
+
                   <div className="field text">
                     <label htmlFor="displayNameField">Display Name</label>
                     <input type="text" name="displayName" id="displayNameField" value={displayName} onChange={(event) => this.setState({displayName: event.target.value, savedAllChanges: false})}/>
                   </div>
+
                   <div className="field text">
                     <label htmlFor="firstNameField">First Name</label>
                     <input type="text" name="firstName" id="firstNameField" value={firstName} onChange={(event) => this.setState({firstName: event.target.value, savedAllChanges: false})}/>
                   </div>
+
                   <div className="field text">
                     <label htmlFor="lastNameField">Last Name</label>
                     <input type="text" name="lastName" id="lastNameField" value={lastName} onChange={(event) => this.setState({lastName: event.target.value, savedAllChanges: false})}/>
                   </div>
+
                   <div className="field text">
                     <label htmlFor="passwordField">Password</label>
                     <input type="password" name="password" id="passwordField" value={password} onChange={(event) => this.setState({password: event.target.value, savedAllChanges: false})}/>
                   </div>
+
                   <div className="field text">
                     <label htmlFor="confirmPasswordField">Confirm password</label>
                     <input type="password" name="confirmPassword" id="confirmPasswordField" value={confirmPassword} onChange={(event) => this.setState({confirmPassword: event.target.value, savedAllChanges: false})}/>
@@ -267,8 +317,8 @@ export default class ProfileEditForm extends React.Component<ProfileEditProps, P
                   </div>
 
                   <div>
-                    <button className="button" onClick={this.handleSubmit} disabled={this.state.savedAllChanges}>
-                      {this.state.savedAllChanges ? 'Saved' : 'Save'}
+                    <button className="button" onClick={this.handleSubmit} disabled={savedAllChanges}>
+                      {savedAllChanges ? 'Saved' : 'Save'}
                       <FontAwesomeIcon icon={faCheck}/>
                     </button>
                   </div>

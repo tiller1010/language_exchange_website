@@ -20,7 +20,7 @@ module.exports.defineAuthenticationRoutes = function(app) {
 		const { displayName, password } = req.body;
 
 		let passportConfig = {
-      successRedirect: '/account-profile',
+			successRedirect: '/account-profile',
 			failureRedirect: '/login',
 			failureFlash: true,
 		}

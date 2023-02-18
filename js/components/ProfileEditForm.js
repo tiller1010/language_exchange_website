@@ -68,6 +68,7 @@ var free_solid_svg_icons_1 = require("@fortawesome/free-solid-svg-icons");
 var graphQLFetch_js_1 = require("../graphQLFetch.js");
 var Navigation_jsx_1 = require("./Navigation.jsx");
 var decipher_js_1 = require("../decipher.js");
+var emailFetch_js_1 = require("../emailFetch.js");
 var ProfileEditForm = /** @class */ (function (_super) {
     __extends(ProfileEditForm, _super);
     function ProfileEditForm(props) {
@@ -81,11 +82,13 @@ var ProfileEditForm = /** @class */ (function (_super) {
             confirmPassword: '',
             profilePictureSrc: '',
             savedAllChanges: true,
+            emailVerificationSent: false,
         };
         _this.state = state;
         _this.handleProfilePictureChange = _this.handleProfilePictureChange.bind(_this);
         _this.handleSubmit = _this.handleSubmit.bind(_this);
         _this.handleDeleteUser = _this.handleDeleteUser.bind(_this);
+        _this.handleSendEmailVerification = _this.handleSendEmailVerification.bind(_this);
         return _this;
     }
     ProfileEditForm.prototype.componentDidMount = function () {
@@ -171,7 +174,7 @@ var ProfileEditForm = /** @class */ (function (_super) {
                         mutationName = void 0;
                         if (!savedUser) return [3 /*break*/, 2];
                         // If updating existing
-                        query = "mutation updateUser($userID: ID!, $user: UserInputs, $file: Upload){\n          updateUser(userID: $userID, user: $user, profilePictureFile: $file){\n            _id\n            email\n            displayName\n            firstName\n            lastName\n            profilePictureSrc\n          }\n        }";
+                        query = "mutation updateUser($userID: ID!, $user: UserInputs, $file: Upload){\n          updateUser(userID: $userID, user: $user, profilePictureFile: $file){\n            _id\n            email\n            displayName\n            firstName\n            lastName\n            profilePictureSrc\n            verifiedEmail\n          }\n        }";
                         variables = {
                             userID: savedUser._id,
                             user: {
@@ -235,14 +238,51 @@ var ProfileEditForm = /** @class */ (function (_super) {
             });
         });
     };
+    ProfileEditForm.prototype.handleSendEmailVerification = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var user, host, host, host, emailResponse;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.setState({ emailVerificationSent: true });
+                        user = this.state.savedUser;
+                        try {
+                            host = "https://".concat(process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL);
+                        }
+                        catch (e) {
+                            try {
+                                host = "https://localhost:".concat(process.env.APP_PORT);
+                            }
+                            catch (e) {
+                                host = 'https://localhost:3000';
+                            }
+                        }
+                        return [4 /*yield*/, (0, emailFetch_js_1.sendEmailToUser)(user._id, 'Email Verification', "<p><a href=\"".concat(host, "/verify-email?email=").concat(encodeURIComponent(user.email), "&userID=").concat(user._id, "\">Verify this email address</a></p>"))];
+                    case 1:
+                        emailResponse = _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     ProfileEditForm.prototype.render = function () {
         var _this = this;
-        var _a = this.state, email = _a.email, displayName = _a.displayName, firstName = _a.firstName, lastName = _a.lastName, password = _a.password, confirmPassword = _a.confirmPassword, profilePictureSrc = _a.profilePictureSrc, savedUser = _a.savedUser;
+        var _a = this.state, email = _a.email, displayName = _a.displayName, firstName = _a.firstName, lastName = _a.lastName, password = _a.password, confirmPassword = _a.confirmPassword, profilePictureSrc = _a.profilePictureSrc, savedUser = _a.savedUser, savedAllChanges = _a.savedAllChanges, emailVerificationSent = _a.emailVerificationSent;
+        var verifiedEmail = false;
+        if (savedUser) {
+            verifiedEmail = savedUser.verifiedEmail;
+        }
         return (React.createElement("div", { className: "frame fw-container fw-typography-spacing" },
             React.createElement(Navigation_jsx_1.default, null),
             React.createElement("section", { className: "fw-space double noleft noright" },
                 React.createElement("div", { className: "pure-g" },
                     React.createElement("h2", { className: "pure-u-1" }, "User Profile"),
+                    !verifiedEmail && savedAllChanges ?
+                        React.createElement("button", { className: "button", onClick: this.handleSendEmailVerification },
+                            emailVerificationSent ? 'Email Verification Sent' : 'Verify this email',
+                            React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faEnvelope }))
+                        :
+                            '',
                     React.createElement("form", { className: "pure-u-1 fw-form" },
                         React.createElement("div", { className: "flex-container desktop-100" },
                             React.createElement("div", { className: "desktop-50 phone-100" },
@@ -270,8 +310,8 @@ var ProfileEditForm = /** @class */ (function (_super) {
                                         "Profile Picture",
                                         React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faUpload }))),
                                 React.createElement("div", null,
-                                    React.createElement("button", { className: "button", onClick: this.handleSubmit, disabled: this.state.savedAllChanges },
-                                        this.state.savedAllChanges ? 'Saved' : 'Save',
+                                    React.createElement("button", { className: "button", onClick: this.handleSubmit, disabled: savedAllChanges },
+                                        savedAllChanges ? 'Saved' : 'Save',
                                         React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faCheck })))),
                             React.createElement("div", { className: "desktop-30 phone-100" },
                                 React.createElement("div", { className: "desktop-100", style: { maxWidth: '100%', height: '300px' } },

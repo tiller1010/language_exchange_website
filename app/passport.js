@@ -102,7 +102,12 @@ passport.use(new GoogleStrategy({
 				return done(null, user);
 			} else {
 				let user = await addUser(newUser);
-				await sendEmail(newUser.email, `${process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL}> Registration`, "<b>Thank you for registering</b>");
+				await sendEmail(
+					newUser.email,
+					`${process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL}> Registration`,
+					`<p><b>Thank you for registering</b></p>\
+<p><a href="${process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL}/verify-email?email=${encodeURIComponent(newUser.email)}&userID=${user._id}">Verify this email address</a></p>`
+				);
 				return done(null, newUser);
 			}
 		} catch(error) {

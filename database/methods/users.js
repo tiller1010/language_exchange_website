@@ -74,13 +74,13 @@ async function findUserByID(id){
 
 async function graphql_findUserByID(_, { userID }){
 	const db = getDB();
-	let user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
+	let user = await findUserByID(userID);
 	return user;
 }
 
 async function addCompletedTopic(userID, topic){
 	const db = getDB();
-	let user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
+	let user = await findUserByID(userID);
 	// Sync completed topics
 	let completedTopics = user.completedTopics || [];
 	let topicAlreadyCompleted = false;
@@ -97,7 +97,7 @@ async function addCompletedTopic(userID, topic){
 
 async function removeCompletedTopic(userID, topicID){
 	const db = getDB();
-	let user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
+	let user = await findUserByID(userID);
 	// Sync completed topics
 	let completedTopics = user.completedTopics || [];
 	let newCompletedTopics = [];
@@ -112,14 +112,14 @@ async function removeCompletedTopic(userID, topicID){
 async function verifyUser(_, {userID, verificationStatus}){
 	const db = getDB();
 	await db.collection('users').updateOne({ _id: new mongo.ObjectID(userID) }, { $set: { verified: verificationStatus } });
-	const user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
+	const user = await findUserByID(userID);
 	return user;
 }
 
 async function addStripeAccountIDToUser(userID, connectedStripeAccountID){
 	const db = getDB();
 	await db.collection('users').updateOne({ _id: new mongo.ObjectID(userID) }, { $set: { connectedStripeAccountID } });
-	const user = await db.collection('users').findOne({ _id: new mongo.ObjectID(userID) });
+	const user = await findUserByID(userID);
 	return user;
 }
 
@@ -144,17 +144,21 @@ async function updateUser(_, { userID, user, profilePictureFile }){
 	}
 	delete user.password;
 
+	const originalUser = await findUserByID(userID);
+	const newEmail = user.email !== originalUser.email;
 
-	user = await db.collection('users').findOneAndUpdate(
+	let updatedUser = await db.collection('users').findOneAndUpdate(
 		{ _id: new mongo.ObjectID(userID) },
 		{ $set: { ...user } },
 		{ returnOriginal: false }
 	);
-	user = user.value;
-	await db.collection('users').updateOne({ _id: new mongo.ObjectID(user.userID) }, { $set: { user } });
-	return user;
+	updatedUser = updatedUser.value;
 
-	return false;
+	if (newEmail) {
+		updatedUser = await setVerifiedEmail(userID, false);
+	}
+
+	return updatedUser;
 }
 
 async function getRecentUsers(_){
@@ -183,6 +187,16 @@ async function searchUsers(_, { searchQuery }){
 	return { users };
 }
 
+async function setVerifiedEmail(userID, verificationStatus){
+	const db = getDB();
+	const updatedUser = await db.collection('users').findOneAndUpdate(
+		{ _id: new mongo.ObjectID(userID) },
+		{ $set: { verifiedEmail: verificationStatus } },
+		{ returnOriginal: false }
+	);
+	return updatedUser.value;
+}
+
 module.exports = {
 	addUser,
 	updateUser,
@@ -195,4 +209,5 @@ module.exports = {
 	addStripeAccountIDToUser,
 	getRecentUsers,
 	searchUsers,
+	setVerifiedEmail,
 };

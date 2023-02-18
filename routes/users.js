@@ -1,5 +1,5 @@
 const { sendEmail } = require('../app/email.js');
-const { findUserByID, addStripeAccountIDToUser } = require('../database/methods/users.js');
+const { findUserByID, addStripeAccountIDToUser, setVerifiedEmail } = require('../database/methods/users.js');
 
 module.exports.defineUserRoutes = function(app) {
 
@@ -24,8 +24,10 @@ module.exports.defineUserRoutes = function(app) {
   app.post('/send-email-to-user', async (req, res) => {
     const { subject, content, forUserID } = req.body;
     if (req.user && forUserID && subject && content) {
-      const user = await findUserByID(forUserID);
-      const emailResponse = await sendEmail(user.email, subject, content, (account) => res.json(account));
+      if (req.user.verifiedEmail || subject === 'Email Verification') {
+        const user = await findUserByID(forUserID);
+        const emailResponse = await sendEmail(user.email, subject, content, (account) => res.json(account));
+      }
     }
   });
 
@@ -42,5 +44,24 @@ module.exports.defineUserRoutes = function(app) {
       res.status(200).json(user);
     }
   });
+
+  // Process Email Verification
+  app.get('/verify-email', async (req, res) => {
+    if (req.user) {
+      const user = req.user;
+      const { email, userID } = req.query;
+      const requestEmail = decodeURIComponent(email);
+
+      if (String(user._id) === userID && user.email === requestEmail) {
+        const updatedUser = await setVerifiedEmail(user._id, true);
+        return res.redirect('/account-profile-edit');
+      } else {
+        res.sendStatus(404);
+      }
+    } else {
+      return res.redirect('/login');
+    }
+  });
+
 }
 
