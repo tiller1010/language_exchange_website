@@ -90,7 +90,7 @@ module.exports.defineStripeRoutes = function(app) {
 	app.get('/complete-order/:priceID', async (req, res) => {
 		if(req.user && req.params.priceID){
 			await completeOrder(req.user._id, req.params.priceID);
-			await sendEmail(req.user.email, `${process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL}> Chat Order`, "<b>Thank you for your order. Go to your account products on the time of the chat.</b>");
+			await sendEmail(req.user.email, `${process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL} Chat Order`, "<b>Thank you for your order. Go to your account products on the time of the chat.</b>");
 			return res.redirect('/account-profile');
 		}
 	});

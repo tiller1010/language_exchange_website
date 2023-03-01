@@ -32,6 +32,7 @@ const resolvers = {
 		// Users
 		verifyUser: users.verifyUser,
 		updateUser: users.updateUser,
+    updateUser_setForgotPasswordResetPassword: users.updateUser_setForgotPasswordResetPassword,
 		// Premium Video Chat Listings
 		addPremiumVideoChatListing: premiumVideoChatListings.addPremiumVideoChatListing,
 		addPremiumVideoChatListingThumbnailTest: premiumVideoChatListings.addPremiumVideoChatListingThumbnailTest,

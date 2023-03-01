@@ -67,14 +67,20 @@ class Login extends React.Component {
             </div>
           </form>
 
-            <a href="/register" className="button">
-              Register
-              <FontAwesomeIcon icon={faLongArrowAltRight}/>
-            </a>
-            <a href="/auth/google" className="button">
-              Login with Google
-              <FontAwesomeIcon icon={faGoogle}/>
-            </a>
+          <a href="/register" className="button">
+            Register
+            <FontAwesomeIcon icon={faLongArrowAltRight}/>
+          </a>
+
+          <a href="/auth/google" className="button">
+            Login with Google
+            <FontAwesomeIcon icon={faGoogle}/>
+          </a>
+
+          <a href="/forgot-password" className="button no-icon">
+            Forgot Password
+          </a>
+
         </div>
       </div>
     );

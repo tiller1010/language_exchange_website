@@ -20,7 +20,7 @@ module.exports.defineUserRoutes = function(app) {
     res.sendStatus(404);
   });
 
-  // Send email via ajax request
+  // Send email to a user via ajax request
   app.post('/send-email-to-user', async (req, res) => {
     const { subject, content, forUserID } = req.body;
     if (req.user && forUserID && subject && content) {

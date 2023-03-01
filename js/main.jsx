@@ -14,6 +14,8 @@ import Chats from './components/Chats.jsx';
 import UserFeed from './components/UserFeed.js';
 import Lessons from './components/Lessons.js';
 import NotificationModal from './components/NotificationModal.js';
+import ForgotPasswordForm from './components/ForgotPasswordForm.js';
+import ResetPasswordForm from './components/ResetPasswordForm.js';
 
 import 'purecss/build/pure-min.css';
 import 'purecss/build/grids-responsive-min.css';
@@ -191,6 +193,17 @@ if(lessonsElement){
     var authenticatedUserID = lessonsElement.getAttribute('authenticateduserid');
     ReactDOM.render(<Lessons authenticatedUserID={authenticatedUserID} isLive={isLive}/>, lessonsElement);
   }
+}
+
+var forgotPasswordElement = document.getElementById('forgot-password');
+if (forgotPasswordElement) {
+  ReactDOM.render(<ForgotPasswordForm/>, forgotPasswordElement);
+}
+
+var resetPasswordElement = document.getElementById('reset-password');
+if (resetPasswordElement) {
+  var errors = resetPasswordElement.getAttribute('errors');
+  ReactDOM.render(<ResetPasswordForm errors={errors}/>, resetPasswordElement);
 }
 
 

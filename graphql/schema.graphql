@@ -185,5 +185,6 @@ type Mutation {
 	updatePremiumVideoChatListing(listingID: ID!, premiumVideoChatListing: PremiumVideoChatListingInputs, thumbnailFile: Upload): PremiumVideoChatListing
 	removePremiumVideoChatListing(userID: ID!): Boolean
 	updateUser(userID: ID!, user: UserInputs, profilePictureFile: Upload): User
+  updateUser_setForgotPasswordResetPassword(email: String!): User
 	createProduct(productObjectCollection: String!, productDescription: String!, productObjectID: ID!, userID: ID!, productObjectUpdateData: String!): Product
 }
