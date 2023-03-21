@@ -6,19 +6,32 @@ const { addCompletedTopic, removeCompletedTopic } = require('../database/methods
 
 const { myCipher } = require('../app/cipher.js');
 
+const axios = require('axios');
+
 const isLive = process.env.APP_ENV == 'production';
 
 module.exports.defineLessonRoutes = function(app) {
 
 	// Lessons route
-	app.get('/lessons', (req, res) => {
+	app.get('/lessons', async (req, res) => {
 		let userID = null;
 		if(req.user){
 			userID = req.user._id;
 		}
 		const props = { userID };
+
+    /* SSR Levels */
+    await axios.get(`${process.env.STRAPI_API_URL}/levels\
+?populate[topics][populate]=FeaturedMedia\
+&sort[0]=Level\
+&filters[Level][$contains]=1\
+`)
+    .then(res => {
+      props.levels = res.data.data;
+    });
+
 		if (isLive) {
-			res.render('lessons', { p: myCipher(JSON.stringify(props)), isLive });
+			res.render('lessons', { p: myCipher(JSON.stringify(props)), isLive, levels: props.levels });
 		} else {
 			res.render('lessons', props);
 		}
