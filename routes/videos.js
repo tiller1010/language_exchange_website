@@ -89,9 +89,9 @@ module.exports.defineVideoRoutes = function(app, VideoSearchService) {
 			userLikedVideos = req.user.likedVideos || [];
 			userID = req.user._id;
 		}
-		const props = { userLikedVideos, userID };
+		const props = { userLikedVideos, userID, videos: videos.videos };
 		if (isLive) {
-			return res.render('videos', { p: myCipher(JSON.stringify(props)), isLive });
+			return res.render('videos', { p: myCipher(JSON.stringify(props)), isLive, videos: props.videos });
 		} else {
 			res.render('videos', props);
 		}
