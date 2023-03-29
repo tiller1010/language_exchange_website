@@ -408,7 +408,7 @@ var PremiumVideoChatListing = /** @class */ (function (_super) {
                         "\u00A0",
                         currency))),
             React.createElement("div", { className: "thumbnail-preview img-container" },
-                React.createElement("img", { style: { height: '100%', width: '100%', objectFit: 'cover' }, src: thumbnailSrc, alt: thumbnailSrc })),
+                React.createElement("img", { style: { height: '100%', width: '100%', objectFit: 'cover' }, src: thumbnailSrc, alt: topic })),
             React.createElement("h4", { style: { margin: '35px 0 10px 0', fontSize: '1.5em' } }, "Timeslots"),
             React.createElement("div", { className: "fw-form fw-form-process-event", style: { maxHeight: '250px', overflowY: 'auto' } }, this.renderTimeSlots()),
             this.props.view == 'customer' && this.state.timeSlots.filter(function (timeSlot) { return timeSlot.tempCustomerUserID; }).length ?

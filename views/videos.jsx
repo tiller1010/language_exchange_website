@@ -13,9 +13,9 @@ const Videos = (props) => {
         {videos.map((video) =>
           <div key={video._id} className="pure-u-1 pure-u-lg-1-3">
             <div style={{ padding: '0 10px' }}>
-              <h3>{video.title}</h3>
+              <h2>{video.title}</h2>
               {video.languageOfTopic ?
-                <h4>{video.languageOfTopic}</h4>
+                <h3>{video.languageOfTopic}</h3>
                 :
                 ''
               }

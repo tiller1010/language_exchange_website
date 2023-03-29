@@ -1,19 +1,27 @@
 const { myCipher } = require('../app/cipher.js');
 const stripe = require('stripe')(process.env.STRIPE_SECRET || '');
+const { getRecentPremiumVideoChatListings } = require('../database/methods/premium-video-chat-listings.js');
+const { findUserByID } = require('../database/methods/users.js');
 
 const isLive = process.env.APP_ENV == 'production';
 
 module.exports.defineVideoChatRoutes = function(app) {
 
   // Chats route
-  app.get('/chats', (req, res) => {
+  app.get('/chats', async (req, res) => {
     let authenticatedUserID = null;
     if(req.user){
       authenticatedUserID = req.user._id;
     }
     const props = { authenticatedUserID };
+
+    /* SSR Chats */
+    let premiumVideoChatListings = await getRecentPremiumVideoChatListings(null);
+    premiumVideoChatListings = premiumVideoChatListings.listings;
+    props.premiumVideoChatListings = premiumVideoChatListings;
+
     if (isLive) {
-      return res.render('chats', { p: myCipher(JSON.stringify(props)), isLive });
+      return res.render('chats', { p: myCipher(JSON.stringify(props)), isLive, premiumVideoChatListings });
     } else {
       res.render('chats', props);
     }
