@@ -70,7 +70,7 @@ class Level extends React.Component {
               {topics.map((topic) =>
                 <div key={topics.indexOf(topic)} className="topic pure-u-1 pure-u-md-1-3">
                   <div className="pad">
-                  <TopicLink topic={topic} levelID={this.state.levelID}/>
+                    <TopicLink topic={topic} levelID={this.state.levelID}/>
                     {topic.attributes.challenges.data ?
                       <div className="challenges">
                         <Slider {...{
