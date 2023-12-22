@@ -51,6 +51,7 @@
     "react-dom": "^16.13.1",
     "react-mic": "github:tiller1010/react-mic#master",
     "react-slick": "^0.28.0",
+    "remove-accents": "^0.5.0",
     "slick-carousel": "^1.8.1",
     "socket.io": "^4.5.4",
     "stripe": "^8.193.0",

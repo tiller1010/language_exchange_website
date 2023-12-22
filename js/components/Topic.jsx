@@ -3,6 +3,7 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faLongArrowAltLeft, faSync, faPlus, faTimes, faCheckCircle, faDumbbell } from '@fortawesome/free-solid-svg-icons';
 import Navigation from './Navigation.jsx';
+import removeAccents from 'remove-accents';
 
 function shuffleArray(array) {
   let newArray = [...array];
@@ -71,6 +72,7 @@ class Topic extends React.Component {
     if (translatedCorrectAnswer) {
       correctAnswer = translatedCorrectAnswer.textContent.toLowerCase();
     }
+    correctAnswer = removeAccents(correctAnswer);
     if(inputElement.value.toLowerCase() == correctAnswer){
       const newState = this.state;
       const challengeIndex = newState.challenges.indexOf(challenge);
