@@ -5,6 +5,7 @@ const mongo = require('mongodb');
 const createSearchService = require('../../app/search.js');
 const { findUserByID } = require('./users.js');
 const stripe = require('stripe')(process.env.STRIPE_SECRET || '');
+const { getConnectedStripeAccountID } = require('../../app/getConnectedStripeAccountID.js');
 
 function randomFilename() {
   var text = "";
@@ -26,9 +27,10 @@ async function getRecentPremiumVideoChatListings(_){
 	let purchasablePremiumVideoChatListings = [];
 	for(listing of premiumVideoChatListings){
 		const user = await findUserByID(listing.userID);
-		if(user){
-			if(user.connectedStripeAccountID){
-				const account = await stripe.accounts.retrieve(user.connectedStripeAccountID);
+		if (user) {
+      const connectedStripeAccountID = getConnectedStripeAccountID(user);
+			if (connectedStripeAccountID) {
+				const account = await stripe.accounts.retrieve(connectedStripeAccountID);
 				if(account.charges_enabled && account.payouts_enabled){
 					purchasablePremiumVideoChatListings.push(listing);
 				}
@@ -56,8 +58,9 @@ async function searchPremiumVideoChatListings(_, { topic, languageOfTopic }){
 	for(listing of listings){
 		const user = await findUserByID(listing.userID);
 		if (user) {
-			if(user.connectedStripeAccountID){
-				const account = await stripe.accounts.retrieve(user.connectedStripeAccountID);
+      const connectedStripeAccountID = getConnectedStripeAccountID(user);
+			if (connectedStripeAccountID) {
+				const account = await stripe.accounts.retrieve(connectedStripeAccountID);
 				if(account.charges_enabled && account.payouts_enabled){
 					purchasablePremiumVideoChatListings.push(listing);
 				}
@@ -142,7 +145,7 @@ async function removePremiumVideoChatListing(_, { userID }){
 		await db.collection('premium_video_chat_listings').deleteOne({ _id: new mongo.ObjectID(originalUser.premiumVideoChatListing._id) });
 		return true;
 	}
-	
+
 	return false;
 }
 

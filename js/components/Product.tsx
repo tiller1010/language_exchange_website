@@ -2,6 +2,7 @@ import * as React from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
+import { getConnectedStripeAccountID } from '../getConnectedStripeAccountID.js';
 
 interface ProductObject {
   userID: string;
@@ -62,7 +63,9 @@ export default class Product extends React.Component<ProductProps, ProductState>
     const productUser = await fetch(`/user/${product.productObject.userID}`)
       .then((response) => response.json());
 
-    if(productUser.connectedStripeAccountID){
+    const connectedStripeAccountID = getConnectedStripeAccountID(productUser);
+
+    if (connectedStripeAccountID) {
 
       const stripe = await loadStripe(process.env.STRIPE_PUBLIC_KEY || '');
 
@@ -71,7 +74,7 @@ export default class Product extends React.Component<ProductProps, ProductState>
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           priceID: product.priceID,
-          connectedStripeAccountID: productUser.connectedStripeAccountID,
+          connectedStripeAccountID,
         })
       })
       .then(function(response) {

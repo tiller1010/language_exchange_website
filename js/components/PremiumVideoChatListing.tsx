@@ -3,6 +3,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faLongArrowAltRight, faClock, faFlag } from '@fortawesome/free-solid-svg-icons';
 import graphQLFetch from '../graphQLFetch.js';
+import { getConnectedStripeAccountID } from '../getConnectedStripeAccountID.js';
 
 interface PremiumVideoChatListingObject {
   _id: string
@@ -311,7 +312,9 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
           const productUser = await fetch(`/user/${premiumVideoChatListing.userID}`)
             .then((response) => response.json());
 
-          if(productUser.connectedStripeAccountID){
+          const connectedStripeAccountID = getConnectedStripeAccountID(productUser);
+
+          if (connectedStripeAccountID) {
 
             const stripe = await loadStripe(process.env.STRIPE_PUBLIC_KEY || '');
 
@@ -320,7 +323,7 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 priceID: data.createProduct.priceID,
-                connectedStripeAccountID: productUser.connectedStripeAccountID,
+                connectedStripeAccountID,
               })
             })
             .then(function(response) {

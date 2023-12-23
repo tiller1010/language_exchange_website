@@ -119,7 +119,14 @@ async function verifyUser(_, {userID, verificationStatus}){
 
 async function addStripeAccountIDToUser(userID, connectedStripeAccountID){
   const db = getDB();
-  await db.collection('users').updateOne({ _id: new mongo.ObjectID(userID) }, { $set: { connectedStripeAccountID } });
+  const isLive = process.env.STRIPE_PUBLIC_KEY.match(/^pk_live_.*$/);
+  let connectedStripeAccountIDKey = 'connectedStripeAccountID';
+  if (isLive) {
+    connectedStripeAccountIDKey = 'connectedStripeAccountID_Live';
+  }
+  const updateQueryObject = {};
+  updateQueryObject[connectedStripeAccountIDKey] = connectedStripeAccountID;
+  await db.collection('users').updateOne({ _id: new mongo.ObjectID(userID) }, { $set: updateQueryObject });
   const user = await findUserByID(userID);
   return user;
 }

@@ -10,6 +10,7 @@ import PremiumVideoChatListingForm from './PremiumVideoChatListingForm.js';
 import RemoveConfirmationModal from './RemoveConfirmationModal.js';
 import TopicLink from './TopicLink.js';
 import decipher from '../decipher.js';
+import { getConnectedStripeAccountID } from '../getConnectedStripeAccountID.js';
 
 class AccountProfile extends React.Component {
   constructor(props){
@@ -168,6 +169,7 @@ class AccountProfile extends React.Component {
     const authenticatedUserIsAdmin = authenticatedUser ? authenticatedUser.isAdmin : false;
     const authenticatedUserIsVerified = authenticatedUser ? authenticatedUser.verified : false;
     const products = this.state.user.products || [];
+    const connectedStripeAccountID = getConnectedStripeAccountID(authenticatedUser);
 
     document.addEventListener('cssmodal:hide', () => {
       this.setState({
@@ -256,19 +258,19 @@ class AccountProfile extends React.Component {
                 <>
                   <PremiumVideoChatListingForm user={authenticatedUser}/>
                   <p>
-                    {authenticatedUser.connectedStripeAccountID ?
+                    {connectedStripeAccountID ?
                       <>
                       {this.state.stripeAccountPending ?
                         <>
                         <p><b>!! Your Connected Stripe Account still needs to be completed, or is pending verification. !!</b></p>
                         <p>Your video chat listing will not be purchasable until your connected Stripe account is completed and verified.</p>
-                        <a href={`/manage-stripe-account/${authenticatedUser.connectedStripeAccountID}`} className="button" style={{ display: 'block', margin: 'auto' }}>
+                        <a href={`/manage-stripe-account/${connectedStripeAccountID}`} className="button" style={{ display: 'block', margin: 'auto' }}>
                            Complete Stripe Account
                           <FontAwesomeIcon icon={faUser}/>
                         </a>
                         </>
                         :
-                        <a href={`/manage-stripe-account/${authenticatedUser.connectedStripeAccountID}`} className="button" style={{ display: 'block', margin: 'auto' }}>
+                        <a href={`/manage-stripe-account/${connectedStripeAccountID}`} className="button" style={{ display: 'block', margin: 'auto' }}>
                            Manage Stripe Account
                           <FontAwesomeIcon icon={faUser}/>
                         </a>

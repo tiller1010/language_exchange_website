@@ -1,6 +1,7 @@
 const { findAndSyncUser } = require('../database/methods/users.js');
 const { myCipher } = require('../app/cipher.js');
 const stripe = require('stripe')(process.env.STRIPE_SECRET || '');
+const { getConnectedStripeAccountID } = require('../app/getConnectedStripeAccountID.js');
 
 const isLive = process.env.APP_ENV == 'production';
 
@@ -27,9 +28,10 @@ module.exports.defineAccountProfileRoutes = function(app) {
 				let user = req.user;
 
 				let stripeAccountPending = true;
-				if (user.connectedStripeAccountID) {
+        const connectedStripeAccountID = getConnectedStripeAccountID(user);
+				if (connectedStripeAccountID) {
 					try {
-						const account = await stripe.accounts.retrieve(user.connectedStripeAccountID);
+						const account = await stripe.accounts.retrieve(connectedStripeAccountID);
 						stripeAccountPending = !(account.charges_enabled && account.payouts_enabled);
 					} catch(e) {
 						console.log(e);

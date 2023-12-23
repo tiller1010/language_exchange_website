@@ -30,6 +30,7 @@ type User {
 	products: [Product!]
 	premiumVideoChatListing: PremiumVideoChatListing
 	connectedStripeAccountID: String
+  connectedStripeAccountID_Live: String
 	verifiedEmail: Boolean
 }
 

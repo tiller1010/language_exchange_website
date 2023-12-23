@@ -29,7 +29,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -55,6 +55,7 @@ var React = require("react");
 var stripe_js_1 = require("@stripe/stripe-js");
 var react_fontawesome_1 = require("@fortawesome/react-fontawesome");
 var free_solid_svg_icons_1 = require("@fortawesome/free-solid-svg-icons");
+var getConnectedStripeAccountID_js_1 = require("../getConnectedStripeAccountID.js");
 var Product = /** @class */ (function (_super) {
     __extends(Product, _super);
     function Product(props) {
@@ -99,7 +100,7 @@ var Product = /** @class */ (function (_super) {
     };
     Product.prototype.handleCompletePurchase = function (e) {
         return __awaiter(this, void 0, void 0, function () {
-            var product, productUser, stripe_1;
+            var product, productUser, connectedStripeAccountID, stripe_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -115,7 +116,8 @@ var Product = /** @class */ (function (_super) {
                                 .then(function (response) { return response.json(); })];
                     case 1:
                         productUser = _a.sent();
-                        if (!productUser.connectedStripeAccountID) return [3 /*break*/, 3];
+                        connectedStripeAccountID = (0, getConnectedStripeAccountID_js_1.getConnectedStripeAccountID)(productUser);
+                        if (!connectedStripeAccountID) return [3 /*break*/, 3];
                         return [4 /*yield*/, (0, stripe_js_1.loadStripe)(process.env.STRIPE_PUBLIC_KEY || '')];
                     case 2:
                         stripe_1 = _a.sent();
@@ -124,7 +126,7 @@ var Product = /** @class */ (function (_super) {
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
                                 priceID: product.priceID,
-                                connectedStripeAccountID: productUser.connectedStripeAccountID,
+                                connectedStripeAccountID: connectedStripeAccountID,
                             })
                         })
                             .then(function (response) {
