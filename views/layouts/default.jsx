@@ -1,7 +1,7 @@
 
 import React from 'react';
 import DisableDevtools from '../components/DisableDevtools';
- 
+
 const DefaultLayout = (props) => {
 	return (
 		<html style={{ fontFamily: 'sans-serif' }} translate="yes" lang="en">
@@ -16,11 +16,22 @@ const DefaultLayout = (props) => {
 					:
 					''
 				}
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <script async src={`${props.pathResolver || ''}js/main.js`}></script>
+        <script async src={`${props.pathResolver || ''}js/modal.js`}></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css"/>
+
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-NPHYEJZVPM"></script>
+        <script dangerouslySetInnerHTML={{__html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-NPHYEJZVPM');
+        `}}></script>
+
 			</head>
-			<meta name="viewport" content="width=device-width, initial-scale=1"/>
-			<script async src={`${props.pathResolver || ''}js/main.js`}></script>
-			<script async src={`${props.pathResolver || ''}js/modal.js`}></script>
-			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css"/>
 			<body style={{ backgroundColor: '#eee' }}>
 				<div style={{ minHeight: '100vh' }}>
 					{props.children}
@@ -36,5 +47,5 @@ const DefaultLayout = (props) => {
 		</html>
 	);
 }
- 
+
 export default DefaultLayout;
