@@ -34,10 +34,18 @@ module.exports.defineLessonRoutes = function(app) {
     } catch (e) {
     }
 
+    const title = 'Lessons';
+
+    props.title = title;
     props.levels = levels;
 
     if (isLive) {
-      res.render('lessons', { p: myCipher(JSON.stringify(props)), isLive, levels });
+      res.render('lessons', {
+        title,
+        p: myCipher(JSON.stringify(props)),
+        isLive,
+        levels,
+      });
     } else {
       res.render('lessons', props);
     }

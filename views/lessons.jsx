@@ -18,7 +18,7 @@ const Lessons = (props) => {
   }
 
   return (
-		<DefaultLayout isLive={props.isLive}>
+		<DefaultLayout {...props}>
 			<div id="lessons" authenticateduserid={props.userID} p={props.p}>
 				<SSRView/>
         <div>
