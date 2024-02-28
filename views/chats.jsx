@@ -7,7 +7,7 @@ const Chats = (props) => {
   const { premiumVideoChatListings } = props;
 
   return (
-    <DefaultLayout isLive={props.isLive}>
+    <DefaultLayout {...props}>
       <div id="chats" authenticateduserid={props.authenticatedUserID} p={props.p}>
         <SSRView/>
         {premiumVideoChatListings.map((listing) =>

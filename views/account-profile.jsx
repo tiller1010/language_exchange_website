@@ -7,7 +7,7 @@ class AccountProfile extends React.Component {
   render(){
 
     return (
-      <DefaultLayout pathResolver={this.props.pathResolver || ''} isLive={this.props.isLive}>
+      <DefaultLayout pathResolver={this.props.pathResolver || ''} {...this.props}>
           <div id="account-profile"
             userid={this.props.userID}
             authenticateduserid={this.props.authenticatedUserID}

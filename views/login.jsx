@@ -7,7 +7,7 @@ class Login extends React.Component {
   render(){
 
     return (
-      <DefaultLayout>
+      <DefaultLayout {...this.props}>
           <div id="login" errors={JSON.stringify(this.props.errors)}>
           <SSRView/>
           </div>

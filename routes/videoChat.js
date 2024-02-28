@@ -20,8 +20,17 @@ module.exports.defineVideoChatRoutes = function(app) {
     premiumVideoChatListings = premiumVideoChatListings.listings;
     props.premiumVideoChatListings = premiumVideoChatListings;
 
+    const title = 'Chat With Other Learners';
+
+    props.title = title;
+
     if (isLive) {
-      return res.render('chats', { p: myCipher(JSON.stringify(props)), isLive, premiumVideoChatListings });
+      return res.render('chats', {
+        title,
+        p: myCipher(JSON.stringify(props)),
+        isLive,
+        premiumVideoChatListings,
+      });
     } else {
       res.render('chats', props);
     }

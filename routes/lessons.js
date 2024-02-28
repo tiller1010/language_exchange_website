@@ -74,10 +74,19 @@ module.exports.defineLessonRoutes = function(app) {
       console.log(e)
     }
 
+    const title = levelName;
+
+    props.title = title;
     props.topics = topics;
 
     if (isLive) {
-      res.render('level', { p: myCipher(JSON.stringify(props)), isLive, topics, levelID });
+      res.render('level', {
+        title,
+        p: myCipher(JSON.stringify(props)),
+        isLive,
+        topics,
+        levelID,
+      });
     } else {
       res.render('level', props);
     }
@@ -120,6 +129,7 @@ module.exports.defineLessonRoutes = function(app) {
     }
 
     res.render('topic.jsx', {
+      title: `${levelName} - ${topicName}`,
       levelID,
       levelName,
       topicID,

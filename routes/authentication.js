@@ -11,7 +11,10 @@ module.exports.defineAuthenticationRoutes = function(app) {
       return res.redirect('/account-profile');
     }
     const errors = req.flash().error || [];
-    res.render('login', { errors });
+    res.render('login', {
+      title: 'Login',
+      errors,
+    });
   });
 
   // Submit login form
@@ -115,7 +118,10 @@ module.exports.defineAuthenticationRoutes = function(app) {
       return res.redirect('/account-profile');
     }
     const errors = req.flash().error || [];
-    res.render('register', { errors });
+    res.render('register', {
+      title: 'Register',
+      errors,
+    });
   });
 
   // Submit register form

@@ -7,7 +7,7 @@ const Videos = (props) => {
   const { videos } = props;
 
   return (
-    <DefaultLayout isLive={props.isLive}>
+    <DefaultLayout {...props}>
         <div id="videos" userlikedvideos={JSON.stringify(props.userLikedVideos)} userid={props.userID} p={props.p}>
         <SSRView/>
         {videos.map((video) =>

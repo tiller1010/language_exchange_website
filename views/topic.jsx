@@ -7,7 +7,7 @@ const Topic = (props) => {
   const { challenges } = props;
 
   return (
-  <DefaultLayout pathResolver="../../../">
+  <DefaultLayout pathResolver="../../../" {...props}>
     <div className="pad">
       <h1 className="topic-heading">{props.levelName} - {props.topicName}</h1>
     </div>

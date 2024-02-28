@@ -89,9 +89,23 @@ module.exports.defineVideoRoutes = function(app, VideoSearchService) {
 			userLikedVideos = req.user.likedVideos || [];
 			userID = req.user._id;
 		}
-		const props = { userLikedVideos, userID, videos: videos.videos };
+
+    const title = 'Learn From The Community';
+
+		const props = {
+      title,
+      userLikedVideos,
+      userID,
+      videos: videos.videos,
+    };
+
 		if (isLive) {
-			return res.render('videos', { p: myCipher(JSON.stringify(props)), isLive, videos: props.videos });
+			return res.render('videos', {
+        title,
+        p: myCipher(JSON.stringify(props)),
+        isLive,
+        videos: props.videos,
+      });
 		} else {
 			res.render('videos', props);
 		}
@@ -99,7 +113,9 @@ module.exports.defineVideoRoutes = function(app, VideoSearchService) {
 
 	// Add video route
 	app.get('/videos/add', (req, res) => {
-		res.render('videos-add');
+		res.render('videos-add', {
+      title: 'Share What You Know',
+    });
 	});
 
 	// Submit new video route

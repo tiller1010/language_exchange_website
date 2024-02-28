@@ -7,7 +7,7 @@ class Register extends React.Component {
   render(){
 
     return (
-      <DefaultLayout>
+      <DefaultLayout {...this.props}>
           <div id="register" errors={JSON.stringify(this.props.errors)}>
           <SSRView/>
           </div>

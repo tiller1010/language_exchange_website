@@ -11,7 +11,7 @@ const Level = (props) => {
   const { topics, levelID } = props;
 
   return (
-  <DefaultLayout pathResolver="../" isLive={props.isLive}>
+  <DefaultLayout pathResolver="../" {...props}>
     <div className="pad">
       <h1>{props.levelName}</h1>
     </div>

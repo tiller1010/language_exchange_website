@@ -13,14 +13,24 @@ module.exports.defineAccountProfileRoutes = function(app) {
 			if(req.params.viewOtherUserID){
 				let user = await findAndSyncUser(req.params.viewOtherUserID, 'id');
 				let isCurrentUser = req.user ? String(req.user._id) == String(user._id) : false;
+
+        const title = isCurrentUser ? 'My Profile' : `${user.displayName}'s Profile`;
+
 				const props = {
+          title,
 					userID: user._id,
 					authenticatedUserID: req.user ? req.user._id : null,
 					isCurrentUser,
 					pathResolver: '../',
 				};
+
 				if (isLive) {
-					return res.render('account-profile', { p: myCipher(JSON.stringify(props)), isLive, pathResolver: props.pathResolver });
+					return res.render('account-profile', {
+            title,
+            p: myCipher(JSON.stringify(props)),
+            isLive,
+            pathResolver: props.pathResolver,
+          });
 				} else {
 					return res.render('account-profile', props);
 				}
@@ -37,7 +47,11 @@ module.exports.defineAccountProfileRoutes = function(app) {
 						console.log(e);
 					}
 				}
+
+        const title = 'My Profile';
+
 				const props = {
+          title,
 					userID: user._id,
 					authenticatedUserID: req.user._id,
 					isCurrentUser: true,
@@ -46,7 +60,12 @@ module.exports.defineAccountProfileRoutes = function(app) {
 				}
 
 				if (isLive) {
-					res.render('account-profile', { p: myCipher(JSON.stringify(props)), isLive, pathResolver: props.pathResolver });
+					res.render('account-profile', {
+            title,
+            p: myCipher(JSON.stringify(props)),
+            isLive,
+            pathResolver: props.pathResolver,
+          });
 				} else {
 					return res.render('account-profile', props);
 				}
