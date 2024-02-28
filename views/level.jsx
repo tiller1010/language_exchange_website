@@ -11,12 +11,12 @@ const Level = (props) => {
   const { topics, levelID } = props;
 
   return (
-	<DefaultLayout pathResolver="../" isLive={props.isLive}>
-		<div className="pad">
-			<h1>{props.levelName}</h1>
-		</div>
-		<div id="level" levelid={props.levelID} p={props.p}>
-			<SSRView/>
+  <DefaultLayout pathResolver="../" isLive={props.isLive}>
+    <div className="pad">
+      <h1>{props.levelName}</h1>
+    </div>
+    <div id="level" levelid={props.levelID} p={props.p}>
+      <SSRView/>
       {topics.length ?
         <div className="topics fw-typography-spacing pure-u-1 flex x-space-around">
           {topics.map((topic) =>
@@ -49,8 +49,8 @@ const Level = (props) => {
         :
         ''
       }
-		</div>
-	</DefaultLayout>
+    </div>
+  </DefaultLayout>
   );
 }
 

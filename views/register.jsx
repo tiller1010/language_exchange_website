@@ -4,16 +4,16 @@ import SSRView from './components/SSRView';
 
 class Register extends React.Component {
 
-	render(){
+  render(){
 
-		return (
-			<DefaultLayout>
-			    <div id="register" errors={JSON.stringify(this.props.errors)}>
-					<SSRView/>
-			    </div>
-			</DefaultLayout>
-		);
-	}
+    return (
+      <DefaultLayout>
+          <div id="register" errors={JSON.stringify(this.props.errors)}>
+          <SSRView/>
+          </div>
+      </DefaultLayout>
+    );
+  }
 }
 
 export default Register;

@@ -18,9 +18,9 @@ const Lessons = (props) => {
   }
 
   return (
-		<DefaultLayout {...props}>
-			<div id="lessons" authenticateduserid={props.userID} p={props.p}>
-				<SSRView/>
+    <DefaultLayout {...props}>
+      <div id="lessons" authenticateduserid={props.userID} p={props.p}>
+        <SSRView/>
         <div>
           {levels.map((level) =>
             <div key={level.id} className="flex x-center">
@@ -52,8 +52,8 @@ const Lessons = (props) => {
             </div>
           )}
         </div>
-			</div>
-		</DefaultLayout>
+      </div>
+    </DefaultLayout>
   );
 }
 

@@ -4,16 +4,16 @@ import SSRView from './components/SSRView';
 
 class Login extends React.Component {
 
-	render(){
+  render(){
 
-		return (
-			<DefaultLayout>
-			    <div id="login" errors={JSON.stringify(this.props.errors)}>
-					<SSRView/>
-			    </div>
-			</DefaultLayout>
-		);
-	}
+    return (
+      <DefaultLayout>
+          <div id="login" errors={JSON.stringify(this.props.errors)}>
+          <SSRView/>
+          </div>
+      </DefaultLayout>
+    );
+  }
 }
 
 export default Login;

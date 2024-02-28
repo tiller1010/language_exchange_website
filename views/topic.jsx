@@ -7,12 +7,12 @@ const Topic = (props) => {
   const { challenges } = props;
 
   return (
-	<DefaultLayout pathResolver="../../../">
-		<div className="pad">
-			<h1 className="topic-heading">{props.levelName} - {props.topicName}</h1>
-		</div>
-		<div id="topic" levelid={props.levelID} topicid={props.topicID} completed={String(props.completed)}>
-			<SSRView/>
+  <DefaultLayout pathResolver="../../../">
+    <div className="pad">
+      <h1 className="topic-heading">{props.levelName} - {props.topicName}</h1>
+    </div>
+    <div id="topic" levelid={props.levelID} topicid={props.topicID} completed={String(props.completed)}>
+      <SSRView/>
 
       {challenges.length ?
         <form className="challenges pure-u-1 fw-form flex x-space-around">
@@ -31,8 +31,8 @@ const Topic = (props) => {
         ''
       }
 
-		</div>
-	</DefaultLayout>
+    </div>
+  </DefaultLayout>
   );
 }
 

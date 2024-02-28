@@ -4,16 +4,16 @@ import SSRView from './components/SSRView';
 
 class VideosAdd extends React.Component {
 
-	render(){
+  render(){
 
-		return (
-			<DefaultLayout pathResolver={this.props.pathResolver || '../'}>
-		      <div id="videos-add" video={this.props.video}>
-				<SSRView/>
-		      </div>
-			</DefaultLayout>
-		);
-	}
+    return (
+      <DefaultLayout pathResolver={this.props.pathResolver || '../'}>
+          <div id="videos-add" video={this.props.video}>
+        <SSRView/>
+          </div>
+      </DefaultLayout>
+    );
+  }
 }
 
 export default VideosAdd;

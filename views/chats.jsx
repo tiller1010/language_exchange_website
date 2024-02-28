@@ -7,9 +7,9 @@ const Chats = (props) => {
   const { premiumVideoChatListings } = props;
 
   return (
-		<DefaultLayout isLive={props.isLive}>
-			<div id="chats" authenticateduserid={props.authenticatedUserID} p={props.p}>
-				<SSRView/>
+    <DefaultLayout isLive={props.isLive}>
+      <div id="chats" authenticateduserid={props.authenticatedUserID} p={props.p}>
+        <SSRView/>
         {premiumVideoChatListings.map((listing) =>
           <div key={listing._id}>
             <div className="fw-typography-spacing">
@@ -26,8 +26,8 @@ const Chats = (props) => {
             </button>
           </div>
         )}
-			</div>
-		</DefaultLayout>
+      </div>
+    </DefaultLayout>
   );
 }
 
