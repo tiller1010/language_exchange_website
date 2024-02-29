@@ -35,13 +35,16 @@ module.exports.defineLessonRoutes = function(app) {
     }
 
     const title = 'Lessons';
+    const description = 'Complete free lessons and challenges to sharpen your skills.';
 
     props.title = title;
+    props.description = description;
     props.levels = levels;
 
     if (isLive) {
       res.render('lessons', {
         title,
+        description,
         p: myCipher(JSON.stringify(props)),
         isLive,
         levels,
@@ -75,13 +78,16 @@ module.exports.defineLessonRoutes = function(app) {
     }
 
     const title = levelName;
+    const description = `Complete lessons and challenges to sharpen your skills in ${levelName}.`;
 
     props.title = title;
+    props.description = description;
     props.topics = topics;
 
     if (isLive) {
       res.render('level', {
         title,
+        description,
         p: myCipher(JSON.stringify(props)),
         isLive,
         topics,
@@ -130,6 +136,7 @@ module.exports.defineLessonRoutes = function(app) {
 
     res.render('topic.jsx', {
       title: `${levelName} - ${topicName}`,
+      description: `Complete lessons and challenges to sharpen your skills in ${levelName} - ${topicName}.`,
       levelID,
       levelName,
       topicID,

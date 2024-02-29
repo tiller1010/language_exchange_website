@@ -21,12 +21,15 @@ module.exports.defineVideoChatRoutes = function(app) {
     props.premiumVideoChatListings = premiumVideoChatListings;
 
     const title = 'Chat With Other Learners';
+    const description = 'Chat with other learners and teachers to get real language practice.';
 
     props.title = title;
+    props.description = description;
 
     if (isLive) {
       return res.render('chats', {
         title,
+        description,
         p: myCipher(JSON.stringify(props)),
         isLive,
         premiumVideoChatListings,

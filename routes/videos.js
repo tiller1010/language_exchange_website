@@ -91,9 +91,11 @@ module.exports.defineVideoRoutes = function(app, VideoSearchService) {
 		}
 
     const title = 'Learn From The Community';
+    const description = 'Watch videos or listen to sound clips from the community to learn new skills and share your knowledge.';
 
 		const props = {
       title,
+      description,
       userLikedVideos,
       userID,
       videos: videos.videos,
@@ -102,6 +104,7 @@ module.exports.defineVideoRoutes = function(app, VideoSearchService) {
 		if (isLive) {
 			return res.render('videos', {
         title,
+        description,
         p: myCipher(JSON.stringify(props)),
         isLive,
         videos: props.videos,
@@ -115,6 +118,7 @@ module.exports.defineVideoRoutes = function(app, VideoSearchService) {
 	app.get('/videos/add', (req, res) => {
 		res.render('videos-add', {
       title: 'Share What You Know',
+      description: 'Upload a video or sound recording to share your knowledge with the community.',
     });
 	});
 
