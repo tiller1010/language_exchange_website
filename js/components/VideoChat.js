@@ -100,11 +100,13 @@ var VideoChat = /** @class */ (function (_super) {
                     encryptedProps = JSON.parse(encryptedProps);
                     newState = {
                         authenticatedUserID: encryptedProps.authenticatedUserID,
+                        usersEmail: encryptedProps.usersEmail,
                     };
                 }
                 else {
                     newState = {
                         authenticatedUserID: this.props.authenticatedUserID,
+                        usersEmail: this.props.usersEmail,
                     };
                 }
                 this.setState(newState, function () { return __awaiter(_this, void 0, void 0, function () {
@@ -496,8 +498,7 @@ var VideoChat = /** @class */ (function (_super) {
     };
     VideoChat.prototype.renderCallControls = function () {
         var _this = this;
-        var _a = this.state, availableCalls = _a.availableCalls, forUserID = _a.forUserID, forUserDisplayName = _a.forUserDisplayName, withUserID = _a.withUserID, callButtonDisabled = _a.callButtonDisabled, answerButtonDisabled = _a.answerButtonDisabled, callID = _a.callID, withUserDisplayName = _a.withUserDisplayName;
-        var usersEmail = this.props.usersEmail;
+        var _a = this.state, availableCalls = _a.availableCalls, forUserID = _a.forUserID, forUserDisplayName = _a.forUserDisplayName, withUserID = _a.withUserID, callButtonDisabled = _a.callButtonDisabled, answerButtonDisabled = _a.answerButtonDisabled, callID = _a.callID, withUserDisplayName = _a.withUserDisplayName, usersEmail = _a.usersEmail;
         if (forUserID) {
             return (React.createElement("div", { className: "pure-u-1 pure-u-md-1-2" },
                 React.createElement("div", { className: "pad" },

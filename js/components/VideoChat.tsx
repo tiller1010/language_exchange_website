@@ -50,6 +50,7 @@ interface VideoChatState {
   forUserDisplayName?: string;
   withUserID?: string;
   withUserDisplayName?: string;
+  usersEmail?: string;
   availableCalls?: CallOffer[];
   answered: boolean;
   authenticatedUserID?: string
@@ -96,10 +97,12 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
       encryptedProps = JSON.parse(encryptedProps);
       newState = {
         authenticatedUserID: encryptedProps.authenticatedUserID,
+        usersEmail: encryptedProps.usersEmail,
       }
     } else {
       newState = {
         authenticatedUserID: this.props.authenticatedUserID,
+        usersEmail: this.props.usersEmail,
       }
     }
     this.setState(newState, async () => {
@@ -434,11 +437,8 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
       answerButtonDisabled,
       callID,
       withUserDisplayName,
-    } = this.state;
-
-    const {
       usersEmail,
-    } = this.props;
+    } = this.state;
 
     if(forUserID){
       return(
