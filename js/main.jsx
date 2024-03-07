@@ -169,7 +169,8 @@ if(videoChatElement){
     ReactDOM.render(<VideoChat p={p} isLive={isLive}/>, videoChatElement);
   } else {
     var authenticatedUserID = videoChatElement.getAttribute('authenticateduserid');
-    ReactDOM.render(<VideoChat authenticatedUserID={authenticatedUserID} isLive={isLive}/>, videoChatElement);
+    var usersEmail = videoChatElement.getAttribute('usersemail');
+    ReactDOM.render(<VideoChat authenticatedUserID={authenticatedUserID} usersEmail={usersEmail} isLive={isLive}/>, videoChatElement);
   }
 }
 

@@ -194,6 +194,7 @@ var VideoChat = /** @class */ (function (_super) {
                                 this.setState({
                                     withUserID: withUserID,
                                     availableCalls: availableCalls_1,
+                                    withUserDisplayName: withUserDisplayName_1,
                                 });
                                 _a.label = 6;
                             case 6: return [2 /*return*/];
@@ -495,7 +496,8 @@ var VideoChat = /** @class */ (function (_super) {
     };
     VideoChat.prototype.renderCallControls = function () {
         var _this = this;
-        var _a = this.state, availableCalls = _a.availableCalls, forUserID = _a.forUserID, forUserDisplayName = _a.forUserDisplayName, withUserID = _a.withUserID, callButtonDisabled = _a.callButtonDisabled, answerButtonDisabled = _a.answerButtonDisabled, callID = _a.callID;
+        var _a = this.state, availableCalls = _a.availableCalls, forUserID = _a.forUserID, forUserDisplayName = _a.forUserDisplayName, withUserID = _a.withUserID, callButtonDisabled = _a.callButtonDisabled, answerButtonDisabled = _a.answerButtonDisabled, callID = _a.callID, withUserDisplayName = _a.withUserDisplayName;
+        var usersEmail = this.props.usersEmail;
         if (forUserID) {
             return (React.createElement("div", { className: "pure-u-1 pure-u-md-1-2" },
                 React.createElement("div", { className: "pad" },
@@ -540,12 +542,17 @@ var VideoChat = /** @class */ (function (_super) {
                                             React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faPhone }))));
                             })
                             :
-                                '')))));
+                                '')),
+                    React.createElement("p", null, "If you are still not seeing the right call, you can try emailing the user to ask them to send you a call offer."),
+                    React.createElement("p", null,
+                        withUserDisplayName,
+                        "'s email address: ",
+                        React.createElement("a", { href: "mailto:".concat(usersEmail) }, usersEmail)))));
         }
         return '';
     };
     VideoChat.prototype.render = function () {
-        var _a = this.state, availableCalls = _a.availableCalls, answered = _a.answered;
+        var answered = this.state.answered;
         return (React.createElement("div", { className: "frame fw-container" },
             React.createElement(Navigation_jsx_1.default, null),
             React.createElement("div", { className: "fw-typography-spacing pure-u-g" },

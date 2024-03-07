@@ -33,6 +33,7 @@ interface CallOffer {
 
 interface VideoChatProps {
   authenticatedUserID?: string;
+  usersEmail?: string;
   p?: string // Encrypted props
   isLive?: boolean
 }
@@ -48,6 +49,7 @@ interface VideoChatState {
   forUserID?: string;
   forUserDisplayName?: string;
   withUserID?: string;
+  withUserDisplayName?: string;
   availableCalls?: CallOffer[];
   answered: boolean;
   authenticatedUserID?: string
@@ -166,6 +168,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
         this.setState({
           withUserID,
           availableCalls,
+          withUserDisplayName,
         });
       }
     }
@@ -430,7 +433,12 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
       callButtonDisabled,
       answerButtonDisabled,
       callID,
+      withUserDisplayName,
     } = this.state;
+
+    const {
+      usersEmail,
+    } = this.props;
 
     if(forUserID){
       return(
@@ -444,7 +452,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
           </div>
         </div>
       );
-    } else if(withUserID){
+    } else if(withUserID) {
       return(
         <div className="pure-u-1 pure-u-md-1-2">
           <div className="pad">
@@ -488,6 +496,8 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
                 }
               </div>
             </div>
+            <p>If you are still not seeing the right call, you can try emailing the user to ask them to send you a call offer.</p>
+            <p>{withUserDisplayName}'s email address: <a href={`mailto:${usersEmail}`}>{usersEmail}</a></p>
           </div>
         </div>
       );
@@ -497,7 +507,7 @@ export default class VideoChat extends React.Component<VideoChatProps, VideoChat
 
   render(){
 
-    const { availableCalls, answered } = this.state;
+    const { answered } = this.state;
 
     return (
       <div className="frame fw-container">

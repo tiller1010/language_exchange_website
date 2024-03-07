@@ -46,7 +46,13 @@ module.exports.defineVideoChatRoutes = function(app) {
     } else {
       return res.redirect(`/login?backURL=${req.originalUrl}`);
     }
-    const props = { authenticatedUserID: userID };
+
+    const user = await findUserByID(userID);
+    const props = {
+      authenticatedUserID: userID,
+      usersEmail: user.email,
+    };
+
     if (isLive) {
       return res.render('video-chat', { p: myCipher(JSON.stringify(props)), isLive });
     } else {
