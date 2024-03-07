@@ -328,7 +328,7 @@ export default class ProfileEditForm extends React.Component<ProfileEditProps, P
                 <div className="desktop-30 phone-100">
                   <div className="desktop-100" style={{ maxWidth: '100%', height: '300px' }}>
                     <div className="pad" style={{ height: '100%', width: '100%', boxSizing: 'border-box' }}>
-                      <div className="profilePicture-preview img-container" style={{ height: '100%', width: '100%', background: `url(${ profilePictureSrc }) no-repeat top center/cover` }}></div>
+                      <div className="profilePicture-preview img-container" style={{ height: '100%', width: '100%', background: `#999999 url(${ profilePictureSrc }) no-repeat top center/contain` }}></div>
                     </div>
                   </div>
                 </div>

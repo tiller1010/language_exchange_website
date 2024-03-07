@@ -316,7 +316,7 @@ var ProfileEditForm = /** @class */ (function (_super) {
                             React.createElement("div", { className: "desktop-30 phone-100" },
                                 React.createElement("div", { className: "desktop-100", style: { maxWidth: '100%', height: '300px' } },
                                     React.createElement("div", { className: "pad", style: { height: '100%', width: '100%', boxSizing: 'border-box' } },
-                                        React.createElement("div", { className: "profilePicture-preview img-container", style: { height: '100%', width: '100%', background: "url(".concat(profilePictureSrc, ") no-repeat top center/cover") } })))))),
+                                        React.createElement("div", { className: "profilePicture-preview img-container", style: { height: '100%', width: '100%', background: "#999999 url(".concat(profilePictureSrc, ") no-repeat top center/contain") } })))))),
                     React.createElement("div", { className: "pure-u-1 flex-container flex-horizontal-center" })))));
     };
     return ProfileEditForm;
