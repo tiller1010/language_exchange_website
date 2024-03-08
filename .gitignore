@@ -8,4 +8,5 @@ public/*.gif
 .env
 .npmrc
 package-lock.json
+security/*
 
