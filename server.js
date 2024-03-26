@@ -29,6 +29,7 @@ const { defineVideoChatRoutes } = require('./routes/videoChat.js');
 const { defineAuthenticationRoutes } = require('./routes/authentication.js');
 const { defineUserRoutes } = require('./routes/users.js');
 const { defineStripeRoutes } = require('./routes/stripe.js');
+const { defineReportABugRoutes } = require('./routes/report-a-bug.js');
 
 // Configure Server
 const app = express();
@@ -87,6 +88,9 @@ app.use(express.json());
 
     // Stripe routes
     defineStripeRoutes(app);
+
+    // Report a bug
+    defineReportABugRoutes(app);
 
     const httpsOptions = {
       key: fs.readFileSync('./security/cert.key'),

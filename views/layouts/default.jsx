@@ -37,8 +37,9 @@ const DefaultLayout = (props) => {
         </div>
         <footer className="flex-container flex-horizontal-center grey-section">
           <div className="fw-container">
-            <div className="fw-space" style={{ paddingBottom: '150px' }}>
+            <div className="fw-space text-center" style={{ paddingBottom: '150px' }}>
               <p>&copy; {(new Date()).getFullYear()} Copyright Tyler Trout</p>
+              <p><a href="/report-a-bug">Report a Bug</a></p>
             </div>
           </div>
         </footer>
