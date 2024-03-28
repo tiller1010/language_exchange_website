@@ -69,143 +69,147 @@ String.prototype.convertTo12HourTime = function(){
 })();
 
 
-var homeElement = document.getElementById('home');
-if(homeElement){
-  if (window.isLive) {
-    var p = homeElement.getAttribute('p');
-    ReactDOM.render(<Home p={p} isLive={isLive}/>, homeElement);
-  } else {
-    var userLikedVideos = homeElement.getAttribute('userlikedvideos');
-    var userID = homeElement.getAttribute('userid');
-    ReactDOM.render(<Home userLikedVideos={userLikedVideos} userID={userID} isLive={isLive}/>, homeElement);
+function initializeReactApp() {
+  var homeElement = document.getElementById('home');
+  if(homeElement){
+    if (window.isLive) {
+      var p = homeElement.getAttribute('p');
+      ReactDOM.render(<Home p={p} isLive={isLive}/>, homeElement);
+    } else {
+      var userLikedVideos = homeElement.getAttribute('userlikedvideos');
+      var userID = homeElement.getAttribute('userid');
+      ReactDOM.render(<Home userLikedVideos={userLikedVideos} userID={userID} isLive={isLive}/>, homeElement);
+    }
+  }
+
+  var videosElement = document.getElementById('videos');
+  if(videosElement){
+    if (window.isLive) {
+      var p = videosElement.getAttribute('p');
+      ReactDOM.render(<VideosIndex p={p} isLive={isLive}/>, videosElement);
+    } else {
+      var userLikedVideos = videosElement.getAttribute('userlikedvideos');
+      var userID = videosElement.getAttribute('userid');
+      ReactDOM.render(<VideosIndex userLikedVideos={userLikedVideos} userID={userID} isLive={isLive}/>, videosElement);
+    }
+  }
+
+  var videosAddElement = document.getElementById('videos-add');
+  if(videosAddElement){
+    var video = videosAddElement.getAttribute('video');
+    ReactDOM.render(<VideosAdd video={video}/>, videosAddElement);
+  }
+
+  var levelElement = document.getElementById('level');
+  if(levelElement){
+    if (window.isLive) {
+      var p = levelElement.getAttribute('p');
+      ReactDOM.render(<Level p={p} isLive={isLive}/>, levelElement);
+    } else {
+      var levelID = levelElement.getAttribute('levelid');
+      ReactDOM.render(<Level levelID={levelID} isLive={isLive}/>, levelElement);
+    }
+  }
+
+  var topicElement = document.getElementById('topic');
+  if(topicElement){
+    var levelID = topicElement.getAttribute('levelid');
+    var topicID = topicElement.getAttribute('topicid');
+    var completed = topicElement.getAttribute('completed');
+    ReactDOM.render(<Topic levelID={levelID} topicID={topicID} completed={eval(completed)}/>, topicElement);
+  }
+
+  var loginElement = document.getElementById('login');
+  if(loginElement){
+    var errors = loginElement.getAttribute('errors');
+    ReactDOM.render(<Login errors={errors}/>, loginElement);
+  }
+
+  var registerElement = document.getElementById('register');
+  if(registerElement){
+    var errors = registerElement.getAttribute('errors');
+    ReactDOM.render(<Register errors={errors}/>, registerElement);
+  }
+
+  var accountProfileElement = document.getElementById('account-profile');
+  if(accountProfileElement){
+    if (window.isLive) {
+      var p = accountProfileElement.getAttribute('p');
+      ReactDOM.render(<AccountProfile p={p} isLive={isLive}/>, accountProfileElement);
+    } else {
+      var userID = accountProfileElement.getAttribute('userid');
+      var authenticatedUserID = accountProfileElement.getAttribute('authenticateduserid');
+      var isCurrentUser = accountProfileElement.getAttribute('iscurrentuser');
+      var stripeAccountPending = accountProfileElement.getAttribute('stripeaccountpending');
+      var pathResolver = accountProfileElement.getAttribute('pathresolver');
+      ReactDOM.render(<AccountProfile userID={userID} authenticatedUserID={authenticatedUserID} isCurrentUser={eval(isCurrentUser)} stripeAccountPending={eval(stripeAccountPending)} pathResolver={pathResolver} isLive={isLive}/>, accountProfileElement);
+    }
+  }
+
+  var accountProfileEditElement = document.getElementById('account-profile-edit');
+  if(accountProfileEditElement){
+    if (window.isLive) {
+      var p = accountProfileEditElement.getAttribute('p');
+      ReactDOM.render(<ProfileEditForm p={p} isLive={isLive}/>, accountProfileEditElement);
+    } else {
+      var userID = accountProfileEditElement.getAttribute('userid');
+      var pathResolver = accountProfileEditElement.getAttribute('pathresolver');
+      ReactDOM.render(<ProfileEditForm userID={userID} pathResolver={pathResolver} isLive={isLive}/>, accountProfileEditElement);
+    }
+  }
+
+  var findUsersElement = document.getElementById('find-users');
+  if(findUsersElement){
+    ReactDOM.render(<UserFeed SearchFormHeading="Find friends"/>, findUsersElement);
+  }
+
+  var videoChatElement = document.getElementById('video-chat');
+  if(videoChatElement){
+    if (window.isLive) {
+      var p = videoChatElement.getAttribute('p');
+      ReactDOM.render(<VideoChat p={p} isLive={isLive}/>, videoChatElement);
+    } else {
+      var authenticatedUserID = videoChatElement.getAttribute('authenticateduserid');
+      var usersEmail = videoChatElement.getAttribute('usersemail');
+      ReactDOM.render(<VideoChat authenticatedUserID={authenticatedUserID} usersEmail={usersEmail} isLive={isLive}/>, videoChatElement);
+    }
+  }
+
+  var chatsElement = document.getElementById('chats');
+  if(chatsElement){
+    if (window.isLive) {
+      var p = chatsElement.getAttribute('p');
+      ReactDOM.render(<Chats p={p} isLive={isLive}/>, chatsElement);
+    } else {
+      var authenticatedUserID = chatsElement.getAttribute('authenticateduserid');
+      ReactDOM.render(<Chats authenticatedUserID={authenticatedUserID} isLive={isLive}/>, chatsElement);
+    }
+  }
+
+  var lessonsElement = document.getElementById('lessons');
+  if(lessonsElement){
+    if (window.isLive) {
+      var p = lessonsElement.getAttribute('p');
+      ReactDOM.render(<Lessons p={p} isLive={isLive}/>, lessonsElement);
+    } else {
+      var authenticatedUserID = lessonsElement.getAttribute('authenticateduserid');
+      ReactDOM.render(<Lessons authenticatedUserID={authenticatedUserID} isLive={isLive}/>, lessonsElement);
+    }
+  }
+
+  var forgotPasswordElement = document.getElementById('forgot-password');
+  if (forgotPasswordElement) {
+    ReactDOM.render(<ForgotPasswordForm/>, forgotPasswordElement);
+  }
+
+  var resetPasswordElement = document.getElementById('reset-password');
+  if (resetPasswordElement) {
+    var errors = resetPasswordElement.getAttribute('errors');
+    ReactDOM.render(<ResetPasswordForm errors={errors}/>, resetPasswordElement);
   }
 }
-
-var videosElement = document.getElementById('videos');
-if(videosElement){
-  if (window.isLive) {
-    var p = videosElement.getAttribute('p');
-    ReactDOM.render(<VideosIndex p={p} isLive={isLive}/>, videosElement);
-  } else {
-    var userLikedVideos = videosElement.getAttribute('userlikedvideos');
-    var userID = videosElement.getAttribute('userid');
-    ReactDOM.render(<VideosIndex userLikedVideos={userLikedVideos} userID={userID} isLive={isLive}/>, videosElement);
-  }
-}
-
-var videosAddElement = document.getElementById('videos-add');
-if(videosAddElement){
-  var video = videosAddElement.getAttribute('video');
-  ReactDOM.render(<VideosAdd video={video}/>, videosAddElement);
-}
-
-var levelElement = document.getElementById('level');
-if(levelElement){
-  if (window.isLive) {
-    var p = levelElement.getAttribute('p');
-    ReactDOM.render(<Level p={p} isLive={isLive}/>, levelElement);
-  } else {
-    var levelID = levelElement.getAttribute('levelid');
-    ReactDOM.render(<Level levelID={levelID} isLive={isLive}/>, levelElement);
-  }
-}
-
-var topicElement = document.getElementById('topic');
-if(topicElement){
-  var levelID = topicElement.getAttribute('levelid');
-  var topicID = topicElement.getAttribute('topicid');
-  var completed = topicElement.getAttribute('completed');
-  ReactDOM.render(<Topic levelID={levelID} topicID={topicID} completed={eval(completed)}/>, topicElement);
-}
-
-var loginElement = document.getElementById('login');
-if(loginElement){
-  var errors = loginElement.getAttribute('errors');
-  ReactDOM.render(<Login errors={errors}/>, loginElement);
-}
-
-var registerElement = document.getElementById('register');
-if(registerElement){
-  var errors = registerElement.getAttribute('errors');
-  ReactDOM.render(<Register errors={errors}/>, registerElement);
-}
-
-var accountProfileElement = document.getElementById('account-profile');
-if(accountProfileElement){
-  if (window.isLive) {
-    var p = accountProfileElement.getAttribute('p');
-    ReactDOM.render(<AccountProfile p={p} isLive={isLive}/>, accountProfileElement);
-  } else {
-    var userID = accountProfileElement.getAttribute('userid');
-    var authenticatedUserID = accountProfileElement.getAttribute('authenticateduserid');
-    var isCurrentUser = accountProfileElement.getAttribute('iscurrentuser');
-    var stripeAccountPending = accountProfileElement.getAttribute('stripeaccountpending');
-    var pathResolver = accountProfileElement.getAttribute('pathresolver');
-    ReactDOM.render(<AccountProfile userID={userID} authenticatedUserID={authenticatedUserID} isCurrentUser={eval(isCurrentUser)} stripeAccountPending={eval(stripeAccountPending)} pathResolver={pathResolver} isLive={isLive}/>, accountProfileElement);
-  }
-}
-
-var accountProfileEditElement = document.getElementById('account-profile-edit');
-if(accountProfileEditElement){
-  if (window.isLive) {
-    var p = accountProfileEditElement.getAttribute('p');
-    ReactDOM.render(<ProfileEditForm p={p} isLive={isLive}/>, accountProfileEditElement);
-  } else {
-    var userID = accountProfileEditElement.getAttribute('userid');
-    var pathResolver = accountProfileEditElement.getAttribute('pathresolver');
-    ReactDOM.render(<ProfileEditForm userID={userID} pathResolver={pathResolver} isLive={isLive}/>, accountProfileEditElement);
-  }
-}
-
-var findUsersElement = document.getElementById('find-users');
-if(findUsersElement){
-  ReactDOM.render(<UserFeed SearchFormHeading="Find friends"/>, findUsersElement);
-}
-
-var videoChatElement = document.getElementById('video-chat');
-if(videoChatElement){
-  if (window.isLive) {
-    var p = videoChatElement.getAttribute('p');
-    ReactDOM.render(<VideoChat p={p} isLive={isLive}/>, videoChatElement);
-  } else {
-    var authenticatedUserID = videoChatElement.getAttribute('authenticateduserid');
-    var usersEmail = videoChatElement.getAttribute('usersemail');
-    ReactDOM.render(<VideoChat authenticatedUserID={authenticatedUserID} usersEmail={usersEmail} isLive={isLive}/>, videoChatElement);
-  }
-}
-
-var chatsElement = document.getElementById('chats');
-if(chatsElement){
-  if (window.isLive) {
-    var p = chatsElement.getAttribute('p');
-    ReactDOM.render(<Chats p={p} isLive={isLive}/>, chatsElement);
-  } else {
-    var authenticatedUserID = chatsElement.getAttribute('authenticateduserid');
-    ReactDOM.render(<Chats authenticatedUserID={authenticatedUserID} isLive={isLive}/>, chatsElement);
-  }
-}
-
-var lessonsElement = document.getElementById('lessons');
-if(lessonsElement){
-  if (window.isLive) {
-    var p = lessonsElement.getAttribute('p');
-    ReactDOM.render(<Lessons p={p} isLive={isLive}/>, lessonsElement);
-  } else {
-    var authenticatedUserID = lessonsElement.getAttribute('authenticateduserid');
-    ReactDOM.render(<Lessons authenticatedUserID={authenticatedUserID} isLive={isLive}/>, lessonsElement);
-  }
-}
-
-var forgotPasswordElement = document.getElementById('forgot-password');
-if (forgotPasswordElement) {
-  ReactDOM.render(<ForgotPasswordForm/>, forgotPasswordElement);
-}
-
-var resetPasswordElement = document.getElementById('reset-password');
-if (resetPasswordElement) {
-  var errors = resetPasswordElement.getAttribute('errors');
-  ReactDOM.render(<ResetPasswordForm errors={errors}/>, resetPasswordElement);
-}
+initializeReactApp();
+window.addEventListener('load', initializeReactApp);
 
 
 /* Uses Webpack Plugin. "process.env" is not a real variable */
