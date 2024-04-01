@@ -167,7 +167,7 @@ var Product = /** @class */ (function (_super) {
                             productObject.topic),
                         React.createElement("h4", null,
                             "Language: ",
-                            productObject.language)),
+                            productObject.languageOfTopic)),
                     timeSlots_1.length ?
                         React.createElement("div", { style: { maxHeight: '250px', overflowY: 'auto' } }, timeSlots_1.map(function (timeSlot) {
                             return React.createElement("div", { key: timeSlots_1.indexOf(timeSlot) },
@@ -190,11 +190,14 @@ var Product = /** @class */ (function (_super) {
     };
     Product.prototype.render = function () {
         var product = this.props.product;
+        var cost = product.cost;
+        cost = cost / 100;
+        cost = cost.toFixed(2);
         return (React.createElement("div", { className: "fw-form fw-form-process-event" },
             this.renderProduct(product),
             React.createElement("p", null,
                 "Cost: ",
-                product.cost,
+                cost,
                 " ",
                 product.currency),
             React.createElement("p", null,

@@ -109,7 +109,7 @@ export default class Product extends React.Component<ProductProps, ProductState>
           </div>
           <div className="fw-space noleft noright">
             <h3 style={{ marginBottom: '5px' }}>Topic: {productObject.topic}</h3>
-            <h4>Language: {productObject.language}</h4>
+            <h4>Language: {productObject.languageOfTopic}</h4>
           </div>
           {timeSlots.length ?
             <div style={{ maxHeight: '250px', overflowY: 'auto' }}>
@@ -135,11 +135,14 @@ export default class Product extends React.Component<ProductProps, ProductState>
   render(){
 
     const { product } = this.props;
+    let cost = product.cost;
+    cost = cost / 100;
+    cost = cost.toFixed(2);
 
     return (
       <div className="fw-form fw-form-process-event">
         {this.renderProduct(product)}
-        <p>Cost: {product.cost} {product.currency}</p>
+        <p>Cost: {cost} {product.currency}</p>
         <p>Ordered on: {product.orderedOn}</p>
         {product.status == 'Unpaid' ?
 
