@@ -127,7 +127,8 @@ var VideoPlayer = /** @class */ (function (_super) {
     VideoPlayer.prototype.render = function () {
         var _this = this;
         var _a = this.state, likes = _a.likes, likedByCurrentUser = _a.likedByCurrentUser;
-        var _b = this.props, _id = _b._id, title = _b.title, languageOfTopic = _b.languageOfTopic, uploadedBy = _b.uploadedBy, src = _b.src, thumbnailSrc = _b.thumbnailSrc;
+        var _b = this.props, _id = _b._id, title = _b.title, languageOfTopic = _b.languageOfTopic, uploadedBy = _b.uploadedBy, src = _b.src, thumbnailSrc = _b.thumbnailSrc, handleDeleteVideo = _b.handleDeleteVideo, authenticatedUserIsAdmin = _b.authenticatedUserIsAdmin;
+        var canEdit = handleDeleteVideo || authenticatedUserIsAdmin;
         return (React.createElement("div", { style: { position: 'relative' } },
             React.createElement("div", { className: "flex x-center" },
                 React.createElement("div", { className: "desktop-100", style: { maxWidth: '400px' } },
@@ -149,15 +150,17 @@ var VideoPlayer = /** @class */ (function (_super) {
                                     React.createElement("h4", null, languageOfTopic)
                                     :
                                         '')),
-                        this.props.handleDeleteVideo ?
-                            React.createElement(React.Fragment, null,
-                                React.createElement("form", { action: "/videos/remove", method: "POST", className: "fw-form" },
-                                    React.createElement("input", { type: "hidden", name: "videoID", value: this.props._id }),
-                                    React.createElement("a", { className: "button", style: { position: 'absolute', right: '-10px', bottom: '150px', height: '36px' }, href: "#remove-video", title: "Remove Video", onClick: function (event) { return _this.props.handleDeleteVideo(event); } },
-                                        React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faTrash }))),
-                                React.createElement("div", null,
-                                    React.createElement("a", { className: "button", style: { position: 'absolute', right: '-10px', bottom: '190px', height: '36px' }, href: "/videos/edit/".concat(this.props._id), title: "Edit Video" },
-                                        React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faEdit }))))
+                        handleDeleteVideo ?
+                            React.createElement("form", { action: "/videos/remove", method: "POST", className: "fw-form" },
+                                React.createElement("input", { type: "hidden", name: "videoID", value: this.props._id }),
+                                React.createElement("a", { className: "button", style: { position: 'absolute', right: '-10px', bottom: '150px', height: '36px' }, href: "#remove-video", title: "Remove Video", onClick: function (event) { return _this.props.handleDeleteVideo(event); } },
+                                    React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faTrash })))
+                            :
+                                '',
+                        canEdit ?
+                            React.createElement("div", null,
+                                React.createElement("a", { className: "button", style: { position: 'absolute', right: '-10px', bottom: '190px', height: '36px' }, href: "/videos/edit/".concat(this.props._id), title: "Edit Video" },
+                                    React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faEdit })))
                             :
                                 '',
                         uploadedBy._id ?

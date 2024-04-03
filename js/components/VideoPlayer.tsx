@@ -26,6 +26,7 @@ interface VideoPlayerProps {
   likes: number;
   likedByCurrentUser: boolean;
   authenticatedUserID: string;
+  authenticatedUserIsAdmin?: boolean;
   handleDeleteVideo: Function;
   afterToggleLike: Function;
 }
@@ -109,7 +110,18 @@ export default class VideoPlayer extends React.Component<VideoPlayerProps, Video
   render(){
 
     const { likes, likedByCurrentUser } = this.state;
-    const { _id, title, languageOfTopic, uploadedBy, src, thumbnailSrc } = this.props;
+    const {
+      _id,
+      title,
+      languageOfTopic,
+      uploadedBy,
+      src,
+      thumbnailSrc,
+      handleDeleteVideo,
+      authenticatedUserIsAdmin,
+    } = this.props;
+
+    const canEdit = handleDeleteVideo || authenticatedUserIsAdmin;
 
     return (
       <div style={{ position: 'relative' }}>
@@ -140,20 +152,22 @@ export default class VideoPlayer extends React.Component<VideoPlayerProps, Video
                   }
                 </ReadMore>
               </div>
-              {this.props.handleDeleteVideo ?
-                <>
+              {handleDeleteVideo ?
                 <form action="/videos/remove" method="POST" className="fw-form">
                   <input type="hidden" name="videoID" value={this.props._id}/>
                   <a className="button" style={{ position: 'absolute', right: '-10px', bottom: '150px', height: '36px' }} href="#remove-video" title="Remove Video" onClick={(event) => this.props.handleDeleteVideo(event)}>
                     <FontAwesomeIcon icon={faTrash}/>
                   </a>
                 </form>
+                :
+                ''
+              }
+              {canEdit ?
                 <div>
                   <a className="button" style={{ position: 'absolute', right: '-10px', bottom: '190px', height: '36px' }} href={`/videos/edit/${this.props._id}`} title="Edit Video">
                     <FontAwesomeIcon icon={faEdit}/>
                   </a>
                 </div>
-                </>
                 :
                 ''
               }

@@ -53,6 +53,7 @@ class VideosIndex extends React.Component {
       let encryptedProps = myDecipher(this.props.p);
       encryptedProps = JSON.parse(encryptedProps);
       userLikedVideos = encryptedProps.userLikedVideos;
+      authenticatedUserIsAdmin = encryptedProps.authenticatedUserIsAdmin;
       this.setState({
         userID: encryptedProps.userID,
       });
@@ -60,6 +61,7 @@ class VideosIndex extends React.Component {
       userLikedVideos = JSON.parse(this.props.userLikedVideos);
       this.setState({
         userID: this.props.userID,
+        authenticatedUserIsAdmin: this.props.authenticatedUserIsAdmin,
       });
     }
 
@@ -122,7 +124,7 @@ class VideosIndex extends React.Component {
 
   render(){
 
-    const { loaded } = this.state;
+    const { loaded, authenticatedUserIsAdmin } = this.state;
 
     var urlParams = new URLSearchParams(window.location.search);
     var keywords = urlParams.get('keywords') || '';
@@ -151,14 +153,14 @@ class VideosIndex extends React.Component {
               <div>
               <button className="button" onClick={this.refreshVideos}>
                 Refresh
-                    <FontAwesomeIcon icon={faSync}/>
+                <FontAwesomeIcon icon={faSync}/>
               </button>
               </div>
               <span>&nbsp;</span>
               <div>
                 <a onClick={this.handleChangePage} href="/videos" className="button">
                   Clear filters
-                    <FontAwesomeIcon icon={faBan}/>
+                  <FontAwesomeIcon icon={faBan}/>
                 </a>
               </div>
             </div>
@@ -174,7 +176,7 @@ class VideosIndex extends React.Component {
                     className="button icon-left"
                     aria-label="previous"
                   >
-                        <FontAwesomeIcon icon={faLongArrowAltLeft}/>
+                    <FontAwesomeIcon icon={faLongArrowAltLeft}/>
                     Prev
                   </a>
                 </li>
@@ -224,6 +226,7 @@ class VideosIndex extends React.Component {
                       likes={video.likes}
                       likedByCurrentUser={this.currentUserHasLikedVideo(video)}
                       authenticatedUserID={this.state.userID}
+                      authenticatedUserIsAdmin={authenticatedUserIsAdmin}
                     />
                   </div>
                 </div>
@@ -241,7 +244,7 @@ class VideosIndex extends React.Component {
                     className="button icon-left"
                     aria-label="previous"
                   >
-                        <FontAwesomeIcon icon={faLongArrowAltLeft}/>
+                    <FontAwesomeIcon icon={faLongArrowAltLeft}/>
                     Prev
                   </a>
                 </li>

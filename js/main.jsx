@@ -96,8 +96,16 @@ function initializeReactApp() {
       } else {
         var userLikedVideos = videosElement.getAttribute('userlikedvideos');
         var userID = videosElement.getAttribute('userid');
+        var authenticatedUserIsAdmin = videosElement.getAttribute('authenticateduserisadmin') === 'true';
         videosElement.dataset.loaded = true;
-        return ReactDOM.render(<VideosIndex userLikedVideos={userLikedVideos} userID={userID} isLive={isLive}/>, videosElement);
+
+        return ReactDOM.render(<VideosIndex
+          userLikedVideos={userLikedVideos}
+          userID={userID}
+          authenticatedUserIsAdmin={authenticatedUserIsAdmin}
+          isLive={isLive}
+        />, videosElement);
+
       }
     }
   }
@@ -169,7 +177,16 @@ function initializeReactApp() {
         var stripeAccountPending = accountProfileElement.getAttribute('stripeaccountpending');
         var pathResolver = accountProfileElement.getAttribute('pathresolver');
         accountProfileElement.dataset.loaded = true;
-        return ReactDOM.render(<AccountProfile userID={userID} authenticatedUserID={authenticatedUserID} isCurrentUser={eval(isCurrentUser)} stripeAccountPending={eval(stripeAccountPending)} pathResolver={pathResolver} isLive={isLive}/>, accountProfileElement);
+
+        return ReactDOM.render(<AccountProfile
+          userID={userID}
+          authenticatedUserID={authenticatedUserID}
+          isCurrentUser={eval(isCurrentUser)}
+          stripeAccountPending={eval(stripeAccountPending)}
+          pathResolver={pathResolver}
+          isLive={isLive}
+        />, accountProfileElement);
+
       }
     }
   }
