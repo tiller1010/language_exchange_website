@@ -406,7 +406,7 @@ var PremiumVideoChatListing = /** @class */ (function (_super) {
                         duration)),
                 React.createElement("p", null,
                     React.createElement("b", null,
-                        price,
+                        price.toFixed(2),
                         "\u00A0",
                         currency))),
             React.createElement("div", { className: "thumbnail-preview img-container" },

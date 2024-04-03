@@ -7,7 +7,7 @@ import LanguageSelector from './LanguageSelector.js';
 import { ReactMic } from 'react-mic/dist/index.js';
 
 class VideosAdd extends React.Component {
-  constructor(){
+  constructor() {
     super();
     this.state = {
       title: '',
@@ -24,7 +24,7 @@ class VideosAdd extends React.Component {
     this.saveRecording = this.saveRecording.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     const urlParams = new URLSearchParams(window.location.search);
     const challenge = urlParams.get('challenge');
 
@@ -40,25 +40,25 @@ class VideosAdd extends React.Component {
     }
   }
 
-  handleTitleChange(event){
+  handleTitleChange(event) {
     this.setState({
       title: event.target.value
     });
   }
 
-  handleThumbnailUploadChange(event){
+  handleThumbnailUploadChange(event) {
     const context = this;
     let key = event.target.name;
     let newState = {};
-      let image = event.target.files[0];
-      if(image){
+    let image = event.target.files[0];
+    if (image) {
       newState[key] = image.name;
       this.setState(newState);
 
-        // Set preview
+      // Set preview
       let reader = new FileReader();
       reader.addEventListener('load', function () {
-        if(/jpeg|jpg|png/.test(reader.result.substr(0, 20))){
+        if (/jpeg|jpg|png/.test(reader.result.substr(0, 20))) {
           context.setState({
             thumbnailSrc: reader.result,
           });
@@ -68,22 +68,22 @@ class VideosAdd extends React.Component {
 
       }, false);
       reader.readAsDataURL(image);
-      }
+    }
   }
 
-  handleVideoUploadChange(event){
+  handleVideoUploadChange(event) {
     const context = this;
     let key = event.target.name;
     let newState = {};
-      let video = event.target.files[0];
-      if(video){
+    let video = event.target.files[0];
+    if (video) {
       newState.video = video.name;
       this.setState(newState);
 
-        // Set preview
-        let reader = new FileReader();
+      // Set preview
+      let reader = new FileReader();
       reader.addEventListener('load', function () {
-        if(/mp4|quicktime|wav|mp3/.test(reader.result.substr(0, 20))){
+        if (/mp4|quicktime|wav|mp3/.test(reader.result.substr(0, 20))) {
             context.setState({
               mediaSource: URL.createObjectURL(video),
             });
@@ -92,8 +92,8 @@ class VideosAdd extends React.Component {
           alert('Invalid video format.');
         }
       }, false);
-        reader.readAsDataURL(video);
-      }
+      reader.readAsDataURL(video);
+    }
   }
 
   startRecording() {
@@ -122,7 +122,7 @@ class VideosAdd extends React.Component {
     });
   }
 
-  render(){
+  render() {
 
     const {
       title,

@@ -369,7 +369,7 @@ export default class PremiumVideoChatListing extends React.Component<PremiumVide
           <h4>{topic}</h4>
           <p><b><FontAwesomeIcon icon={faFlag}/>&nbsp;{languageOfTopic}</b></p>
           <p><b><FontAwesomeIcon icon={faClock}/>&nbsp;{duration}</b></p>
-          <p><b>{price}&nbsp;{currency}</b></p>
+          <p><b>{price.toFixed(2)}&nbsp;{currency}</b></p>
         </div>
         <div className="thumbnail-preview img-container">
           <img style={{ height: '100%', width: '100%', objectFit: 'cover' }} src={thumbnailSrc} alt={topic}/>
