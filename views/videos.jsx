@@ -8,7 +8,12 @@ const Videos = (props) => {
 
   return (
     <DefaultLayout {...props}>
-        <div id="videos" userlikedvideos={JSON.stringify(props.userLikedVideos)} userid={props.userID} authenticateduserisadmin={authenticatedUserIsAdmin.toString()} p={props.p}>
+        <div id="videos"
+          userlikedvideos={JSON.stringify(props.userLikedVideos)}
+          userid={props.userID}
+          authenticateduserisadmin={authenticatedUserIsAdmin ? authenticatedUserIsAdmin.toString() : 'false'}
+          p={props.p}
+        >
         <SSRView/>
         {videos.map((video) =>
           <div key={video._id} className="pure-u-1 pure-u-lg-1-3">

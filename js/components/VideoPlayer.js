@@ -159,7 +159,7 @@ var VideoPlayer = /** @class */ (function (_super) {
                                 '',
                         canEdit ?
                             React.createElement("div", null,
-                                React.createElement("a", { className: "button", style: { position: 'absolute', right: '-10px', bottom: '190px', height: '36px' }, href: "/videos/edit/".concat(this.props._id), title: "Edit Video" },
+                                React.createElement("a", { className: "button", style: { position: 'absolute', right: '-10px', bottom: '190px', height: '36px', zIndex: 1 }, href: "/videos/edit/".concat(this.props._id), title: "Edit Video" },
                                     React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faEdit })))
                             :
                                 '',

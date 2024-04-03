@@ -1,10 +1,11 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faUpload, faMicrophone, faStop } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faUpload, faMicrophone, faStop, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Navigation from './Navigation.jsx';
 import MediaRenderer from './MediaRenderer.js';
 import LanguageSelector from './LanguageSelector.js';
 import { ReactMic } from 'react-mic/dist/index.js';
+import RemoveConfirmationModal from './RemoveConfirmationModal.js';
 
 class VideosAdd extends React.Component {
   constructor() {
@@ -22,6 +23,9 @@ class VideosAdd extends React.Component {
     this.startRecording = this.startRecording.bind(this);
     this.stopRecording = this.stopRecording.bind(this);
     this.saveRecording = this.saveRecording.bind(this);
+    this.handleRemoveUpload = this.handleRemoveUpload.bind(this);
+
+    this.removeUploadForm = React.createRef();
   }
 
   componentDidMount() {
@@ -122,6 +126,10 @@ class VideosAdd extends React.Component {
     });
   }
 
+  handleRemoveUpload() {
+    this.removeUploadForm.current.submit();
+  }
+
   render() {
 
     const {
@@ -133,6 +141,8 @@ class VideosAdd extends React.Component {
       thumbnailSrc, // encoded image: "data:image/jpeg;base64,/..."
       recording,
     } = this.state;
+
+    const videoID = this.state._id;
 
     let fileExtension = '';
     if (video) {
@@ -169,7 +179,7 @@ class VideosAdd extends React.Component {
           <div className="page-form desktop-50 tablet-100">
             <h1 style={{ textAlign: 'right', marginBottom: '5px' }}>Share what you know</h1>
             <h2 style={{ fontSize: '1.5em' }}>Add a video or sound file</h2>
-            <form action={`/videos/${this.state._id ? 'edit/' + this.state._id : 'add'}`} method="POST" encType="multipart/form-data" className="flex-col x-end fw-form">
+            <form action={`/videos/${videoID ? 'edit/' + videoID : 'add'}`} method="POST" encType="multipart/form-data" className="flex-col x-end fw-form">
               <div className="field text desktop-100" htmlFor="titleField">
                 <label htmlFor="titleField">Title</label>
                 <input type="text" name="title" id="titleField" value={title} onChange={this.handleTitleChange} aria-label="title" required/>
@@ -221,6 +231,30 @@ class VideosAdd extends React.Component {
                 <FontAwesomeIcon icon={faPlus}/>
               </button>
             </form>
+
+            {videoID ?
+              <>
+              <RemoveConfirmationModal
+                buttonText="Remove Upload"
+                buttonAnchor="remove-upload"
+                modalTitle="Remove Upload"
+                modalContent="Are you sure you want to remove this upload?"
+                handleDelete={this.handleRemoveUpload}
+              />
+
+              <form action="/videos/remove" method="POST" className="fw-form" ref={this.removeUploadForm}>
+                <input type="hidden" name="videoID" value={videoID}/>
+              </form>
+
+              <a className="button" style={{ marginTop: '380px' }} href="#remove-upload">
+                Remove Upload
+                <FontAwesomeIcon icon={faTrash}/>
+              </a>
+              </>
+              :
+              ''
+            }
+
           </div>
         </div>
       </div>

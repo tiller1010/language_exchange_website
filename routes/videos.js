@@ -178,10 +178,15 @@ module.exports.defineVideoRoutes = function(app, VideoSearchService) {
     {name: 'soundRecording', maxCount: 1},
   ]), async (req, res) => {
 
-    const video = await findVideo(req.params.videoID);
+    const videoID = req.params.videoID;
+    const user = req.user;
+    const video = await findVideo(videoID);
+
+    if (!user) return res.redirect('/');
+    if (!(String(user._id) == String(video.uploadedBy._id) || user.isAdmin)) return res.redirect('/');
 
     let updatedVideo = {
-      videoID: req.params.videoID,
+      videoID,
       title: req.body.title,
       languageOfTopic: req.body.languageOfTopic,
     };
@@ -199,11 +204,8 @@ module.exports.defineVideoRoutes = function(app, VideoSearchService) {
       updatedVideo.originalThumbnailName = req.files['thumbnail'][0].originalname;
     }
 
-    if (req.user) {
-      if (String(req.user._id) == String(video.uploadedBy._id) || req.user.isAdmin) {
-        await updateVideo(updatedVideo);
-      }
-    }
+
+    await updateVideo(updatedVideo);
 
     if(req.body.nativeFlag){
       res.status(200).send('Successful upload');
@@ -214,9 +216,16 @@ module.exports.defineVideoRoutes = function(app, VideoSearchService) {
 
   // Remove uploaded video route
   app.post('/videos/remove', async (req, res) => {
-    if(req.user){
-      await removeVideo(req.body.videoID);
-    }
+
+    const videoID = req.body.videoID;
+    const user = req.user;
+    const video = await findVideo(videoID);
+
+    if (!user) return res.redirect('/');
+    if (!(String(user._id) == String(video.uploadedBy._id) || user.isAdmin)) return res.redirect('/');
+
+    await removeVideo(videoID);
+
     if(req.body.nativeFlag){
       res.status(200).send('Successfully removed');
     } else {

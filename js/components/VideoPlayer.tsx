@@ -164,7 +164,7 @@ export default class VideoPlayer extends React.Component<VideoPlayerProps, Video
               }
               {canEdit ?
                 <div>
-                  <a className="button" style={{ position: 'absolute', right: '-10px', bottom: '190px', height: '36px' }} href={`/videos/edit/${this.props._id}`} title="Edit Video">
+                  <a className="button" style={{ position: 'absolute', right: '-10px', bottom: '190px', height: '36px', zIndex: 1 }} href={`/videos/edit/${this.props._id}`} title="Edit Video">
                     <FontAwesomeIcon icon={faEdit}/>
                   </a>
                 </div>
