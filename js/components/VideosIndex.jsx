@@ -49,6 +49,7 @@ class VideosIndex extends React.Component {
     const myDecipher = decipher(process.env.PROP_SALT);
 
     let userLikedVideos = [];
+    let authenticatedUserIsAdmin = false;
     if (this.props.isLive) {
       let encryptedProps = myDecipher(this.props.p);
       encryptedProps = JSON.parse(encryptedProps);
@@ -56,6 +57,7 @@ class VideosIndex extends React.Component {
       authenticatedUserIsAdmin = encryptedProps.authenticatedUserIsAdmin;
       this.setState({
         userID: encryptedProps.userID,
+        authenticatedUserIsAdmin,
       });
     } else {
       userLikedVideos = JSON.parse(this.props.userLikedVideos);

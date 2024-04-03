@@ -111,7 +111,6 @@ module.exports.defineVideoRoutes = function(app, VideoSearchService) {
         p: myCipher(JSON.stringify(props)),
         isLive,
         videos: props.videos,
-        authenticatedUserIsAdmin,
       });
     } else {
       res.render('videos', props);
