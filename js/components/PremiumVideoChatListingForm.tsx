@@ -62,7 +62,7 @@ interface PremiumVideoChatListingFormProps {
 }
 
 export default class PremiumVideoChatListingForm extends React.Component<PremiumVideoChatListingFormProps, PremiumVideoChatListingFormState>{
-  constructor(props: PremiumVideoChatListingFormProps){
+  constructor(props: PremiumVideoChatListingFormProps) {
     super(props);
     let state: PremiumVideoChatListingFormState = {
       topic: '',
@@ -92,8 +92,8 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
     this.handleDeleteListing = this.handleDeleteListing.bind(this);
   }
 
-  componentDidMount(){
-    if(this.props.user.premiumVideoChatListing){
+  componentDidMount() {
+    if (this.props.user.premiumVideoChatListing) {
       this.setState({ ...this.props.user.premiumVideoChatListing });
       this.setState({ savedPremiumVideoChatListing: this.props.user.premiumVideoChatListing });
     }
@@ -118,19 +118,19 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
     this.setState({price: Number(event.target.value), savedAllChanges: false});
   }
 
-  handleThumbnailChange(event){
+  handleThumbnailChange(event) {
     const context = this;
-      const image = event.target.files[0];
-      context.setState({
-        thumbnailFile: image,
-      savedAllChanges: false,
-      });
-      if(image){
-        // Set preview
-        const reader = new FileReader();
+    const image = event.target.files[0];
+    context.setState({
+      thumbnailFile: image,
+    savedAllChanges: false,
+    });
+    if (image) {
+      // Set preview
+      const reader = new FileReader();
       reader.addEventListener('load', function () {
-        if(typeof reader.result === 'string'){
-          if(/jpeg|jpg|png/.test(reader.result.substr(0, 20))){
+        if (typeof reader.result === 'string') {
+          if (/jpeg|jpg|png/.test(reader.result.substr(0, 20))) {
             context.setState({thumbnailSrc: reader.result});
           } else {
             alert('Invalid thumbnail format.');
@@ -141,10 +141,10 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 
       }, false);
       reader.readAsDataURL(image);
-      }
+    }
   }
 
-  handleTimeSlotChange(valueKey, value, timeSlotIndex){
+  handleTimeSlotChange(valueKey, value, timeSlotIndex) {
     let { timeSlots } = this.state;
     let timeSlot = timeSlots[timeSlotIndex];
     timeSlot[valueKey] = value;
@@ -155,7 +155,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
     })
   }
 
-  handleRemoveTimeSlot(e, timeSlotIndex){
+  handleRemoveTimeSlot(e, timeSlotIndex) {
     e.preventDefault();
     let { timeSlots } = this.state;
     timeSlots.splice(timeSlotIndex, 1);
@@ -165,7 +165,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
     });
   }
 
-  handleAddTimeSlot(e){
+  handleAddTimeSlot(e) {
     e.preventDefault();
     this.setState({
       timeSlots: [
@@ -185,7 +185,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
     }, 100);
   }
 
-  async handleSubmit(event){
+  async handleSubmit(event) {
 
     event.preventDefault();
 
@@ -205,14 +205,14 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
 
     let { user } = this.props;
 
-    if(user && topic && languageOfTopic && duration && thumbnailSrc){
+    if (user && topic && languageOfTopic && duration && thumbnailSrc) {
       let query;
       let variables;
       let mutationName;
-      if(savedPremiumVideoChatListing){
+      if (savedPremiumVideoChatListing) {
         // If updating existing
-        query = `mutation updatePremiumVideoChatListing($listingID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){
-          updatePremiumVideoChatListing(listingID: $listingID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){
+        query = `mutation updatePremiumVideoChatListing($listingID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload) {
+          updatePremiumVideoChatListing(listingID: $listingID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file) {
             _id
             topic
             languageOfTopic
@@ -242,14 +242,14 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
             timeSlots,
           }
         };
-        if(thumbnailFile){
+        if (thumbnailFile) {
           variables.file = thumbnailFile;
         }
         mutationName = 'updatePremiumVideoChatListing';
       } else {
         // If adding new
-        query = `mutation addPremiumVideoChatListing($userID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){
-          addPremiumVideoChatListing(userID: $userID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){
+        query = `mutation addPremiumVideoChatListing($userID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload) {
+          addPremiumVideoChatListing(userID: $userID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file) {
             _id
             topic
             languageOfTopic
@@ -302,8 +302,8 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
     }
 
     // DEBUG UPLOAD
-    // const query = `mutation addPremiumVideoChatListingThumbnailTest($file: Upload){
-    //   addPremiumVideoChatListingThumbnailTest(thumbnailFile: $file){
+    // const query = `mutation addPremiumVideoChatListingThumbnailTest($file: Upload) {
+    //   addPremiumVideoChatListingThumbnailTest(thumbnailFile: $file) {
     //     thumbnailSrc
     //   }
     // }`;
@@ -312,12 +312,12 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
     // }, true);
   }
 
-  async handleDeleteListing(){
+  async handleDeleteListing() {
 
     const { user } = this.props;
 
     // If adding new
-    const query = `mutation removePremiumVideoChatListing($userID: ID!){
+    const query = `mutation removePremiumVideoChatListing($userID: ID!) {
       removePremiumVideoChatListing(userID: $userID)
     }`;
     const variables = {
@@ -336,7 +336,7 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
     });
   }
 
-  render(){
+  render() {
 
     let {
       topic,
@@ -348,6 +348,8 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
       timeSlots,
       savedPremiumVideoChatListing
     } = this.state;
+
+    price = price.toFixed(2);
 
     let { user } = this.props;
 

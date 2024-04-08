@@ -168,6 +168,9 @@ class AccountProfile extends React.Component {
     const authenticatedUser = this.state.authenticatedUser;
     const authenticatedUserIsAdmin = authenticatedUser ? authenticatedUser.isAdmin : false;
     const authenticatedUserIsVerified = authenticatedUser ? authenticatedUser.verified : false;
+    const currentUser = this.state.user; // The user profile being viewed.
+    const currentUserIsVerified = authenticatedUserIsVerified && this.state.isCurrentUser;
+
     const products = this.state.user.products || [];
     const connectedStripeAccountID = getConnectedStripeAccountID(authenticatedUser);
 
@@ -254,9 +257,9 @@ class AccountProfile extends React.Component {
           <div className="fw-container">
             <div className="fw-space">
 
-              {authenticatedUserIsVerified && this.state.isCurrentUser ?
+              {currentUserIsVerified || authenticatedUserIsAdmin ?
                 <>
-                  <PremiumVideoChatListingForm user={authenticatedUser}/>
+                  <PremiumVideoChatListingForm user={currentUser}/>
                   <p>
                     {connectedStripeAccountID ?
                       <>

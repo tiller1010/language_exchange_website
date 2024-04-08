@@ -225,7 +225,7 @@ var PremiumVideoChatListingForm = /** @class */ (function (_super) {
                         mutationName = void 0;
                         if (savedPremiumVideoChatListing) {
                             // If updating existing
-                            query = "mutation updatePremiumVideoChatListing($listingID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){\n          updatePremiumVideoChatListing(listingID: $listingID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){\n            _id\n            topic\n            languageOfTopic\n            duration\n            price\n            currency\n            thumbnailSrc\n            userID\n            timeSlots {\n              date\n              time\n              customerUserID\n              completed\n              booked\n              paid\n            }\n          }\n        }";
+                            query = "mutation updatePremiumVideoChatListing($listingID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload) {\n          updatePremiumVideoChatListing(listingID: $listingID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file) {\n            _id\n            topic\n            languageOfTopic\n            duration\n            price\n            currency\n            thumbnailSrc\n            userID\n            timeSlots {\n              date\n              time\n              customerUserID\n              completed\n              booked\n              paid\n            }\n          }\n        }";
                             variables = {
                                 listingID: savedPremiumVideoChatListing._id,
                                 premiumVideoChatListing: {
@@ -244,7 +244,7 @@ var PremiumVideoChatListingForm = /** @class */ (function (_super) {
                         }
                         else {
                             // If adding new
-                            query = "mutation addPremiumVideoChatListing($userID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload){\n          addPremiumVideoChatListing(userID: $userID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file){\n            _id\n            topic\n            languageOfTopic\n            duration\n            price\n            currency\n            thumbnailSrc\n            userID\n            timeSlots {\n              date\n              time\n              customerUserID\n              completed\n              booked\n              paid\n            }\n          }\n        }";
+                            query = "mutation addPremiumVideoChatListing($userID: ID!, $premiumVideoChatListing: PremiumVideoChatListingInputs, $file: Upload) {\n          addPremiumVideoChatListing(userID: $userID, premiumVideoChatListing: $premiumVideoChatListing, thumbnailFile: $file) {\n            _id\n            topic\n            languageOfTopic\n            duration\n            price\n            currency\n            thumbnailSrc\n            userID\n            timeSlots {\n              date\n              time\n              customerUserID\n              completed\n              booked\n              paid\n            }\n          }\n        }";
                             variables = {
                                 userID: user._id,
                                 premiumVideoChatListing: {
@@ -290,7 +290,7 @@ var PremiumVideoChatListingForm = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         user = this.props.user;
-                        query = "mutation removePremiumVideoChatListing($userID: ID!){\n      removePremiumVideoChatListing(userID: $userID)\n    }";
+                        query = "mutation removePremiumVideoChatListing($userID: ID!) {\n      removePremiumVideoChatListing(userID: $userID)\n    }";
                         variables = {
                             userID: user._id
                         };
@@ -312,6 +312,7 @@ var PremiumVideoChatListingForm = /** @class */ (function (_super) {
     PremiumVideoChatListingForm.prototype.render = function () {
         var _this = this;
         var _a = this.state, topic = _a.topic, languageOfTopic = _a.languageOfTopic, duration = _a.duration, price = _a.price, currency = _a.currency, thumbnailSrc = _a.thumbnailSrc, timeSlots = _a.timeSlots, savedPremiumVideoChatListing = _a.savedPremiumVideoChatListing;
+        price = price.toFixed(2);
         var user = this.props.user;
         return (React.createElement("div", { className: "pure-g" },
             React.createElement("h2", { className: "pure-u-1" }, "Video chat listing"),
