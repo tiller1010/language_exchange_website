@@ -30,6 +30,7 @@ const { defineAuthenticationRoutes } = require('./routes/authentication.js');
 const { defineUserRoutes } = require('./routes/users.js');
 const { defineStripeRoutes } = require('./routes/stripe.js');
 const { defineReportABugRoutes } = require('./routes/report-a-bug.js');
+const { defineBecomeVerifiedRoutes } = require('./routes/become-verified.js');
 
 // Configure Server
 const app = express();
@@ -91,6 +92,9 @@ app.use(express.json());
 
     // Report a bug
     defineReportABugRoutes(app);
+
+    // Become Verified
+    defineBecomeVerifiedRoutes(app);
 
     const httpsOptions = {
       key: fs.readFileSync('./security/cert.key'),

@@ -1,7 +1,14 @@
 import React from 'react';
 import Navigation from './Navigation.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt, faSearch, faUser, faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
+import {
+  faEdit,
+  faLongArrowAltRight,
+  faPlus,
+  faSearch,
+  faSignOutAlt,
+  faUser,
+} from '@fortawesome/free-solid-svg-icons';
 import Slider from 'react-slick';
 import graphQLFetch from '../graphQLFetch.js';
 import VideoPlayer from './VideoPlayer.js';
@@ -165,10 +172,14 @@ class AccountProfile extends React.Component {
 
   render(){
 
-    const authenticatedUser = this.state.authenticatedUser;
+    const {
+      authenticatedUser,
+      currentUser, // The user profile being viewed.
+      isCurrentUser,
+    } = this.state;
+
     const authenticatedUserIsAdmin = authenticatedUser ? authenticatedUser.isAdmin : false;
     const authenticatedUserIsVerified = authenticatedUser ? authenticatedUser.verified : false;
-    const currentUser = this.state.user; // The user profile being viewed.
     const currentUserIsVerified = authenticatedUserIsVerified && this.state.isCurrentUser;
 
     const products = this.state.user.products || [];
@@ -190,7 +201,7 @@ class AccountProfile extends React.Component {
 
               <div className="flex-container">
                 <div className="desktop-75 phone-100">
-                  {this.state.isCurrentUser ?
+                  {isCurrentUser ?
                     <>
                     <h1>Welcome, {this.state.user.firstName}!</h1>
                     <a href="/logout" className="button" style={{ width: 'max-content' }}>
@@ -291,6 +302,15 @@ class AccountProfile extends React.Component {
                 ''
               }
 
+              {!currentUserIsVerified && isCurrentUser ?
+                  <a href="/become-verified" className="button" style={{ display: 'block', margin: 'auto' }}>
+                    Want to get paid to teach others? Become a verified user!
+                    <FontAwesomeIcon icon={faLongArrowAltRight}/>
+                  </a>
+                :
+                ''
+              }
+
             </div>
           </div>
         </section>
@@ -338,7 +358,7 @@ class AccountProfile extends React.Component {
           </div>
         </section>
 
-        {this.state.isCurrentUser || authenticatedUserIsAdmin ?
+        {isCurrentUser || authenticatedUserIsAdmin ?
           <RemoveConfirmationModal
             buttonText="Remove Video"
             buttonAnchor="remove-video"
@@ -354,7 +374,7 @@ class AccountProfile extends React.Component {
           <div className="fw-container">
             <div className="fw-space">
 
-              {products.length && this.state.isCurrentUser ?
+              {products.length && isCurrentUser ?
                 <div>
                   <h2 className="text-center">Products</h2>
                   <hr/>
@@ -381,7 +401,7 @@ class AccountProfile extends React.Component {
                   </Slider>
                 </div>
                 :
-                this.state.isCurrentUser ?
+                isCurrentUser ?
                   <div>
                     <h2 className="text-center">No Purchased Products</h2>
                     <hr/>
@@ -429,7 +449,7 @@ class AccountProfile extends React.Component {
                           likes={video.likes}
                           likedByCurrentUser={video.likedByCurrentUser}
                           authenticatedUserID={authenticatedUser ? authenticatedUser._id : null}
-                          handleDeleteVideo={this.state.isCurrentUser || authenticatedUserIsAdmin ? this.handleDeleteVideo : null}
+                          handleDeleteVideo={isCurrentUser || authenticatedUserIsAdmin ? this.handleDeleteVideo : null}
                           afterToggleLike={this.afterToggleLike}
                         />
                       </div>

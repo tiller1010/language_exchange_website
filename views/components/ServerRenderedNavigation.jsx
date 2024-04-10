@@ -54,4 +54,3 @@ export default function ServerRenderedNavigation(props) {
   );
 }
 
-// export default ServerRenderedNavigation;

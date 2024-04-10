@@ -93,9 +93,11 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
   }
 
   componentDidMount() {
-    if (this.props.user.premiumVideoChatListing) {
-      this.setState({ ...this.props.user.premiumVideoChatListing });
-      this.setState({ savedPremiumVideoChatListing: this.props.user.premiumVideoChatListing });
+    if (this.props.user) {
+      if (this.props.user.premiumVideoChatListing) {
+        this.setState({ ...this.props.user.premiumVideoChatListing });
+        this.setState({ savedPremiumVideoChatListing: this.props.user.premiumVideoChatListing });
+      }
     }
 
     // Make sure generated buttons effect state

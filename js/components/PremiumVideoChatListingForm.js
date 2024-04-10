@@ -124,9 +124,11 @@ var PremiumVideoChatListingForm = /** @class */ (function (_super) {
     }
     PremiumVideoChatListingForm.prototype.componentDidMount = function () {
         var _this = this;
-        if (this.props.user.premiumVideoChatListing) {
-            this.setState(__assign({}, this.props.user.premiumVideoChatListing));
-            this.setState({ savedPremiumVideoChatListing: this.props.user.premiumVideoChatListing });
+        if (this.props.user) {
+            if (this.props.user.premiumVideoChatListing) {
+                this.setState(__assign({}, this.props.user.premiumVideoChatListing));
+                this.setState({ savedPremiumVideoChatListing: this.props.user.premiumVideoChatListing });
+            }
         }
         // Make sure generated buttons effect state
         var numericButtonsCheck = setInterval(function () {
