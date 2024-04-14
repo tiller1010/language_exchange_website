@@ -372,7 +372,9 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
               </div>
               <div className="field numeric">
                 <label htmlFor="priceField">Price</label>
-                <input type="number" min="0.50" step="0.01" name="price" id="priceField" value={price} onChange={this.handlePriceChange}/>
+                <div className="middleColumn" style={{ position: 'relative' }}>
+                  <input type="number" min="0.50" step="0.01" name="price" id="priceField" value={price} onChange={this.handlePriceChange}/>
+                </div>
                 <p><i>Application fees will be applied</i></p>
               </div>
               <div className="field text">

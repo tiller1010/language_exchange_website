@@ -23,7 +23,7 @@ class AccountProfile extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      user: {
+      currentUser: {
         completedTopics: [],
         uploadedVideos: [],
         products: [],
@@ -98,26 +98,26 @@ class AccountProfile extends React.Component {
       }
     }
     this.setState({
-      user: userProfile,
+      currentUser: userProfile,
       authenticatedUser,
     });
   }
 
   async verifyUser(verificationStatus){
-    if(this.state.userID){
+    if(currentUserID){
       const query = `mutation verifyUser($userID: ID!, $verificationStatus: Boolean!){
         verifyUser(userID: $userID, verificationStatus: $verificationStatus){
           verified
         }
       }`;
       const data = await graphQLFetch(query, {
-        userID: this.state.user._id,
+        userID: this.state.currentUser._id,
         verificationStatus: verificationStatus
       });
-      let updatedUser = this.state.user;
+      let updatedUser = this.state.currentUser;
       updatedUser.verified = data.verifyUser.verified;
       this.setState({
-        user: updatedUser
+        currentUser: updatedUser
       });
     }
   }
@@ -125,7 +125,7 @@ class AccountProfile extends React.Component {
   afterToggleLike(newVideo, likedByCurrentUser){
     newVideo.likedByCurrentUser = likedByCurrentUser;
     let videoAlreadyLiked = false;
-    let updatedUser = this.state.user;
+    let updatedUser = this.state.currentUser;
     updatedUser.likedVideos.forEach((userLikedVideo) => {
       if(String(newVideo._id) == String(userLikedVideo._id)){
         videoAlreadyLiked = true;
@@ -145,7 +145,7 @@ class AccountProfile extends React.Component {
       }
     });
     this.setState({
-      user: updatedUser
+      currentUser: updatedUser
     });
   }
 
@@ -182,7 +182,7 @@ class AccountProfile extends React.Component {
     const authenticatedUserIsVerified = authenticatedUser ? authenticatedUser.verified : false;
     const currentUserIsVerified = authenticatedUserIsVerified && this.state.isCurrentUser;
 
-    const products = this.state.user.products || [];
+    const products = currentUser.products || [];
     const connectedStripeAccountID = getConnectedStripeAccountID(authenticatedUser);
 
     document.addEventListener('cssmodal:hide', () => {
@@ -203,7 +203,7 @@ class AccountProfile extends React.Component {
                 <div className="desktop-75 phone-100">
                   {isCurrentUser ?
                     <>
-                    <h1>Welcome, {this.state.user.firstName}!</h1>
+                    <h1>Welcome, {currentUser.firstName}!</h1>
                     <a href="/logout" className="button" style={{ width: 'max-content' }}>
                       Logout
                       <FontAwesomeIcon icon={faSignOutAlt}/>
@@ -220,19 +220,19 @@ class AccountProfile extends React.Component {
                     </a>
                     </>
                     :
-                    <h1>{this.state.user.firstName}</h1>
+                    <h1>{currentUser.firstName}</h1>
                   }
 
                   {authenticatedUserIsAdmin ?
                     <form className="fw-form">
-                      {this.state.user.verified ?
+                      {currentUser.verified ?
                         <div className="field checkbox">
-                          <input type="checkbox" name="verifyUser" id="verifyUserField" checked="checked" onChange={(event) => this.verifyUser(!this.state.user.verified)}/>
+                          <input type="checkbox" name="verifyUser" id="verifyUserField" checked="checked" onChange={(event) => this.verifyUser(!currentUser.verified)}/>
                           <label htmlFor="verifyUserField">Remove verification for this user?</label>
                         </div>
                         :
                         <div className="field checkbox">
-                          <input type="checkbox" name="verifyUser" id="verifyUserField" onChange={(event) => this.verifyUser(!this.state.user.verified)}/>
+                          <input type="checkbox" name="verifyUser" id="verifyUserField" onChange={(event) => this.verifyUser(!currentUser.verified)}/>
                           <label htmlFor="verifyUserField">Verify this user?</label>
                         </div>
                       }
@@ -242,11 +242,11 @@ class AccountProfile extends React.Component {
                   }
 
                 </div>
-                {this.state.user.profilePictureSrc ?
+                {currentUser.profilePictureSrc ?
                   <div className="desktop-25 phone-100">
                     <div className="img-container" style={{ background: '#999999' }}>
-                      <img src={`${this.state.pathResolver}${this.state.user.profilePictureSrc}`}
-                        alt={`Picture of ${this.state.user.displayName}`}
+                      <img src={`${this.state.pathResolver}${currentUser.profilePictureSrc}`}
+                        alt={`Picture of ${currentUser.displayName}`}
                         style={{
                           maxHeight: '300px',
                           objectPosition: 'top',
@@ -302,7 +302,10 @@ class AccountProfile extends React.Component {
                 ''
               }
 
-              {!currentUserIsVerified && isCurrentUser ?
+              {
+                currentUser._id // user profile is loaded in
+                && isCurrentUser
+                && !currentUserIsVerified ?
                   <a href="/become-verified" className="button" style={{ display: 'block', margin: 'auto' }}>
                     Want to get paid to teach others? Become a verified user!
                     <FontAwesomeIcon icon={faLongArrowAltRight}/>
@@ -319,7 +322,7 @@ class AccountProfile extends React.Component {
           <div className="fw-container">
             <div className="fw-space">
 
-              {this.state.user.completedTopics.length ?
+              {currentUser.completedTopics.length ?
               <div className="topics">
                 <h2 className="text-center">Completed Topics</h2>
                 <hr/>
@@ -338,7 +341,7 @@ class AccountProfile extends React.Component {
                     }
                   ]
                 }}>
-                  {this.state.user.completedTopics.reverse().map((topic) =>
+                  {currentUser.completedTopics.reverse().map((topic) =>
                     <div className="topic pure-u-1 pure-u-md-11-24" key={topic.id}>
                       <div className="pad">
                         <TopicLink topic={topic} levelID={topic.levelID}/>
@@ -393,7 +396,7 @@ class AccountProfile extends React.Component {
                       }
                     ]
                   }}>
-                    {this.state.user.products.reverse().map((product) =>
+                    {currentUser.products.reverse().map((product) =>
                       <div key={product._id} className="pure-u-1 pure-u-lg-1-3">
                         <Product product={product}/>
                       </div>
@@ -418,7 +421,7 @@ class AccountProfile extends React.Component {
           <div className="fw-container">
             <div className="fw-space">
 
-              {this.state.user.uploadedVideos.length ?
+              {currentUser.uploadedVideos.length ?
                 <div>
                   <h2 className="text-center">Uploaded Content</h2>
                   <hr/>
@@ -437,7 +440,7 @@ class AccountProfile extends React.Component {
                       }
                     ]
                   }}>
-                    {this.state.user.uploadedVideos.reverse().map((video) =>
+                    {currentUser.uploadedVideos.reverse().map((video) =>
                       <div key={video._id} className="pure-u-1 pure-u-lg-1-3">
                         <VideoPlayer
                           _id={video._id}
@@ -475,7 +478,7 @@ class AccountProfile extends React.Component {
           <div className="fw-container">
             <div className="frame normaltop">
 
-              {this.state.user.likedVideos.length ?
+              {currentUser.likedVideos.length ?
                 <div>
                   <h2 className="text-center">Liked Content</h2>
                   <hr/>
@@ -494,7 +497,7 @@ class AccountProfile extends React.Component {
                       }
                     ]
                   }}>
-                    {this.state.user.likedVideos.reverse().map((video) =>
+                    {currentUser.likedVideos.reverse().map((video) =>
                       <div key={video._id} className="pure-u-1 pure-u-lg-1-3">
                         <VideoPlayer
                           _id={video._id}
