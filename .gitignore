@@ -9,4 +9,5 @@ public/*.gif
 .npmrc
 package-lock.json
 security/*
+public/js/main.js.LICENSE.txt
 

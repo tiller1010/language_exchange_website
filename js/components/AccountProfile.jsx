@@ -180,7 +180,7 @@ class AccountProfile extends React.Component {
 
     const authenticatedUserIsAdmin = authenticatedUser ? authenticatedUser.isAdmin : false;
     const authenticatedUserIsVerified = authenticatedUser ? authenticatedUser.verified : false;
-    const currentUserIsVerified = authenticatedUserIsVerified && this.state.isCurrentUser;
+    const currentUserIsVerified = currentUser ? currentUser.verified : false;
 
     const products = currentUser.products || [];
     const connectedStripeAccountID = getConnectedStripeAccountID(authenticatedUser);
@@ -268,7 +268,7 @@ class AccountProfile extends React.Component {
           <div className="fw-container">
             <div className="fw-space">
 
-              {currentUserIsVerified || authenticatedUserIsAdmin ?
+              {(isCurrentUser || authenticatedUserIsAdmin) && currentUserIsVerified ?
                 <>
                   <PremiumVideoChatListingForm user={currentUser}/>
                   <p>
@@ -306,10 +306,13 @@ class AccountProfile extends React.Component {
                 currentUser._id // user profile is loaded in
                 && isCurrentUser
                 && !currentUserIsVerified ?
-                  <a href="/become-verified" className="button" style={{ display: 'block', margin: 'auto' }}>
-                    Want to get paid to teach others? Become a verified user!
-                    <FontAwesomeIcon icon={faLongArrowAltRight}/>
-                  </a>
+                 <p className="text-center">
+                    Want to get paid to teach others?
+                    <a href="/become-verified" className="button" style={{ display: 'block', margin: 'auto' }}>
+                      Become a verified user!
+                      <FontAwesomeIcon icon={faLongArrowAltRight}/>
+                    </a>
+                  </p>
                 :
                 ''
               }
