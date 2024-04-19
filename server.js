@@ -32,6 +32,13 @@ const { defineStripeRoutes } = require('./routes/stripe.js');
 const { defineReportABugRoutes } = require('./routes/report-a-bug.js');
 const { defineBecomeVerifiedRoutes } = require('./routes/become-verified.js');
 
+// Database
+const {
+  addSocketUser,
+  getSocketUserByUserID ,
+  deleteSocketUser,
+} = require('./database/methods/socketUsers.js');
+
 // Configure Server
 const app = express();
 app.set('views', __dirname + '/views');
@@ -114,43 +121,24 @@ app.use(express.json());
     });
 
     const io = socketio(server);
-    let socketUsers = [];
     io.on('connection', (socket) => {
 
-      socket.emit('Hello Client');
+      // socket.emit('Hello Client');
 
       socket.on('disconnect', () => {
-        let newSocketUsers = [];
-        for (let user of socketUsers) {
-          if (!user.socketID == socket.id) {
-            newSocketUsers.push(user);
-          }
-        }
-        socketUsers = newSocketUsers;
+        deleteSocketUser(socket.id);
       });
 
-      socket.on('Hello Server', (userID) => {
-        console.log('Hello Server');
-        for (let user of socketUsers) {
-          if (user.userID == userID) {
-            user.socketID = socket.id;
-            return;
-          }
-        }
-        socketUsers.push({
-          socketID: socket.id,
-          userID,
-        });
+      socket.on('Hello Server', async (userID) => {
+        const user = await getSocketUserByUserID(userID);
+        if (user) return;
+        addSocketUser(socket.id, userID);
       });
 
-      socket.on('Call Sent', (forUserID, content) => {
-        console.log('Server received call.');
-        // console.log(socketUsers)
-        for (let user of socketUsers) {
-          if (user.userID == forUserID) {
-            socket.to(user.socketID).emit('Call Incoming', { content, from: socket.id });
-          }
-        }
+      socket.on('Call Sent', async (forUserID, content) => {
+        // console.log('Server received call.');
+        const user = await getSocketUserByUserID(forUserID);
+        socket.to(user.socketID).emit('Call Incoming', { content, from: socket.id });
       });
 
     });

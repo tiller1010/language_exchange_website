@@ -289,19 +289,19 @@ try {
   try {
     var socketHost = `https://localhost:${process.env.APP_PORT}`;
   } catch(e) {
-    var socketHost = 'https://localhost:3000';
+    var socketHost = 'http://localhost:3000';
   }
 }
 window.socket = io(socketHost);
 fetch('/current-user-id')
   .then(res => res.json())
-  .then(socketUserID => {
-    window.socket.emit('Hello Server', socketUserID)
-    window.socket.on('Hello Client', (...args) => {
-      console.log('Hello Client')
-    });
+  .then(userID => {
+    window.socket.emit('Hello Server', userID)
+    // window.socket.on('Hello Client', (...args) => {
+    //   console.log('Hello Client')
+    // });
     window.socket.on('Call Incoming', ({ content, from }) => {
-      console.log('Call Incoming From server')
+      // console.log('Call Incoming From server')
       var callModal = document.createElement('div');
       callModal = document.body.appendChild(callModal);
       ReactDOM.render(<NotificationModal buttonAnchor={`call-modal-from-${from}`} modalTitle={'You have an incoming call!'} modalContent={content} />, callModal);

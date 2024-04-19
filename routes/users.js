@@ -14,7 +14,7 @@ module.exports.defineUserRoutes = function(app) {
 
   // Get authenticated user ID
   app.get('/current-user-id', (req, res) => {
-    if(req.user){
+    if (req.user) {
       return res.json(req.user._id);
     }
     res.sendStatus(404);
