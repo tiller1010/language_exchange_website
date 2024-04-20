@@ -14,7 +14,7 @@
 - React
 - Socket.io
 - Stripe
-- Typescript
+- TypeScript
 - Webpack
 
 
