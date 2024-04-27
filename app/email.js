@@ -12,7 +12,7 @@ async function sendEmail(toEmail, subject, content, localTestingCallback = false
 
 			try {
 				var info = await transporter.sendMail({
-					from: `"Openeducationapp" <noreply@${process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL}>`, // sender address
+					from: `"${process.env.APP_NAME}" <noreply@${process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL}>`, // sender address
 					to: toEmail,
 					subject,
 					html: content,
@@ -36,7 +36,7 @@ async function sendEmail(toEmail, subject, content, localTestingCallback = false
 
 			try {
 				var info = await transporter.sendMail({
-					from: `"Openeducationapp" <noreply@${process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL}>`, // sender address
+					from: `"${process.env.APP_NAME}" <noreply@${process.env.SECURED_DOMAIN_WITHOUT_PROTOCOL}>`, // sender address
 					to: toEmail,
 					subject,
 					html: content,
