@@ -20,7 +20,7 @@ module.exports.defineVideoChatRoutes = function(app) {
     premiumVideoChatListings = premiumVideoChatListings.listings;
     props.premiumVideoChatListings = premiumVideoChatListings;
 
-    const title = 'Chat With Other Learners';
+    const title = `Chat With Other Learners - ${process.env.APP_NAME}`;
     const description = 'Chat with other learners and teachers to get real language practice.';
 
     props.title = title;

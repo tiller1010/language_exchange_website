@@ -92,7 +92,7 @@ module.exports.defineVideoRoutes = function(app, VideoSearchService) {
       authenticatedUserIsAdmin = req.user.isAdmin;
     }
 
-    const title = 'Learn From The Community';
+    const title = `Learn From The Community - ${process.env.APP_NAME}`;
     const description = 'Watch videos or listen to sound clips from the community to learn new skills and share your knowledge.';
 
     const props = {

@@ -12,7 +12,7 @@ module.exports.defineAuthenticationRoutes = function(app) {
     }
     const errors = req.flash().error || [];
     res.render('login', {
-      title: 'Login',
+      title: `Login - ${process.env.APP_NAME}`,
       description: 'Login to your account to access your profile and settings.',
       errors,
     });
@@ -120,7 +120,7 @@ module.exports.defineAuthenticationRoutes = function(app) {
     }
     const errors = req.flash().error || [];
     res.render('register', {
-      title: 'Register',
+      title: `Register - ${process.env.APP_NAME}`,
       description: 'Register for a new account. Registered users can track progress, manage uploads, schedule lessons, and become paid teachers.',
       errors,
     });

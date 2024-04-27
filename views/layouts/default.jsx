@@ -5,7 +5,7 @@ const DefaultLayout = (props) => {
   return (
     <html style={{ fontFamily: 'sans-serif' }} translate="yes" lang="en">
       <head>
-        <title>{props.title || 'Open Education App'}</title>
+        <title>{props.title || 'LinguaLearn - Free Online Language Learning'}</title>
         <meta name="description"
         content={ props.description || 'Start using the language you want to learn today. Complete free lessons and challenges to sharpen your skills. Practice your new skills with language learners around the world. Schedule a time to get real practice with a native speaker.' }></meta>
         <script src={`${props.pathResolver || ''}js/main.js`}></script>

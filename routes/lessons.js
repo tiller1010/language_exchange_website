@@ -34,7 +34,7 @@ module.exports.defineLessonRoutes = function(app) {
     } catch (e) {
     }
 
-    const title = 'Lessons';
+    const title = `Lessons - ${process.env.APP_NAME}`;
     const description = 'Complete free lessons and challenges to sharpen your skills.';
 
     props.title = title;
@@ -77,7 +77,7 @@ module.exports.defineLessonRoutes = function(app) {
       console.log(e)
     }
 
-    const title = levelName;
+    const title = `${levelName} - ${process.env.APP_NAME}`;
     const description = `Complete lessons and challenges to sharpen your skills in ${levelName}.`;
 
     props.title = title;
@@ -135,7 +135,7 @@ module.exports.defineLessonRoutes = function(app) {
     }
 
     res.render('topic.jsx', {
-      title: `${levelName} - ${topicName}`,
+      title: `${levelName} - ${topicName} - ${process.env.APP_NAME}`,
       description: `Complete lessons and challenges to sharpen your skills in ${levelName} - ${topicName}.`,
       levelID,
       levelName,
