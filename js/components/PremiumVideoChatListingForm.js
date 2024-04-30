@@ -40,7 +40,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -313,7 +313,7 @@ var PremiumVideoChatListingForm = /** @class */ (function (_super) {
     };
     PremiumVideoChatListingForm.prototype.render = function () {
         var _this = this;
-        var _a = this.state, topic = _a.topic, languageOfTopic = _a.languageOfTopic, duration = _a.duration, price = _a.price, currency = _a.currency, thumbnailSrc = _a.thumbnailSrc, timeSlots = _a.timeSlots, savedPremiumVideoChatListing = _a.savedPremiumVideoChatListing;
+        var _a = this.state, topic = _a.topic, languageOfTopic = _a.languageOfTopic, duration = _a.duration, price = _a.price, currency = _a.currency, thumbnailSrc = _a.thumbnailSrc, timeSlots = _a.timeSlots, savedPremiumVideoChatListing = _a.savedPremiumVideoChatListing, savedAllChanges = _a.savedAllChanges;
         price = price.toFixed(2);
         var user = this.props.user;
         return (React.createElement("div", { className: "pure-g" },
@@ -367,9 +367,16 @@ var PremiumVideoChatListingForm = /** @class */ (function (_super) {
                                 "Thumbnail",
                                 React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faUpload }))),
                         React.createElement("div", null,
-                            React.createElement("button", { className: "button", onClick: this.handleSubmit, disabled: this.state.savedAllChanges },
-                                this.state.savedAllChanges ? 'Saved' : 'Save',
-                                React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faCheck })))))),
+                            savedAllChanges ?
+                                ''
+                                :
+                                    React.createElement("p", { style: { color: 'red' } }, "YOU HAVE UNSAVED CHANGES"),
+                            React.createElement("button", { className: "button", onClick: this.handleSubmit, disabled: savedAllChanges, style: savedAllChanges ? {} : { padding: '10px 15px' } }, savedAllChanges ?
+                                React.createElement(React.Fragment, null,
+                                    "Saved",
+                                    React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faCheck }))
+                                :
+                                    'Save Now'))))),
             React.createElement("div", { className: "pure-u-1 flex-container flex-horizontal-center" }, savedPremiumVideoChatListing ?
                 React.createElement("div", { className: "desktop-100" },
                     React.createElement("h3", null, "Your saved Video Chat Listing"),

@@ -1,7 +1,13 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faPlus, faHome, faPlay, faUser, faComments, faBook
+  faPlus,
+  faHome,
+  faPlay,
+  faUser,
+  faComments,
+  faBook,
+  faNewspaper,
 } from '@fortawesome/free-solid-svg-icons';
 
 export default function ServerRenderedNavigation(props) {
@@ -41,6 +47,12 @@ export default function ServerRenderedNavigation(props) {
           <a href="/chats" className="button">
             <span>Chat</span>
             <FontAwesomeIcon icon={faComments}/>
+          </a>
+        </div>
+        <div className="small-pad">
+          <a href="https://blog.lingualearn.net" target="_blank" rel="noopener" className="button">
+            <span>Blog</span>
+            <FontAwesomeIcon icon={faNewspaper}/>
           </a>
         </div>
         <div className="small-pad">

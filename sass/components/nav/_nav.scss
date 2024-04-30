@@ -1,4 +1,4 @@
-nav{
+nav {
 	position: fixed;
 	top: 0;
 	right: 0;
@@ -32,13 +32,16 @@ nav{
 		}
 	}
 }
-@media only screen and (max-width: 815px){
-	nav{
+@media only screen and (max-width: 815px) {
+	nav {
 		width: 100%;
 		top: unset;
 		bottom: 0;
 		border-radius: 25px 25px 0 0;
-		.flex{
+    .small-pad {
+      padding: 5px;
+    }
+		.flex {
 			justify-content: center;
 		}
 		.add-content-btn-container {
@@ -48,7 +51,7 @@ nav{
 			bottom: 65px;
 			margin: 0;
 		}
-		a.button{
+		a.button {
 			display: flex;
 			justify-content: center;
 			align-items: center;
@@ -59,10 +62,10 @@ nav{
 			margin: 20px 0 0 0;
 			text-align: center;	
 			border-radius: 50%;
-			span{
+			span {
 				display: none;
 			}
-			svg{
+			svg {
 				position: static;
 			}
 		}

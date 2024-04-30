@@ -348,7 +348,8 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
       currency,
       thumbnailSrc,
       timeSlots,
-      savedPremiumVideoChatListing
+      savedPremiumVideoChatListing,
+      savedAllChanges,
     } = this.state;
 
     price = price.toFixed(2);
@@ -429,9 +430,20 @@ export default class PremiumVideoChatListingForm extends React.Component<Premium
               </div>
 
               <div>
-                <button className="button" onClick={this.handleSubmit} disabled={this.state.savedAllChanges}>
-                  {this.state.savedAllChanges ? 'Saved' : 'Save'}
-                  <FontAwesomeIcon icon={faCheck}/>
+                {savedAllChanges ?
+                  ''
+                  :
+                  <p style={{ color: 'red' }}>YOU HAVE UNSAVED CHANGES</p>
+                }
+                <button className="button" onClick={this.handleSubmit} disabled={savedAllChanges} style={savedAllChanges ? {} : { padding: '10px 15px' }}>
+                  {savedAllChanges ?
+                    <>
+                    Saved
+                    <FontAwesomeIcon icon={faCheck}/>
+                    </>
+                    :
+                    'Save Now'
+                }
                 </button>
               </div>
             </div>
